@@ -7,7 +7,7 @@ body {
 	text-align: center;
 	font: 12px Verdana;
 	color: #000000;
-	background: url(https://dl.dropboxusercontent.com/s/mrr2tkpg8h9yg8m/backgroundnew.gif) repeat-x 0 0;
+	background: url(https://dl.dropboxusercontent.com/s/b8uiiaamaluvyd9/backgroundnew.gif) repeat-x 0 0;
 }
 
 img {
@@ -154,7 +154,7 @@ img {
 	display: block;
 	outline: none;
 	text-indent: -9999px;
-	background: url(images/title3.gif) no-repeat 0 0;
+	background: url(https://github.com/ASully/Small-Dev-Talk/blob/master/images/title3.gif?raw=true) no-repeat 0 0;
 	width: 344px;
 	height: 53px;
 }
@@ -180,16 +180,16 @@ img {
 	clear: both;
 	width: 676px;
 	float: left;
-	background: url(images/contentbody.gif) repeat-y 0 0;
+	background: url(https://github.com/ASully/Small-Dev-Talk/blob/master/images/contentbody.gif?raw=true) repeat-y 0 0;
 	font-family: Arial;
 }
 
 #content .head {
-	background: url(images/contenthead.gif) no-repeat 0 0;
+	background: url(https://github.com/ASully/Small-Dev-Talk/blob/master/images/contenthead.gif?raw=true) no-repeat 0 0;
 }
 
 #content .foot {
-	background: url(images/contentfoot.gif) no-repeat 0 bottom;
+	background: url(https://github.com/ASully/Small-Dev-Talk/blob/master/images/contentfoot.gif?raw=true) no-repeat 0 bottom;
 	padding: 25px 8px;
 }
 
@@ -265,7 +265,7 @@ img {
 	padding: 15px;
 	color: #ffffff;
 	font-family: Verdana;
-	background: url(images/shade.png) repeat 0 0;
+	background: url(https://github.com/ASully/Small-Dev-Talk/blob/master/images/shade.png?raw=true) repeat 0 0;
 	z-index: 4;
 }
 
