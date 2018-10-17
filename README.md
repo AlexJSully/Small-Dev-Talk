@@ -7,7 +7,7 @@ Small Dev Talk is an independent news source that covers all things from the ind
 
 ## Getting Started
 
-It is recommended that you use the web-version available at http://smalldevtalk.net/ but if you want to download and run the Small Dev Talk locally, it is possible though it require internet connection to load the images or any articles ([Tumblr](https://www.tumblr.com/) was used as a hosting platform). 
+It is recommended that you use the web-version available at http://smalldevtalk.net/ but if you want to download and run the Small Dev Talk locally, it is possible though it requires an internet connection to load the images or any articles ([Tumblr](https://www.tumblr.com/) was used as a hosting platform). 
 
 ## Browser Compatibilities 
 
@@ -21,7 +21,7 @@ There is nothing to install, just download all the files and open [index.html](i
 
 ## Known issues
 
-We aim to make the Small Dev Talk as perfect as possible but unfortunately, there may be some unforseen bugs. If you manage to find one that is not here, feel free to create a [bug report](https://github.com/ASully/Small-Dev-Talk/issues/new?template=bug_report.md) so we can fix it.
+We aim to make the Small Dev Talk as perfect as possible but unfortunately, there may be some unforeseen bugs. If you manage to find one that is not here, feel free to create a [bug report](https://github.com/ASully/Small-Dev-Talk/issues/new?template=bug_report.md) so we can fix it.
 * None at the moment... Help us find some!
 
 ## Contributing
