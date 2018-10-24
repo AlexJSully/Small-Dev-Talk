@@ -1,8 +1,5 @@
 # Small Dev Talk
 
-[![TravisCI - Build Status](https://travis-ci.org/ASully/Small-Dev-Talk.svg?branch=master)](https://travis-ci.org/ASully/Small-Dev-Talk)
-[![Maintainability](https://api.codeclimate.com/v1/badges/ed11eb461733c807d580/maintainability)](https://codeclimate.com/github/ASully/Small-Dev-Talk/maintainability)
-
 Small Dev Talk is an independent news source that covers all things from the indie world of entertainment, from games to movies to books to technology and more. Our focus of Small Dev Talk is simply to give the chance of having upcoming developers show off their projects in forms of interviews which include images and video and present it to our audience.
 
 ## Getting Started
@@ -32,4 +29,4 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 * Alexander Sullivan - [GitHub](https://github.com/ASully), [Twitter](https://twitter.com/alexjsully), [LinkedIn](https://www.linkedin.com/in/alexanderjsullivan/)
 * Neil Rampone - [Twitter](https://twitter.com/BaphometGMG)
-* Jeff Cen - [Twitter](https://twitter.com/ThatJCatt)
+* Jeffery Cen - [GitHub](https://github.com/JCatt)
