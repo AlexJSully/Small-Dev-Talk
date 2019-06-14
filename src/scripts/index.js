@@ -255,7 +255,7 @@ class ChangeFeaturedArticles {
             appendStr += '<a href="index.html?' + displayList[d] + '">' + articleTitle + '</a>';
             appendStr += '</h2>';
             appendStr += '<p>' + articleSummary;
-            appendStr += '<a href="index.html?' + displayList[d] + '">Read More</a>';
+            appendStr += '<a href="index.html?' + displayList[d] + '"> Read More</a>';
             appendStr += '</p>';
             appendStr += '<p class="details"><a href="index.html?' + displayList[d] + '">' + articleDate + '</a></p>';
             appendStr += '</div>';
