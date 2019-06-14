@@ -1,6 +1,6 @@
 ## playsets
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_playsets\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image1.jpg)
 
 Haven’t you ever just wanted to relax and play a tabletop RPG but you don’t own a tabletop board game. Well then check out playsets! It is a virtual tabletop game including many maps and characters. It brings enjoyment to all players with entertaining emoticons and status effects. Recently I got the chance to talk with the playsets team and you can find more below or you can check out more on their [Kickstarter](https://www.kickstarter.com/projects/985647565/playsets-the-future-of-social-storytelling) or on their [Facebook page](https://www.facebook.com/playsetsapp).
 
@@ -12,13 +12,13 @@ Haven’t you ever just wanted to relax and play a tabletop RPG but you don’t 
 
 **The playsets team:** Yes, Playsets will have some premade campaigns that GMs can lead their players through.  We’ve hired a professional writer to come up with stories to help those people looking for some great play sessions without a lot of their own prep time beforehand.  
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_playsets\image2.gif)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image2.gif)
 
 **Small Dev Talk: In your introduction Kickstarter video of playsets, it mentions ‘game master’. Does this mean that the player can create their own stories in playsets? Will the game master have to set-up a custom game before they meet with other players?**
 
 **The playsets team:** That is exactly what we want people to do with Playsets, we provide some really great maps of basic environmental types(like towns or dungeons) with tons of options for layout, and they use them to run their own stories.  In addition to our customizable maps we plan on providing a bunch of extra story props like treasure chests, fire, and traps that help GMs bring the stories they have planned to life for their players.  
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_playsets\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image3.jpg)
 
 **Small Dev Talk: Being a Dungeons and Dragons like table top bored game, how is the gameplay itself going to work? Will there be in-game dice or combat mechanics?**  
 
@@ -28,7 +28,7 @@ Haven’t you ever just wanted to relax and play a tabletop RPG but you don’t 
 
 **The playsets team:** We’ve built in a variety of ways for players to use their character tokens, the most important of which we feel is real time token movement.  For us this was an important behavior because it helped to bring back that “in the room” feeling that can get lost in a networked environment.  Players can also trigger animated actions, like attacks, that can add emphasis to the story being told.  
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_playsets\image4.gif)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image4.gif)
 
 **Small Dev Talk: What type of worlds or environments will the player see in playsets? Will users be able to edit or create their own environments?**
 
@@ -42,7 +42,7 @@ Each of these environments contains 5 major features with 3 very different optio
 
 We currently do not have a way of adding your own artwork for tokens, but we are looking into options for user created content in the future.  In the mean time, we have several [Kickstarter](https://www.kickstarter.com/projects/985647565/playsets-the-future-of-social-storytelling) rewards that model an NPC after a backer, so our core NPC tokens will be inspired by the people who helped make playsets a reality.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_playsets\image5.gif)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image5.gif)
 
 **Small Dev Talk: How is the co-operative play going to work? Will it be online or will it be over Bluetooth? Will there by voice-chat or text based chat when paying with others?**
 
@@ -56,7 +56,7 @@ We want to include a voice chat functionality, but don’t want to have to do it
 
 Status effects was an area we never were satisfied with tokens, even with real physical objects. It was always hard to tell what monster / character had what effect and we felt that this was where we could take an advantage in the digital realm.  We chose 9 basic status effect types that we felt could cover just about any status you needed to indicate on a token and had our artist create great animations for them.  It not only looks great, but really helps users conduct combat without asking the GM which kolbold is the confused one for the tenth time.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_playsets\image6.gif)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image6.gif)
 
 **Small Dev Talk: What inspired you to create playsets?**
 
@@ -74,7 +74,7 @@ The interface has also been a huge battle for us, it is both difficult and cruci
 
 Distance has also been a big challenge for our team.  Our developer lives in Iowa while our artist and designer live in Los Angeles and missing out on working in the same space and having face to face meetings can be difficult.  For about a month at the beginning of the project we all actually lived in the same house and it was a very productive time, but that couldn’t last forever and we were back to our separate places.  Then again if it weren’t for the distance separating us in the first place we might not have felt such a strong urge to build Playsets, so maybe its for the best…
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_playsets\image7.gif)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image7.gif)
 
 **Small Dev Talk: What is it like being a team of three developing a game like playsets?**
 
@@ -100,7 +100,7 @@ Playsets is designed primarily to be Free-To-Play.  We want Playsets to be an en
 
 Playsets is ultimately about getting together with friends and having a great time and hopefully we can help you do that.  We want to be your portal to great stories, as an enhanced map that replaces the graph paper of your local game, or as the shared space for a group getting together from all over the country.  So we hope that not only can we enhance your existing groups, but inspire greater reach in your new ones, and maybe even pull in someone who hasn’t yet made it to game night.  Tabletop games are the most fun social storytelling we know and hopefully our work makes it even easier for you to have great adventures as well.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_playsets\image8.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image8.jpg)
 
 ----
 Upload date: 2013-11-03. Last modified: 2013-11-03. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
