@@ -85,7 +85,7 @@ class ArticleFiller {
             
             // Call article            
             const xhr = new XMLHttpRequest();
-            const url = '../src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleName + '.md';
+            const url = 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleName + '.md';
 
             xhr.responseType = 'text';
             xhr.onreadystatechange = () => {
@@ -192,7 +192,7 @@ class ChangeFeaturedArticles {
             var articleThumbnail = articleFiller.articleData[carouselList[c]]["thumbnail"];
             var articleTitle = articleFiller.articleData[carouselList[c]]["title"];
             var articleSummary = articleFiller.articleData[carouselList[c]]["summary"];
-            var url = '../src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleThumbnail;
+            var url = 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleThumbnail;
 
             // Change indicators
             var appendStr = '';
@@ -240,7 +240,7 @@ class ChangeFeaturedArticles {
             var articleTitle = articleFiller.articleData[displayList[d]]["title"];
             var articleSummary = articleFiller.articleData[displayList[d]]["summary"];
             var articleDate = articleFiller.articleData[displayList[d]]["date"];
-            var url = '../src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleThumbnail;
+            var url = 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleThumbnail;
 
             // Change indicators
             var appendStr = '';
