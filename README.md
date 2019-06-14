@@ -10,7 +10,7 @@ It is recommended that you use the web-version available at http://smalldevtalk.
 
 Chrome | Firefox | IE | Edge | Safari | Opera
 --- | --- | --- | --- | --- | --- |
-✔ |  ✔ | ✔ |  ✔ | ? |  ? |
+✔ |  ✔ | ✔ |  ? | ? |  ✔ |
 
 ## Installation/Open
 

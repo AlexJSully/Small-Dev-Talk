@@ -1,19 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <title>Small Dev Talk - Talk with the Developers of the Future</title>
+  <title id='pageTitle'>Small Dev Talk - Talk with the Developers of the Future</title>
   <meta name="description" content="Talk with the Developers of the Future" />
-  <link rel="shortcut icon" href="https://si0.twimg.com/profile_images/3393473724/e963a2d4f4d321261cc7f7a18f9d7b7b_normal.jpeg" />
-  <link rel="apple-touch-icon" href="https://si0.twimg.com/profile_images/3393473724/e963a2d4f4d321261cc7f7a18f9d7b7b_normal.jpeg" />
-  <link rel="alternate" type="application/rss+xml" href="http://smalldevtalk.net/rss" />
+  <link rel="shortcut icon" href="./src/images/logo.jpeg" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="https://dl.dropboxusercontent.com/s/k1u8f8pyefosn32/style.css" />
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="./src/style.min.css" />
+  <script src='./src/scripts/libraries/jquery/jquery.min.js'></script>
+  <link rel="stylesheet" href="./src/scripts/libraries/bootstrap/bootstrap.min.css">
+  <script src="./src/scripts/libraries/bootstrap/jquery-3.2.1.slim.min.js"></script>
+  <script src="./src/scripts/libraries/bootstrap/popper.min.js"></script>
+  <script src="./src/scripts/libraries/bootstrap/bootstrap.min.js"></script>
+  <script src='./src/scripts/libraries/showdown/showdown.min.js'></script>
+  <script defer src='./src/scripts/index.min.js'></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-38961857-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-38961857-4');
+  </script>
 </head>
 
 <body>
@@ -24,47 +33,38 @@
       <nav>
         <ul class="pages">
           <li>
-            <a href="http://smalldevtalk.tumblr.com">Home</a>
+            <a href="index.html">Home</a>
           </li>
           <li>
-            <a href="http://smalldevtalk.tumblr.com/games">Games</a>
+            <a href="index.html?pages&games">Games</a>
             <ul>
               <li>
-                <a href="http://smalldevtalk.tumblr.com/gameinterviews">Interviews</a>
+                <a href="index.html?pages&gameinterviews">Interviews</a>
               </li>
               <li>
-                <a href="http://smalldevtalk.tumblr.com/Reviews">Reviews</a>
+                <a href="index.html?pages&reviews">Reviews</a>
               </li>
               <li>
-                <a href="http://smalldevtalk.tumblr.com/SmallPlays">Small Plays</a>
+                <a href="index.html?pages&smallPlays">Small Plays</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="http://smalldevtalk.tumblr.com/movies">Movies</a>
+            <a href="index.html?pages&movies">Movies</a>
           </li>
           <li>
-            <a href="http://smalldevtalk.tumblr.com/comics">Comics & Books</a>
+            <a href="index.html?pages&comics">Comics & Books</a>
           </li>
           <li>
-            <a href="http://smalldevtalk.tumblr.com/technology">Technology & Design</a>
+            <a href="index.html?pages&electronics">Technology & Design</a>
           </li>
           <li>
-            <a href="http://smalldevtalk.tumblr.com/fashion">Fashion</a>
-          </li>
-          <li>
-            <a href="http://smalldevtalk.tumblr.com/aboutus">About us</a>
-          </li>
-          <li>
-            <a href="http://smalldevtalk.tumblr.com/archive">Archive</a>
-          </li>
-          <li class="rss">
-            <a href="http://smalldevtalk.tumblr.com/rss">RSS</a>
+            <a href="index.html?pages&fashion">Fashion</a>
           </li>
         </ul>
       </nav>
       <h1 style="margin-top: -30px;">
-        <a href="http://smalldevtalk.tumblr.com/">Small Dev Talk</a>
+        <a href="index.html">Small Dev Talk</a>
       </h1>
       <!-- END header -->
       <div id="body">
@@ -74,43 +74,12 @@
             <div class="foot">
               <!-- begin index -->
               <!-- begin featured -->
-              {block:IndexPage}
-              <div class="featured">
-                <h2 class="title">Featured Posts</h2>
+              <div id='featuredArticles' class="featured">
+                <h2 class="title">Featured Articles</h2>
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                  <ol class="carousel-indicators" id="carouselIndicator">
                   </ol>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <a href="http://smalldevtalk.net/post/142868698188/hearthstone-down-with-the-sickness">
-                        <img src="http://41.media.tumblr.com/bd40c17567cea1660f935da9762c0712/tumblr_inline_o5p7ytPXQY1rh4ugl_540.png" class="d-block w-100" alt="Hearthstone Opinion" style=" width:100%; height: 400px !important;">
-                        <div class="carousel-caption d-none d-md-block" style="text-shadow: 0 0 3px #000000;">
-                          <h5>Hearthstone: Down with the sickness?</h5>
-                          <p>Long-time Hearthstone player and SDT Writer Neil takes a look at the current meta-game in Hearthstone: Heroes of Warcraft.</p>
-                        </div>
-                      </a>
-                    </div>
-                    <div class="carousel-item">
-                      <a href="http://smalldevtalk.net/post/142764447318/early-access-phantasmal-city-of-darkness">
-                        <img src="http://36.media.tumblr.com/7728c4fb9cfaa4af597e474746225f18/tumblr_inline_o5ljq4ckDC1rh4ugl_500.png" class="d-block w-100" alt="Preview: Phantasmal City of Darkness" style=" width:100%; height: 400px !important;">
-                        <div class="carousel-caption d-none d-md-block" style="text-shadow: 0 0 3px #000000;">
-                          <h5>[EARLY ACCESS] Phantasmal: City of Darkness</h5>
-                          <p>Does the dark frighten you easily? If not, take a look at Small Dev Talk's early access to Phantasmal.</p>
-                        </div>
-                      </a>
-                    </div>
-                    <div class="carousel-item">
-                      <a href="http://smalldevtalk.net/post/75380449286/cents-interview">
-                        <img src="https://31.media.tumblr.com/ef96c1352b36dcdb26e5530165244b0d/tumblr_inline_n0dp5gGbkJ1rh4ugl.jpg" class="d-block w-100" alt="CENTS Interview" style=" width:100%; height: 400px !important;">
-                        <div class="carousel-caption d-none d-md-block" style="text-shadow: 0 0 3px #000000;">
-                          <h5>CENTS</h5>
-                          <p>Sammy uses her gift for mathematics and enlist her “frenemies” to revamp the school penny drive into a major moneymaking operations in CENTS, new upcoming movie by Christopher Boone.</p>
-                        </div>
-                      </a>
-                    </div>
+                  <div class="carousel-inner" id="carouselInner">
                   </div>
                   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -123,493 +92,51 @@
                 </div>
               </div>
               <!-- end featured -->
+              <!-- begin displaying articles -->
+              <div id='displayArticles'>
+              </div>
+              <!-- end displaying articles -->
               <!-- begin articles -->
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.net/post/142868698188/hearthstone-down-with-the-sickness">
-                    <img src="http://41.media.tumblr.com/bd40c17567cea1660f935da9762c0712/tumblr_inline_o5p7ytPXQY1rh4ugl_540.png" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.net/post/142868698188/hearthstone-down-with-the-sickness">Hearthstone: Down with the Sickness?</a>
-                  </h2>
-                  <p>Long-time Hearthstone player and SDT Writer Neil takes a look at the current meta-game in Hearthstone: Heroes of Warcraft.
-                    <a href="http://smalldevtalk.net/post/142868698188/hearthstone-down-with-the-sickness">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.net/post/142868698188/hearthstone-down-with-the-sickness">April 15, 2016</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.net/post/142764447318/early-access-phantasmal-city-of-darkness">
-                    <img src="http://36.media.tumblr.com/7728c4fb9cfaa4af597e474746225f18/tumblr_inline_o5ljq4ckDC1rh4ugl_500.png" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.net/post/142764447318/early-access-phantasmal-city-of-darkness">[EARLY ACCESS] Phantasmal: City of Darkness</a>
-                  </h2>
-                  <p>Does the dark frighten you easily? If not, take a look at Small Dev Talk's early access to Phantasmal.
-                    <a href="http://smalldevtalk.net/post/142764447318/early-access-phantasmal-city-of-darkness">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/75952479897/colorino-interview">April 13, 2016</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/75952479897/colorino-interview">
-                    <img src="https://31.media.tumblr.com/caf16f216a6ed5a89c5b0c2e52fdfc1e/tumblr_inline_n0nmbfan9T1rh4ugl.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/75952479897/colorino-interview">COLORINO Interview</a>
-                  </h2>
-                  <p>Challenge yourself with COLORNIO! A new puzzle game by Pete SkyKing and Alex Probst for your iOS and Andriod.
-                    <a href="http://smalldevtalk.tumblr.com/post/75952479897/colorino-interview">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/75952479897/colorino-interview">February 07, 2014</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/75497027836/hoyo-interview">
-                    <img src="https://31.media.tumblr.com/27435396e216a8bbe4931d2e4c7a44bb/tumblr_inline_n0fm07UNUc1rh4ugl.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/75497027836/hoyo-interview">HOYO Interview</a>
-                  </h2>
-                  <p>With HOYO, now I can watch YouTube while taking a bath, study while in the shower or read cooking tutorials cleanly while
-                    cooking!
-                    <a href="http://smalldevtalk.tumblr.com/post/75497027836/hoyo-interview">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/75497027836/hoyo-interview">February 03, 2014</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/75380449286/cents-interview">
-                    <img src="https://31.media.tumblr.com/ef96c1352b36dcdb26e5530165244b0d/tumblr_inline_n0dp5gGbkJ1rh4ugl.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/75380449286/cents-interview">CENTS</a>
-                  </h2>
-                  <p>Sammy uses her gift for mathematics and enlist her “frenemies” to revamp the school penny drive into a major moneymaking
-                    operations in CENTS, new upcoming movie by Christopher Boone.
-                    <a href="http://smalldevtalk.tumblr.com/post/75380449286/cents-interview">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/75380449286/cents-interview">February 2, 2014</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/74530465720/dclic-interview">
-                    <img src="https://31.media.tumblr.com/242ea8aff24f099ef7ed87e0e97f630f/tumblr_inline_mzz7luuWtH1rh4ugl.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/74530465720/dclic-interview">D’Clic Interview</a>
-                  </h2>
-                  <p>Fashion is always changing and coming up with new innovative methods to express meaning in a sense of clothing of accessories.
-                    A unique way to look at how this is done is by looking at D’clic. A new industrial urban accessories designed by Martial
-                    Yapo.
-                    <a href="http://smalldevtalk.tumblr.com/post/74530465720/dclic-interview">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/74530465720/dclic-interview">Janurary 25, 2014</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/66925453906/linked-pathways-interview">
-                    <img src="http://media.tumblr.com/dc2ad618c5113743b280637b6c10d43b/tumblr_inline_mw8cvwxkNA1rh4ugl.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/66925453906/linked-pathways-interview">Linked Pathways Interview</a>
-                  </h2>
-                  <p>Test out your dating skills in Linked Pathways, a new visual novel dating simulation game created by Esteban Gonzalez
-                    and his development team.
-                    <a href="http://smalldevtalk.tumblr.com/post/66925453906/linked-pathways-interview">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/66925453906/linked-pathways-interview">November 11, 2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/66434124554/champion-of-dema-interview">
-                    <img src="http://media.tumblr.com/545af3441ccb551e382d5d2e158d1172/tumblr_inline_mvza2joUcU1rh4ugl.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/66434124554/champion-of-dema-interview">Champion of Dema Interview</a>
-                  </h2>
-                  <p>Join along Kade in Hameed Catel’s new afrocentric graphic novel, Champion of Dema.
-                    <a href="http://smalldevtalk.tumblr.com/post/66434124554/champion-of-dema-interview">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/66434124554/champion-of-dema-interview">November 11, 2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/66156294606/shuttered-city-interview">
-                    <img src="http://media.tumblr.com/47c45e853c31fba84fdc0074817dcdb5/tumblr_inline_mvtot7bYf61rh4ugl.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/66156294606/shuttered-city-interview">Shuttered City Interview</a>
-                  </h2>
-                  <p>Join Leland on his adventure in Shuttered City.
-                    <a href="http://smalldevtalk.tumblr.com/post/66156294606/shuttered-city-interview">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/66156294606/shuttered-city-interview">November 5, 2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/65902798149/playsets">
-                    <img src="http://media.tumblr.com/dbf566aabf3b33aaedccbab350812f2e/tumblr_inline_mvp52wHfSa1rh4ugl.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/65902798149/playsets">playsets Interview</a>
-                  </h2>
-                  <p>Haven’t you ever just wanted to relax and play a tabletop RPG but you don’t own a tabletop board game. Well then check
-                    out playsets! It is a virtual tabletop game including many maps and characters. It brings enjoyment to all players
-                    with entertaining emoticons and status effects.
-                    <a href="http://smalldevtalk.tumblr.com/post/65902798149/playsets">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/65902798149/playsets">November 3, 2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/59331216011/bound">
-                    <img src="http://media.tumblr.com/1f2eef6740217b6147b48a0a9ac70b55/tumblr_inline_ms3sh9BuO71qz4rgp.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/59331216011/bound">Bound Interview</a>
-                  </h2>
-                  <p>Have you ever wanted to watch an entire movie made from Lego bricks? Check out Bound, a new dramactic adventure made
-                    entirely from Lego bricks! I recently got the chance to talk with Greg Tull from Monitogo Studios on their recently
-                    successful Kickstarter film, Bound.
-                    <a href="http://smalldevtalk.tumblr.com/post/59331216011/bound">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/59331216011/bound">August 25, 2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/59153156860/rick-future">
-                    <img src="http://media.tumblr.com/aa1bc1dbf447df23c789a64e8610d2d5/tumblr_inline_ms0fczgNME1qz4rgp.png" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/59153156860/rick-future">Rick Future Interview</a>
-                  </h2>
-                  <p>The future of point and click gameplay starts with Rick Future.
-                    <a href="http://smalldevtalk.tumblr.com/post/59153156860/rick-future">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/59153156860/rick-future">August 23, 2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/58982422001/after-reset">
-                    <img src="http://media.tumblr.com/acbd3508c755307dd03e29404586b8ae/tumblr_inline_mrx05itK8d1qz4rgp.png" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/58982422001/after-reset">After Reset Interview</a>
-                  </h2>
-                  <p>It has been 132 years since the Reset and now, it is your turn to explore this world. This is opportunity. This is After
-                    Reset.
-                    <a href="http://smalldevtalk.tumblr.com/post/58982422001/after-reset">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/58982422001/after-reset">August 22, 2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/58711300809/stone-rage">
-                    <img src="http://media.tumblr.com/4c250ad60cde1d5df762c7c1a367342a/tumblr_inline_mrshcpO16i1qz4rgp.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/58711300809/stone-rage">Stone Rage Interview</a>
-                  </h2>
-                  <p>FREE-TO-PLAY! Stone Rage is a Free-To-Play online third person multiplayer action game set within the Pleistocene and
-                    Eocene eras and it looks beautiful.
-                    <a href="http://smalldevtalk.tumblr.com/post/58711300809/stone-rage">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/58711300809/stone-rage">August 19, 2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/58635579248/salt-burn">
-                    <img src="http://media.tumblr.com/1560cd3c135e27a032c9daf190aed7d6/tumblr_inline_mrqw6chv3A1qz4rgp.jpg" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/58635579248/salt-burn">Salt & Burn Interview</a>
-                  </h2>
-                  <p>Gear yourself up to hunt some monsters in Salt & Burn. A new tabletop monster-hunter RPG board game by Unicorn Empire
-                    Prints.
-                    <a href="http://smalldevtalk.tumblr.com/post/58635579248/salt-burn">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="hhttp://smalldevtalk.tumblr.com/post/58635579248/salt-burn">August 18, 2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/58490055714/fluorovu">
-                    <img src="http://media.tumblr.com/e38180e8d8e7706c4ed92d4b1a410192/tumblr_inline_mrnw7xLiub1qz4rgp.png" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/58490055714/fluorovu">FluoroVu Interview</a>
-                  </h2>
-                  <p>Have you ever wanted your own UV camera to detect fluorescences on your phone? Well check out FluoroVu, crated by Eigen
-                    Imaging, a new portable and reliable physical addon to your smart phone that allows you to view and capture Ultraviolet-induced
-                    fluorescence images of certain objects and materials.
-                    <a href="http://smalldevtalk.tumblr.com/post/58490055714/fluorovu">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/58490055714/fluorovu">August 17,2013</a>
-                  </p>
-                </div>
-              </div>
-              <div class="post">
-                <div class="l">
-                  <a href="http://smalldevtalk.tumblr.com/post/58209128657/socially-awkward">
-                    <img src="http://media.tumblr.com/b4eb6738f584f5f03caacdfb657c4fb6/tumblr_inline_mri38uo6hT1qz4rgp.png" width="134" />
-                  </a>
-                </div>
-                <div class="r">
-                  <h2>
-                    <a href="http://smalldevtalk.tumblr.com/post/58209128657/socially-awkward">Socially Awkward Interview</a>
-                  </h2>
-                  <p>Am I just too Socially Awkward? Well, why don’t you check out Sam Maiden’s new art book of his collection of illustrations
-                    about anxiety, depression and rejection and how people cope with these problems.
-                    <a href="http://smalldevtalk.tumblr.com/post/58209128657/socially-awkward">Read More</a>
-                  </p>
-                  <p class="details">
-                    <a href="http://smalldevtalk.tumblr.com/post/58209128657/socially-awkward">August 13, 2013</a>
-                  </p>
-                </div>
+              <div id='articleBody' class='articleBody' hidden>
               </div>
               <!-- end articles -->
-              <div>
-                <div class="featured">
-                  <h2 class="title">Blog</h2>
-                  <div class="thumb">
-                    <div class="b">
-                      {/block:IndexPage}
-                      <!-- end Index -->
-                      <!-- begin post -->
-                      <ol id="posts">
-                        {block:Posts}
-                        <div class="post {block:Text}post-type-text{/block:Text}{block:Photo}post-type-photo{/block:Photo}{block:Photoset}post-type-photoset{/block:Photoset}{block:Quote}post-type-quote{/block:Quote}{block:Link}post-type-link{/block:Link}{block:Chat}post-type-chat{/block:Chat}{block:Video}post-type-video{/block:Video}{block:Audio}post-type-audio{/block:Audio}">
-                          <div class="post-meta">
-                            {block:Date}
-                            <div class="date">
-                              {Month} {DayOfMonthWithZero}, {Year}
-                            </div>
-                            <!-- .date -->
-                            {/block:Date}
-                          </div>
-                          <!-- .post-meta -->
-                          <div class="post-content">
-                            {block:Text} {block:Title}
-                            <h2>
-                              <a href="{Permalink}">{Title}</a>
-                            </h2>{/block:Title} {Body} {/block:Text} {block:Photo} {LinkOpenTag}
-                            <img src="{PhotoURL-500}" class="photo" alt="{PhotoAlt}" />{LinkCloseTag} {block:HighRes}
-                            <a href="{PhotoURL-HighRes}" class="high-res" target="_blank"></a>{/block:HighRes} {block:Caption}
-                            <div class="caption">{Caption}</div>{/block:Caption} {/block:Photo} {block:Photoset} {Photoset-500} {block:Caption}
-                            <div class="caption">{Caption}</div>{/block:Caption} {/block:Photoset} {block:Quote}
-                            <div class="quote-content">"{Quote}"</div>
-                            {block:Source}
-                            <p class="quote-source">&mdash; {Source}</p>{/block:Source} {/block:Quote} {block:Link}
-                            <div class="link-wrap">
-                              <a href="{URL}" {Target}>{Name}</a>
-                            </div>
-                            {block:Description}
-                            <div class="description">{Description}</div>{/block:Description} {/block:Link} {block:Chat} {block:Title}
-                            <h3>
-                              <a href="{Permalink}">{Title}</a>
-                            </h3>{/block:Title}
-                            <ul class="chat-wrap">
-                              {block:Lines}
-                              <li class="{Alt} user_{UserNumber}">
-                                {block:Label}
-                                <span class="label">{Label}</span>{/block:Label} {Line}
-                              </li>
-                              {/block:Lines}
-                            </ul>
-                            {/block:Chat} {block:Video}
-                            <div class="video-wrap">{Video-500}</div>
-                            {block:Caption}
-                            <div class="caption">{Caption}</div>{/block:Caption} {/block:Video} {block:Audio}
-                            <div class="audio-wrap">{AudioPlayerGrey}</div>
-                            {block:Caption}
-                            <div class="caption">{Caption}</div>{/block:Caption} {/block:Audio} {block:PostNotes} {PostNotes-16} {/block:PostNotes}
-                          </div>
-                        </div>
-                        <hr /> {/block:posts}
-                      </ol>
-                      <!-- end post -->
-                      {block:IndexPage}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/block:IndexPage}
             </div>
           </div>
         </div>
         <!-- END content -->
         <!-- BEGIN sidebar -->
         <div id="sidebar">
-          <!-- begin search -->
-          <div class="box">
-            <form class="section" id="tumblr" action="/search" method="get" id="search">
-              <input type="text" name="q" id="query" value="{SearchQuery}" />
-              <button type="submit">Search</button>
-            </form>
-          </div>
-          <!-- end search -->
           <!-- begin popular posts -->
           <div class="box">
             <h2>Top Articles</h2>
-            <ul>
               <p>
-                <a href="http://smalldevtalk.tumblr.com/post/46361526808/caravaneer-2">Caravaneer 2</a>
+                <a href="index.html?Caravaneer2">Caravaneer 2</a>
               </p>
-              <br />
               <p>
-                <a href="http://smalldevtalk.tumblr.com/post/65902798149/playsets">playsets</a>
+                <a href="index.html?Playsets">Playsets</a>
               </p>
-              <br />
               <p>
-                <a href="http://smalldevtalk.tumblr.com/post/47809932114/star-wars-battlecry">Star Wars Battlecry</a>
+                <a href="index.html?StarWarsBattlecry">Star Wars Battlecry</a>
               </p>
-              <br />
               <p>
-                <a href="http://smalldevtalk.tumblr.com/post/48724243407/oceania">Oceania</a>
+                <a href="index.html?Oceania">Oceania</a>
               </p>
-              <br />
               <p>
-                <a href="http://smalldevtalk.tumblr.com/post/48558476266/son-of-nor">Son of Nor</a>
+                <a href="index.html?SonOfNor">Son of Nor</a>
               </p>
-              <br />
-            </ul>
           </div>
           <!-- end popular posts -->
           <!-- begin twitter -->
           <div class="box">
             <h2>Twitter</h2>
-            <a class="twitter-timeline" href="https://twitter.com/SmallDevTalk" data-widget-id="321739945385529344">Tweets by @SmallDevTalk</a>
-            <script>
-              ! function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (!d.getElementById(id)) {
-                  js = d.createElement(s);
-                  js.id = id;
-                  js.src = "//platform.twitter.com/widgets.js";
-                  fjs.parentNode.insertBefore(js, fjs);
-                }
-              }(document, "script", "twitter-wjs");
-            </script>
+            <a class="twitter-timeline" data-height="1000" href="https://twitter.com/SmallDevTalk?ref_src=twsrc%5Etfw">Tweets by SmallDevTalk</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
           </div>
           <!-- end twitter -->
-          <!-- begin facebook -->
-          <div id="fb-root"></div>
-          <script>
-            (function (d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s);
-              js.id = id;
-              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-          </script>
-          <div class="fb-page" data-href="https://www.facebook.com/Small-Dev-Talk-549132841934533/" data-tabs="timeline" data-small-header="true"
-            data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
-          <!-- end facebook -->
         </div>
         <!-- END sidebar -->
         <div class="break"></div>
       </div>
     </div>
     <!-- END wrapper -->
-    <!-- BEGIN footer -->
-    <div id="footer">
-      <script type="text/javascript">
-        (function (i, s, o, g, r, a, m) {
-          i['GoogleAnalyticsObject'] = r;
-          i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-          }, i[r].l = 1 * new Date();
-          a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-          a.async = 1;
-          a.src = g;
-          m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-38961857-4', 'auto');
-        ga('send', 'pageview');
-      </script>
-    </div>
-    <!-- END footer -->
 
 </html>
