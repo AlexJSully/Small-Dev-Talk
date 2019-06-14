@@ -23,7 +23,7 @@ class ArticleFiller {
      */
     retrieveArticleData() {
         const xhr = new XMLHttpRequest();
-        const url = '../src/articleArchive/articleData.json';
+        const url = 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/articleData.json';
 
         xhr.responseType = 'json';
         xhr.onreadystatechange = () => {
@@ -135,7 +135,7 @@ class ChangeFeaturedArticles {
      */
     retrievePageData() {
         const xhr = new XMLHttpRequest();
-        const url = '../src/legacyPages/legacyPagesDisplay.json';
+        const url = 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/legacyPages/legacyPagesDisplay.json';
 
         xhr.responseType = 'json';
         xhr.onreadystatechange = () => {
