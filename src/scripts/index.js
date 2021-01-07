@@ -77,7 +77,7 @@ class ArticleFiller {
         if (articleFiller.articleData[articleName] != undefined) {
             // Change title:
             var articleTitle = articleFiller.articleData[articleName]["title"];
-            document.getElementById('pageTitle').innerHTML = 'Small Dev Talk: ' + articleTitle;
+            document.getElementById('pageTitle').innerText = 'Small Dev Talk: ' + articleTitle;
 
             // Create URL
             var authorFolder = 'author' + articleFiller.articleData[articleName]['author'].split(' ').join("");
@@ -178,7 +178,7 @@ class ChangeFeaturedArticles {
     changeCarousel() {
         // Change title:
         var docTitle = changeFeaturedArticles.whatPageDisplay[0].toUpperCase() + changeFeaturedArticles.whatPageDisplay.substr(1, changeFeaturedArticles.whatPageDisplay.length);
-        document.getElementById('pageTitle').innerHTML = 'Small Dev Talk: ' + docTitle;
+        document.getElementById('pageTitle').innerText = 'Small Dev Talk: ' + docTitle;
 
         let carouselList = changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay]['carousel'];
         // Reset carousel
@@ -211,7 +211,7 @@ class ChangeFeaturedArticles {
             };
             appendStr += '">';
             appendStr += '<a id="carouselLink' + c + '" href="index.html?' + carouselList[c] + '">';
-            appendStr += '<img id="carouselImage' + c + '"src="' + url + '" class="d-block w-100" style=" width:100%; height: 400px !important;">';
+            appendStr += '<img id="carouselImage' + c + '"src="' + url + '" class="d-block w-100" style="width:100%; height: 400px !important;" loading="lazy">';
             appendStr += '<div class="carousel-caption d-none d-md-block" style="text-shadow: 0 0 3px #000000;">';
             appendStr += '<h5 id="carouselHeader' + c + '">' + articleTitle + '</h5>';
             appendStr += '<p id="carouselParagraph' + c + '">' + articleSummary + '</p>';
@@ -247,7 +247,7 @@ class ChangeFeaturedArticles {
             appendStr += '<div class="post" id="featuredArticle' + d +'">';
             appendStr += '<div class="l">';
             appendStr += '<a href="index.html?' + displayList[d] + '">';
-            appendStr += '<img src="' + url + '" width="134" />';
+            appendStr += '<img src="' + url + '" width="134" loading="lazy" />';
             appendStr += '</a>';
             appendStr += '</div>';
             appendStr += '<div class="r">';

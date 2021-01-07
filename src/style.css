@@ -150,15 +150,6 @@ img {
 	clear: both;
 }
 
-#header h1 a {
-	display: block;
-	outline: none;
-	text-indent: -9999px;
-	background: url(images/title3.gif) no-repeat 0 0;
-	width: 344px;
-	height: 53px;
-}
-
 #header .ad {
 	float: right;
 	padding-top: 30px;
