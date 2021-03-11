@@ -4,11 +4,11 @@ Small Dev Talk is an independent news source that covers all things from the ind
 
 ## Getting Started
 
-It is recommended that you use the web-version of Small Dev Talk available at [https://asully.github.io/Small-Dev-Talk/](https://asully.github.io/Small-Dev-Talk/) which is an archived version of the original site that is being hosted on [Tumblr](https://smalldevtalk.tumblr.com/). This does require an internet connection to load. 
+It is recommended that you use the web-version of Small Dev Talk available at [https://smalldevtalk.net/](https://smalldevtalk.net/) which is an archived version of the original site that is being hosted on [Tumblr](https://smalldevtalk.tumblr.com/). This does require an internet connection to load. 
 
 If you would like to run this offline, you can download the Github and remove all of 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/' from index.js & index.min.js and it would load offline as well. 
 
-To visit specific articles, just change the directory to end with '?' + article name (list of article names can be found in [articleData.json](src\articleArchive\articleData.json)). For example, if you would like to read the Playsets' interview, just change the directory to [https://asully.github.io/Small-Dev-Talk/index.html?Playsets](https://asully.github.io/Small-Dev-Talk/index.html?Playsets).
+To visit specific articles, just change the directory to end with '?' + article name (list of article names can be found in [articleData.json](src\articleArchive\articleData.json)). For example, if you would like to read the Playsets' interview, just change the directory to [https://smalldevtalk.net/index.html?Playsets](https://smalldevtalk.net/index.html?Playsets).
 
 ## Browser Compatibilities 
 
