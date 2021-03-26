@@ -247,7 +247,7 @@ class ChangeFeaturedArticles {
             appendStr += '<div class="post" id="featuredArticle' + d +'">';
             appendStr += '<div class="l">';
             appendStr += '<a href="index.html?' + displayList[d] + '">';
-            appendStr += '<img src="' + url + '" width="134" loading="lazy" />';
+            appendStr += '<img src="' + url + '" width="134" loading="lazy">';
             appendStr += '</a>';
             appendStr += '</div>';
             appendStr += '<div class="r">';

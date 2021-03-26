@@ -29,4 +29,4 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 * Alexander Sullivan - [GitHub](https://github.com/ASully), [Twitter](https://twitter.com/alexjsully), [LinkedIn](https://www.linkedin.com/in/alexanderjsullivan/)
 * Neil Rampone - [Twitter](https://twitter.com/BaphometGMG)
-* Jeffery Cen - [GitHub](https://github.com/JCatt)
+* Jeffery Cen - [GitHub](https://github.com/JCatt), [Website](https://www.jefferycen.com)
