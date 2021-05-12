@@ -168,7 +168,62 @@ class ChangeFeaturedArticles {
             changeFeaturedArticles.callPageDisplay = false;
         } else {
             changeFeaturedArticles.callPageDisplay = true;
-            changeFeaturedArticles.changeCarousel();
+
+            if (changeFeaturedArticles.whatPageDisplay === 'archive') {
+                changeFeaturedArticles.displayArchive();
+            } else {
+                changeFeaturedArticles.changeCarousel();
+            };
+        };
+    };
+
+    /**
+     * Display archive of articles
+     */
+    displayArchive() {
+        // Reset page
+        document.getElementById('featuredArticles').setAttribute('hidden', true);
+        document.getElementById('articleBody').removeAttribute('hidden');
+
+        /** String form of the articles to display */
+        let archiveDisplay = '';
+        /** All article's data */
+        let articleData = articleFiller.articleData;
+
+        for (const [key, value] of Object.entries(articleData)) {
+            if (value['title'] && value['author'] && value['date'] && value['thumbnail']) {
+                // Create bootstrap container
+                if (archiveDisplay.trim().length < 1) {
+                    archiveDisplay += '<div class="container-fluid">';
+                    archiveDisplay += '<div class="row">';
+                };
+
+                // Bootstrap column
+                archiveDisplay += '<div class="col-sm archive-display">';
+
+                // Link to article
+                archiveDisplay += `<a class="archive-link" href="${document.location.origin}/index.html?${key}">`;
+
+                // article title
+                archiveDisplay += `<p class="archive-title">${value['title']}</p>`
+
+                /** Article's thumbnail URL */
+                let imgURL = `src/articleArchive/author${value['author'].split(' ').join('')}/${value['date']}_${key}/${value['thumbnail']}`;
+                // Article's thumbnail
+                archiveDisplay += `<img src=${imgURL}>`;
+
+                // Close HTML tags
+                archiveDisplay += '</a>';
+                archiveDisplay += '</div>';
+            };
+        };
+
+        // If things to add, add it
+        if (archiveDisplay.trim().length > 0) {
+            archiveDisplay += '</div>';
+            archiveDisplay += '</div>';
+
+            document.getElementById('displayArticles').innerHTML += archiveDisplay;
         };
     };
 
@@ -180,45 +235,47 @@ class ChangeFeaturedArticles {
         var docTitle = changeFeaturedArticles.whatPageDisplay[0].toUpperCase() + changeFeaturedArticles.whatPageDisplay.substr(1, changeFeaturedArticles.whatPageDisplay.length);
         document.getElementById('pageTitle').innerText = 'Small Dev Talk: ' + docTitle;
 
-        let carouselList = changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay]['carousel'];
-        // Reset carousel
-        document.getElementById('carouselIndicator').innerHTML = '';
-        document.getElementById('carouselInner').innerHTML = '';
-        // Fill carousel
-        for (var c = 0; c < carouselList.length; c++) {
-            // Create URL 
-            var authorFolder = 'author' + articleFiller.articleData[carouselList[c]]['author'].split(' ').join("");
-            var articleFolder = articleFiller.articleData[carouselList[c]]['date'] + '_' + carouselList[c];
-            var articleThumbnail = articleFiller.articleData[carouselList[c]]["thumbnail"];
-            var articleTitle = articleFiller.articleData[carouselList[c]]["title"];
-            var articleSummary = articleFiller.articleData[carouselList[c]]["summary"];
-            var url = 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleThumbnail;
+        if (changeFeaturedArticles && changeFeaturedArticles.pageData && changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay] &&  changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay]['carousel']) {
+            let carouselList = changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay]['carousel'];
+            // Reset carousel
+            document.getElementById('carouselIndicator').innerHTML = '';
+            document.getElementById('carouselInner').innerHTML = '';
+            // Fill carousel
+            for (var c = 0; c < carouselList.length; c++) {
+                // Create URL 
+                var authorFolder = 'author' + articleFiller.articleData[carouselList[c]]['author'].split(' ').join("");
+                var articleFolder = articleFiller.articleData[carouselList[c]]['date'] + '_' + carouselList[c];
+                var articleThumbnail = articleFiller.articleData[carouselList[c]]["thumbnail"];
+                var articleTitle = articleFiller.articleData[carouselList[c]]["title"];
+                var articleSummary = articleFiller.articleData[carouselList[c]]["summary"];
+                var url = 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleThumbnail;
 
-            // Change indicators
-            var appendStr = '';
-            appendStr += '<li data-target="#carouselExampleIndicators" data-slide-to="' + c + '"';
-            if (c === 0) {
-                appendStr += ' class="active"';
-            };
-            appendStr += '></li>';
-            document.getElementById('carouselIndicator').innerHTML += appendStr;
+                // Change indicators
+                var appendStr = '';
+                appendStr += '<li data-target="#carouselExampleIndicators" data-slide-to="' + c + '"';
+                if (c === 0) {
+                    appendStr += ' class="active"';
+                };
+                appendStr += '></li>';
+                document.getElementById('carouselIndicator').innerHTML += appendStr;
 
-            // Change content
-            appendStr = '';
-            appendStr += '<div class="carousel-item'; 
-            if (c === 0) {
-                appendStr += ' active';
+                // Change content
+                appendStr = '';
+                appendStr += '<div class="carousel-item'; 
+                if (c === 0) {
+                    appendStr += ' active';
+                };
+                appendStr += '">';
+                appendStr += '<a id="carouselLink' + c + '" href="index.html?' + carouselList[c] + '">';
+                appendStr += '<img id="carouselImage' + c + '"src="' + url + '" class="d-block w-100" style="width:100%; height: 400px !important;" loading="lazy">';
+                appendStr += '<div class="carousel-caption d-none d-md-block" style="text-shadow: 0 0 3px #000000;">';
+                appendStr += '<h5 id="carouselHeader' + c + '">' + articleTitle + '</h5>';
+                appendStr += '<p id="carouselParagraph' + c + '">' + articleSummary + '</p>';
+                appendStr += '</div>';
+                appendStr += '</a>';
+                appendStr += '</div>';
+                document.getElementById('carouselInner').innerHTML += appendStr;
             };
-            appendStr += '">';
-            appendStr += '<a id="carouselLink' + c + '" href="index.html?' + carouselList[c] + '">';
-            appendStr += '<img id="carouselImage' + c + '"src="' + url + '" class="d-block w-100" style="width:100%; height: 400px !important;" loading="lazy">';
-            appendStr += '<div class="carousel-caption d-none d-md-block" style="text-shadow: 0 0 3px #000000;">';
-            appendStr += '<h5 id="carouselHeader' + c + '">' + articleTitle + '</h5>';
-            appendStr += '<p id="carouselParagraph' + c + '">' + articleSummary + '</p>';
-            appendStr += '</div>';
-            appendStr += '</a>';
-            appendStr += '</div>';
-            document.getElementById('carouselInner').innerHTML += appendStr;
         };
 
         changeFeaturedArticles.changeFeaturedArticles();
@@ -228,40 +285,42 @@ class ChangeFeaturedArticles {
      * Change list of featured articles
      */
     changeFeaturedArticles() {
-        let displayList = changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay]['displayArticles'];
-        // Reset featured articles
-        document.getElementById('displayArticles').innerHTML = '';
-        // Fill featured articles
-        for (var d = 0; d < displayList.length; d++) {
-            // Create URL 
-            var authorFolder = 'author' + articleFiller.articleData[displayList[d]]['author'].split(' ').join("");
-            var articleFolder = articleFiller.articleData[displayList[d]]['date'] + '_' + displayList[d];
-            var articleThumbnail = articleFiller.articleData[displayList[d]]["thumbnail"];
-            var articleTitle = articleFiller.articleData[displayList[d]]["title"];
-            var articleSummary = articleFiller.articleData[displayList[d]]["summary"];
-            var articleDate = articleFiller.articleData[displayList[d]]["date"];
-            var url = 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleThumbnail;
-
-            // Change indicators
-            var appendStr = '';
-            appendStr += '<div class="post" id="featuredArticle' + d +'">';
-            appendStr += '<div class="l">';
-            appendStr += '<a href="index.html?' + displayList[d] + '">';
-            appendStr += '<img src="' + url + '" width="134" loading="lazy">';
-            appendStr += '</a>';
-            appendStr += '</div>';
-            appendStr += '<div class="r">';
-            appendStr += '<h2>';
-            appendStr += '<a href="index.html?' + displayList[d] + '">' + articleTitle + '</a>';
-            appendStr += '</h2>';
-            appendStr += '<p>' + articleSummary;
-            appendStr += '<a href="index.html?' + displayList[d] + '"> Read More</a>';
-            appendStr += '</p>';
-            appendStr += '<p class="details"><a href="index.html?' + displayList[d] + '">' + articleDate + '</a></p>';
-            appendStr += '</div>';
-            appendStr += '</div>';
-
-            document.getElementById('displayArticles').innerHTML += appendStr;
+        if (changeFeaturedArticles && changeFeaturedArticles.pageData && changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay] &&  changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay]['displayArticles']) {
+            let displayList = changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay]['displayArticles'];
+            // Reset featured articles
+            document.getElementById('displayArticles').innerHTML = '';
+            // Fill featured articles
+            for (let d in displayList) {
+                // Create URL 
+                var authorFolder = 'author' + articleFiller.articleData[displayList[d]]['author'].split(' ').join("");
+                var articleFolder = articleFiller.articleData[displayList[d]]['date'] + '_' + displayList[d];
+                var articleThumbnail = articleFiller.articleData[displayList[d]]["thumbnail"];
+                var articleTitle = articleFiller.articleData[displayList[d]]["title"];
+                var articleSummary = articleFiller.articleData[displayList[d]]["summary"];
+                var articleDate = articleFiller.articleData[displayList[d]]["date"];
+                var url = 'https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/' + authorFolder + '/' + articleFolder + '/' + articleThumbnail;
+    
+                // Change indicators
+                var appendStr = '';
+                appendStr += '<div class="post" id="featuredArticle' + d +'">';
+                appendStr += '<div class="l">';
+                appendStr += '<a href="index.html?' + displayList[d] + '">';
+                appendStr += '<img src="' + url + '" width="134" loading="lazy">';
+                appendStr += '</a>';
+                appendStr += '</div>';
+                appendStr += '<div class="r">';
+                appendStr += '<h2>';
+                appendStr += '<a href="index.html?' + displayList[d] + '">' + articleTitle + '</a>';
+                appendStr += '</h2>';
+                appendStr += '<p>' + articleSummary;
+                appendStr += '<a href="index.html?' + displayList[d] + '"> Read More</a>';
+                appendStr += '</p>';
+                appendStr += '<p class="details"><a href="index.html?' + displayList[d] + '">' + articleDate + '</a></p>';
+                appendStr += '</div>';
+                appendStr += '</div>';
+    
+                document.getElementById('displayArticles').innerHTML += appendStr;
+            };
         };
     };
 };

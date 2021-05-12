@@ -127,5 +127,8 @@
         "displayArticles": [
             "DClic"
         ]
+    },
+    "archive": {
+        "displayAll": true
     }
 }

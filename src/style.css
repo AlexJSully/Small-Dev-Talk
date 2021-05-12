@@ -441,6 +441,33 @@ img {
 
 /** END content **/
 
+/** BEGIN archive **/
+
+.archive-title {
+	text-align: center;
+	color: #000000;
+	text-decoration: none;
+}
+
+.archive-link {
+	text-decoration: none;
+}
+
+.archive-display {
+	border: 1px solid rgba(0, 0, 0, 0.342);
+	max-width: 30% !important;
+	min-width: 200px;
+	margin: auto;
+	margin-bottom: 2%;
+}
+
+.archive-display img {
+	width: 100%;
+	margin: auto;
+}
+
+/** END archive **/
+
 /** BEGIN sidebar **/
 
 #sidebar {
