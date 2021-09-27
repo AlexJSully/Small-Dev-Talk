@@ -27,6 +27,6 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 ## Authors
 
-* Alexander Sullivan - [GitHub](https://github.com/ASully), [Twitter](https://twitter.com/alexjsully), [LinkedIn](https://www.linkedin.com/in/alexanderjsullivan/)
+* Alexander Sullivan - [GitHub](https://github.com/ASully), [Twitter](https://twitter.com/alexjsully), [LinkedIn](https://www.linkedin.com/in/alexanderjsullivan/), [Website](https://alexjsully.me/)
 * Neil Rampone - [Twitter](https://twitter.com/BaphometGMG)
 * Jeffery Cen - [GitHub](https://github.com/JCatt), [Website](https://www.jefferycen.com)
