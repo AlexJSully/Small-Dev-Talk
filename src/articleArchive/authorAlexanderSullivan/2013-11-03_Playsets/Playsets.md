@@ -1,6 +1,6 @@
 ## playsets
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-03_Playsets\image1.webp)
 
 Haven’t you ever just wanted to relax and play a tabletop RPG but you don’t own a tabletop board game. Well then check out playsets! It is a virtual tabletop game including many maps and characters. It brings enjoyment to all players with entertaining emoticons and status effects. Recently I got the chance to talk with the playsets team and you can find more below or you can check out more on their [Kickstarter](https://www.kickstarter.com/projects/985647565/playsets-the-future-of-social-storytelling) or on their [Facebook page](https://www.facebook.com/playsetsapp).
 

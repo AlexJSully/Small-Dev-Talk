@@ -1,6 +1,6 @@
 ## Linked Pathways Interview
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-13_LinkedPathways\image1.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-13_LinkedPathways\image1.webp)
 
 Test out your dating skills in Linked Pathways, a new visual novel dating simulation game created by Esteban Gonzalez and his development team. To support them and find out more, check out their [Kickstarter](https://www.kickstarter.com/projects/372912899/linked-pathways).
 

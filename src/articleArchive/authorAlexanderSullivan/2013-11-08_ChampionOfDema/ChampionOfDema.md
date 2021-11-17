@@ -1,6 +1,6 @@
 ## Champion of Dema Interview
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image1.webp)
 
 Join along Kade in Hameed Catel’s new afrocentric graphic novel, Champion of Dema. Recently, I got the chance to talk with Hameed Catel from Kiru Comics on his new graphic novel, Champion of Dema. You can support him on [Kickstarter](https://www.kickstarter.com/projects/1088749339/champion-of-dema) and find out more on his [website](https://ronucreative.com/).
 

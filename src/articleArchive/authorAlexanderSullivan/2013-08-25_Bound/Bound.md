@@ -1,6 +1,6 @@
 ## Bound
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-25_Bound\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-25_Bound\image1.webp)
 
 Have you ever wanted to watch an entire movie made from Lego bricks? Check out Bound, a new dramactic adventure made entirely from Lego bricks! I recently got the chance to talk with Greg Tull from Monitogo Studios on their recently successful Kickstarter film, Bound. You can find more on their [website](http://www.monitogostudios.com/bound/).
 

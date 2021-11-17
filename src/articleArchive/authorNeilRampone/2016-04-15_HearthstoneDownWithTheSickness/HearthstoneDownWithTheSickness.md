@@ -8,7 +8,7 @@ Since his release a few months back, Reno Jackson has quite literally become the
 
 However, before I get further into my rant, let’s take a look at Hearthstone’s humble beginnings, and an overview of where we are now. 
 
-![image2](src\articleArchive\authorNeilRampone\2016-04-15_HearthstoneDownWithTheSickness\image2.jpg)
+![image2](src\articleArchive\authorNeilRampone\2016-04-15_HearthstoneDownWithTheSickness\image2.webp)
 
 Since its launch in March of 2014, Hearthstone has amassed more than 40 million registered accounts. The game release itself, as well as all of its expansions, have been well-received, none seeming to score any less than a 75% on any game review website. It quite quickly became known as a fun and entertaining free-to-play card game that involves strategy, but is still fairly simplistic. 
 

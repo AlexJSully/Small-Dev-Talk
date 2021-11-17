@@ -20,7 +20,7 @@ My first enounter with some baddies went alright, I suppose. Zombie-like in natu
 
 My second run through was a slightly speedier process. I got attacked by a haunted garbage can while trying to loot a hidden crate (I’m hoping this was a glitch, but it was hilarious either way) and at one point I stumbled across probably the creepiest room in the game, which I dubbed the “Teddy Bear Room”. Filled with dis-membered stuffed bears, complete with a nasty-looking knife sticking out of the counter-top (which I could not pick up, sadface), it gave me a very… escaped asylum patient vibe. Just plain weird.
 
-![image2](src\articleArchive\authorNeilRampone\2016-04-13_EarlyAccessPhantasmal\image3.jpg)
+![image2](src\articleArchive\authorNeilRampone\2016-04-13_EarlyAccessPhantasmal\image3.webp)
 
 One thing that was refreshing about Phantasmal is the fact that the environment is about 95% interactive. It adds an interesting element to the game, because a lot of objects laying around make fairly loud noises and it makes it difficult to sneak around in certain situations (ie. Breaking empty bottles of alcohol by stepping on them is definitely loud enough to grab an enemies attention – But is that necessarily a bad thing?). One downside of the interactive environment is that I’ve found in tight spaces, you have a chance of getting stuck on certain objects, the main offender being empty cardboard boxes. However, that aside, being able to interact thoroughly with your environment and use it to your (possible) advantage is an interesting alley to explore, and certainly opens up lots of possibilities. 
 
