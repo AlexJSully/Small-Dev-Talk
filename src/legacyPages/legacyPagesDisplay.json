@@ -1,134 +1,82 @@
 {
-    "index": {
-        "carousel": [
-            "HearthstoneDownWithTheSickness", 
-            "EarlyAccessPhantasmal", 
-            "CENTS"
-        ],
-        "displayArticles": [
-            "HearthstoneDownWithTheSickness",
-            "EarlyAccessPhantasmal",
-            "COLORINO",
-            "HOYO",
-            "CENTS",
-            "LinkedPathways",
-            "ChampionOfDema",
-            "ShutteredCity",
-            "Playsets",
-            "Bound"
-        ]
-    },
-    "games": {
-        "carousel": [
-            "MotteIsland", 
-            "TacticalInterventionReview", 
-            "LumberIsland"
-        ],
-        "displayArticles": [
-            "COLORINO",
-            "LinkedPathways",
-            "Playsets",
-            "RickFuture",
-            "AfterReset",
-            "StoneRage",
-            "SaltBurn",
-            "AdventureTidesOnline",
-            "QuickSlickDeadly",
-            "SNOW"
-        ]
-    },
-    "gameinterviews": {
-        "carousel": [
-            "MotteIsland", 
-            "Playsets", 
-            "Ghostship"
-        ],
-        "displayArticles": [
-            "COLORINO",
-            "LinkedPathways",
-            "Playsets",
-            "RickFuture",
-            "AfterReset",
-            "StoneRage",
-            "SaltBurn",
-            "AdventureTidesOnline",
-            "QuickSlickDeadly",
-            "SNOW"
-        ]
-    },
-    "reviews": {
-        "carousel": [
-            "CubeMetalHeart2",
-            "TacticalInterventionReview",
-            "OneLifeLeft"
-        ],
-        "displayArticles": [
-            "CubeMetalHeart2",
-            "TacticalInterventionReview",
-            "OneLifeLeft"
-        ]
-    },
-    "smallPlays": {
-        "carousel": [
-            "LumberIsland",
-            "1916"
-        ],
-        "displayArticles": [
-            "LumberIsland",
-            "1916"
-        ]
-    },
-    "movies": {
-        "carousel": [
-            "CENTS",
-            "ThisIsNormal",
-            "Vessel"
-        ],
-        "displayArticles": [
-            "CENTS",
-            "Bound",
-            "Aurora",
-            "ThisIsNormal",
-            "Vessel"
-        ]
-    },
-    "comics": {
-        "carousel": [
-            "JackieRose",
-            "ChampionOfDema",
-            "ShutteredCity"
-        ],
-        "displayArticles": [
-            "ChampionOfDema",
-            "ShutteredCity",
-            "SociallyAwkward",
-            "JackieRose",
-            "BeyondInfinity",
-            "Outworld",
-            "YukiVsPanda"
-        ]
-    },
-    "electronics": {
-        "carousel": [
-            "Wave",
-            "FluoroVu",
-            "HOYO"
-        ],
-        "displayArticles": [
-            "HOYO",
-            "FluoroVu",
-            "Wave"
-        ]
-    },
-    "fashion": {
-        "carousel": [
-            "DClic"
-        ],
-        "displayArticles": [
-            "DClic"
-        ]
-    },
-    "archive": {
-        "displayAll": true
-    }
+	"index": {
+		"carousel": ["HearthstoneDownWithTheSickness", "EarlyAccessPhantasmal", "CENTS"],
+		"displayArticles": [
+			"HearthstoneDownWithTheSickness",
+			"EarlyAccessPhantasmal",
+			"COLORINO",
+			"HOYO",
+			"CENTS",
+			"LinkedPathways",
+			"ChampionOfDema",
+			"ShutteredCity",
+			"Playsets",
+			"Bound"
+		]
+	},
+	"games": {
+		"carousel": ["MotteIsland", "TacticalInterventionReview", "LumberIsland"],
+		"displayArticles": [
+			"COLORINO",
+			"LinkedPathways",
+			"Playsets",
+			"RickFuture",
+			"AfterReset",
+			"StoneRage",
+			"SaltBurn",
+			"AdventureTidesOnline",
+			"QuickSlickDeadly",
+			"SNOW"
+		]
+	},
+	"gameinterviews": {
+		"carousel": ["MotteIsland", "Playsets", "Ghostship"],
+		"displayArticles": [
+			"COLORINO",
+			"LinkedPathways",
+			"Playsets",
+			"RickFuture",
+			"AfterReset",
+			"StoneRage",
+			"SaltBurn",
+			"AdventureTidesOnline",
+			"QuickSlickDeadly",
+			"SNOW"
+		]
+	},
+	"reviews": {
+		"carousel": ["CubeMetalHeart2", "TacticalInterventionReview", "OneLifeLeft"],
+		"displayArticles": ["CubeMetalHeart2", "TacticalInterventionReview", "OneLifeLeft"]
+	},
+	"smallPlays": {
+		"carousel": ["LumberIsland", "1916"],
+		"displayArticles": ["LumberIsland", "1916"]
+	},
+	"movies": {
+		"carousel": ["CENTS", "ThisIsNormal", "Vessel"],
+		"displayArticles": ["CENTS", "Bound", "Aurora", "ThisIsNormal", "Vessel"]
+	},
+	"comics": {
+		"carousel": ["JackieRose", "ChampionOfDema", "ShutteredCity"],
+		"displayArticles": [
+			"ChampionOfDema",
+			"ShutteredCity",
+			"SociallyAwkward",
+			"JackieRose",
+			"BeyondInfinity",
+			"Outworld",
+			"YukiVsPanda"
+		]
+	},
+	"electronics": {
+		"carousel": ["Wave", "FluoroVu", "HOYO"],
+		"displayArticles": ["HOYO", "FluoroVu", "Wave"]
+	},
+	"fashion": {
+		"carousel": ["DClic"],
+		"displayArticles": ["DClic"]
+	},
+	"archive": {
+		"displayAll": true
+	}
 }

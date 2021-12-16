@@ -1,506 +1,506 @@
 {
-    "HearthstoneDownWithTheSickness": {
-        "author": "Neil Rampone",
-        "date": "2016-04-15",
-        "summary": "Long-time Hearthstone player and SDT Writer Neil takes a look at the current meta-game in Hearthstone: Heroes of Warcraft",
-        "thumbnail": "image2.webp",
-        "title": "Hearthstone: Down with the Sickness"
-    },
-    "EarlyAccessPhantasmal": {
-        "author": "Neil Rampone",
-        "date": "2016-04-13",
-        "summary": "Does the dark frighten you easily? If not, take a look at Small Dev Talk's early access to Phantasmal.",
-        "thumbnail": "image3.webp",
-        "title": "[Early Access] Phantasmal: City of Darkness"
-    },
-    "MotteIsland": {
-        "author": "Alexander Sullivan",
-        "date": "2013-07-16",
-        "summary": "Can you survive Motte Island? Check out the most creative interview you will ever have seen exclusively on Small Dev Talk where we got the chance to talk with One Aperture on their latest game, Motte Island.",
-        "thumbnail": "image1.jpg",
-        "title": "Motte Island"
-    },
-    "TacticalInterventionReview": {
-        "author": "Neil Rampone",
-        "date": "2013-05-01",
-        "summary": "We did an interview and now we do the review. Check out our opinion on FIX Korea’s and OGPlanet’s game, Tactical Interview.",
-        "thumbnail": "image1.jpg",
-        "title": "Tactical Intervention Review"
-    },
-    "TacticalIntervention": {
-        "author": "Neil Rampone",
-        "date": "2013-04-20",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Tactical Intervention"    
-    },
-    "LumberIsland": {
-        "author": "Jeff Cen",
-        "date": "2013-05-04",
-        "summary": "Check out Small Dev Talks first Small play! Featuring Jeff Cen as the player and the brand new indie game Lumber Island created by Dean Forge!",
-        "thumbnail": "image1.jpg",
-        "title": "Small Plays - Lumber Island"
-    },
-    "COLORINO": {
-        "author": "Alexander Sullivan",
-        "date": "2014-02-07",
-        "summary": "Challenge yourself with COLORNIO! A new puzzle game by Pete SkyKing and Alex Probst for your iOS and Andriod.",
-        "thumbnail": "image1.jpg",
-        "title": "COLORINO Interview"
-    },
-    "CENTS": {
-        "author": "Alexander Sullivan",
-        "date": "2014-02-02",
-        "summary": "Sammy uses her gift for mathematics and enlist her “frenemies” to revamp the school penny drive into a major moneymaking operations in CENTS, new upcoming movie by Christopher Boone.",
-        "thumbnail": "image1.jpg",
-        "title": "CENTS Interview"
-    },
-    "Caravaneer2": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-26",
-        "summary": "",
-        "thumbnail": "",
-        "title": "Caravaneer 2"
-    },
-    "Playsets": {
-        "author": "Alexander Sullivan",
-        "date": "2013-11-03",
-        "summary": "Haven’t you ever just wanted to relax and play a tabletop RPG but you don’t own a tabletop board game. Well then check out playsets! It is a virtual tabletop game including many maps and characters. It brings enjoyment to all players with entertaining emoticons and status effects.",
-        "thumbnail": "image1.webp",
-        "title": "playsets"
-    },
-    "StarWarsBattlecry": {
-        "author": "Neil Rampone",
-        "date": "2013-03-12",
-        "summary": "",
-        "thumbnail": "",
-        "title": "Star Wars Battlecry"
-    },
-    "Oceania": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-23",
-        "summary": "",
-        "thumbnail": "",
-        "title": "Oceania"
-    },
-    "SonOfNor": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-21",
-        "summary": "",
-        "thumbnail": "",
-        "title": "Son of Nor"
-    },
-    "HOYO": {
-        "author": "Alexander Sullivan",
-        "date": "2014-02-03",
-        "summary": "With HOYO, now I can watch YouTube while taking a bath, study while in the shower or read cooking tutorials cleanly while cooking!",
-        "thumbnail": "image1.webp",
-        "title": "HOYO Interview"
-    },
-    "DClic": {
-        "author": "Alexander Sullivan",
-        "date": "2014-01-25",
-        "summary": "Fashion is always changing and coming up with new innovative methods to express meaning in a sense of clothing of accessories. A unique way to look at how this is done is by looking at D’clic. A new industrial urban accessories designed by Martial Yapo.",
-        "thumbnail": "image1.jpg",
-        "title": "D'Clic Interview"
-    },
-    "LinkedPathways": {
-        "author": "Alexander Sullivan",
-        "date": "2013-11-13",
-        "summary": "Test out your dating skills in Linked Pathways, a new visual novel dating simulation game created by Esteban Gonzalez and his development team.",
-        "thumbnail": "image1.webp",
-        "title": "Linked Pathways Interview"
-    },
-    "ChampionOfDema": {
-        "author": "Alexander Sullivan",
-        "date": "2013-11-08",
-        "summary": "Join along Kade in Hameed Catel’s new afrocentric graphic novel, Champion of Dema.",
-        "thumbnail": "image1.webp",
-        "title": "Champion of Dema Interview"
-    },
-    "ShutteredCity": {
-        "author": "Alexander Sullivan",
-        "date": "2013-11-05",
-        "summary": "Join Leland on his adventure in Shuttered City.",
-        "thumbnail": "image1.jpg",
-        "title": "Shuttered City Interview"
-    },
-    "Bound": {
-        "author": "Alexander Sullivan",
-        "date": "2013-08-25",
-        "summary": "Have you ever wanted to watch an entire movie made from Lego bricks? Check out Bound, a new dramactic adventure made entirely from Lego bricks! I recently got the chance to talk with Greg Tull from Monitogo Studios on their recently successful Kickstarter film, Bound.",
-        "thumbnail": "image1.webp",
-        "title": "Bound Interview"
-    },
-    "RickFuture": {
-        "author": "Alexander Sullivan",
-        "date": "2013-08-23",
-        "summary": "The future of point and click gameplay starts with Rick Future.",
-        "thumbnail": "image1.png",
-        "title": "Rick Future"
-    },
-    "AfterReset": {
-        "author": "Alexander Sullivan",
-        "date": "2013-08-22",
-        "summary": "It has been 132 years since the Reset and now, it is your turn to explore this world. This is opportunity. This is After Reset.",
-        "thumbnail": "image1.png",
-        "title": "After Reset"
-    },
-    "StoneRage": {
-        "author": "Alexander Sullivan",
-        "date": "2013-08-19",
-        "summary": "FREE-TO-PLAY! Stone Rage is a Free-To-Play online third person multiplayer action game set within the Pleistocene and Eocene eras and it looks beautiful.",
-        "thumbnail": "image1.jpg",
-        "title": "Stone Rage Interview"
-    },
-    "SaltBurn": {
-        "author": "Alexander Sullivan",
-        "date": "2013-08-18",
-        "summary": "Gear yourself up to hunt some monsters in Salt & Burn. A new tabletop monster-hunter RPG board game by Unicorn Empire Prints.",
-        "thumbnail": "image1.jpg",
-        "title": "Salt & Burn Interview"
-    },
-    "FluoroVu": {
-        "author": "Alexander Sullivan",
-        "date": "2013-08-18",
-        "summary": "Have you ever wanted your own UV camera to detect fluorescences on your phone? Well check out FluoroVu, crated by Eigen Imaging, a new portable and reliable physical addon to your smart phone that allows you to view and capture Ultraviolet-induced fluorescence images of certain objects and materials.",
-        "thumbnail": "image1.png",
-        "title": "FluoroVu Interview"
-    },
-    "SociallyAwkward": {
-        "author": "Alexander Sullivan",
-        "date": "2013-08-13",
-        "summary": "Am I just too Socially Awkward? Well, why don’t you check out Sam Maiden’s new art book of his collection of illustrations about anxiety, depression and rejection and how people cope with these problems.",
-        "thumbnail": "image1.png",
-        "title": "Socially Awkward Interview"
-    },
-    "AdventureTidesOnline": {
-        "author": "Alexander Sullivan",
-        "date": "2013-07-29",
-        "summary": "This is the era of adventure. Whether you choose to be a headhunter, marksmen, monk or knight; this if your opportunity to fight and change the tides of this war in Adventure Tides Online. Recently I got the chance to talk with the developers from Saker Games on their new Free-To-Play MMO, Adventure Tides Online.",
-        "thumbnail": "image1.png",
-        "title": "Adventure Tides Online Interview"
-    },
-    "QuickSlickDeadly": {
-        "author": "Alexander Sullivan",
-        "date": "2013-07-27",
-        "summary": "You got to be quick, slick and deadly to win this fight. Recently I got the chance to talk with Siavash Tazari from Adventurous Productions on their recently released game, Quick Slick Deadly which you can purchase on Desura now or support them on Steam Greenlight.",
-        "thumbnail": "image1.jpg",
-        "title": "Quick Slick Deadly Interview"
-    },
-    "SNOW": {
-        "author": "Alexander Sullivan",
-        "date": "2013-07-27",
-        "summary": "Haven’t you ever just wanted to go skiing and snowboarding anytime during the year? Well, you can experience the freedom and adrenaline anytime you want in SNOW, Poppermost Productions new Free-To-Play open world game.",
-        "thumbnail": "image1.png",
-        "title": "SNOW"
-    },
-    "DeadPlasma": {
-        "author": "Alexander Sullivan",
-        "date": "2013-07-21",
-        "summary": "The Martial Arts Grand Prix is here to show you who the best fighters are! Check out our latest interview with Antonie Baker from Ninja Gate Studios on their latest game, Dead Plasma.",
-        "thumbnail": "image1.png",
-        "title": "Dead Plasma"
-    },
-    "ProjectTemporality": {
-        "author": "Alexander Sullivan",
-        "date": "2013-07-19",
-        "summary": "Check out Small Dev Talk’s first developer commentary interview on Project Temporality, a new game from Defrost Games where you manipulate time to solve puzzles.",
-        "thumbnail": "image1.jpg",
-        "title": "Project Temporality Developer Commentary Interview"
-    },
-    "Ghostship": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-07",
-        "summary": "A new exciting free roaming sci-fi horror game is coming called Ghostship! I got the chance to sit down and talk with the developer of Ghostship, Shaun Williams and get a better look at what Ghostship truly holds for their players.",
-        "thumbnail": "image1.jpg",
-        "title": "Ghostship"
-    },
-    "CubeMetalHeart2": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-13",
-        "summary": "Check out Small Dev Talk’s game review on Cube MetalHeart 2 - Combat Squared by Freak Mind Games.",
-        "thumbnail": "image1.jpg",
-        "title": "Cube Metalheart 2: Comabt Squared Review"
-    },
-    "OneLifeLeft": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-17",
-        "summary": "Check out Small Dev Talk’s first video review of One Life Left submitted to us by sambufalo on our Steam group.",
-        "thumbnail": "image1.jpg",
-        "title": "Cube Metalheart 2: Comabt Squared Review"
-    },
-    "1916": {
-        "author": "Jeff Cen",
-        "date": "2013-05-20",
-        "summary": "Watch as Jeff tackles his 2nd Small Plays, this time playing a FPS horror game 1916 - Der Unbekannte Krieg!",
-        "thumbnail": "image1.jpg",
-        "title": "1916"
-    },
-    "Aurora": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-03",
-        "summary": "This is the twisted love story of Aurora. Recently I got the chance to talk with Robert Kouba, the director, writer and producer of a new upcoming film called Aurora from Vantis Pictures.",
-        "thumbnail": "image1.png",
-        "title": "Aurora"
-    },
-    "ThisIsNormal": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-24",
-        "summary": "Recently I got the chance to talk with the writers and directors, Justin Giddings and Ryan Welsh, for their short film, This is Normal. A short film that brings the audience across the journey of Gwen, a deaf women, and her difficult life as a member of the deaf community and her choices to find self-identity, acceptance and normalcy.",
-        "thumbnail": "image1.jpg",
-        "title": "Aurora"
-    },
-    "Vessel": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-19",
-        "summary": "Recently I got the chance to talk with the director, writer and producer of the film Vessel, Adam Ciancio. A uniquely new upcoming sci-fi drama about a man’s gift to communicate with ET’s.",
-        "thumbnail": "image1.jpg",
-        "title": "Vessel"
-    },
-    "JackieRose": {
-        "author": "Alexander Sullivan",
-        "date": "2013-07-15",
-        "summary": "Join along for the adventure of the century in Jackie Rose: The Treasure of Captain Read Volume 1! Not long ago I got the chance to talk with the artist and author of the very enjoyable graphic novel, Jackie Rose: The Treasure of Captain Read Volume 1, Josh Ulrich. We got the chance to talk about some in depth details about his graphic novel and his inspirations.",
-        "thumbnail": "image1.jpg",
-        "title": "Jackie Rose: The Treasure of Captain Read Volume 1 Interview"
-    },
-    "BeyondInfinity": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-11",
-        "summary": "Have you ever wanted to take a mathematical adventure? Haven’t you ever wondered what the personalities of 3, 61, 69 and 313 would be? Well now you can with the upcoming novel by Charles Fischer, Beyond Infinity.",
-        "thumbnail": "image1.jpg",
-        "title": "Beyond Infinity"
-    },
-    "Outworld": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-09",
-        "summary": "Outworld: Return of the Master Teachers is a new exciting comic by Griot Enterprises that mixes the genres of sci-fi and kung-fu into one amazing adventure.",
-        "thumbnail": "image1.jpg",
-        "title": "Outworld: Return of the Master Teachers"
-    },
-    "YukiVsPanda": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-22",
-        "summary": "Yesterday I got the chance to have an interview with a member of the Yuki vs Panda team, Graham Misiurak on their hilarious and amazing graphic novel, Yuki vs Panda. A story about a high school teenage girl and her nemesis, the Panda!",
-        "thumbnail": "image1.jpg",
-        "title": "Yuki vs Panda"
-    },
-    "Wave": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-07",
-        "summary": "It’s time to wear the future! With the new Wave technology, you can wear a fashionable bracelet that syncs with your mobile device or event to flash to notifications or with the music at the club. Recently I got the chance to talk with a developer behind this amazing new technology of Wave and CEO of Cloudsona, Paul Fulton.",
-        "thumbnail": "image1.jpg",
-        "title": "Wave"
-    },
-    "WeCare": {
-        "author": "Alexander Sullivan",
-        "date": "2014-01-26",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "We Care About You!"
-    },
-    "PlaysetsTrailer": {
-        "author": "Alexander Sullivan",
-        "date": "2013-11-05",
-        "summary": "",
-        "thumbnail": "image1.webp",
-        "title": "playsets Kickstarter Trailer"
-    },
-    "LucunaPassage": {
-        "author": "Alexander Sullivan",
-        "date": "2013-07-17",
-        "summary": "",
-        "thumbnail": "image1.png",
-        "title": "Lacuna Passage"
-    },
-    "QuickSlickDeadlyTrailer": {
-        "author": "Alexander Sullivan",
-        "date": "2013-07-13",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Lacuna Passage"
-    },
-    "Doorways": {
-        "author": "Alexander Sullivan",
-        "date": "2013-06-03",
-        "summary": "",
-        "thumbnail": "image1.png",
-        "title": "Doorways"
-    },
-    "LittleSimPeeps": {
-        "author": "Neil Rampone",
-        "date": "2013-05-29",
-        "summary": "",
-        "thumbnail": "image1.png",
-        "title": "Little Sim Peeps"
-    },
-    "Prisonhood": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-21",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Prisonhood"
-    },
-    "Shadowlurker": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-20",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Shadowlurker"
-    },
-    "ShroudsBurden": {
-        "author": "Alexander Sullivan",
-        "date": "2013-06-18",
-        "summary": "",
-        "thumbnail": "image1.png",
-        "title": "Shroud’s Burden"
-    },
-    "Hello": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-17",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Hello everyone!"
-    },
-    "HappyStPatricksDay": {
-        "author": "Alexander Sullivan",
-        "date": "2013-03-17",
-        "summary": "",
-        "thumbnail": "",
-        "title": "Happy St. Patrick’s Day Everyone! ^,^"
-    },
-    "TheRealm": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-28",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "The Realm"
-    },
-    "JaggedAllianceFlashback": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-23",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Jagged Alliance Flashback"
-    },
-    "MemoryOfSoul": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-21",
-        "summary": "",
-        "thumbnail": "image1.png",
-        "title": "Memory of Soul"
-    },
-    "Warlords": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-19",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Warlords"
-    },
-    "Outpost": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-12",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Outpost"
-    },
-    "RunningDude": {
-        "author": "Alexander Sullivan",
-        "date": "2013-05-06",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Running Dude"
-    },
-    "GloriaVictis": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Gloria Victis"
-    },
-    "KingsportCases": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-25",
-        "summary": "",
-        "thumbnail": "image1.png",
-        "title": "The Kingsport Cases"
-    },
-    "BlackSoul": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-24",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "BlackSoul"
-    },
-    "DreadOut": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-19",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "DreadOut"
-    },
-    "LeviathanCrossfire": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-17",
-        "summary": "",
-        "thumbnail": "image1.png",
-        "title": "Leviathan Crossfire"
-    },
-    "Runes": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-16",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Runes"
-    },
-    "Titanic": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-15",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Titanic: Honor and Glory"
-    },
-    "OneMonth": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-15",
-        "summary": "",
-        "thumbnail": "",
-        "title": "It Has Been 1 Month"
-    },
-    "SangFroid": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-13",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Sang-Froid - Tales of Werewolves"
-    },
-    "PlanetExplorers": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-11",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Planet Explorers"
-    },
-    "TowerOfGuns": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-05",
-        "summary": "",
-        "thumbnail": "image1.png",
-        "title": "Tower of Guns"
-    },
-    "LifeEssence": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-03",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "LifeEssence"
-    },
-    "ArmyMen3": {
-        "author": "Alexander Sullivan",
-        "date": "2013-04-01",
-        "summary": "",
-        "thumbnail": "image1.jpg",
-        "title": "Army Men III [NOT AN APRIL FOOLS JOKE!]"
-    }
+	"HearthstoneDownWithTheSickness": {
+		"author": "Neil Rampone",
+		"date": "2016-04-15",
+		"summary": "Long-time Hearthstone player and SDT Writer Neil takes a look at the current meta-game in Hearthstone: Heroes of Warcraft",
+		"thumbnail": "image2.webp",
+		"title": "Hearthstone: Down with the Sickness"
+	},
+	"EarlyAccessPhantasmal": {
+		"author": "Neil Rampone",
+		"date": "2016-04-13",
+		"summary": "Does the dark frighten you easily? If not, take a look at Small Dev Talk's early access to Phantasmal.",
+		"thumbnail": "image3.webp",
+		"title": "[Early Access] Phantasmal: City of Darkness"
+	},
+	"MotteIsland": {
+		"author": "Alexander Sullivan",
+		"date": "2013-07-16",
+		"summary": "Can you survive Motte Island? Check out the most creative interview you will ever have seen exclusively on Small Dev Talk where we got the chance to talk with One Aperture on their latest game, Motte Island.",
+		"thumbnail": "image1.jpg",
+		"title": "Motte Island"
+	},
+	"TacticalInterventionReview": {
+		"author": "Neil Rampone",
+		"date": "2013-05-01",
+		"summary": "We did an interview and now we do the review. Check out our opinion on FIX Korea’s and OGPlanet’s game, Tactical Interview.",
+		"thumbnail": "image1.jpg",
+		"title": "Tactical Intervention Review"
+	},
+	"TacticalIntervention": {
+		"author": "Neil Rampone",
+		"date": "2013-04-20",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Tactical Intervention"
+	},
+	"LumberIsland": {
+		"author": "Jeff Cen",
+		"date": "2013-05-04",
+		"summary": "Check out Small Dev Talks first Small play! Featuring Jeff Cen as the player and the brand new indie game Lumber Island created by Dean Forge!",
+		"thumbnail": "image1.jpg",
+		"title": "Small Plays - Lumber Island"
+	},
+	"COLORINO": {
+		"author": "Alexander Sullivan",
+		"date": "2014-02-07",
+		"summary": "Challenge yourself with COLORNIO! A new puzzle game by Pete SkyKing and Alex Probst for your iOS and Andriod.",
+		"thumbnail": "image1.jpg",
+		"title": "COLORINO Interview"
+	},
+	"CENTS": {
+		"author": "Alexander Sullivan",
+		"date": "2014-02-02",
+		"summary": "Sammy uses her gift for mathematics and enlist her “frenemies” to revamp the school penny drive into a major moneymaking operations in CENTS, new upcoming movie by Christopher Boone.",
+		"thumbnail": "image1.jpg",
+		"title": "CENTS Interview"
+	},
+	"Caravaneer2": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-26",
+		"summary": "",
+		"thumbnail": "",
+		"title": "Caravaneer 2"
+	},
+	"Playsets": {
+		"author": "Alexander Sullivan",
+		"date": "2013-11-03",
+		"summary": "Haven’t you ever just wanted to relax and play a tabletop RPG but you don’t own a tabletop board game. Well then check out playsets! It is a virtual tabletop game including many maps and characters. It brings enjoyment to all players with entertaining emoticons and status effects.",
+		"thumbnail": "image1.webp",
+		"title": "playsets"
+	},
+	"StarWarsBattlecry": {
+		"author": "Neil Rampone",
+		"date": "2013-03-12",
+		"summary": "",
+		"thumbnail": "",
+		"title": "Star Wars Battlecry"
+	},
+	"Oceania": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-23",
+		"summary": "",
+		"thumbnail": "",
+		"title": "Oceania"
+	},
+	"SonOfNor": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-21",
+		"summary": "",
+		"thumbnail": "",
+		"title": "Son of Nor"
+	},
+	"HOYO": {
+		"author": "Alexander Sullivan",
+		"date": "2014-02-03",
+		"summary": "With HOYO, now I can watch YouTube while taking a bath, study while in the shower or read cooking tutorials cleanly while cooking!",
+		"thumbnail": "image1.webp",
+		"title": "HOYO Interview"
+	},
+	"DClic": {
+		"author": "Alexander Sullivan",
+		"date": "2014-01-25",
+		"summary": "Fashion is always changing and coming up with new innovative methods to express meaning in a sense of clothing of accessories. A unique way to look at how this is done is by looking at D’clic. A new industrial urban accessories designed by Martial Yapo.",
+		"thumbnail": "image1.jpg",
+		"title": "D'Clic Interview"
+	},
+	"LinkedPathways": {
+		"author": "Alexander Sullivan",
+		"date": "2013-11-13",
+		"summary": "Test out your dating skills in Linked Pathways, a new visual novel dating simulation game created by Esteban Gonzalez and his development team.",
+		"thumbnail": "image1.webp",
+		"title": "Linked Pathways Interview"
+	},
+	"ChampionOfDema": {
+		"author": "Alexander Sullivan",
+		"date": "2013-11-08",
+		"summary": "Join along Kade in Hameed Catel’s new afrocentric graphic novel, Champion of Dema.",
+		"thumbnail": "image1.webp",
+		"title": "Champion of Dema Interview"
+	},
+	"ShutteredCity": {
+		"author": "Alexander Sullivan",
+		"date": "2013-11-05",
+		"summary": "Join Leland on his adventure in Shuttered City.",
+		"thumbnail": "image1.jpg",
+		"title": "Shuttered City Interview"
+	},
+	"Bound": {
+		"author": "Alexander Sullivan",
+		"date": "2013-08-25",
+		"summary": "Have you ever wanted to watch an entire movie made from Lego bricks? Check out Bound, a new dramactic adventure made entirely from Lego bricks! I recently got the chance to talk with Greg Tull from Monitogo Studios on their recently successful Kickstarter film, Bound.",
+		"thumbnail": "image1.webp",
+		"title": "Bound Interview"
+	},
+	"RickFuture": {
+		"author": "Alexander Sullivan",
+		"date": "2013-08-23",
+		"summary": "The future of point and click gameplay starts with Rick Future.",
+		"thumbnail": "image1.png",
+		"title": "Rick Future"
+	},
+	"AfterReset": {
+		"author": "Alexander Sullivan",
+		"date": "2013-08-22",
+		"summary": "It has been 132 years since the Reset and now, it is your turn to explore this world. This is opportunity. This is After Reset.",
+		"thumbnail": "image1.png",
+		"title": "After Reset"
+	},
+	"StoneRage": {
+		"author": "Alexander Sullivan",
+		"date": "2013-08-19",
+		"summary": "FREE-TO-PLAY! Stone Rage is a Free-To-Play online third person multiplayer action game set within the Pleistocene and Eocene eras and it looks beautiful.",
+		"thumbnail": "image1.jpg",
+		"title": "Stone Rage Interview"
+	},
+	"SaltBurn": {
+		"author": "Alexander Sullivan",
+		"date": "2013-08-18",
+		"summary": "Gear yourself up to hunt some monsters in Salt & Burn. A new tabletop monster-hunter RPG board game by Unicorn Empire Prints.",
+		"thumbnail": "image1.jpg",
+		"title": "Salt & Burn Interview"
+	},
+	"FluoroVu": {
+		"author": "Alexander Sullivan",
+		"date": "2013-08-18",
+		"summary": "Have you ever wanted your own UV camera to detect fluorescences on your phone? Well check out FluoroVu, crated by Eigen Imaging, a new portable and reliable physical addon to your smart phone that allows you to view and capture Ultraviolet-induced fluorescence images of certain objects and materials.",
+		"thumbnail": "image1.png",
+		"title": "FluoroVu Interview"
+	},
+	"SociallyAwkward": {
+		"author": "Alexander Sullivan",
+		"date": "2013-08-13",
+		"summary": "Am I just too Socially Awkward? Well, why don’t you check out Sam Maiden’s new art book of his collection of illustrations about anxiety, depression and rejection and how people cope with these problems.",
+		"thumbnail": "image1.png",
+		"title": "Socially Awkward Interview"
+	},
+	"AdventureTidesOnline": {
+		"author": "Alexander Sullivan",
+		"date": "2013-07-29",
+		"summary": "This is the era of adventure. Whether you choose to be a headhunter, marksmen, monk or knight; this if your opportunity to fight and change the tides of this war in Adventure Tides Online. Recently I got the chance to talk with the developers from Saker Games on their new Free-To-Play MMO, Adventure Tides Online.",
+		"thumbnail": "image1.png",
+		"title": "Adventure Tides Online Interview"
+	},
+	"QuickSlickDeadly": {
+		"author": "Alexander Sullivan",
+		"date": "2013-07-27",
+		"summary": "You got to be quick, slick and deadly to win this fight. Recently I got the chance to talk with Siavash Tazari from Adventurous Productions on their recently released game, Quick Slick Deadly which you can purchase on Desura now or support them on Steam Greenlight.",
+		"thumbnail": "image1.jpg",
+		"title": "Quick Slick Deadly Interview"
+	},
+	"SNOW": {
+		"author": "Alexander Sullivan",
+		"date": "2013-07-27",
+		"summary": "Haven’t you ever just wanted to go skiing and snowboarding anytime during the year? Well, you can experience the freedom and adrenaline anytime you want in SNOW, Poppermost Productions new Free-To-Play open world game.",
+		"thumbnail": "image1.png",
+		"title": "SNOW"
+	},
+	"DeadPlasma": {
+		"author": "Alexander Sullivan",
+		"date": "2013-07-21",
+		"summary": "The Martial Arts Grand Prix is here to show you who the best fighters are! Check out our latest interview with Antonie Baker from Ninja Gate Studios on their latest game, Dead Plasma.",
+		"thumbnail": "image1.png",
+		"title": "Dead Plasma"
+	},
+	"ProjectTemporality": {
+		"author": "Alexander Sullivan",
+		"date": "2013-07-19",
+		"summary": "Check out Small Dev Talk’s first developer commentary interview on Project Temporality, a new game from Defrost Games where you manipulate time to solve puzzles.",
+		"thumbnail": "image1.jpg",
+		"title": "Project Temporality Developer Commentary Interview"
+	},
+	"Ghostship": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-07",
+		"summary": "A new exciting free roaming sci-fi horror game is coming called Ghostship! I got the chance to sit down and talk with the developer of Ghostship, Shaun Williams and get a better look at what Ghostship truly holds for their players.",
+		"thumbnail": "image1.jpg",
+		"title": "Ghostship"
+	},
+	"CubeMetalHeart2": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-13",
+		"summary": "Check out Small Dev Talk’s game review on Cube MetalHeart 2 - Combat Squared by Freak Mind Games.",
+		"thumbnail": "image1.jpg",
+		"title": "Cube Metalheart 2: Comabt Squared Review"
+	},
+	"OneLifeLeft": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-17",
+		"summary": "Check out Small Dev Talk’s first video review of One Life Left submitted to us by sambufalo on our Steam group.",
+		"thumbnail": "image1.jpg",
+		"title": "Cube Metalheart 2: Comabt Squared Review"
+	},
+	"1916": {
+		"author": "Jeff Cen",
+		"date": "2013-05-20",
+		"summary": "Watch as Jeff tackles his 2nd Small Plays, this time playing a FPS horror game 1916 - Der Unbekannte Krieg!",
+		"thumbnail": "image1.jpg",
+		"title": "1916"
+	},
+	"Aurora": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-03",
+		"summary": "This is the twisted love story of Aurora. Recently I got the chance to talk with Robert Kouba, the director, writer and producer of a new upcoming film called Aurora from Vantis Pictures.",
+		"thumbnail": "image1.png",
+		"title": "Aurora"
+	},
+	"ThisIsNormal": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-24",
+		"summary": "Recently I got the chance to talk with the writers and directors, Justin Giddings and Ryan Welsh, for their short film, This is Normal. A short film that brings the audience across the journey of Gwen, a deaf women, and her difficult life as a member of the deaf community and her choices to find self-identity, acceptance and normalcy.",
+		"thumbnail": "image1.jpg",
+		"title": "Aurora"
+	},
+	"Vessel": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-19",
+		"summary": "Recently I got the chance to talk with the director, writer and producer of the film Vessel, Adam Ciancio. A uniquely new upcoming sci-fi drama about a man’s gift to communicate with ET’s.",
+		"thumbnail": "image1.jpg",
+		"title": "Vessel"
+	},
+	"JackieRose": {
+		"author": "Alexander Sullivan",
+		"date": "2013-07-15",
+		"summary": "Join along for the adventure of the century in Jackie Rose: The Treasure of Captain Read Volume 1! Not long ago I got the chance to talk with the artist and author of the very enjoyable graphic novel, Jackie Rose: The Treasure of Captain Read Volume 1, Josh Ulrich. We got the chance to talk about some in depth details about his graphic novel and his inspirations.",
+		"thumbnail": "image1.jpg",
+		"title": "Jackie Rose: The Treasure of Captain Read Volume 1 Interview"
+	},
+	"BeyondInfinity": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-11",
+		"summary": "Have you ever wanted to take a mathematical adventure? Haven’t you ever wondered what the personalities of 3, 61, 69 and 313 would be? Well now you can with the upcoming novel by Charles Fischer, Beyond Infinity.",
+		"thumbnail": "image1.jpg",
+		"title": "Beyond Infinity"
+	},
+	"Outworld": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-09",
+		"summary": "Outworld: Return of the Master Teachers is a new exciting comic by Griot Enterprises that mixes the genres of sci-fi and kung-fu into one amazing adventure.",
+		"thumbnail": "image1.jpg",
+		"title": "Outworld: Return of the Master Teachers"
+	},
+	"YukiVsPanda": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-22",
+		"summary": "Yesterday I got the chance to have an interview with a member of the Yuki vs Panda team, Graham Misiurak on their hilarious and amazing graphic novel, Yuki vs Panda. A story about a high school teenage girl and her nemesis, the Panda!",
+		"thumbnail": "image1.jpg",
+		"title": "Yuki vs Panda"
+	},
+	"Wave": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-07",
+		"summary": "It’s time to wear the future! With the new Wave technology, you can wear a fashionable bracelet that syncs with your mobile device or event to flash to notifications or with the music at the club. Recently I got the chance to talk with a developer behind this amazing new technology of Wave and CEO of Cloudsona, Paul Fulton.",
+		"thumbnail": "image1.jpg",
+		"title": "Wave"
+	},
+	"WeCare": {
+		"author": "Alexander Sullivan",
+		"date": "2014-01-26",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "We Care About You!"
+	},
+	"PlaysetsTrailer": {
+		"author": "Alexander Sullivan",
+		"date": "2013-11-05",
+		"summary": "",
+		"thumbnail": "image1.webp",
+		"title": "playsets Kickstarter Trailer"
+	},
+	"LucunaPassage": {
+		"author": "Alexander Sullivan",
+		"date": "2013-07-17",
+		"summary": "",
+		"thumbnail": "image1.png",
+		"title": "Lacuna Passage"
+	},
+	"QuickSlickDeadlyTrailer": {
+		"author": "Alexander Sullivan",
+		"date": "2013-07-13",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Lacuna Passage"
+	},
+	"Doorways": {
+		"author": "Alexander Sullivan",
+		"date": "2013-06-03",
+		"summary": "",
+		"thumbnail": "image1.png",
+		"title": "Doorways"
+	},
+	"LittleSimPeeps": {
+		"author": "Neil Rampone",
+		"date": "2013-05-29",
+		"summary": "",
+		"thumbnail": "image1.png",
+		"title": "Little Sim Peeps"
+	},
+	"Prisonhood": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-21",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Prisonhood"
+	},
+	"Shadowlurker": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-20",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Shadowlurker"
+	},
+	"ShroudsBurden": {
+		"author": "Alexander Sullivan",
+		"date": "2013-06-18",
+		"summary": "",
+		"thumbnail": "image1.png",
+		"title": "Shroud’s Burden"
+	},
+	"Hello": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-17",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Hello everyone!"
+	},
+	"HappyStPatricksDay": {
+		"author": "Alexander Sullivan",
+		"date": "2013-03-17",
+		"summary": "",
+		"thumbnail": "",
+		"title": "Happy St. Patrick’s Day Everyone! ^,^"
+	},
+	"TheRealm": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-28",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "The Realm"
+	},
+	"JaggedAllianceFlashback": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-23",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Jagged Alliance Flashback"
+	},
+	"MemoryOfSoul": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-21",
+		"summary": "",
+		"thumbnail": "image1.png",
+		"title": "Memory of Soul"
+	},
+	"Warlords": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-19",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Warlords"
+	},
+	"Outpost": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-12",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Outpost"
+	},
+	"RunningDude": {
+		"author": "Alexander Sullivan",
+		"date": "2013-05-06",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Running Dude"
+	},
+	"GloriaVictis": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Gloria Victis"
+	},
+	"KingsportCases": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-25",
+		"summary": "",
+		"thumbnail": "image1.png",
+		"title": "The Kingsport Cases"
+	},
+	"BlackSoul": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-24",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "BlackSoul"
+	},
+	"DreadOut": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-19",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "DreadOut"
+	},
+	"LeviathanCrossfire": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-17",
+		"summary": "",
+		"thumbnail": "image1.png",
+		"title": "Leviathan Crossfire"
+	},
+	"Runes": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-16",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Runes"
+	},
+	"Titanic": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-15",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Titanic: Honor and Glory"
+	},
+	"OneMonth": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-15",
+		"summary": "",
+		"thumbnail": "",
+		"title": "It Has Been 1 Month"
+	},
+	"SangFroid": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-13",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Sang-Froid - Tales of Werewolves"
+	},
+	"PlanetExplorers": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-11",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Planet Explorers"
+	},
+	"TowerOfGuns": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-05",
+		"summary": "",
+		"thumbnail": "image1.png",
+		"title": "Tower of Guns"
+	},
+	"LifeEssence": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-03",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "LifeEssence"
+	},
+	"ArmyMen3": {
+		"author": "Alexander Sullivan",
+		"date": "2013-04-01",
+		"summary": "",
+		"thumbnail": "image1.jpg",
+		"title": "Army Men III [NOT AN APRIL FOOLS JOKE!]"
+	}
 }
