@@ -98,8 +98,10 @@ Tyler Owen: If you want to see a game like this then we need your help. Support 
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image10.png)
 
-----
+---
+
 Upload date: 2013-07-17. Last modified: 2013-07-17. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

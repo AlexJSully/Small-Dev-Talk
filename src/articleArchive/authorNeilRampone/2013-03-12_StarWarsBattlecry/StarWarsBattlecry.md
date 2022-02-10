@@ -24,7 +24,7 @@ Star Wars: Battlecry is an MMOFPS/TPS that is under development. It takes its or
 
 **Small Dev Talk: Will there be any special characters, such as Jedi or Sith?**
 
-**Deforges:** This is something that’s been asked a lot by our fans. Hero characters are planned but not a current priority. As soon as we start releasing heroes there is a fear that the fanbase will just become preoccupied with wanting their favorite to be made next. Our character artist, Ben, puts a lot of effort into his work. Characters may take upwards to two weeks for everything to be complete. 
+**Deforges:** This is something that’s been asked a lot by our fans. Hero characters are planned but not a current priority. As soon as we start releasing heroes there is a fear that the fanbase will just become preoccupied with wanting their favorite to be made next. Our character artist, Ben, puts a lot of effort into his work. Characters may take upwards to two weeks for everything to be complete.
 
 [Lord Vader Voiceover](https://www.moddb.com/games/star-wars-battlecry/videos)
 
@@ -84,8 +84,10 @@ Did/have you run in to any major difficulties in the development of your game? I
 
 **Deforges:** I have to say that you guys give us some of the greatest motivation a team could ask for! I’m really grateful for all the kind words of encouragement people have given us over the past few months. The team and I are trying our hardest to bring you some of the best work we’ve ever done as artists. I hope to be hosting a lot of “play with the devs” sessions in the future. Until then, keep watching us and keep on spreading the word! Thank you!
 
-----
+---
+
 Upload date: 2013-03-12. Last modified: 2013-07-03. Written by [Neil Rampone](https://twitter.com/BaphometGMG)
 
------
+---
+
 ## Archived public comments

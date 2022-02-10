@@ -1,198 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<title id="pageTitle">Small Dev Talk - Talk with the Developers of the Future</title>
 
-<head>
-  <title id='pageTitle'>Small Dev Talk - Talk with the Developers of the Future</title>
+		<!-- META DATA -->
+		<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+		<meta http-equiv="Cache-control" content="max-age=604800" />
+		<meta name="title" content="Small Dev Talk" />
+		<meta
+			name="description"
+			content="Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene"
+		/>
+		<meta
+			name="keywords"
+			content="game, website, gamedev, design, movies, news, fashion, tumblr, technology, game-development, indie, comics, entertainment"
+		/>
+		<meta name="robots" content="index, follow" />
+		<meta name="language" content="English" />
+		<meta name="revisit-after" content="90 days" />
+		<meta name="author" content="Alexander Sullivan, Neil Rampone, Jeffery Cen" />
+		<meta property="og:title" content="Small Dev Talk" />
+		<meta property="og:image" content="./src/icon/og-image.jpg" />
+		<meta property="og:image:width" content="279" />
+		<meta property="og:image:height" content="279" />
+		<meta property="og:description" content="Practice gRNA+Primer design online with Small Dev Talk!" />
+		<meta property="og:title" content="Small Dev Talk" />
+		<meta property="og:url" content="https://Small Dev Talk.com/" />
+		<link rel="shortcut icon" href="./src/icon/apple-touch-icon.png" type="image/x-icon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="apple-mobile-web-app-title" content="Small Dev Talk" />
+		<link rel="apple-touch-icon" sizes="180x180" href="./src/icon/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="./src/icon/android-chrome-192x192.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="./src/icon/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="./src/icon/favicon-16x16.png" />
+		<link rel="manifest" href="./src/icon/site.webmanifest" />
+		<link rel="mask-icon" href="./src/icon/safari-pinned-tab.svg" color="#ffffff" />
+		<meta name="application-name" content="Small Dev Talk" />
+		<meta name="msapplication-config" content="./src/icon/browserconfig.xml" />
+		<meta name="msapplication-TileColor" content="#b91d47" />
+		<meta name="msapplication-TileImage" content="./src/icon/mstile-144x144.png" />
+		<meta name="theme-color" content="#ffffff" />
+		<meta name="twitter:site" content="@SmallDevTalk" />
+		<!-- END META DATA -->
 
-  <!-- META DATA -->
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-  <meta http-equiv="Cache-control" content="max-age=604800">
-  <meta name="title" content="Small Dev Talk">
-  <meta name="description" content="Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene">
-  <meta name="keywords" content="game, website, gamedev, design, movies, news, fashion, tumblr, technology, game-development, indie, comics, entertainment">
-  <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
-  <meta name="revisit-after" content="90 days">
-  <meta name="author" content="Alexander Sullivan, Neil Rampone, Jeffery Cen">
-  <meta property="og:title" content="Small Dev Talk" />
-  <meta property="og:image" content="./src/icon/og-image.jpg">
-  <meta property="og:image:width" content="279">
-  <meta property="og:image:height" content="279">
-  <meta property="og:description" content="Practice gRNA+Primer design online with Small Dev Talk!">
-  <meta property="og:title" content="Small Dev Talk">
-  <meta property="og:url" content="https://Small Dev Talk.com/">
-  <link rel="shortcut icon" href="./src/icon/apple-touch-icon.png" type="image/x-icon" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-title" content="Small Dev Talk">
-  <link rel="apple-touch-icon" sizes="180x180" href="./src/icon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="./src/icon/android-chrome-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./src/icon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./src/icon/favicon-16x16.png">
-  <link rel="manifest" href="./src/icon/site.webmanifest">
-  <link rel="mask-icon" href="./src/icon/safari-pinned-tab.svg" color="#ffffff">
-  <meta name="application-name" content="Small Dev Talk">
-  <meta name="msapplication-config" content="./src/icon/browserconfig.xml">
-  <meta name="msapplication-TileColor" content="#b91d47">
-  <meta name="msapplication-TileImage" content="./src/icon/mstile-144x144.png">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="twitter:site" content="@SmallDevTalk">
-  <!-- END META DATA -->
+		<!-- Scripts -->
+		<link rel="stylesheet" type="text/css" href="./src/style.min.css" />
+		<script rel="preload" as="script" src="./src/scripts/libraries/jquery/jquery.min.js"></script>
+		<link rel="stylesheet" href="./src/scripts/libraries/bootstrap/css/bootstrap.min.css" />
+		<script rel="preload" as="script" src="./src/scripts/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script rel="preload" as="script" src="./src/scripts/libraries/showdown/showdown.min.js"></script>
+		<script>
+			// Add service workers
+			if ("serviceWorker" in navigator) {
+				// Use the window load event to keep the page load performant
+				window.addEventListener("load", () => {
+					navigator.serviceWorker.register("./src/serviceWorker/sw.js");
+				});
+			}
+		</script>
+		<script rel="preload" as="script" src="./src/scripts/index.min.js"></script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-38961857-4"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
 
-  <!-- Scripts -->
-  <link rel="stylesheet" type="text/css" href="./src/style.min.css" />
-  <script rel="preload" as="script" src='./src/scripts/libraries/jquery/jquery.min.js'></script>
-  <link rel="stylesheet" href="./src/scripts/libraries/bootstrap/css/bootstrap.min.css">
-  <script rel="preload" as="script" src="./src/scripts/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script rel="preload" as="script" src='./src/scripts/libraries/showdown/showdown.min.js'></script>
-  <script>
-    // Add service workers
-    if ('serviceWorker' in navigator) {
-      // Use the window load event to keep the page load performant
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./src/serviceWorker/sw.js');
-      });
-    };
-  </script>
-  <script rel="preload" as="script" src='./src/scripts/index.min.js'></script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-38961857-4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+			gtag("config", "UA-38961857-4");
+		</script>
+		<!-- Google Tag Manager -->
+		<script>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({"gtm.start": new Date().getTime(), event: "gtm.js"});
+				var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s),
+					dl = l != "dataLayer" ? "&l=" + l : "";
+				j.async = true;
+				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, "script", "dataLayer", "GTM-5H259MB");
+		</script>
+		<!-- End Google Tag Manager -->
+		<meta name="cf-2fa-verify" content="e5b76f5064222a2" />
+	</head>
 
-    gtag('config', 'UA-38961857-4');
-  </script>
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5H259MB');</script>
-  <!-- End Google Tag Manager -->
-  <meta name="cf-2fa-verify" content="e5b76f5064222a2">
-</head>
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript
+			><iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-5H259MB"
+				height="0"
+				width="0"
+				style="display: none; visibility: hidden"
+			></iframe
+		></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		<!-- BEGIN wrapper -->
+		<div id="wrapper">
+			<!-- BEGIN header -->
+			<div id="header">
+				<nav>
+					<ul class="pages">
+						<li>
+							<a href="index.html">Home</a>
+						</li>
+						<li>
+							<a href="index.html?pages&games">Games</a>
+							<ul>
+								<li>
+									<a href="index.html?pages&gameinterviews">Interviews</a>
+								</li>
+								<li>
+									<a href="index.html?pages&reviews">Reviews</a>
+								</li>
+								<li>
+									<a href="index.html?pages&smallPlays">Small Plays</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="index.html?pages&movies">Movies</a>
+						</li>
+						<li>
+							<a href="index.html?pages&comics">Comics & Books</a>
+						</li>
+						<li>
+							<a href="index.html?pages&electronics">Technology & Design</a>
+						</li>
+						<li>
+							<a href="index.html?pages&fashion">Fashion</a>
+						</li>
+						<li>
+							<a href="index.html?pages&archive">Archive</a>
+						</li>
+					</ul>
+				</nav>
+				<h1 style="margin-top: -30px">
+					<a href="index.html"
+						><img
+							src="src/images/title.svg"
+							style="
+								height: 70px;
+								background-color: white;
+								border-style: solid;
+								border-width: 2px;
+								border-color: #212529;
+							"
+							alt="Small Dev Talk"
+							loading="lazy"
+					/></a>
+				</h1>
+				<!-- END header -->
+				<div id="body">
+					<!-- BEGIN content -->
+					<div id="content">
+						<div class="head">
+							<div class="foot">
+								<!-- begin index -->
+								<!-- begin featured -->
+								<div id="featuredArticles" class="featured">
+									<h2 class="title">Featured Articles</h2>
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5H259MB"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  <!-- BEGIN wrapper -->
-  <div id="wrapper">
-    <!-- BEGIN header -->
-    <div id="header">
-      <nav>
-        <ul class="pages">
-          <li>
-            <a href="index.html">Home</a>
-          </li>
-          <li>
-            <a href="index.html?pages&games">Games</a>
-            <ul>
-              <li>
-                <a href="index.html?pages&gameinterviews">Interviews</a>
-              </li>
-              <li>
-                <a href="index.html?pages&reviews">Reviews</a>
-              </li>
-              <li>
-                <a href="index.html?pages&smallPlays">Small Plays</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="index.html?pages&movies">Movies</a>
-          </li>
-          <li>
-            <a href="index.html?pages&comics">Comics & Books</a>
-          </li>
-          <li>
-            <a href="index.html?pages&electronics">Technology & Design</a>
-          </li>
-          <li>
-            <a href="index.html?pages&fashion">Fashion</a>
-          </li>
-          <li>
-            <a href="index.html?pages&archive">Archive</a>
-          </li>
-        </ul>
-      </nav>
-      <h1 style="margin-top: -30px;">
-        <a href="index.html"><img src="src/images/title.svg" style="height: 70px; background-color: white; border-style: solid; border-width: 2px; border-color: #212529;" alt="Small Dev Talk" loading="lazy"></a>
-      </h1>
-      <!-- END header -->
-      <div id="body">
-        <!-- BEGIN content -->
-        <div id="content">
-          <div class="head">
-            <div class="foot">
-              <!-- begin index -->
-              <!-- begin featured -->
-              <div id='featuredArticles' class="featured">
-                <h2 class="title">Featured Articles</h2>
-
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators" id="carouselIndicator">
-                  </ol>
-                  <div class="carousel-inner" id="carouselInner">
-                  </div>
-                  <a class="carousel-control-prev" onClick="$('.carousel').carousel('prev')" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only"></span>
-                  </a>
-                  <a class="carousel-control-next" onClick="$('.carousel').carousel('next')" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only"></span>
-                  </a>
-                </div>
-              </div>
-              <!-- end featured -->
-              <!-- begin displaying articles -->
-              <div id='displayArticles'>
-              </div>
-              <!-- end displaying articles -->
-              <!-- begin articles -->
-              <div id='articleBody' class='articleBody' hidden>
-              </div>
-              <!-- end articles -->
-            </div>
-          </div>
-        </div>
-        <!-- END content -->
-        <!-- BEGIN sidebar -->
-        <div id="sidebar">
-          <!-- begin popular posts -->
-          <div class="box">
-            <h2>Top Articles</h2>
-              <p>
-                <a href="index.html?Caravaneer2">Caravaneer 2</a>
-              </p>
-              <p>
-                <a href="index.html?Playsets">Playsets</a>
-              </p>
-              <p>
-                <a href="index.html?StarWarsBattlecry">Star Wars Battlecry</a>
-              </p>
-              <p>
-                <a href="index.html?Oceania">Oceania</a>
-              </p>
-              <p>
-                <a href="index.html?SonOfNor">Son of Nor</a>
-              </p>
-          </div>
-          <!-- end popular posts -->
-          <!-- begin twitter -->
-          <div class="box">
-            <h2>Twitter</h2>
-            <a class="twitter-timeline" data-height="1000" href="https://twitter.com/SmallDevTalk?ref_src=twsrc%5Etfw">Tweets by SmallDevTalk</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-          </div>
-          <!-- end twitter -->
-        </div>
-        <!-- END sidebar -->
-        <div class="break"></div>
-      </div>
-    </div>
-    <!-- END wrapper -->
-
+									<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+										<ol class="carousel-indicators" id="carouselIndicator"></ol>
+										<div class="carousel-inner" id="carouselInner"></div>
+										<a
+											class="carousel-control-prev"
+											onClick="$('.carousel').carousel('prev')"
+											role="button"
+											data-slide="prev"
+										>
+											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+											<span class="sr-only"></span>
+										</a>
+										<a
+											class="carousel-control-next"
+											onClick="$('.carousel').carousel('next')"
+											role="button"
+											data-slide="next"
+										>
+											<span class="carousel-control-next-icon" aria-hidden="true"></span>
+											<span class="sr-only"></span>
+										</a>
+									</div>
+								</div>
+								<!-- end featured -->
+								<!-- begin displaying articles -->
+								<div id="displayArticles"></div>
+								<!-- end displaying articles -->
+								<!-- begin articles -->
+								<div id="articleBody" class="articleBody" hidden></div>
+								<!-- end articles -->
+							</div>
+						</div>
+					</div>
+					<!-- END content -->
+					<!-- BEGIN sidebar -->
+					<div id="sidebar">
+						<!-- begin popular posts -->
+						<div class="box">
+							<h2>Top Articles</h2>
+							<p>
+								<a href="index.html?Caravaneer2">Caravaneer 2</a>
+							</p>
+							<p>
+								<a href="index.html?Playsets">Playsets</a>
+							</p>
+							<p>
+								<a href="index.html?StarWarsBattlecry">Star Wars Battlecry</a>
+							</p>
+							<p>
+								<a href="index.html?Oceania">Oceania</a>
+							</p>
+							<p>
+								<a href="index.html?SonOfNor">Son of Nor</a>
+							</p>
+						</div>
+						<!-- end popular posts -->
+						<!-- begin twitter -->
+						<div class="box">
+							<h2>Twitter</h2>
+							<a
+								class="twitter-timeline"
+								data-height="1000"
+								href="https://twitter.com/SmallDevTalk?ref_src=twsrc%5Etfw"
+								>Tweets by SmallDevTalk</a
+							>
+							<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						</div>
+						<!-- end twitter -->
+					</div>
+					<!-- END sidebar -->
+					<div class="break"></div>
+				</div>
+			</div>
+			<!-- END wrapper -->
+		</div>
+	</body>
 </html>

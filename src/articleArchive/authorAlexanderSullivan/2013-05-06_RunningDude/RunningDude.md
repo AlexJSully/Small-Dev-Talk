@@ -78,17 +78,20 @@ RUN DUDE RUN! Experience the adventurous run of this dude in Running Dude by Pan
 
 **Small Dev Talk: How much success have you made on the android version of Running Dude and what have you learned since you released it?**
 
-**Serjey Panin:** After I first released running dude on android, my web site was visited by over a million people!  The release of the game on Google Play was just a test release to see how it all works. That is the reason why I still haven’t even changed the name of the game on Google Play. My next release is going to be the proper launch of “Running dude” on PC, android, Xbox 360, PlayStation 3 and maybe even PlayStation 4!
+**Serjey Panin:** After I first released running dude on android, my web site was visited by over a million people! The release of the game on Google Play was just a test release to see how it all works. That is the reason why I still haven’t even changed the name of the game on Google Play. My next release is going to be the proper launch of “Running dude” on PC, android, Xbox 360, PlayStation 3 and maybe even PlayStation 4!
 
 **Small Dev Talk: Do you have anything to say towards the readers?**
 
-**Serjey Panin:** If you want to become an independent game developer then you must believe in yourself and believe that your game is going to be a success! Also learn some programming and just do your best. Thank you very much for having an interview with me.  
+**Serjey Panin:** If you want to become an independent game developer then you must believe in yourself and believe that your game is going to be a success! Also learn some programming and just do your best. Thank you very much for having an interview with me.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image7.jpg) 
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image7.jpg)
 
-----
+---
+
 Upload date: 2013-05-06. Last modified: 2013-05-06. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [Poppy Whatmore](https://www.facebook.com/poppy.whatmore): love this game!

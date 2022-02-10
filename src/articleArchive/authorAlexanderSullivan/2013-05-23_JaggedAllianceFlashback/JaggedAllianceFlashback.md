@@ -42,13 +42,13 @@ Jagged Alliance is back for another adventure in Jagged Alliance Flashback! I re
 
 **Small Dev Talk: What is base management and how will it work in Jagged Alliance Flashback?**
 
-**Jagged Alliance Flashback Team:** You will start out with a small landing zone and expand your base of operations as you gain access to funds. New additions to your base will add various levels of support options to your squads. From fortifying your base that help against enemy attacks to helicopter pads and recruiting a gunsmith will allow you to repair weapons and research new attachments that increase weapon effectiveness. 
+**Jagged Alliance Flashback Team:** You will start out with a small landing zone and expand your base of operations as you gain access to funds. New additions to your base will add various levels of support options to your squads. From fortifying your base that help against enemy attacks to helicopter pads and recruiting a gunsmith will allow you to repair weapons and research new attachments that increase weapon effectiveness.
 
-But this is not where it ends. In captured villages we would like to rework the militia system from earlier games. Parts of the buildings used in your central base can also be built in villages - e.g. fortify specific buildings, repair shops and medical facilities. But you can’t build an air strip or a hospital, these are things you have to control to reap the benefits. The enemy will actively try to retake lost sectors, so the more you control, the more you have to lose. 
+But this is not where it ends. In captured villages we would like to rework the militia system from earlier games. Parts of the buildings used in your central base can also be built in villages - e.g. fortify specific buildings, repair shops and medical facilities. But you can’t build an air strip or a hospital, these are things you have to control to reap the benefits. The enemy will actively try to retake lost sectors, so the more you control, the more you have to lose.
 
-So it’s important to defend your central base while spending some resources on expanding your presence on the map. Leaving your base open will allow the enemy to take it, removing the support it gives to your mercenary squads. 
+So it’s important to defend your central base while spending some resources on expanding your presence on the map. Leaving your base open will allow the enemy to take it, removing the support it gives to your mercenary squads.
 
-This adds much more value to the strategic part of the game and more depth in gameplay. 
+This adds much more value to the strategic part of the game and more depth in gameplay.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image5.jpg)
 
@@ -68,7 +68,7 @@ Where we want to make things a little different is in the UI, where we want to g
 
 **Small Dev Talk: How does the cover system work in a turn-based game?**
 
-**Jagged Alliance Flashback Team:** You can stay behind different objects in the world to gain a cover bonus. This reduces the chances of being hit from the other side. But beware, as certain covers can also be destroyed by the enemy 
+**Jagged Alliance Flashback Team:** You can stay behind different objects in the world to gain a cover bonus. This reduces the chances of being hit from the other side. But beware, as certain covers can also be destroyed by the enemy
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image7.jpg)
 
@@ -136,9 +136,12 @@ Costs and launch dates are to be decided in detail as we go into real production
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image10.jpg)
 
-----
+---
+
 Upload date: 2013-05-23. Last modified: 2013-05-23. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [gwathdring](https://gwathdring.tumblr.com/): A nice little interview with the team behind the successful Kickstarter courtesy of SmallDevTalk.

@@ -80,9 +80,12 @@ Yesterday I got the chance to have an interview with a member of the Yuki vs Pan
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image7.jpg)
 
-----
+---
+
 Upload date: 2013-03-22. Last modified: 2013-07-02. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [Chris Roberts](https://www.facebook.com/profile.php?id=724855682): The interview format is quite captivating, and when read alongside a viewing of the trailor, just makes me want to play it!

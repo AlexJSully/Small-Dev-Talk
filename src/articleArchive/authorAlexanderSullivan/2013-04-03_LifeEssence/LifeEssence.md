@@ -16,7 +16,7 @@ LifeEssence is a new innovative game that brings together the fun of adventure g
 
 **Small Dev Talk: Who are you in LifeEssence? What is the main character’s story?**
 
-**Anthony:** In LifeEssence you are the ‘Observer.’ this character is a human without a mouth. The reason for this is in his fight with Mental Illness he barred his emotions inside because he felt he would be judged or misunderstood had he spoken about them. Of course, this only made the Illness deeper, it caused more pain. The story of the Observer is centered around mainly Depression and how once in its grips, it’s hard to have it let go. Once a human, as he falls further into Illness he transforms and his mouth is lost. The Observer learns a lot in his journey, primarily about himself but also about other struggling characters. His story is about growth from the lowest depths of his suffering to complete contentment and acceptance. 
+**Anthony:** In LifeEssence you are the ‘Observer.’ this character is a human without a mouth. The reason for this is in his fight with Mental Illness he barred his emotions inside because he felt he would be judged or misunderstood had he spoken about them. Of course, this only made the Illness deeper, it caused more pain. The story of the Observer is centered around mainly Depression and how once in its grips, it’s hard to have it let go. Once a human, as he falls further into Illness he transforms and his mouth is lost. The Observer learns a lot in his journey, primarily about himself but also about other struggling characters. His story is about growth from the lowest depths of his suffering to complete contentment and acceptance.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image2.jpg)
 
@@ -48,7 +48,7 @@ LifeEssence is a new innovative game that brings together the fun of adventure g
 
 **Small Dev Talk: What is the environment like in LifeEssence?**
 
-**Anthony:** The environment in LifeEssence is based on Life really. We took what I felt in times of Depression and created environments based on the feeling. The dungeon for instance is a very lonely and dark place that feels claustrophobic and trapped. Other environments are the same way. We’ve made sure to make a progression and balance though because in healing comes better understanding and knowledge which makes things easier and more comfortable. 
+**Anthony:** The environment in LifeEssence is based on Life really. We took what I felt in times of Depression and created environments based on the feeling. The dungeon for instance is a very lonely and dark place that feels claustrophobic and trapped. Other environments are the same way. We’ve made sure to make a progression and balance though because in healing comes better understanding and knowledge which makes things easier and more comfortable.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image6.jpg)
 
@@ -60,11 +60,11 @@ LifeEssence is a new innovative game that brings together the fun of adventure g
 
 **Small Dev Talk: What inspired you to create LifeEssence?**
 
-**Anthony:** That’s a good question. I’ve been struggling with Depression since I was twelve years old. I’m now twenty. Mental Illness has surrounded me through my family and friends and I’ve always been drawn to people who have been hurting. This game is a way to reach out and share another perspective on what it’s like to have Mental Illness, and also to hopefully reduce the stigma surrounding it. Often times when I watch the news I see things about crimes committed and the person often has Mental Illness of some sort. I’m hoping that this game will not only be an awesome and fun experience, but also one that makes people think and empathize with those fighting something so vastly misunderstood. Hopefully it will even start more games that are about personal causes like this because I believe everyone should be heard and that equality is important. 
+**Anthony:** That’s a good question. I’ve been struggling with Depression since I was twelve years old. I’m now twenty. Mental Illness has surrounded me through my family and friends and I’ve always been drawn to people who have been hurting. This game is a way to reach out and share another perspective on what it’s like to have Mental Illness, and also to hopefully reduce the stigma surrounding it. Often times when I watch the news I see things about crimes committed and the person often has Mental Illness of some sort. I’m hoping that this game will not only be an awesome and fun experience, but also one that makes people think and empathize with those fighting something so vastly misunderstood. Hopefully it will even start more games that are about personal causes like this because I believe everyone should be heard and that equality is important.
 
 **Small Dev Talk: What is your favourite aspect of the game?**
 
-**Anthony:** My favourite aspect of the game is probably the environment and music. I had contacted many pretty well known bands about this project and I told them about the game and the cause behind it. All of them offered to help. The music fits the atmosphere perfectly and it’s just amazing to experience what once was a difficult time in my life come alive through music and art. Beyond difficult times, the positive comes out even more beautifully. The whole thing has been amazing to develop. I’m proud of many things with this game. 
+**Anthony:** My favourite aspect of the game is probably the environment and music. I had contacted many pretty well known bands about this project and I told them about the game and the cause behind it. All of them offered to help. The music fits the atmosphere perfectly and it’s just amazing to experience what once was a difficult time in my life come alive through music and art. Beyond difficult times, the positive comes out even more beautifully. The whole thing has been amazing to develop. I’m proud of many things with this game.
 
 **Small Dev Talk: What challenges did you and your team come across in the development of LifeEssence?**
 
@@ -76,7 +76,7 @@ LifeEssence is a new innovative game that brings together the fun of adventure g
 
 **Small Dev Talk: Do you have any advice to upcoming developers?**
 
-**Anthony:** Advice, definitely. 
+**Anthony:** Advice, definitely.
 
 Keep chasing your dreams. No matter how difficult, anything is obtainable with hard work. Through this project I’ve encountered so much kindness and I’ve even been able to work with some of my favorite musicians to make the soundtrack. As hard as it gets, it’ll get easier.
 
@@ -88,9 +88,12 @@ Keep chasing your dreams. No matter how difficult, anything is obtainable with h
 
 **Anthony:** Just keep doing what you do. Support indie development. Indie developers take risks to make dreams reality so that you can enjoy the games they make. Beyond that, keep updated at [www.facebook.com/lifeessencegame](https://www.facebook.com/LifeEssenceGame/) (definitely a good community) or [www.lifeessencegame.com](www.lifeessencegame.com), thank you for your interest.
 
-----
+---
+
 Upload date: 2013-04-03. Last modified: 2013-07-03. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [alamantus](https://alamantus.com/): This looks spectacular. I need to remember this game so I can check it out when it comes out.

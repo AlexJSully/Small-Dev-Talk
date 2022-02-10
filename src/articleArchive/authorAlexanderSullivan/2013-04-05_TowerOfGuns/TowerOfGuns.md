@@ -42,7 +42,7 @@ I recently got the chance to talk with the Joe Mirabello ([@blankslatejoe](https
 
 So, that said, similar to how you would unlock ships in FTL or how you might unlock classes in a more traditional roguelike, you unlock guns in Tower of Guns. How you play the game with a shotgun is very different than how you play with a saw blade launcher, but both can be advantageous in different circumstances.
 
-Additionally you can couple a gun choice with a 'perk’ at the beginning of each run attempt, and many of those are mobility based. Some perks can make it so you take no fall-damage; others make you move twice as fast, or double-jump without the need to find a jump-upgrade. You can mix and match perks and guns and creates some nice variety in how you play the game. 
+Additionally you can couple a gun choice with a 'perk’ at the beginning of each run attempt, and many of those are mobility based. Some perks can make it so you take no fall-damage; others make you move twice as fast, or double-jump without the need to find a jump-upgrade. You can mix and match perks and guns and creates some nice variety in how you play the game.
 
 **Small Dev Talk: What type of weapons will the player expected to see included in Tower of Guns?**
 
@@ -115,8 +115,10 @@ Additionally there are the more difficult enemies like the Grinder and the Angle
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image11.jpg)
 
-----
+---
+
 Upload date: 2013-04-05. Last modified: 2013-07-03. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

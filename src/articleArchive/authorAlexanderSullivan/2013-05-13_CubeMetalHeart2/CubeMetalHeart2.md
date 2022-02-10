@@ -6,7 +6,7 @@ Check out Small Dev Talk’s latest game review on Cube MetalHeart 2 - Combat Sq
 
 We gave it a 8/10
 
-Pros: 
+Pros:
 
      -Lots of gamemodes & maps
 
@@ -16,7 +16,7 @@ Pros:
 
      -Fast pace
 
-Cons: 
+Cons:
 
      -Not many online
 
@@ -24,11 +24,14 @@ Cons:
 
      -No respawn shield
 
-----
+---
+
 Upload date: 2013-05-13. Last modified: 2013-05-13. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [Valzew](https://www.youtube.com/channel/UC2vjIAfgvxlZUeajOugaEyw): You make cool vids! :D
 
 [Fannamedjacob](https://www.youtube.com/channel/UC8NW_t_2deov73WRzQMn1zQ): I really want to figure out the names of the songs..

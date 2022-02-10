@@ -8,9 +8,12 @@ You can also check out their trailer below.
 
 [![YouTube Video](https://img.youtube.com/vi/S9c4K2OhZPw/0.jpg)](https://www.youtube.com/watch?v=S9c4K2OhZPw)
 
-----
+---
+
 Upload date: 2013-07-16. Last modified: 2013-07-16. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [Chris Roberts](https://www.facebook.com/profile.php?id=724855682): The interview format is quite captivating, and when read alongside a viewing of the trailor, just makes me want to play it!

@@ -11,9 +11,12 @@ Website: [http://quickslickdeadly.com/](http://quickslickdeadly.com/)
 
 Either comment below or tweet to us [@SmallDevTalk](https://twitter.com/smalldevtalk) and tell us what you think of Quick Slick Deadly
 
-----
+---
+
 Upload date: 2013-07-13. Last modified: 2013-07-13. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
-[StardustSpeedman](https://www.youtube.com/channel/UCoQDv95LH5u9YT1-nT76buA): Thank you very much for putting my game's trailer here! *:D*
+
+[StardustSpeedman](https://www.youtube.com/channel/UCoQDv95LH5u9YT1-nT76buA): Thank you very much for putting my game's trailer here! _:D_

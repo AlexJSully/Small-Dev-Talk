@@ -6,7 +6,7 @@ It is time for you to become a warlord! Not long ago I got the chance to talk wi
 
 **Small Dev Talk: What is Warlords?**
 
-**Alen Magdic:** Warlords RTS: Clash of Thrones is tablet & mobile strategy game, set in fantasy world of Aldfarne. 
+**Alen Magdic:** Warlords RTS: Clash of Thrones is tablet & mobile strategy game, set in fantasy world of Aldfarne.
 
 On your journey to defeat fierce evil hordes, you’ll face various challenges which you can solve by applying your own tactics & strategies. You should choose your army carefully, since each unit has very different abilities.
 
@@ -16,7 +16,7 @@ By using a unique unit control and camp upgrades, you will be able to boost your
 
 **Alen Magdic:** There is quite deep story and lore behind World of Aldfarne. We’re keeping it as surprise for the community and complete lore will be released soon on our website. Here is small spoiler what Thrones are about.
 
-Throne is an expression for influence, sometimes referring to the sole strength of single men, sometimes referring to the declared dominion of House or Guild, or in other occasions, referred to cities or kingdoms, and where power is held, sovereignty upon ways of life is established – the war, trading and culture fall under its throne, and such throne represents controlled land, and such throne is well recognized. Ilsenthar is the strongest throne known in the Aldfarne, but any prospering conqueror would attempt to enslave the sovereignty of elven Houses, or break into the throne of dwarven Styrgard, capital of their culture.  In Aldfarne, the power of throne begins with one’s personage and the firm integrity of their actions, whether it be a single person or Guild.
+Throne is an expression for influence, sometimes referring to the sole strength of single men, sometimes referring to the declared dominion of House or Guild, or in other occasions, referred to cities or kingdoms, and where power is held, sovereignty upon ways of life is established – the war, trading and culture fall under its throne, and such throne represents controlled land, and such throne is well recognized. Ilsenthar is the strongest throne known in the Aldfarne, but any prospering conqueror would attempt to enslave the sovereignty of elven Houses, or break into the throne of dwarven Styrgard, capital of their culture. In Aldfarne, the power of throne begins with one’s personage and the firm integrity of their actions, whether it be a single person or Guild.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image2.jpg)
 
@@ -85,7 +85,7 @@ Each level is its own challenge. Your goal can be quite different, defeating cer
 
 **Small Dev Talk: What engine does Warlords run on?**
 
-**Alen Magdic:** We choose Unity, so we can release easily on multiple platforms. 
+**Alen Magdic:** We choose Unity, so we can release easily on multiple platforms.
 
 **Small Dev Talk: What is the expected launch date for Warlords and will it have a cost or will it be Free-To-Play?**
 
@@ -97,8 +97,10 @@ Each level is its own challenge. Your goal can be quite different, defeating cer
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image9.jpg)
 
-----
+---
+
 Upload date: 2013-05-19. Last modified: 2013-05-19. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

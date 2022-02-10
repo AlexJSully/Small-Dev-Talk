@@ -56,9 +56,9 @@ These are big plans, we know. But we hope all planned features will be released 
 
 **Saker Games:** Imagine that your clan lays siege on an enemy castle. There’s smoke and blood all over the battlefield. Cannon balls are hitting the ground right next to you. Then your soldier fires back, the stone walls fall apart then finally you start running to get into the castle and start fighting against other players. Using your skills you may become the hero of the day, while your team gives you a split of the loot.
 
-Or imagine that you’ve travelled quite a lot with your character, helped a lot of people during quest, fought many monsters, and collected a lot of treasure. What can you do? Rest a little bit. Buy a piece of land in a village or next to a city, build your own house or even a farm. 
+Or imagine that you’ve travelled quite a lot with your character, helped a lot of people during quest, fought many monsters, and collected a lot of treasure. What can you do? Rest a little bit. Buy a piece of land in a village or next to a city, build your own house or even a farm.
 
-I think these are the aspects I would like in a game like ATO. 
+I think these are the aspects I would like in a game like ATO.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image4.png)
 
@@ -88,8 +88,10 @@ See you soon on Indiegogo!
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image5.png)
 
-----
+---
+
 Upload date: 2013-07-29. Last modified: 2013-07-29. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

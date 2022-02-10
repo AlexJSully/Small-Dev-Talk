@@ -26,7 +26,7 @@ You travel across strange and horrifying sceneries. What are exactly those place
 
 **Small Dev Talk: How is Doorway a puzzle-ridden adventure? What puzzles will be included in Doorway?**
 
-**Saibot Studios:** There’re mind puzzles as well as timed and agility challenges. 
+**Saibot Studios:** There’re mind puzzles as well as timed and agility challenges.
 
 This could be in relation with the scenery but also against creatures.
 
@@ -102,9 +102,12 @@ And we’ll see about the Big TV for controller support. It could be a possibili
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image10.jpg)
 
-----
+---
+
 Upload date: 2013-06-03. Last modified: 2013-06-29. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [Chris Roberts](https://www.facebook.com/profile.php?id=724855682): The interview format is quite captivating, and when read alongside a viewing of the trailor, just makes me want to play it!

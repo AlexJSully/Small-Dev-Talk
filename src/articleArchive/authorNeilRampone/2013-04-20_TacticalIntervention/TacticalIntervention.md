@@ -6,7 +6,7 @@ Tactical Intervention is a brand new MMOFPS by OGPlanet that just came out of th
 
 **Small Dev Talk: What kind of a game is Tactical Intervention?**
 
-**Minh Le:** It’s a First-person multiplayer shooter in the same mold as Counter-Strike. It has more interactivity than CS, with the player able to do things such as roll, lean, blind fire, drive cars, rappel. There’s also a lot of equipment that players can use to help them win, such as shields, dogs, environmental items (such as fire extinguishers and propane tanks). 
+**Minh Le:** It’s a First-person multiplayer shooter in the same mold as Counter-Strike. It has more interactivity than CS, with the player able to do things such as roll, lean, blind fire, drive cars, rappel. There’s also a lot of equipment that players can use to help them win, such as shields, dogs, environmental items (such as fire extinguishers and propane tanks).
 
 [![YouTube Video](https://img.youtube.com/vi/T18I2Xr7HH8/0.jpg)](https://www.youtube.com/watch?v=T18I2Xr7HH8)
 
@@ -18,7 +18,7 @@ Tactical Intervention is a brand new MMOFPS by OGPlanet that just came out of th
 
 **Small Dev Talk: Is there anything that was learned from Counter Strike and improved upon for this game?**
 
-**Minh Le:** I was able to use a lot of the experience I had when programming and designing Counter-Strike to help guide me in developing TI.  I learned a lot from the mistakes I made when developing on Counter-Strike.. Obviously, since CS was developed 10 years ago, I’ve gotten better at programming code.
+**Minh Le:** I was able to use a lot of the experience I had when programming and designing Counter-Strike to help guide me in developing TI. I learned a lot from the mistakes I made when developing on Counter-Strike.. Obviously, since CS was developed 10 years ago, I’ve gotten better at programming code.
 
 ![image3](src\articleArchive\authorNeilRampone\2013-04-20_TacticalIntervention\image3.jpg)
 
@@ -46,7 +46,7 @@ Tactical Intervention is a brand new MMOFPS by OGPlanet that just came out of th
 
 **Small Dev Talk: What engine does your game run on?**
 
-**Minh Le:** It runs on a modified Portal2 engine (w/ CS:GO's  advanced shadow system)
+**Minh Le:** It runs on a modified Portal2 engine (w/ CS:GO's advanced shadow system)
 
 ![image7](src\articleArchive\authorNeilRampone\2013-04-20_TacticalIntervention\image7.jpg)
 
@@ -64,8 +64,10 @@ Don’t work on a project without having continual feedback from your target aud
 
 ![image9](src\articleArchive\authorNeilRampone\2013-04-20_TacticalIntervention\image9.jpg)
 
-----
+---
+
 Upload date: 2013-04-20. Last modified: 2013-04-20. Written by [Neil Rampone](https://twitter.com/BaphometGMG)
 
------
+---
+
 ## Archived public comments

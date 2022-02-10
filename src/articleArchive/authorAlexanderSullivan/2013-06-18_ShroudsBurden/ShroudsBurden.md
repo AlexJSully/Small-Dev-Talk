@@ -42,8 +42,10 @@ Today I got the chance to talk with C. Scott from ancientgames, the developer of
 
 **C. Scott:** The only thing I have to say is, get excited, there are passionate gamers, just like you, working on Shroud’s Burden!
 
-----
+---
+
 Upload date: 2013-06-18. Last modified: 2013-06-30. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

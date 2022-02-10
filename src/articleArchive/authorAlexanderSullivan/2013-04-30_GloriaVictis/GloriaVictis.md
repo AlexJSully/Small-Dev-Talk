@@ -102,8 +102,10 @@ Will you be an archer or a warrior as you tour the grand land of Gloria Victis, 
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-30_GloriaVictis\image11.jpg)
 
-----
+---
+
 Upload date: 2013-04-30. Last modified: 2013-04-30. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

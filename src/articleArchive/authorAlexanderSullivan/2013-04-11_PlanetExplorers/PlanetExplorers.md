@@ -6,7 +6,7 @@ Planet Explorers is an exciting new voxel based game. It is an RPG where you bui
 
 **Small Dev Talk: What is Planet Explorers?**
 
-**Zifei:** Planet Explorers is a marching cubes voxel based open world sandbox adventure RPG. The marching cubes algorithm allows the game to have deformable terrain but have a smooth look at the same time. The game mixes elements from many genres into one adventure, thus allowing the player to have a significant amount of freedom.  We've also included a very robust creations system in game where the player can create a lot of tools, vehicles, and objects. The game also features a very consistent and believable alien world, featuring strange fauna and wildlife, offering a deep immersion for the player.
+**Zifei:** Planet Explorers is a marching cubes voxel based open world sandbox adventure RPG. The marching cubes algorithm allows the game to have deformable terrain but have a smooth look at the same time. The game mixes elements from many genres into one adventure, thus allowing the player to have a significant amount of freedom. We've also included a very robust creations system in game where the player can create a lot of tools, vehicles, and objects. The game also features a very consistent and believable alien world, featuring strange fauna and wildlife, offering a deep immersion for the player.
 
 [![YouTube Video](https://img.youtube.com/vi/BxcaRhmHm18/0.jpg)](https://www.youtube.com/watch?v=BxcaRhmHm18)
 
@@ -116,11 +116,14 @@ After placing the key buildings, players will be able to go gather up the NPCs. 
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-11_PlanetExplorers\image13.jpg)
 
-----
+---
+
 Upload date: 2013-04-11. Last modified: 2013-07-03. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [alamantus](https://alamantus.com/): READ THIS INTERVIEW!
 
 DO IT

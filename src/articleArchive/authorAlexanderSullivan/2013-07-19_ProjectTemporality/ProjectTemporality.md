@@ -6,9 +6,12 @@ Check out Small Dev Talk’s first developer commentary interview on Project Tem
 
 [![YouTube Video](https://img.youtube.com/vi/QfkfDRJg31A/0.jpg)](https://www.youtube.com/watch?v=QfkfDRJg31A)
 
-----
+---
+
 Upload date: 2013-07-16. Last modified: 2013-07-16. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [Gianluca De Luca](https://www.youtube.com/channel/UCVHxPR98axAf8hEOGYq7iqw): looks awesome!

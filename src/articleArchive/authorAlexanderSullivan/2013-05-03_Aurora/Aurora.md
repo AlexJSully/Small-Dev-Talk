@@ -2,7 +2,7 @@
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image1.png)
 
-This is the twisted love story of Aurora. Recently I got the chance to talk with Robert Kouba, the director, writer and producer of a new upcoming film called Aurora from Vantis Pictures. You can check it out here at [http://aurorafilm.org/](http://aurorafilm.org/) and you can support the new indie film at their [Kickstarter](https://www.kickstarter.com/projects/vantispictures/aurora-twisted-robot-love-story?ref=card) here. 
+This is the twisted love story of Aurora. Recently I got the chance to talk with Robert Kouba, the director, writer and producer of a new upcoming film called Aurora from Vantis Pictures. You can check it out here at [http://aurorafilm.org/](http://aurorafilm.org/) and you can support the new indie film at their [Kickstarter](https://www.kickstarter.com/projects/vantispictures/aurora-twisted-robot-love-story?ref=card) here.
 
 **Small Dev Talk: What is Aurora?**
 
@@ -38,7 +38,7 @@ This is the twisted love story of Aurora. Recently I got the chance to talk with
 
 **Small Dev Talk: What inspired you to create Aurora?**
 
-**Robert Kouba:** I got inspired after reading the books by futurist Ray Kurzweil who believes in an actual Singularity in the next couple of decades. 
+**Robert Kouba:** I got inspired after reading the books by futurist Ray Kurzweil who believes in an actual Singularity in the next couple of decades.
 
 **Small Dev Talk: What is your favourite aspect of Aurora?**
 
@@ -58,7 +58,7 @@ This is the twisted love story of Aurora. Recently I got the chance to talk with
 
 **Small Dev Talk: How did you choose you actors? What were you and the team looking for?**
 
-**Robert Kouba:**When you write a screenplay, you already have a strong image of the characters. After a long pre-casting we found the perfect fit for my vision - Julian and Jeannine! 
+**Robert Kouba:**When you write a screenplay, you already have a strong image of the characters. After a long pre-casting we found the perfect fit for my vision - Julian and Jeannine!
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image4.png)
 
@@ -72,8 +72,10 @@ This is the twisted love story of Aurora. Recently I got the chance to talk with
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image5.png)
 
-----
+---
+
 Upload date: 2013-05-03. Last modified: 2013-05-03. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

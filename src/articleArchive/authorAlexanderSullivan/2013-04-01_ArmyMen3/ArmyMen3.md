@@ -12,7 +12,7 @@ Army Men III, another addition to the Army Men video game series is coming soon 
 
 **Small Dev Talk: Does Army Men III have a story and if so, what is it about?**
 
-**Franklin Iheanacho:** Yes, It takes place where Army Men II left off. 
+**Franklin Iheanacho:** Yes, It takes place where Army Men II left off.
 
 Since the death of Major Mylar, the Tan Army have begun to lose every battle. Even with the help of the Blue and Grey armies, they’re efforts were futile and the victory of the Green Army seemed imminent. However, the Insane Grey Doctor who was recently declared MIA, is still alive and has been furthering his research that he started back in the tropical zone of the plastic world, going beyond zombies and instead has found a new interest in the insects of the real world. Spawning creature after creature of the vilest order, The Grey Doctor’s power only grows with each passing moment. Seeking to capture and destroy the plastic world, The Doctor finally emerges back in the real world, with his new found army ready and at his command he launches an assault on all of the nations. But unknown to anyone, even the Tan General Plastro, the Grey Doctor has also recovered Major Mylar’s remains and with them, has created a weapon so powerful, it threatens the balance of both the real and the plastic worlds.
 
@@ -125,7 +125,7 @@ Be sure to check out our website or more updates.
 
 If you are experienced with the UDK and are willing to lend us a helping hand, you can contact us via our website.
 
-Also, be sure to sign up on the community forums and join any of our social networks. It really helps us a LOT as this game still lacks the publicity and support it needs and deserves. 
+Also, be sure to sign up on the community forums and join any of our social networks. It really helps us a LOT as this game still lacks the publicity and support it needs and deserves.
 
 [http://armymen3.com/forum/](http://armymen3.com/forum/)
 
@@ -133,9 +133,12 @@ The larger the community and fan base as well the more skilled developers we hav
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image8.jpg)
 
-----
+---
+
 Upload date: 2013-04-01. Last modified: 2013-08-19. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [azraelthebrony](https://azraelthebrony.tumblr.com/): I am so confused… Is this an April Fools Joke?

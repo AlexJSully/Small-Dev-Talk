@@ -6,17 +6,17 @@ Join Leland on his adventure in Shuttered City. Recently I got the chance to tal
 
 **Small Dev Talk: What is Shuttered City?**
 
-**Justin:** The Shuttered City is a six-chapter, 140 page graphic novel set in an extremely distant future where humanity has spread across the galaxy, but splintered into dozens of subspecies, either  through genetic engineering to adapt to alien worlds, or for other, more sinister reasons. Most of these subspecies of humanity have taken their place in the caste system imposed by the Empire of Man, but more than a few have hidden themselves in the shadows, ready to pounce on any who cross their path. The city of Sylvanshire is one such hiding place, and the slow revelation of the horror it conceals is the framework around which the story is built.
+**Justin:** The Shuttered City is a six-chapter, 140 page graphic novel set in an extremely distant future where humanity has spread across the galaxy, but splintered into dozens of subspecies, either through genetic engineering to adapt to alien worlds, or for other, more sinister reasons. Most of these subspecies of humanity have taken their place in the caste system imposed by the Empire of Man, but more than a few have hidden themselves in the shadows, ready to pounce on any who cross their path. The city of Sylvanshire is one such hiding place, and the slow revelation of the horror it conceals is the framework around which the story is built.
 
 **Small Dev Talk: What is the story in Shuttered City?**
 
-**Justin:** The story of The Shuttered City is heavily influenced by Lovecraft’s “The Shadow over Innsmouth” in that it is the (rather common) story of a regular person who wanders into a town that seems merely *off* at first viewing, but is soon revealed to be concealing dark secrets. Without giving too much away, I can say that the residents of the town are not nearly as “human” as they first appear, and they have very specific reasons for wanting to get a hold of the main character.
+**Justin:** The story of The Shuttered City is heavily influenced by Lovecraft’s “The Shadow over Innsmouth” in that it is the (rather common) story of a regular person who wanders into a town that seems merely _off_ at first viewing, but is soon revealed to be concealing dark secrets. Without giving too much away, I can say that the residents of the town are not nearly as “human” as they first appear, and they have very specific reasons for wanting to get a hold of the main character.
 
 **Small Dev Talk: What type of characters will we see in Shuttered City?**
 
-**Justin:** The main characters are Leland and Ishmael, who are both “Low-Chimera"  that is to say they’re animal-human hybrids who are low men on the totem pole of society. They’re generally treated by the rest of society as servants or pets, looked down upon by even other Chimera.  Leland is an outsider, Ishmael is a Sylvanshire native; they meet each other after a fight with some local security, and they’re growing friendship throughout the story serves as a counterpoint to the encroaching darkness of the setting.
+**Justin:** The main characters are Leland and Ishmael, who are both “Low-Chimera" that is to say they’re animal-human hybrids who are low men on the totem pole of society. They’re generally treated by the rest of society as servants or pets, looked down upon by even other Chimera. Leland is an outsider, Ishmael is a Sylvanshire native; they meet each other after a fight with some local security, and they’re growing friendship throughout the story serves as a counterpoint to the encroaching darkness of the setting.
 
-On the other side are the citizens and…denizens of Sylvanshire: The sinister leader of the local cult, with his plastered on smile and hidden agenda, and Councilman Waldgrave, the political boss of the town, who seeks to lead the city into the future, while keeping its secrets well-hidden. Both of them are willing to kill, and worse, for Sylvanshire, but for sheer terror they can’t hold a candle to The Great Hag of the Woods, and her minions. They are the true masters of Sylvanshire, and the reason it was founded;  they have ruled it in secret, and unopposed for hundreds of years.
+On the other side are the citizens and…denizens of Sylvanshire: The sinister leader of the local cult, with his plastered on smile and hidden agenda, and Councilman Waldgrave, the political boss of the town, who seeks to lead the city into the future, while keeping its secrets well-hidden. Both of them are willing to kill, and worse, for Sylvanshire, but for sheer terror they can’t hold a candle to The Great Hag of the Woods, and her minions. They are the true masters of Sylvanshire, and the reason it was founded; they have ruled it in secret, and unopposed for hundreds of years.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image2.jpg)
 
@@ -24,7 +24,7 @@ On the other side are the citizens and…denizens of Sylvanshire: The sinister l
 
 **Justin:** Leland is by nature a rather sweet and gentle soul, but disappointment and tragedy have made him bitter and melancholic. Long ago he was a essentially a slave in a well-to-do human household, serving as caretaker for a young girl, with whom he was very close. But when the father realized the girl had more respect for Leland, who was actually raising her, than she did for her own father, he had Leland expelled. This betrayal has marked his character through many subsequent adventures, and made him somewhat desperate in his affections.
 
-I originally conceived the prototype of Leland a few years ago as a reaction against the violent tough-guy characters I had created in my youth. I wanted to create a character who didn’t have violence as an option to solve his problems. Of course, he still has to fight his way out of a few scraps, but he’s certainly no action hero.  Beyond that, I’ve always had an interest in anthro-art, and it seemed a fitting choice from a story point-of-view to make him a rabbit.
+I originally conceived the prototype of Leland a few years ago as a reaction against the violent tough-guy characters I had created in my youth. I wanted to create a character who didn’t have violence as an option to solve his problems. Of course, he still has to fight his way out of a few scraps, but he’s certainly no action hero. Beyond that, I’ve always had an interest in anthro-art, and it seemed a fitting choice from a story point-of-view to make him a rabbit.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image3.jpg)
 
@@ -36,7 +36,7 @@ I originally conceived the prototype of Leland a few years ago as a reaction aga
 
 **Small Dev Talk: Why did you choose to make your graphic novel black and white compared to colour?**
 
-**Justin:** Well, since it is an independent comic and on a limited budget, I decided to stick with black and white, since getting printed copies out was always part of the plan, and color printing is quite costly. Beyond that,  doing pages in ink-wash is quite time consuming, and adding color would have doubled the time it took to paint the pages. Doing a full-color painted book would be a dream, but I’d have to have some kind of help, or a lot of time and money, to do such a thing.
+**Justin:** Well, since it is an independent comic and on a limited budget, I decided to stick with black and white, since getting printed copies out was always part of the plan, and color printing is quite costly. Beyond that, doing pages in ink-wash is quite time consuming, and adding color would have doubled the time it took to paint the pages. Doing a full-color painted book would be a dream, but I’d have to have some kind of help, or a lot of time and money, to do such a thing.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image5.jpg)
 
@@ -46,7 +46,7 @@ I originally conceived the prototype of Leland a few years ago as a reaction aga
 
 **Small Dev Talk: Do you intend to bring any meaning or moral from Shuttered City?**
 
-**Justin:** No meaning per se, but obviously my own outlook and viewpoints influences the story.  I think with a story like this, where the characters are just trying to survive the onslaught of horror, there aren’t many opportunities for soap-boxing.  Better to just write honestly than to try and bend the narrative to fit your “message.”
+**Justin:** No meaning per se, but obviously my own outlook and viewpoints influences the story. I think with a story like this, where the characters are just trying to survive the onslaught of horror, there aren’t many opportunities for soap-boxing. Better to just write honestly than to try and bend the narrative to fit your “message.”
 
 **Small Dev Talk: What type of challenges did you and your team face in the creation of Shuttered City?**
 
@@ -64,7 +64,7 @@ I originally conceived the prototype of Leland a few years ago as a reaction aga
 
 **Small Dev Talk: Do you have any advice for upcoming graphic artists and writers?**
 
-**Justin:** There are lots of people out there who say “I want to make a comic.” or “You know I’ve been thinking of making a graphic novel.” in a very casual way, as if it’s something you can do as a hobby or pastime.  I don’t want to be discouraging, but I can tell you from personal experience that making a comic, if you want it to be good, is one of the hardest, most time-consuming things you will ever do.  To succeed, you must treat it as a job, and take it just as seriously.
+**Justin:** There are lots of people out there who say “I want to make a comic.” or “You know I’ve been thinking of making a graphic novel.” in a very casual way, as if it’s something you can do as a hobby or pastime. I don’t want to be discouraging, but I can tell you from personal experience that making a comic, if you want it to be good, is one of the hardest, most time-consuming things you will ever do. To succeed, you must treat it as a job, and take it just as seriously.
 
 My advice is: Plan it out ahead of time, have an entire story arc ready to go before you put pen to paper. You do not want to write yourself into a corner after drawing dozens of pages. Revise the story in manuscript form, and then revise it AGAIN in thumbnail form, and THEN start creating the final artwork.
 
@@ -78,8 +78,10 @@ My advice is: Plan it out ahead of time, have an entire story arc ready to go be
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image7.jpg)
 
-----
+---
+
 Upload date: 2013-07-16. Last modified: 2013-07-16. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

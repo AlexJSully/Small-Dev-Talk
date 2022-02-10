@@ -4,9 +4,9 @@
 
 It has been 132 years since the Reset and now, it is your turn to explore this world. This is opportunity. This is After Reset. Not long ago, I got the chance to talk with Mr. Nixon on his new game, After Reset. You can find out more about the game on their [website](http://www.afterreset.com/).
 
-**Small Dev Talk: What is After Reset RPG?** 
+**Small Dev Talk: What is After Reset RPG?**
 
-**Mr. Nixon:** After Reset RPG  is a classic open world roleplaying game with an old school top-down view, in which the action takes place in the future on a slowly dying Earth after a nuclear cataclysm that destroyed nearly all life on the planet.
+**Mr. Nixon:** After Reset RPG is a classic open world roleplaying game with an old school top-down view, in which the action takes place in the future on a slowly dying Earth after a nuclear cataclysm that destroyed nearly all life on the planet.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image2.png)
 
@@ -20,7 +20,7 @@ An unfamiliar woman’s voice wakes you up with phrases like “Wake up, Command
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image3.png)
 
-**Small Dev Talk: Can you go in detail with us about the branching character development system in After Reset RPG? What type of perks and skills will the player be able to choose from in After Reset RPG?** 
+**Small Dev Talk: Can you go in detail with us about the branching character development system in After Reset RPG? What type of perks and skills will the player be able to choose from in After Reset RPG?**
 
 **Mr. Nixon:** I’m still working on our game mechanic, SACPIC, so any details aren’t for sure, and could change. In general terms, it takes the best (from my point of view as a player and Game/Dungeon Master) features from DnD (specifically edition 3.5) and SPECIAL (the development of which should have been integrated into Fallout Van Buren).
 
@@ -36,7 +36,7 @@ But I can already say that the level of the player will top out at level 20, but
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image5.png)
 
-**Small Dev talk: How is the co-op going to work in After Reset RPG?** 
+**Small Dev talk: How is the co-op going to work in After Reset RPG?**
 
 **Mr. Nixon:** For now, let’s let that stay a secret. We don’t want to tie that down for marketing reasons. The game will not have to be connected to the internet, there will not be DRM-protection , nor an in-game store, auctions or other heresies. All the same there will be plenty of good reasons, in my opinion, for you to WANT to play the game with the internet on.
 
@@ -50,7 +50,7 @@ If your question is what are feats, which you have to accomplish to have this or
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image7.png)
 
-**Small Dev Talk: What type of enemies will the player come across in After Reset RPG?** 
+**Small Dev Talk: What type of enemies will the player come across in After Reset RPG?**
 
 **Mr. Nixon:** Mankind’s biggest enemy is people themselves. But other than other people, you could come across such beings as Animals, Synthetics, Biomass, Aliens, Aberrations and some others. Each species could have several subspecies.
 
@@ -74,7 +74,7 @@ Well, if you’re totally disillusioned with humanity, or generally find your se
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image9.png)
 
-**Small Dev Talk: What inspired you to create After Reset RPG?** 
+**Small Dev Talk: What inspired you to create After Reset RPG?**
 
 I was sick of waiting for a decent Fallout 3 :) But to be serious, yes I was really sick of waiting for an interesting RPG to come out. Over the last 4 years I made Fallout D20, the fan-made PW NWN2 and got it to a playable server. But due to legal issues, I had to stop development. And then, from my 20 years of experience as a gamer, 6 years of experience as a Dungeon Master, and 5-year experience as a businessman, the setting of After Reset was born.
 
@@ -86,7 +86,7 @@ Intenseness of development of the game sharply grew after I found out about Kick
 
 **Mr. Nixon:** Atmosphere, Story, Roleplaying, and Freedom of Actions.
 
-**Small Dev Talk: What challenges did you and your team come across in the development of After Reset RPG?** 
+**Small Dev Talk: What challenges did you and your team come across in the development of After Reset RPG?**
 
 **Mr. Nixon:** Just as in anything, the basic problem, and simultaneously secret to success is people. It’s really hard to find high quality experts in their business with an adequate self-assessment.
 
@@ -96,15 +96,15 @@ Intenseness of development of the game sharply grew after I found out about Kick
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image11.png)
 
-**Small Dev Talk: What is the expected release date for After Reset RPG and how much will it cost or will it be Free-To-Play?** 
+**Small Dev Talk: What is the expected release date for After Reset RPG and how much will it cost or will it be Free-To-Play?**
 
 **Mr. Nixon:** If we get support on Kickstarter, I think we can expect this game to come out in around 1-2 years. If no, then we’re talking about 5 years. Here’s the simple math:
 
-Game = Time * Money * Perseverance.
+Game = Time _ Money _ Perseverance.
 
-Money = Time * Perseverance.
+Money = Time \* Perseverance.
 
-Thus, Game = Time² * Perseverance or Game = Money² * Perseverance
+Thus, Game = Time² _ Perseverance or Game = Money² _ Perseverance
 
 I’m not much for Perseverance, so the release date will be totally dependent on the wishes of the gamers.
 
@@ -114,8 +114,10 @@ I’m not much for Perseverance, so the release date will be totally dependent o
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image12.png)
 
-----
+---
+
 Upload date: 2013-08-22. Last modified: 2013-08-22. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

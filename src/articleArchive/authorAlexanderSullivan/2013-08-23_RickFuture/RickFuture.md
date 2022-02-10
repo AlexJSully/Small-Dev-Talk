@@ -4,7 +4,7 @@
 
 The future of point and click gameplay starts with Rick Future. Recently I got the chance to talk with Sascha from Metal Pop Games on their upcoming sci-fi adventure game, Rick Future. You can find more about their game on their [website](http://www.rick-future.com/) or support them on [Steam Greenlight](https://steamcommunity.com/sharedfiles/filedetails/?id=93230269).
 
-**Small Dev Talk: What is Rick Future?** 
+**Small Dev Talk: What is Rick Future?**
 
 **Sascha:** Rick Future is sci-fi adventure game. Classic point and click gameplay, but built with a modern 3D engine. You can expect many puzzles and an original and deep story. The game is based on a popular German sci-fi audio play series also called Rick Future. As the player you will take control of all three main characters, Rick, Hubert and Evi, the crew of the space ship ERIC and set out on a big adventure.
 
@@ -12,9 +12,9 @@ The future of point and click gameplay starts with Rick Future. Recently I got t
 
 **Small Dev Talk: What is the story in Rick Future?**
 
-**Sascha:** We have a completely unique and standalone story in the game which does not require the player to know anything about the series. The story in an adventure game is quite important, even more important than in many other types of games I think. Many players play adventure games just to experience a great story, so we are taking great care to craft an interesting and engaging story for the game. Of course I do not want to spoil too much here, but there is quite an adventure waiting for the player. A simple routine cargo run leads Rick and the crew of his spaceship into the dangerous Gon’Dual sector, near the outer territories. Just delivering a cargo of some freight containers turns into a dangerous threat when they are attacked by pirates who show quite an interest in their seemingly harmless cargo. Well… and maybe also an interest in collecting the bounty which has been put on Ricks head… 
+**Sascha:** We have a completely unique and standalone story in the game which does not require the player to know anything about the series. The story in an adventure game is quite important, even more important than in many other types of games I think. Many players play adventure games just to experience a great story, so we are taking great care to craft an interesting and engaging story for the game. Of course I do not want to spoil too much here, but there is quite an adventure waiting for the player. A simple routine cargo run leads Rick and the crew of his spaceship into the dangerous Gon’Dual sector, near the outer territories. Just delivering a cargo of some freight containers turns into a dangerous threat when they are attacked by pirates who show quite an interest in their seemingly harmless cargo. Well… and maybe also an interest in collecting the bounty which has been put on Ricks head…
 
-With no choice left Rick maneuvers the Eric, his seasoned and sturdy cargo ship, into the mysterious Corvula nebula to hide from his pursuers. But instead of escaping, the Eric collides with an old alien emergency probe which holds an ancient distress call from a long forgotten alien ship. And suddenly the crew of the Eric in the middle of a new adventure which leads them through the dangerous Gon’Dual sector, where they do not know who is friend or foe… 
+With no choice left Rick maneuvers the Eric, his seasoned and sturdy cargo ship, into the mysterious Corvula nebula to hide from his pursuers. But instead of escaping, the Eric collides with an old alien emergency probe which holds an ancient distress call from a long forgotten alien ship. And suddenly the crew of the Eric in the middle of a new adventure which leads them through the dangerous Gon’Dual sector, where they do not know who is friend or foe…
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image2.jpg)
 
@@ -50,7 +50,7 @@ We wanted to make the conversations in the game as meaningful as possible. All t
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image5.jpg)
 
-**Small Dev Talk: What inspired you to create Rick Future?** 
+**Small Dev Talk: What inspired you to create Rick Future?**
 
 **Sascha:** After having worked on many big AAA games like Crysis, we really wanted to make something smaller and something that allows us to put in all our crazy ideas. These days, in big AAA productions you cannot just say, ‘Hey I have this great idea, let’s put it in’. Everything is planned many months in advance, which makes it very difficult to make changes or add in new ideas. So we said, let’s build an adventure game in 3D. This allows us to put in all the features and ideas that are very hard to add in a big large scale production.
 
@@ -60,7 +60,7 @@ We wanted to make the conversations in the game as meaningful as possible. All t
 
 **Small Dev Talk: What challenges did you and your team come across in the development of Rick Future?**
 
-**Sascha:** Coming from the corporate AAA world where you just throw money at problems to make them go away, we had to learn that producing a game with a low budget is much more difficult. Solving problems without having a big budget is hard - really hard. You can’t just say, ’Hey let’s make some concept art of this location before building it’, because there is no money to pay the artist. Then again, maybe this circumstance challenges you to be more creative, work with what you have and focus on the important parts. 
+**Sascha:** Coming from the corporate AAA world where you just throw money at problems to make them go away, we had to learn that producing a game with a low budget is much more difficult. Solving problems without having a big budget is hard - really hard. You can’t just say, ’Hey let’s make some concept art of this location before building it’, because there is no money to pay the artist. Then again, maybe this circumstance challenges you to be more creative, work with what you have and focus on the important parts.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image6.jpg)
 
@@ -70,7 +70,7 @@ We wanted to make the conversations in the game as meaningful as possible. All t
 
 There are probably a million more things that I could list… J
 
-**Small Dev Talk: Why did you choose to use CryENGINE to develop Rick Future?** 
+**Small Dev Talk: Why did you choose to use CryENGINE to develop Rick Future?**
 
 **Sascha:** Using CryENGINE was a logical choice for us. Everybody in our team is very experienced with the engine since we have worked with it for many years. In addition to this CryENGINE is a very powerful engine that allows us to do very complex things in a short amount of time. It not only the rendering that makes CryENGINE great but the toolkit it comes with.
 
@@ -88,8 +88,10 @@ There are probably a million more things that I could list… J
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image7.png)
 
-----
+---
+
 Upload date: 2013-08-23. Last modified: 2013-08-23. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

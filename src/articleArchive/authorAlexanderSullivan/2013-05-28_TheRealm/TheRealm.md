@@ -94,8 +94,10 @@ It’s time for a new adventure with Sarina and Toru in The Realm. Recently, we 
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-28_TheRealm\image10.jpg)
 
-----
+---
+
 Upload date: 2013-05-28. Last modified: 2013-05-28. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

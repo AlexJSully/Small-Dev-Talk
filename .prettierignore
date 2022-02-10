@@ -4,6 +4,9 @@
 sw.js
 *.js.map
 
+# Packages
+src/scripts/libraries
+
 # misc
 .DS_Store
 .env.local
@@ -14,6 +17,7 @@ sw.js
 
 # workbox
 workbox-config.js
+src/serviceWorker
 
 # Visual Studio Code
 .vscode/settings.json

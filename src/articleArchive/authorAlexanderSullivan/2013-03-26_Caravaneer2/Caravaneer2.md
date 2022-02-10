@@ -6,7 +6,7 @@ The great sequel to Caravaneer is coming soon and I got the chance to talk with 
 
 **Small Dev Talk: What is Caravaneer 2?**
 
-**Dmitry Zheltobriukhov:** Caravaneer 2 is a free single player browser-based game. It can be downloaded and played offline too, but some features will only be available in online mode. 
+**Dmitry Zheltobriukhov:** Caravaneer 2 is a free single player browser-based game. It can be downloaded and played offline too, but some features will only be available in online mode.
 
 [![YouTube Video](https://img.youtube.com/vi/5MSFJ30FFZ0/0.jpg)](https://www.youtube.com/watch?v=5MSFJ30FFZ0)
 
@@ -18,7 +18,7 @@ The great sequel to Caravaneer is coming soon and I got the chance to talk with 
 
 **Small Dev Talk: What is new in Caravaneer 2 that Caravaneer did not have?**
 
-**Dmitry Zheltobriukhov:** Some of the most significant innovations are isometric battles (instead of top-down view), a larger set of more specific skills,  a morale system, more developed reputation factor and more complex relations with different factions as well as slavery, business ownership, electricity, different kinds of food, illegal goods and other, less significant features.
+**Dmitry Zheltobriukhov:** Some of the most significant innovations are isometric battles (instead of top-down view), a larger set of more specific skills, a morale system, more developed reputation factor and more complex relations with different factions as well as slavery, business ownership, electricity, different kinds of food, illegal goods and other, less significant features.
 
 ![image3](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image3.jpg)
 
@@ -76,8 +76,10 @@ The great sequel to Caravaneer is coming soon and I got the chance to talk with 
 
 ![image6](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image6.jpg)
 
-----
+---
+
 Upload date: 2013-03-26. Last modified: 2013-07-03. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

@@ -76,8 +76,10 @@ Soon, you’ll see what an 11-year old’s imagination can create.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image5.jpg)
 
-----
+---
+
 Upload date: 2013-03-09. Last modified: 2013-07-03. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

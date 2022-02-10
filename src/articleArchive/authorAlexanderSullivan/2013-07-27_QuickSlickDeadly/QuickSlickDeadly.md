@@ -82,9 +82,12 @@ You got to be quick, slick and deadly to win this fight. Recently I got the chan
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-07-27_QuickSlickDeadly\image9.jpg)
 
-----
+---
+
 Upload date: 2013-07-27. Last modified: 2013-07-27. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
-[StardustSpeedman](https://www.youtube.com/channel/UCoQDv95LH5u9YT1-nT76buA): Thank you very much for putting my game's trailer here! *:D*
+
+[StardustSpeedman](https://www.youtube.com/channel/UCoQDv95LH5u9YT1-nT76buA): Thank you very much for putting my game's trailer here! _:D_

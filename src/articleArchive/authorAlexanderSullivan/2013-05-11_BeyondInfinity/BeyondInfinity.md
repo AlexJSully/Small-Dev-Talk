@@ -68,11 +68,14 @@ Always keep learning. I am always amazed at how much there is to learn in this w
 
 **Small Dev Talk: Do you have anything to say towards the readers?**
 
-**Charles Fischer:** I wrote the novel to get people more excited and interested in numbers and mathematics, so please get involved in the conversation! The website is [www.BeyondInfinityBook.com](http://beyondinfinitybook.com/) and it will be a place where people can share their cool ideas and interesting facts. 
+**Charles Fischer:** I wrote the novel to get people more excited and interested in numbers and mathematics, so please get involved in the conversation! The website is [www.BeyondInfinityBook.com](http://beyondinfinitybook.com/) and it will be a place where people can share their cool ideas and interesting facts.
 
-----
+---
+
 Upload date: 2013-05-11. Last modified: 2013-05-11. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [Charles Fischer](https://www.facebook.com/charles.fischer.581): Very cool to be interviewed about my upcoming novel! http://smalldevtalk.com/post/50178611110/beyond-infinity

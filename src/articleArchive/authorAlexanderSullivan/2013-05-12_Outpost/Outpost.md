@@ -90,8 +90,10 @@ Would you rather right for the Pangean Civil Defence or the Peagean Federation? 
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-12_Outpost\image9.png)
 
-----
+---
+
 Upload date: 2013-05-12. Last modified: 2013-05-12. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

@@ -106,9 +106,12 @@ And at the moment, we’re trying hard to raise funds for the game. Please show 
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-15_Titanic\image12.jpg)
 
-----
+---
+
 Upload date: 2013-04-15. Last modified: 2013-04-15. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [neverletgo-love](https://neverletgo-love.tumblr.com/): I MUST HAVE THIS GAME OMG AHH

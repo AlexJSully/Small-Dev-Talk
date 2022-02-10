@@ -12,11 +12,11 @@ FREE-TO-PLAY! Stone Rage is a Free-To-Play online third person multiplayer actio
 
 **Small Dev Talk: Is there a story and if so, what is it about?**
 
-**Mountainwheel Games:** Stone Rage tells not one specific story, but rather allows the players to tell their own stories of survival and heroism.  While the setting of the game places it in a unique position within the story of Humanity as a whole, we take care not to depict any specific moment in history.
+**Mountainwheel Games:** Stone Rage tells not one specific story, but rather allows the players to tell their own stories of survival and heroism. While the setting of the game places it in a unique position within the story of Humanity as a whole, we take care not to depict any specific moment in history.
 
 **Small Dev Talk: What time period is this game set in and why that time period?**
 
-**Mountainwheel Games:** Stone Rage is set within the Pleistocene and Eocene eras.  That was a truly pivotal time during human evolution, and is dramatically under-represented in the context of modern games.  It is a period in which Humanity truly became the world-dominating species it is today, and the last time we truly interacted with other species as equals.
+**Mountainwheel Games:** Stone Rage is set within the Pleistocene and Eocene eras. That was a truly pivotal time during human evolution, and is dramatically under-represented in the context of modern games. It is a period in which Humanity truly became the world-dominating species it is today, and the last time we truly interacted with other species as equals.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-19_StoneRage\image2.jpg)
 
@@ -30,13 +30,13 @@ FREE-TO-PLAY! Stone Rage is a Free-To-Play online third person multiplayer actio
 
 **Small Dev Talk: How is the multiplayer going to work in this game?**
 
-**Mountainwheel Games:** In multiplayer, 2 groups of players are collected from one of the 3 playable races (Human, Neanderthal or Animal).  That means one team might be Animal, and the other might be Neanderthal, for example.  For each pairing, a different scenario is picked.  In the case of Animal vs Neanderthal, the scenario is: “Watering Hole”.  At the beginning of the match, the animals start out in one big group, clustered around their camp, with baby animals to protect.  The neanderthals are hunting them.  The Neanderthals win if they can kill all the baby animals or all of the adult animals controlled by players, and the Animals win if they can kill all the Neanderthals or outlast the timer.
+**Mountainwheel Games:** In multiplayer, 2 groups of players are collected from one of the 3 playable races (Human, Neanderthal or Animal). That means one team might be Animal, and the other might be Neanderthal, for example. For each pairing, a different scenario is picked. In the case of Animal vs Neanderthal, the scenario is: “Watering Hole”. At the beginning of the match, the animals start out in one big group, clustered around their camp, with baby animals to protect. The neanderthals are hunting them. The Neanderthals win if they can kill all the baby animals or all of the adult animals controlled by players, and the Animals win if they can kill all the Neanderthals or outlast the timer.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-19_StoneRage\image3.jpg)
 
 **Small Dev Talk: What type of character classes will there be and can you describe their role in Stone Rage?**
 
-**Mountainwheel Games:** We’ve got a ton of character classes lined up for lots of different roles and player types.  The core roles of Tank, DPS and Healer are all there, with several class choices for each.  Counting all the skill and weapon configurations that are possible creates thousands of possible customized player experiences.  Whether you like lying in wait in the tall grass as a Gastornis or charging through the gates as a Mammoth, there is a class for you in Stone Rage.
+**Mountainwheel Games:** We’ve got a ton of character classes lined up for lots of different roles and player types. The core roles of Tank, DPS and Healer are all there, with several class choices for each. Counting all the skill and weapon configurations that are possible creates thousands of possible customized player experiences. Whether you like lying in wait in the tall grass as a Gastornis or charging through the gates as a Mammoth, there is a class for you in Stone Rage.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-19_StoneRage\image4.jpg)
 
@@ -58,19 +58,19 @@ FREE-TO-PLAY! Stone Rage is a Free-To-Play online third person multiplayer actio
 
 **Small Dev Talk: What is your favourite aspect of the game?**
 
-**Mountainwheel Games:** I love the beautiful, lush worlds our artists have created.  The pre-historic setting is a really powerful thing to play in.
+**Mountainwheel Games:** I love the beautiful, lush worlds our artists have created. The pre-historic setting is a really powerful thing to play in.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-19_StoneRage\image6.jpg)
 
 **Small Dev Talk: What engine does your game run on and does this game require high specs to play?**
 
-**Mountainwheel Games:** Stone Rage uses CryEngine 3 to produce beautiful visuals on a wide range of hardware.  While the game will look fantastic on high end PCs, it will scale down very well to entry-level hardware.
+**Mountainwheel Games:** Stone Rage uses CryEngine 3 to produce beautiful visuals on a wide range of hardware. While the game will look fantastic on high end PCs, it will scale down very well to entry-level hardware.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-19_StoneRage\image7.jpg)
 
 **Small Dev Talk: What is it like being part of an indie development team? What challenges did your team face?**
 
-**Mountainwheel Games:** It’s a lot of work!  We love what we do, but it’s always a challenge.  The Stone Rage team in particular is globally distributed, so it can be tough to coordinate everyone.
+**Mountainwheel Games:** It’s a lot of work! We love what we do, but it’s always a challenge. The Stone Rage team in particular is globally distributed, so it can be tough to coordinate everyone.
 
 **Small Dev Talk: What is the expected launch date for Stone Rage and will it have a cost or will it be Free-To-Play?**
 
@@ -78,12 +78,14 @@ FREE-TO-PLAY! Stone Rage is a Free-To-Play online third person multiplayer actio
 
 **Small Dev Talk: Do you have anything to say towards the reader?**
 
-**Mountainwheel Games:** Thanks for your interest in Stone Rage.  You’ve got a few months left to prepare, after that, get ready to have your face bitten off!
+**Mountainwheel Games:** Thanks for your interest in Stone Rage. You’ve got a few months left to prepare, after that, get ready to have your face bitten off!
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-19_StoneRage\image8.jpg)
 
-----
+---
+
 Upload date: 2013-08-19. Last modified: 2013-08-19. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

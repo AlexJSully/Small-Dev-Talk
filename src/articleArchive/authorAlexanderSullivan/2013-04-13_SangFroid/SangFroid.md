@@ -2,7 +2,7 @@
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image1.jpg)
 
-With the recent release of Sang-Froid – Tales of Werewvoles, I got the chance to talk to with the developers from Artifice Studio of this amazing Steam Greenlight game and ask them questions about Sang-Froid – Tales of Werwolves. The game’s official website is [http://www.sangfroidgame.com/](http://www.sangfroidgame.com/) but you can purchase the game today on Steam for $14.99 [here](https://store.steampowered.com/app/227220/SangFroid__Tales_of_Werewolves/). 
+With the recent release of Sang-Froid – Tales of Werewvoles, I got the chance to talk to with the developers from Artifice Studio of this amazing Steam Greenlight game and ask them questions about Sang-Froid – Tales of Werwolves. The game’s official website is [http://www.sangfroidgame.com/](http://www.sangfroidgame.com/) but you can purchase the game today on Steam for $14.99 [here](https://store.steampowered.com/app/227220/SangFroid__Tales_of_Werewolves/).
 
 **Small Dev Talk: What is Sang-Froid – Tales of Werewolves?**
 
@@ -132,8 +132,10 @@ On the close-combat side, we have 2 main categories: industrial-made lumberjack 
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image13.jpg)
 
-----
+---
+
 Upload date: 2013-04-13. Last modified: 2013-07-03. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

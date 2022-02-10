@@ -20,8 +20,10 @@ We care for you and we are here for you!
 
 (via [jamiebeats](https://jamiebeats.tumblr.com/post/74659439870/joo-hyun-you-can-send-me-an-message-at))
 
-----
+---
+
 Upload date: 2014-01-26. Last modified: 2014-01-26. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

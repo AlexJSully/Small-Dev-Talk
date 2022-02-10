@@ -2,7 +2,7 @@
 
 ![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg)
 
-Sammy uses her gift for mathematics and enlist her “frenemies” to revamp the school penny drive into a major moneymaking operations in CENTS, new upcoming movie by Christopher Boone. You can support them on [[Kickstarter](https://www.kickstarter.com/projects/958208495/cents-feature-film)](https://www.[Kickstarter](https://www.kickstarter.com/projects/958208495/cents-feature-film).com/projects/958208495/cents-feature-film) and find out more on their [website](http://centsthemovie.com/).
+Sammy uses her gift for mathematics and enlist her “frenemies” to revamp the school penny drive into a major moneymaking operations in CENTS, new upcoming movie by Christopher Boone. You can support them on [[Kickstarter](https://www.kickstarter.com/projects/958208495/cents-feature-film)](<https://www.[Kickstarter](https://www.kickstarter.com/projects/958208495/cents-feature-film).com/projects/958208495/cents-feature-film>) and find out more on their [website](http://centsthemovie.com/).
 
 **Small Dev Talk: What is the story in CENTS?**
 
@@ -64,9 +64,12 @@ At the same time, I’ve always liked math and wanted to include it in a story i
 
 ![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg)
 
-----
+---
+
 Upload date: 2013-02-02. Last modified: 2013-02-02. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [joo-hyun](https://joo-hyun.tumblr.com/): I so wanna see this movie! :D

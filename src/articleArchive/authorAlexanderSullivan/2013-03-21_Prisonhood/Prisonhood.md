@@ -24,7 +24,7 @@ I recently got the chance to talk with the developers of the upcoming social gam
 
 **Small Dev Talk: Is there or will there be any multiplayer?**
 
-**Fei Hu Interactive:** We utilize asynchronous play in our game.  We feature social PvP gameplay with our 2 social games, Dog Pound, and The Ring. The Ring is an asynchronous ‘arm wrestle’ where you bet against friends to see if you can out-wrestle them. Dog Pound is a cool PvP asynchronous ‘battle’ where you put your gang against another player’s gang and go head-to head. You need to build a solid gang for this, and can utilize some great special powers to help you win.
+**Fei Hu Interactive:** We utilize asynchronous play in our game. We feature social PvP gameplay with our 2 social games, Dog Pound, and The Ring. The Ring is an asynchronous ‘arm wrestle’ where you bet against friends to see if you can out-wrestle them. Dog Pound is a cool PvP asynchronous ‘battle’ where you put your gang against another player’s gang and go head-to head. You need to build a solid gang for this, and can utilize some great special powers to help you win.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-03-21-Prisonhood\image4.jpg)
 
@@ -62,12 +62,14 @@ I recently got the chance to talk with the developers of the upcoming social gam
 
 **Small Dev Talk: Do you have anything to say towards the readers?**
 
-**Fei Hu Interactive:** Prisonhood will be available in over 9 languages (English, French, Italian, German, Russian, Turkish, Brazilian Portuguese, Simplified Chinese, Japanese and Korean), so we expect to attract fans from all over the world given the topical and universal nature of the prison theme. When launching a new game brand with a strong story line and set of great characters such as Prisonhood, it is always exciting to see what people enjoy the most, and how they connect to the universe. I encourage all your readers to try Prisonhood for themselves. 
+**Fei Hu Interactive:** Prisonhood will be available in over 9 languages (English, French, Italian, German, Russian, Turkish, Brazilian Portuguese, Simplified Chinese, Japanese and Korean), so we expect to attract fans from all over the world given the topical and universal nature of the prison theme. When launching a new game brand with a strong story line and set of great characters such as Prisonhood, it is always exciting to see what people enjoy the most, and how they connect to the universe. I encourage all your readers to try Prisonhood for themselves.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-03-21-Prisonhood\image7.png)
 
-----
+---
+
 Upload date: 2013-03-21. Last modified: 2013-07-02. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

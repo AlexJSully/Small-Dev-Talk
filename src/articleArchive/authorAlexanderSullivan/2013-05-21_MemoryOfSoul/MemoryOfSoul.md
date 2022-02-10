@@ -36,7 +36,7 @@ Moreover, Meira will be capable of using alchemy to create potions aiding her in
 
 **Small Dev Talk: What are the customizable attack trees?**
 
-**Shadow Cube:** We wanted to add a unique flavour to the in-game combat - that’s why we have designed a system based on, as we called them, “customizable attack trees”. We still need to test this mechanic further before we are able to tell you more about it - some details may change in the near future. The main idea behind it is to give the player a chance to create his own attack patterns. The player can also create combinations of attacks by alternating between sword and magic. 
+**Shadow Cube:** We wanted to add a unique flavour to the in-game combat - that’s why we have designed a system based on, as we called them, “customizable attack trees”. We still need to test this mechanic further before we are able to tell you more about it - some details may change in the near future. The main idea behind it is to give the player a chance to create his own attack patterns. The player can also create combinations of attacks by alternating between sword and magic.
 
 **Small Dev Talk: Memory of Soul is supposed to have a strategic side of combat. Can you explain to us how the combat in the game is meant to be strategic and what the combat will be like?**
 
@@ -102,8 +102,10 @@ As for Workshop and gamepad controller - we haven’t planned anything about the
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image10.jpg)
 
-----
+---
+
 Upload date: 2013-05-21. Last modified: 2013-05-21. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

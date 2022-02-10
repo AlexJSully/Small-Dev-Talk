@@ -18,7 +18,7 @@ The universe of Oceania is ever growing with new creatures and features. It brin
 
 **Eduard Digital Engine:** In the days of lore, this world was a fair place, full of blooming flowers and various creatures. But one not so fine day, a great disaster struck, and the face of the earth has changed forever.
 
-Water covered almost the entire surface, with just one rather moderately sized continent remaining. A multitude of archipelagos and islets comprised the rest of the firm ground. And, as the catastrophe has changed the planet’s magnetic field, a number of islands now floated over the planet’s surface. 
+Water covered almost the entire surface, with just one rather moderately sized continent remaining. A multitude of archipelagos and islets comprised the rest of the firm ground. And, as the catastrophe has changed the planet’s magnetic field, a number of islands now floated over the planet’s surface.
 
 Those who survived the great calamity have little by little started to colonize the strips of land all over the endless ocean. Some created new land by building artificial mounds over the shallows, others looked for newly appeared sandbars and atolls.
 
@@ -46,7 +46,7 @@ Thus the new world has begun…
 
 Users can create almost any subject and they decide on their own if this subject is free or can be bought in their game character’s personal shop.
 
-Almost any player can take part in creating and filling up the game world with their own different subjects, monsters and other stuff. Or they can create their own locations and lands which are available (or not available) to other players. 
+Almost any player can take part in creating and filling up the game world with their own different subjects, monsters and other stuff. Or they can create their own locations and lands which are available (or not available) to other players.
 
 Any user can send us a request for creating and adding to the game certain custom content. We determine whether this content is useful and consistent with the game’s style and spirit. If we approve the request, the user will be sent specific requirements to the content and may create and submit it. We check if the submission fits the requirements and either add the content to the game world or send it back to the author to be modified and/or revised. According to the author’s wishes, the content may be added to the game as freely accessible to all, available for purchase from an NPC, sold at the personal shop of the author’s character, etc.
 
@@ -110,11 +110,14 @@ Any user can send us a request for creating and adding to the game certain custo
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image8.jpg)
 
-----
+---
+
 Upload date: 2013-04-23. Last modified: 2013-04-23. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [alamantus](https://alamantus.com/): Well this game is beautiful but it didn’t get funded on Kickstarter because it suffered from severe Lame Kickstarter Video Syndrome. Lots of beautiful visuals, but an unexplained bikini-clad woman who can grow wings (??) and some quite frankly poorly done voice-overs.
 
 At any rate, this game and the concept of an endless ocean continuously spitting up new islands is super interesting to me. And while I don’t see how this could thrive as an MMO, it definitely looks like a gorgeous display of graphics and an enormous treasure trove of possibility.

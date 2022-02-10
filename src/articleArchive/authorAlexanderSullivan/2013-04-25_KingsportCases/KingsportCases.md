@@ -24,7 +24,7 @@ Play it once, play it again! The Kingsport Cases is a new horror where every tim
 
 **Small Dev Talk: What type of people and/or creatures will the player come across in Kingsport Cases?**
 
-**Tabitha Chirrick:** There are all sorts of people in Kingsport, and thanks to procedural generation (forgive me for being a broken record) characters can be generated to be unique and engaging at an infinite rate! You will be able to interact with high class Lords and Ladies to maids and servants, dignitaries to local crime lords, and eligible bachelorettes to cult-leading Matriarchs. But perhaps more interesting are each character’s secrets and ambitions. One might play the part of the loyal servant, but where do his loyalties really lay? It’s half the fun of discovering who the suspects are. Regarding creatures, you can expect to see well paid respect to Lovecraftian beasties, as well as some original content. 
+**Tabitha Chirrick:** There are all sorts of people in Kingsport, and thanks to procedural generation (forgive me for being a broken record) characters can be generated to be unique and engaging at an infinite rate! You will be able to interact with high class Lords and Ladies to maids and servants, dignitaries to local crime lords, and eligible bachelorettes to cult-leading Matriarchs. But perhaps more interesting are each character’s secrets and ambitions. One might play the part of the loyal servant, but where do his loyalties really lay? It’s half the fun of discovering who the suspects are. Regarding creatures, you can expect to see well paid respect to Lovecraftian beasties, as well as some original content.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-25_KingsportCases\image4.jpg)
 
@@ -52,7 +52,7 @@ Play it once, play it again! The Kingsport Cases is a new horror where every tim
 
 **Small Dev Talk: What inspired you to create Kingsport Cases?**
 
-**Tabitha Chirrick:** A little over a year ago I was an undergraduate student at the University of California Santa Cruz, where I was researching innovative story-telling systems with the Expressive Intelligence Studio there. I fell in love with one of the graduate projects I worked on, called Mismanor, which was incredibly innovative and had this fantastic story-telling engine. Unfortunately, in the end it didn’t work out for much more than a dire postmortem, but with the experience I took from there I set out to start innovating stories in games after I graduated. Conrad Nelson is the 3D artist and one of the programmers for Kingsport , and his experience in procedural music generation (as seen in his first release, Borealis) piqued my interest when we sat down to brainstorm games one day. We both thought: what if we could make every aspect of a game procedural? From there we settled on procedural maps and story, but we’ve really enjoyed it so far. 
+**Tabitha Chirrick:** A little over a year ago I was an undergraduate student at the University of California Santa Cruz, where I was researching innovative story-telling systems with the Expressive Intelligence Studio there. I fell in love with one of the graduate projects I worked on, called Mismanor, which was incredibly innovative and had this fantastic story-telling engine. Unfortunately, in the end it didn’t work out for much more than a dire postmortem, but with the experience I took from there I set out to start innovating stories in games after I graduated. Conrad Nelson is the 3D artist and one of the programmers for Kingsport , and his experience in procedural music generation (as seen in his first release, Borealis) piqued my interest when we sat down to brainstorm games one day. We both thought: what if we could make every aspect of a game procedural? From there we settled on procedural maps and story, but we’ve really enjoyed it so far.
 
 **Small Dev Talk: What is your favourite aspect of Kingsport Cases?**
 
@@ -88,9 +88,12 @@ Play it once, play it again! The Kingsport Cases is a new horror where every tim
 
 **Tabitha Chirrick:** Thanks for reading! If you’re interested in The Kingsport Cases you can check out our website at [www.kingsportcases.com](www.kingsportcases.com)! You can also find us on Facebook, Twitter, and IndieDB!
 
-----
+---
+
 Upload date: 2013-04-25. Last modified: 2013-04-25. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [flattopboy](https://flattopboy.tumblr.com/): This looks good

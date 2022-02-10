@@ -38,7 +38,7 @@ Small Dev Talk: What genre is this movie and will it have any action, suspense o
 
 Ironically the disadvantages are in direct relation to the advantages. Money affords you time which means you’re not hammering through important scenes because you’re losing light and need to have the actor on a plane back home before 10. You can do things over and over and over until you get them right. Plus equipment, especially a grip and lighting truck is nice for those locations and times where natural light is causing you all sorts of headaches.
 
-I guess on top of all that you’re taking care of a lot of the elements yourself that you wouldn’t usually do. Instead of wearing just a directors/producer/writer hat you’re also the films publicist, distributor, social networker and anything else that a budget would allow. 
+I guess on top of all that you’re taking care of a lot of the elements yourself that you wouldn’t usually do. Instead of wearing just a directors/producer/writer hat you’re also the films publicist, distributor, social networker and anything else that a budget would allow.
 
 **Small Dev Talk: What challenges did the actor and crew have to go through to make this movie?**
 
@@ -66,8 +66,10 @@ Having said that check out Vessel, we just got accepted into the London Sci Fi w
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-03-19_Vessel\image4.jpg)
 
-----
+---
+
 Upload date: 2013-03-19. Last modified: 2013-03-19. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

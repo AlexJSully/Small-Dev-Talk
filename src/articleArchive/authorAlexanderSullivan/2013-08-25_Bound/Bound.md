@@ -4,7 +4,7 @@
 
 Have you ever wanted to watch an entire movie made from Lego bricks? Check out Bound, a new dramactic adventure made entirely from Lego bricks! I recently got the chance to talk with Greg Tull from Monitogo Studios on their recently successful Kickstarter film, Bound. You can find more on their [website](http://www.monitogostudios.com/bound/).
 
-**Small Dev Talk: What is Bound?** 
+**Small Dev Talk: What is Bound?**
 
 **Greg Tull:** Bound is a 45 - 60 min. dramatic adventure brickfilm. It’s shot in 1080p on extensive sets and involves hundreds of characters!
 
@@ -18,7 +18,7 @@ The first promo was cool. I mean, it had awesome effects, great lighting/composi
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-25_Bound\image2.jpg)
 
-**Small Dev Talk: What is Nathan and Abigail like and what is their story?** 
+**Small Dev Talk: What is Nathan and Abigail like and what is their story?**
 
 **Greg Tull:** Nathan is 16, mostly courageous, loves adventure, and is not unwilling to take on challenges - though he doesn’t always think things through. Abigail is 12, homely, likes a quiet life, but is faithful and becomes quite a hardy little gal by the end of the story. They’re the orphaned siblings of a hunter and a modest women who were lost in a dreadful accident when they were young. Now their older half-brother Zathen and an elderly guardian named Micah look out for them.
 
@@ -30,7 +30,7 @@ The first promo was cool. I mean, it had awesome effects, great lighting/composi
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-25_Bound\image4.jpg)
 
-**Small Dev Talk: What genre can Bound be classified as?** 
+**Small Dev Talk: What genre can Bound be classified as?**
 
 **Greg Tull:** Medieval action/adventure drama
 
@@ -40,7 +40,7 @@ The first promo was cool. I mean, it had awesome effects, great lighting/composi
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-25_Bound\image5.jpg)
 
-**Small Dev Talk: How long does it take to record a one minute scene using lego?** 
+**Small Dev Talk: How long does it take to record a one minute scene using lego?**
 
 **Greg Tull:** A week if all goes well. Sometimes longer…
 
@@ -50,7 +50,7 @@ The first promo was cool. I mean, it had awesome effects, great lighting/composi
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-25_Bound\image6.jpg)
 
-**Small Dev Talk: Is there a moral focus in Bound?** 
+**Small Dev Talk: Is there a moral focus in Bound?**
 
 **Greg Tull:** Absolutely. Family is worth saving, and sharing the Gospel is of utmost importance; it’s worth experiencing suffering and facing the toughest trials.
 
@@ -60,7 +60,7 @@ The first promo was cool. I mean, it had awesome effects, great lighting/composi
 
 **Greg Tull:** God. Other brickfilms. And my brother was into film. Plus I just love film in general.
 
-**Small Dev Talk: What is your favourite aspect of Bound?** 
+**Small Dev Talk: What is your favourite aspect of Bound?**
 
 **Greg Tull:** Oooh! The big sets and the advanced animating techniques. I can cheat in a double answer, right?
 
@@ -70,7 +70,7 @@ The first promo was cool. I mean, it had awesome effects, great lighting/composi
 
 **Greg Tull:** Lack of funding, bad timeline estimation, just flat out how LONG animation takes to create, and space limitations. Welcome to indie film!
 
-**Small Dev Talk: Do you have any advice for upcoming film makers?** 
+**Small Dev Talk: Do you have any advice for upcoming film makers?**
 
 **Greg Tull:** Study movies, practice a lot, and then come up with a great short story. Tell it to the world!
 
@@ -86,8 +86,10 @@ The first promo was cool. I mean, it had awesome effects, great lighting/composi
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-08-25_Bound\image10.jpg)
 
-----
+---
+
 Upload date: 2013-08-25. Last modified: 2013-08-25. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

@@ -58,15 +58,18 @@ A few days ago I got the chance to talk with the developer Julian W. from Hivemi
 
 **Small Dev Talk: Do you have anything to say towards the reader?**
 
-**Julian W.:** “Run, and don’t look back, whatever you do.” 
+**Julian W.:** “Run, and don’t look back, whatever you do.”
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-03-20_Shadowlurker\image4.jpg)
 
-----
+---
+
 Upload date: 2013-03-20. Last modified: 2013-06-30. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
+
 [Kari Musser](https://www.facebook.com/kari.musser.3): i'd play this.
 
 [phenomenally-cosmic-power-blog](https://phenomenally-cosmic-power-blog.tumblr.com/): Super excited for this! Horrifying House Guest is one of my favorite memes @U@

@@ -104,7 +104,7 @@ There are pros and cons for working this way, but it allows us to create a game 
 
 **Dominik:** There are two aspects I love about Leviathan Crossfire. One is definitely the story telling. It will be very close to AAA titles for the upcoming demo (at least, that’s how I currently feel about it; the players will have to decide about this at the end of the day, of course). The full game will then probably even go beyond this and be a true indie game which means, to me, that it will introduce some nice new ways of how to tell a story in a first person shooter.
 
-The second aspect is creating emotions. The emotion of really being in this situation the main character is confronted with or the curiosity of players playing a new game for the first time and seeing something they haven’t seen done before. 
+The second aspect is creating emotions. The emotion of really being in this situation the main character is confronted with or the curiosity of players playing a new game for the first time and seeing something they haven’t seen done before.
 
 Curiosity is, of course, just a first step; the question is always what a game makes out of during a single player campaign.
 
@@ -136,7 +136,7 @@ It’s not one of the very powerful free AAA engines, but yet a highly underrate
 
 **Dominik:** We are upcoming developers ourselves… in the best case :)
 
-ut if I had to give an advice, it would be two things: One is to learn how to really bring the images from your head into the video game (this is the really hard part… I mentioned it already… it’s quite a topic for me because especially many FPSC users underestimate this point in my personal view). The other advice would be… Just ***ing do it! Don’t let anyone bring you down, don’t let anyone tell you to change your plans in a certain way and don’t let failures in creating the game of your dreams bring you down. Do your thing!
+ut if I had to give an advice, it would be two things: One is to learn how to really bring the images from your head into the video game (this is the really hard part… I mentioned it already… it’s quite a topic for me because especially many FPSC users underestimate this point in my personal view). The other advice would be… Just \*\*\*ing do it! Don’t let anyone bring you down, don’t let anyone tell you to change your plans in a certain way and don’t let failures in creating the game of your dreams bring you down. Do your thing!
 
 **Tom:** Schedule your tasks! Don’t do only the fun parts, when you are done with those and you lose your ambitions on the hard parts, then it’s hard to keep up the working progress. If you schedule your plans, you can reward yourself for every completed difficult part with a fun to do part. In other words: Don’t start a Stargate game by designing a P90 Machinegun because that’s fun to do. Rather start with developing an exciting story about some favourite characters.
 
@@ -154,8 +154,10 @@ We hope the full game will be good enough to be sold for a very low, definitely 
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image7.png)
 
-----
+---
+
 Upload date: 2013-04-17. Last modified: 2013-04-17. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

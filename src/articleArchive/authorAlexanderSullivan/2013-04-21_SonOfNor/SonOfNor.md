@@ -26,7 +26,7 @@ Exploring the temples and robbing the magic held within enables you to control t
 
 **Small Dev Talk: What is the story behind Nor?**
 
-**Julian:** Nor is the goddess of the Humans, she represents the night, the moon and the protective veil of darkness; Opposed to Lur, the god of the Sarahul people which represents the sun, the light and the strength it gives to them lizards. 
+**Julian:** Nor is the goddess of the Humans, she represents the night, the moon and the protective veil of darkness; Opposed to Lur, the god of the Sarahul people which represents the sun, the light and the strength it gives to them lizards.
 
 Humans believe that Nor is the reason behind their magic, Telekinesis and Terraforming. She was first concepted or heard of by the humans when Simeon, the first magical human fled from the persecuting Sarahul into the Nanshiri desert. There while he was near death, she appeared before him leading him into an Oasis where he gained back his health. On his return to civilization, he established the Path of Nor as the human religion, became the first Son of Nor and built the first Radir (Nor’s Church) to revere Nor and school prodigies (Humans that discover their powers but still haven’t been trained and gained the titles of Son of Nor).
 
@@ -34,7 +34,7 @@ Humans believe that Nor is the reason behind their magic, Telekinesis and Terraf
 
 **Small Dev Talk: What is the main character like and what inspired you to create that character?**
 
-**Julian:** There is no main playable character. We have created a variety of playable characters which differ in sex, looks, personality and backstory. But they all share three common things: They live in The Edge, they are Sons of Nor and they go through the journey that the main story presents. 
+**Julian:** There is no main playable character. We have created a variety of playable characters which differ in sex, looks, personality and backstory. But they all share three common things: They live in The Edge, they are Sons of Nor and they go through the journey that the main story presents.
 
 We have decided to do this so the player can choose whatever looks and feels like them the most and of course to have some differentiation between each player when playing in 4 player co-op mode.
 
@@ -50,7 +50,7 @@ We have decided to do this so the player can choose whatever looks and feels lik
 
 **Small Dev Talk: Can you describe to use what the spell fusion feature of Son of Nor is and what the player can do with it?**
 
-**Julian:** At some point in the game you obtain elemental powers: Wind, Fire and Essence. These elements when casted leave a magic ridden area that stays active for a while. If another player gets to cast another elemental spell on this “active magic area” then a combination of spells will happen. 
+**Julian:** At some point in the game you obtain elemental powers: Wind, Fire and Essence. These elements when casted leave a magic ridden area that stays active for a while. If another player gets to cast another elemental spell on this “active magic area” then a combination of spells will happen.
 
 For example: Player 1 casts windpush on a sarahul warrior group which will push them back. As they run in again to attack player 1, player 2 casts a fireburst on them that will burn them. Since fireburst was casted on the windpush “active magic area” a fire tornado will commence making the enemies swirl around helplessly while being burned at the same time.
 
@@ -64,7 +64,7 @@ For example: Player 1 casts windpush on a sarahul warrior group which will push 
 
 **Small Dev Talk: What is the environment like in Son of Nor and what people and enemies will you come across in the game?**
 
-**Julian:** Noshrac is the mapped and known land of present day world in Son of Nor 
+**Julian:** Noshrac is the mapped and known land of present day world in Son of Nor
 
 Noshrac is a peninsula that can be separated in three sections vertically. The south section is the Richlands where the Sarahul Empires resides, while the other two sections are desert.
 
@@ -114,8 +114,10 @@ During the game you will explore mostly the desert parts of Noshrac and you will
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image8.png)
 
-----
+---
+
 Upload date: 2013-04-21. Last modified: 2013-04-21. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

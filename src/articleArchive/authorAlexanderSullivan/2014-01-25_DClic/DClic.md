@@ -72,7 +72,7 @@ It can be roll or fold or leave with the extension up.
 
 **D’clic:** By creating D'clic I’m a former architect. Always been into fashion for myself, and I guess natural flow of life drag to my everyday interest but to tell you the true I don’t consider myself as a fashion designer, for the simple reason as:
 
-A :  I don’t have a knowledge of a fashion designer
+A : I don’t have a knowledge of a fashion designer
 
 B : I don’t work the same way and I have a lot of respect for what they do
 
@@ -102,8 +102,10 @@ You will be able to find the product on my website [www.dclicbyyapo.com](http://
 
 ![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image12.jpg)
 
-----
+---
+
 Upload date: 2014-01-25. Last modified: 2014-01-25. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

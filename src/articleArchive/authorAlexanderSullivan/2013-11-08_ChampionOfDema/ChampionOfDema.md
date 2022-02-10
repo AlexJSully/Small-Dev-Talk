@@ -74,12 +74,14 @@ As to what inspired me to write him, well ever since I can remember I have creat
 
 **Small Dev Talk: Do you have anything to say towards our readers?**
 
-**Hameed Catel:** I Just want to say thank you all for taking the time to read this interview and Small Dev Talks are awesome people. It would mean the world to me if you guys helped me out with my dream by bringing this project to life. Visit our kickstarter campaign http://www.kickstarter.com/projects/1088749339/champion-of-dema?ref=live  pre-order your copy by making a pledge, and share it with all your friends. If you have a blog and you wish to share it let me know, I can send you a press release if you want. Or you can write about it yourself. Either way is fine with me. I just need your help to build this tower of success, without you guys, I really can’t achieve my goal and that’s the honest truth. 
+**Hameed Catel:** I Just want to say thank you all for taking the time to read this interview and Small Dev Talks are awesome people. It would mean the world to me if you guys helped me out with my dream by bringing this project to life. Visit our kickstarter campaign http://www.kickstarter.com/projects/1088749339/champion-of-dema?ref=live pre-order your copy by making a pledge, and share it with all your friends. If you have a blog and you wish to share it let me know, I can send you a press release if you want. Or you can write about it yourself. Either way is fine with me. I just need your help to build this tower of success, without you guys, I really can’t achieve my goal and that’s the honest truth.
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image8.jpg)
 
-----
+---
+
 Upload date: 2013-07-16. Last modified: 2013-07-16. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

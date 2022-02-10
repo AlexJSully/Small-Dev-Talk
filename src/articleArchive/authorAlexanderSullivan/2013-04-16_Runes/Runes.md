@@ -70,8 +70,10 @@ I also had a cool experience during our first public playtest. Someone was playi
 
 **Kevin:** You can support the project by following us on [Facebook](https://www.facebook.com/RunesGame) and [IndieDB](https://www.indiedb.com/games/runes-gam), where we will post regular updates on the project. See you in the arena! ;)
 
-----
+---
+
 Upload date: 2013-04-16. Last modified: 2013-04-16. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

@@ -72,8 +72,10 @@ Join along for the adventure of the century in Jackie Rose: The Treasure of Capt
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image7.jpg)
 
-----
+---
+
 Upload date: 2013-07-15. Last modified: 2013-07-15. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments

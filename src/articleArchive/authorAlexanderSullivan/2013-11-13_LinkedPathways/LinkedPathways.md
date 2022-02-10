@@ -9,8 +9,8 @@ Test out your dating skills in Linked Pathways, a new visual novel dating simula
 **Esteban Gonzalez:** Linked pathways is a fan made visual novel/dating sim game. It focuses heavily on realistic characters and relationships to help enforce dramatic story telling and involve the player in the narrative they wish to pursue. Our characters are based on real people and real relationships to help make them feel more genuine to the player and help them immerse themselves more in our story.
 
 **Small Dev Talk: What is the story in Linked Pathways?**
- 
-**Esteban Gonzalez:** The story of Linked Pathways focuses on the player’s life in a new school as he/she forms relationships both romantic and otherwise. The set up is simple and used often in stories of this genre, but we hope to use it as a jumping off point to explore the themes and ideas we wish to portray. From here we can then branch off to tell more character related stories. Since a visual novel’s strength is its story I will share a small example of one of the stories. 
+
+**Esteban Gonzalez:** The story of Linked Pathways focuses on the player’s life in a new school as he/she forms relationships both romantic and otherwise. The set up is simple and used often in stories of this genre, but we hope to use it as a jumping off point to explore the themes and ideas we wish to portray. From here we can then branch off to tell more character related stories. Since a visual novel’s strength is its story I will share a small example of one of the stories.
 
 We’ll use our character eve as an example of the stories we wish to tell. She is a shy timid girl due to her being terribly hurt in the past. Her story revolves around her very slowly learning to accept the player. But yet once she does she immediately over extends herself and latches on to the player. She can then no longer properly function without them, much to the dismay of the player. She very much needs him and his constant approval. Her story then becomes an issue of you worked hard to let her know she can rely on you and yet then it becomes too much and you need her to divert her energy. Is it wrong for the player to then dislike her for wanting so much attention when it is entirely their own fault she is doing so? Or should the blame then be put on Eve for being unable to help herself in this situation.
 
@@ -28,9 +28,9 @@ We’ll use our character eve as an example of the stories we wish to tell. She 
 
 **Small Dev Talk: What type of characters will we come across in Linked Pathways?**
 
-**Esteban Gonzalez:** We have a wide array of really unique characters for the player to date, as well as an assortment of side characters who help keep the world alive and fresh. We made sure to give each character not only deep personalities but fill them with the same type of contradictory traits you find in actual people. 
+**Esteban Gonzalez:** We have a wide array of really unique characters for the player to date, as well as an assortment of side characters who help keep the world alive and fresh. We made sure to give each character not only deep personalities but fill them with the same type of contradictory traits you find in actual people.
 
-Take for example our character Steph. He very much enjoys teasing people and pulling small pranks. However he can be incredibly sweet and caring to those around him. To top it off when he knows he actually hurt someone with his teasing or he feels like people hate him he goes into a depressed state. 
+Take for example our character Steph. He very much enjoys teasing people and pulling small pranks. However he can be incredibly sweet and caring to those around him. To top it off when he knows he actually hurt someone with his teasing or he feels like people hate him he goes into a depressed state.
 
 We try our best to give each character, main or side, deep layers that help shape them.
 
@@ -40,11 +40,11 @@ We try our best to give each character, main or side, deep layers that help shap
 
 **Small Dev Talk: What game engine is Linked Pathways using?**
 
-**Esteban Gonzalez:** We will be using the Ren'Py Visual Novel Engine. It’s incredibly easy to use and understand and supports Macintosh and Linux as well as Windows.  
+**Esteban Gonzalez:** We will be using the Ren'Py Visual Novel Engine. It’s incredibly easy to use and understand and supports Macintosh and Linux as well as Windows.
 
 **Small Dev Talk: What inspired you to create Linked Pathways?**
 
-**Esteban Gonzalez:** The original inspiration of Linked Pathways actually came about from some light hearted joking. What became our team were looking for a dating sim to play and joke around with, although we could find none. Someone opened up the joke that we should make our own dating sim with us in it and we began to say whom would be what type of character. The characters were all very solid and we began materializing them more and more. Before we knew it this turned into something we all actually felt that we wanted to do. 
+**Esteban Gonzalez:** The original inspiration of Linked Pathways actually came about from some light hearted joking. What became our team were looking for a dating sim to play and joke around with, although we could find none. Someone opened up the joke that we should make our own dating sim with us in it and we began to say whom would be what type of character. The characters were all very solid and we began materializing them more and more. Before we knew it this turned into something we all actually felt that we wanted to do.
 
 **Small Dev Talk: What is your favorite aspect of Linked Pathways?**
 
@@ -52,7 +52,7 @@ We try our best to give each character, main or side, deep layers that help shap
 
 **Small Dev Talk: What challenges did you and your team come across in the development of Linked Pathways?**
 
-**Esteban Gonzalez:** In early development we tried our best to make this game completely free. We did not have jobs or the monetary requirements to be able to afford workers. We originally had to message thousands of artists to see if anyone would be willing to work on this game for free. Luckily we found SaitoIkiru who actually agreed to help out with this project. However despite our lucky find they seemed like the only people who were able and willing. It was clear that if we were to try to make this game we needed some kind of funding. 
+**Esteban Gonzalez:** In early development we tried our best to make this game completely free. We did not have jobs or the monetary requirements to be able to afford workers. We originally had to message thousands of artists to see if anyone would be willing to work on this game for free. Luckily we found SaitoIkiru who actually agreed to help out with this project. However despite our lucky find they seemed like the only people who were able and willing. It was clear that if we were to try to make this game we needed some kind of funding.
 
 There was another scenario where very early in one of our writers suffered massive writers block and our other writer simply disappeared (as it turned out later it was due to life issues). We were stuck as we had 1 writer who couldn’t do much and anyone else we tried to introduce to the project was clearly not interested and would not provide any sort of support. From there our project was nearly dead, we couldn’t make any progress nor could we obtain the means of doing so. We however were very lucky to find Renren Zhao whose enthusiasm and creative talents helped fuel our team and allowed us to break through and make huge strides with our project.
 
@@ -74,8 +74,10 @@ There was another scenario where very early in one of our writers suffered massi
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-11-13_LinkedPathways\image2.png)
 
-----
+---
+
 Upload date: 2013-11-13. Last modified: 2013-11-13. Written by [Alexander Sullivan](https://twitter.com/AlexJSully)
 
------
+---
+
 ## Archived public comments
