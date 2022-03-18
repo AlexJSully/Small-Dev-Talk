@@ -7,7 +7,7 @@ exclude_patterns = [
   "sw.js",
   "*.js.map",
   "# Packages",
-  "src/scripts/libraries",
+  "src/scripts/libraries/**",
   "# misc",
   ".DS_Store",
   ".env.local",
@@ -17,10 +17,9 @@ exclude_patterns = [
   ".vscode",
   "# workbox",
   "workbox-config.js",
-  "src/serviceWorker",
+  "src/serviceWorker/**",
   "# Visual Studio Code",
-  ".vscode/settings.json",
-  ".vscode/launch.json"
+  ".vscode/**"
 ]
 
 [[analyzers]]
