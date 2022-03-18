@@ -2,6 +2,12 @@
 
 Small Dev Talk is an independent news source that covers all things from the indie world of entertainment, from games to movies to books to technology and more. Our focus of Small Dev Talk is simply to give the chance of having upcoming developers show off their projects in forms of interviews which include images and video and present it to our audience.
 
+[![Codiga Code Quality Score](https://api.codiga.io/project/32061/score/svg)](https://api.codiga.io/project/32061/score/svg)
+[![Codiga Code Grade](https://api.codiga.io/project/32061/status/svg)](https://api.codiga.io/project/32061/status/svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ed11eb461733c807d580/maintainability)](https://codeclimate.com/github/ASully/Small-Dev-Talk/maintainability)
+[![CodeFactor](https://www.codefactor.io/repository/github/asully/small-dev-talk/badge)](https://www.codefactor.io/repository/github/asully/small-dev-talk)
+[![DeepSource](https://deepsource.io/gh/ASully/Small-Dev-Talk.svg/?label=active+issues&show_trend=true&token=XwOjH3ktxwG4kKUkE0GZK0_p)](https://deepsource.io/gh/ASully/Small-Dev-Talk/?ref=repository-badge)
+
 ## Getting Started
 
 It is recommended that you use the web-version of Small Dev Talk available at [https://smalldevtalk.net/](https://smalldevtalk.net/) which is an archived version of the original site that is being hosted on [Tumblr](https://smalldevtalk.tumblr.com/). This does require an internet connection to load.
