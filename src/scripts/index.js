@@ -174,7 +174,7 @@ class ArticleFiller {
 			// Update image
 			if (articleData?.thumbnail && articleData?.author && articleData?.date && articleKey) {
 				/** Image URL */
-				const imgURL = `src/articleArchive/author${articleData.author.split(" ").join("")}/${
+				const imgURL = `https://smalldevtalk.net/src/articleArchive/author${articleData.author.split(" ").join("")}/${
 					articleData.date
 				}_${articleKey}/${articleData.thumbnail}`;
 
