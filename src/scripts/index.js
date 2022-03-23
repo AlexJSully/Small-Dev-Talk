@@ -139,7 +139,7 @@ class ArticleFiller {
 			// Update title
 			if (articleData?.title) {
 				/** Title of article */
-				let title = `${articleData.title} | Small Dev Talk`;
+				const title = `${articleData.title} | Small Dev Talk`;
 				// Document
 				document.title = title;
 
@@ -156,7 +156,7 @@ class ArticleFiller {
 			// Update description
 			if (articleData?.summary) {
 				/** Summary/description of the article */
-				let description = `${articleData.summary} | Small Dev Talk`;
+				const description = `${articleData.summary} | Small Dev Talk`;
 
 				// Document
 				document.querySelector("meta[name='description']").setAttribute("content", description);
