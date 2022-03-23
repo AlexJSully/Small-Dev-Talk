@@ -76,9 +76,7 @@ class ArticleFiller {
 		}
 
 		if (articleFiller.articleData[articleName] != undefined) {
-			// Change title:
-			const articleTitle = articleFiller.articleData[articleName].title;
-			document.getElementById("pageTitle").innerText = "Small Dev Talk: " + articleTitle;
+			this.updateMetaData(articleFiller.articleData[articleName], articleName);
 
 			// Create URL
 			const authorFolder = "author" + articleFiller.articleData[articleName].author.split(" ").join("");
@@ -110,6 +108,91 @@ class ArticleFiller {
 			articleFiller.articleMd = "Error retrieving article";
 
 			articleFiller.addToPage();
+		}
+	}
+
+	/**
+	 * Dynamically update the article's meta-data based on article content
+	 * @param {Object} articleData The article's data
+	 * @param {String} [articleData.title] Article's title
+	 * @param {String} [articleData.summary] Article's summary
+	 * @param {String} [articleData.thumbnail] The filename of the thumbnail/resoc image of the article
+	 * @param {String} [articleData.author] Author of the article
+	 * @param {String} [articleData.date] Date the article was published (YYYY-MM-DD)
+	 * @param {String} articleKey Article in-code name (key name in articleData.json)
+	 * @example <caption>Use this function to dynamically update the article's meta-data based on article content. Each individual's content of articleData is optional</caption>
+	 * updateMetaData({"author": "Alexander Sullivan","date": "2013-03-26","summary": "The great sequel to Caravaneer is coming soon and I got the chance to talk with the developer, Dmitry Zheltobriukhov from GamesOfHonor.com for their upcoming game Caravaneer 2!","thumbnail": "image1.jpg","title": "Caravaneer 2"}, 'Caravaneer2');
+	 * // returns null (does not return anything but updates the meta-data accordingly)
+	 */
+	updateMetaData(articleData, articleKey) {
+		// If article data object is not empty
+		if (Object.keys(articleData)?.length > 0) {
+			/** Structured data */
+			let structuredData = document?.querySelector("script[type='application/ld+json']")?.textContent;
+			// Convert structured data into a usable JSON object
+			if (structuredData) {
+				structuredData = JSON.parse(structuredData);
+			} else {
+				structuredData = undefined;
+			}
+
+			// Update title
+			if (articleData?.title) {
+				/** Title of article */
+				let title = `${articleData.title} | Small Dev Talk`;
+				// Document
+				document.title = title;
+
+				// og & twitter
+				document.querySelector("meta[property='og:title']").setAttribute("content", title);
+				document.querySelector("meta[property='twitter:title']").setAttribute("content", title);
+
+				// Update structured data
+				if (structuredData?.name) {
+					structuredData.name = title;
+				}
+			}
+
+			// Update description
+			if (articleData?.summary) {
+				/** Summary/description of the article */
+				let description = `${articleData.summary} | Small Dev Talk`;
+
+				// Document
+				document.querySelector("meta[name='description']").setAttribute("content", description);
+
+				// og & twitter
+				document.querySelector("meta[property='og:description']").setAttribute("content", description);
+				document.querySelector("meta[property='twitter:description']").setAttribute("content", description);
+
+				// Update structured data
+				if (structuredData?.description) {
+					structuredData.description = description;
+				}
+			}
+
+			// Update image
+			if (articleData?.thumbnail && articleData?.author && articleData?.date && articleKey) {
+				/** Image URL */
+				const imgURL = `src/articleArchive/author${articleData.author.split(" ").join("")}/${
+					articleData.date
+				}_${articleKey}/${articleData.thumbnail}`;
+
+				// og & twitter
+				document.querySelector("meta[property='og:image']").setAttribute("content", imgURL);
+				document.querySelector("meta[property='twitter:image']").setAttribute("content", imgURL);
+
+				// Update structured data
+				if (structuredData?.image) {
+					structuredData.image = imgURL;
+				}
+			}
+
+			// Update structured data
+			if (structuredData) {
+				document.querySelector("script[type='application/ld+json']").textContent =
+					JSON.stringify(structuredData);
+			}
 		}
 	}
 
