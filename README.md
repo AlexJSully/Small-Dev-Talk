@@ -7,6 +7,10 @@ Small Dev Talk is an independent news source that covers all things from the ind
 [![Maintainability](https://api.codeclimate.com/v1/badges/ed11eb461733c807d580/maintainability)](https://codeclimate.com/github/ASully/Small-Dev-Talk/maintainability)
 [![CodeFactor](https://www.codefactor.io/repository/github/asully/small-dev-talk/badge)](https://www.codefactor.io/repository/github/asully/small-dev-talk)
 [![DeepSource](https://deepsource.io/gh/ASully/Small-Dev-Talk.svg/?label=active+issues&show_trend=true&token=XwOjH3ktxwG4kKUkE0GZK0_p)](https://deepsource.io/gh/ASully/Small-Dev-Talk/?ref=repository-badge)
+[![Follow on Twitter](https://img.shields.io/twitter/follow/smalldevtalk?style=social)](https://twitter.com/smalldevtalk)
+[![GitHub repo size](https://img.shields.io/github/repo-size/ASully/Small-Dev-Talk)](https://github.com/ASully/Small-Dev-Talk)
+[![GitHub](https://img.shields.io/github/license/ASully/Small-Dev-Talk)](https://github.com/ASully/Small-Dev-Talk)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fsmalldevtalk.net%2F)](https://smalldevtalk.net/)
 
 ## Getting Started
 
