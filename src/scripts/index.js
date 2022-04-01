@@ -286,36 +286,35 @@ class ChangeFeaturedArticles {
 			if (value.title && value.author && value.date && value.thumbnail) {
 				// Create bootstrap container
 				if (archiveDisplay.trim().length < 1) {
-					archiveDisplay += '<div class="container-fluid">';
-					archiveDisplay += '<div class="row">';
+					archiveDisplay += `
+						<div class="container-fluid">
+						<div class="row">
+					`;
 				}
-
-				// Bootstrap column
-				archiveDisplay += '<div class="col-sm archive-display">';
-
-				// Link to article
-				archiveDisplay += `<a class="archive-link" href="${document.location.origin}/index.html?${key}">`;
-
-				// article title
-				archiveDisplay += `<p class="archive-title">${value.title}</p>`;
 
 				/** Article's thumbnail URL */
 				const imgURL = `src/articleArchive/author${value.author.split(" ").join("")}/${value.date}_${key}/${
 					value.thumbnail
 				}`;
-				// Article's thumbnail
-				archiveDisplay += `<img src=${imgURL}>`;
 
-				// Close HTML tags
-				archiveDisplay += "</a>";
-				archiveDisplay += "</div>";
+				archiveDisplay += `
+					<div class="col-sm archive-display">
+						<a
+							class="archive-link"
+							href="${document.location.origin}/index.html?${key}"
+							aria-label="Redirect to ${value.title}"
+						>
+							<p class="archive-title">${value.title}</p>
+							<img src=${imgURL} alt="${value.title}'s thumbnail">
+						</a>
+					</div>
+				`;
 			}
 		}
 
 		// If things to add, add it
 		if (archiveDisplay.trim().length > 0) {
-			archiveDisplay += "</div>";
-			archiveDisplay += "</div>";
+			archiveDisplay += "</div></div>";
 
 			document.getElementById("displayArticles").innerHTML += archiveDisplay;
 		}
@@ -358,34 +357,37 @@ class ChangeFeaturedArticles {
 					articleThumbnail;
 
 				// Change indicators
-				let appendStr = "";
-				appendStr += '<li data-target="#carouselExampleIndicators" data-slide-to="' + c + '"';
-				if (c === 0) {
-					appendStr += ' class="active"';
-				}
-				appendStr += "></li>";
+				let appendStr = `
+					<li data-target="#carouselExampleIndicators" data-slide-to="${c}" ${c === 0 ? `class="active"` : ""}></li>
+				`;
 				document.getElementById("carouselIndicator").innerHTML += appendStr;
 
 				// Change content
-				appendStr = "";
-				appendStr += '<div class="carousel-item';
-				if (c === 0) {
-					appendStr += " active";
-				}
-				appendStr += '">';
-				appendStr += '<a id="carouselLink' + c + '" href="index.html?' + carouselList[c] + '">';
-				appendStr +=
-					'<img id="carouselImage' +
-					c +
-					'"src="' +
-					url +
-					'" class="d-block w-100" style="width:100%; height: 400px !important;" loading="lazy">';
-				appendStr += '<div class="carousel-caption d-none d-md-block" style="text-shadow: 0 0 3px #000000;">';
-				appendStr += '<h5 id="carouselHeader' + c + '">' + articleTitle + "</h5>";
-				appendStr += '<p id="carouselParagraph' + c + '">' + articleSummary + "</p>";
-				appendStr += "</div>";
-				appendStr += "</a>";
-				appendStr += "</div>";
+				appendStr = `
+					<div class="carousel-item ${c === 0 ? "active" : ""}>
+						<a
+							id="carouselLink${c}"
+							href="index.html?${carouselList[c]}"
+							aria-label="Redirect to ${articleTitle}"
+						>
+							<img
+								id="carouselImage${c}"
+								src="${url}"
+								class="d-block w-100"
+								style="width:100%; height: 400px !important;"
+								loading="lazy"
+								alt="Carousel image for ${articleTitle}"
+							>
+							<div
+								class="carousel-caption d-none d-md-block"
+								style="text-shadow: 0 0 3px #000000;"
+							>
+								<h5 id="carouselHeader${c}">${articleTitle}</h5>
+								<p id="carouselParagraph${c}">${articleSummary}</p>
+							</div>
+						</a>
+					</div>
+				`;
 				document.getElementById("carouselInner").innerHTML += appendStr;
 			}
 		}
@@ -424,24 +426,50 @@ class ChangeFeaturedArticles {
 					articleThumbnail;
 
 				// Change indicators
-				let appendStr = "";
-				appendStr += '<div class="post" id="featuredArticle' + d + '">';
-				appendStr += '<div class="l">';
-				appendStr += '<a href="index.html?' + displayList[d] + '">';
-				appendStr += '<img src="' + url + '" width="134" loading="lazy">';
-				appendStr += "</a>";
-				appendStr += "</div>";
-				appendStr += '<div class="r">';
-				appendStr += "<h2>";
-				appendStr += '<a href="index.html?' + displayList[d] + '">' + articleTitle + "</a>";
-				appendStr += "</h2>";
-				appendStr += "<p>" + articleSummary;
-				appendStr += '<a href="index.html?' + displayList[d] + '"> Read More</a>';
-				appendStr += "</p>";
-				appendStr +=
-					'<p class="details"><a href="index.html?' + displayList[d] + '">' + articleDate + "</a></p>";
-				appendStr += "</div>";
-				appendStr += "</div>";
+				let appendStr = `
+					<div class="post" id="featuredArticle${d}">
+						<div class="l">
+							<a
+								href="index.html?${displayList[d]}"
+								aria-label="Redirect to ${articleTitle}"
+							>
+								<img
+									src="${url}"
+									width="134"
+									loading="lazy"
+									alt="Thumbnail for ${articleTitle}"
+								>
+							</a>
+						</div>
+						<div class="r">
+							<h2>
+								<a
+									href="index.html?${displayList[d]}"
+									aria-label="Redirect to ${articleTitle}"
+								>
+									${articleTitle}
+								</a>
+							</h2>
+							<p>
+								${articleSummary}
+								<a
+									href="index.html?${displayList[d]}"
+									aria-label="Read more of ${articleTitle}"
+								>
+									Read More
+								</a>
+							</p>
+							<p class="details">
+								<a
+									href="index.html?${displayList[d]}"
+									aria-label="Redirect to ${articleTitle}"
+								>
+									${articleDate}
+								</a>
+							</p>
+						</div>
+					</div>
+				`;
 
 				document.getElementById("displayArticles").innerHTML += appendStr;
 			}
