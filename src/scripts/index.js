@@ -70,8 +70,8 @@ class ArticleFiller {
 		// Change article name to fit format
 		const tempName = articleName.split(" ");
 		articleName = "";
-		for (let i = 0; i < tempName.length; i++) {
-			const change = tempName[i][0].toUpperCase() + tempName[i].substr(1, tempName[i].length);
+		for (const name of tempName) {
+			const change = name[0].toUpperCase() + name.substring(1, name.length);
 			articleName += change;
 		}
 
