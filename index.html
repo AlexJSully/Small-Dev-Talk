@@ -112,6 +112,15 @@
 		<link rel="stylesheet" href="./src/scripts/libraries/bootstrap/css/bootstrap.min.css" />
 		<script rel="preload" as="script" src="./src/scripts/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
 		<script rel="preload" as="script" src="./src/scripts/libraries/showdown/showdown.min.js"></script>
+		<script>
+			// Add service workers
+			if ("serviceWorker" in navigator) {
+				// Use the window load event to keep the page load performant
+				window.addEventListener("load", () => {
+					navigator.serviceWorker.register("./src/serviceWorker/sw.js");
+				});
+			}
+		</script>
 		<script rel="preload" as="script" src="./src/scripts/index.min.js"></script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-W05GNF3X55"></script>
