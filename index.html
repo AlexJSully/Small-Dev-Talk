@@ -9,7 +9,7 @@
 		<meta http-equiv="Cache-control" content="max-age=604800" />
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'self' 'unsafe-inline' data: *.cloudflareinsights.com *.twitter.com *.googletagmanager.com *.githubusercontent.com *.google-analytics.com *.twimg.com *.youtube.com; object-src 'self'"
+			content="default-src 'self' 'unsafe-inline' data: *.cloudflareinsights.com *.twitter.com *.googletagmanager.com *.githubusercontent.com *.google-analytics.com *.twimg.com *.youtube.com *.sentry-cdn.com *.sentry.io; object-src 'self'"
 		/>
 
 		<!-- Metadata -->
@@ -122,6 +122,33 @@
 			}
 		</script>
 		<script rel="preload" as="script" src="./src/scripts/index.min.js"></script>
+		<!-- Sentry -->
+		<script
+			src="https://browser.sentry-cdn.com/7.7.0/bundle.min.js"
+			integrity="sha384-zVycKakbFST6m0pi9RFIAnb5nw7mrA1n/mE4C8grImB4B6iqCp/0LHOcTIu9AI7+"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://browser.sentry-cdn.com/7.7.0/bundle.tracing.min.js"
+			integrity="sha384-lr/bDcE0vmUPBU6dhVBXfmhNYAEilrIepu1BRdVUJ8mZ0Hxhm17aIJ2bt4UfxC72"
+			crossorigin="anonymous"
+		></script>
+		<script>
+			Sentry.init({
+				dsn: "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.sentry.io/6600431",
+				// @AlexJSully when updating the package version number in package.json, update the version number here as well.
+				release: "my-project-name@1.2.3",
+				integrations: [new Sentry.BrowserTracing()],
+
+				// We recommend adjusting this value in production, or using tracesSampler for finer control
+				tracesSampleRate: 1.0,
+			});
+
+			Sentry.configureScope((scope) => {
+				// @AlexJSully when updating the package version number in package.json, update the version number here as well.
+				scope.setTag("app-version", "1.2.3");
+			});
+		</script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-W05GNF3X55"></script>
 		<script>
