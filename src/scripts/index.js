@@ -75,23 +75,16 @@ class ArticleFiller {
 			articleName += change;
 		}
 
-		if (articleFiller.articleData[articleName] != undefined) {
+		if (articleFiller.articleData[articleName]) {
 			this.updateMetaData(articleFiller.articleData[articleName], articleName);
 
 			// Create URL
-			const authorFolder = "author" + articleFiller.articleData[articleName].author.split(" ").join("");
-			const articleFolder = articleFiller.articleData[articleName].date + "_" + articleName;
+			const authorFolder = `author${articleFiller.articleData[articleName].author.split(" ").join("")}`;
+			const articleFolder = `${articleFiller.articleData[articleName].date}_${articleName}`;
 
 			// Call article
 			const xhr = new XMLHttpRequest();
-			const url =
-				"https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/" +
-				authorFolder +
-				"/" +
-				articleFolder +
-				"/" +
-				articleName +
-				".md";
+			const url = `https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleName}.md`;
 
 			xhr.responseType = "text";
 			xhr.onreadystatechange = () => {
@@ -244,7 +237,7 @@ class ChangeFeaturedArticles {
 	 * Call the appropriate page
 	 */
 	callDisplay() {
-		let useURL;
+		let useURL = [];
 		const docURL = document.URL;
 		const sep = docURL.split("?");
 		if (sep.length > 1) {
@@ -274,8 +267,12 @@ class ChangeFeaturedArticles {
 	 */
 	displayArchive() {
 		// Reset page
-		document.getElementById("featuredArticles").setAttribute("hidden", true);
-		document.getElementById("articleBody").removeAttribute("hidden");
+		if (document.getElementById("featuredArticles")) {
+			document.getElementById("featuredArticles").setAttribute("hidden", true);
+		}
+		if (document.getElementById("articleBody")) {
+			document.getElementById("articleBody").removeAttribute("hidden");
+		}
 
 		/** String form of the articles to display */
 		let archiveDisplay = "";
@@ -327,8 +324,8 @@ class ChangeFeaturedArticles {
 		// Change title:
 		const docTitle =
 			changeFeaturedArticles.whatPageDisplay[0].toUpperCase() +
-			changeFeaturedArticles.whatPageDisplay.substr(1, changeFeaturedArticles.whatPageDisplay.length);
-		document.getElementById("pageTitle").innerText = "Small Dev Talk: " + docTitle;
+			changeFeaturedArticles.whatPageDisplay.substring(1, changeFeaturedArticles.whatPageDisplay.length);
+		document.getElementById("pageTitle").innerText = `Small Dev Talk: ${docTitle}`;
 
 		if (
 			changeFeaturedArticles &&
@@ -343,18 +340,12 @@ class ChangeFeaturedArticles {
 			// Fill carousel
 			for (let c = 0; c < carouselList.length; c++) {
 				// Create URL
-				const authorFolder = "author" + articleFiller.articleData[carouselList[c]].author.split(" ").join("");
-				const articleFolder = articleFiller.articleData[carouselList[c]].date + "_" + carouselList[c];
+				const authorFolder = `author${articleFiller.articleData[carouselList[c]].author.split(" ").join("")}`;
+				const articleFolder = `${articleFiller.articleData[carouselList[c]].date}_${carouselList[c]}`;
 				const articleThumbnail = articleFiller.articleData[carouselList[c]].thumbnail;
 				const articleTitle = articleFiller.articleData[carouselList[c]].title;
 				const articleSummary = articleFiller.articleData[carouselList[c]].summary;
-				const url =
-					"https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/" +
-					authorFolder +
-					"/" +
-					articleFolder +
-					"/" +
-					articleThumbnail;
+				const url = `https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
 
 				// Change indicators
 				let appendStr = `
@@ -409,24 +400,21 @@ class ChangeFeaturedArticles {
 			// Reset featured articles
 			document.getElementById("displayArticles").innerHTML = "";
 			// Fill featured articles
-			for (const d in displayList) {
-				// Create URL
-				const authorFolder = "author" + articleFiller.articleData[displayList[d]].author.split(" ").join("");
-				const articleFolder = articleFiller.articleData[displayList[d]].date + "_" + displayList[d];
-				const articleThumbnail = articleFiller.articleData[displayList[d]].thumbnail;
-				const articleTitle = articleFiller.articleData[displayList[d]].title;
-				const articleSummary = articleFiller.articleData[displayList[d]].summary;
-				const articleDate = articleFiller.articleData[displayList[d]].date;
-				const url =
-					"https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/" +
-					authorFolder +
-					"/" +
-					articleFolder +
-					"/" +
-					articleThumbnail;
+			if (displayList && displayList.length > 0) {
+				for (const d in displayList) {
+					// Create URL
+					const authorFolder = `author${articleFiller.articleData[displayList[d]].author
+						.split(" ")
+						.join("")}`;
+					const articleFolder = `${articleFiller.articleData[displayList[d]].date}_${displayList[d]}`;
+					const articleThumbnail = articleFiller.articleData[displayList[d]].thumbnail;
+					const articleTitle = articleFiller.articleData[displayList[d]].title;
+					const articleSummary = articleFiller.articleData[displayList[d]].summary;
+					const articleDate = articleFiller.articleData[displayList[d]].date;
+					const url = `https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
 
-				// Change indicators
-				let appendStr = `
+					// Change indicators
+					const appendStr = `
 					<div class="post" id="featuredArticle${d}">
 						<div class="l">
 							<a
@@ -471,7 +459,8 @@ class ChangeFeaturedArticles {
 					</div>
 				`;
 
-				document.getElementById("displayArticles").innerHTML += appendStr;
+					document.getElementById("displayArticles").innerHTML += appendStr;
+				}
 			}
 		}
 	}
