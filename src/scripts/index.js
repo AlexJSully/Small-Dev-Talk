@@ -349,7 +349,7 @@ class ChangeFeaturedArticles {
 
 				// Change indicators
 				let appendStr = `
-					<li data-target="#carouselExampleIndicators" data-slide-to="${c}" ${c === 0 ? `class="active"` : ""}></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="${c}" ${c === 0 ? 'class="active"' : ""}></li>
 				`;
 				document.getElementById("carouselIndicator").innerHTML += appendStr;
 
