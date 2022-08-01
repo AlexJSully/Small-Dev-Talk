@@ -1,13 +1,10 @@
-* {
-	margin: 0;
-	padding: 0;
-}
-
 body {
 	background: url(images/backgroundnew.gif) repeat-x 0 0;
 	color: #000000;
 	font: 12px Verdana;
 	text-align: center;
+	margin: 0;
+	padding: 0;
 }
 
 img {
@@ -91,9 +88,9 @@ img {
 }
 
 #header nav ul {
+	background: linear-gradient (top, #efefef 0%, #bbbbbb 100%);
 	background: -moz-linear-gradient (top, #efefef 0%, #bbbbbb 100%);
 	background: -webkit-linear-gradient (top, #efefef 0%, #bbbbbb 100%);
-	background: linear-gradient (top, #efefef 0%, #bbbbbb 100%);
 	box-shadow: 0px 0px 9px rgba (0, 0, 0, 0.15);
 	display: inline-table;
 	list-style: none;
