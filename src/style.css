@@ -35,7 +35,7 @@ img {
 /** BEGIN wrapper **/
 
 #wrapper {
-	margin: auto auto;
+	margin: auto;
 	text-align: left;
 	width: 1050px;
 }
@@ -79,10 +79,6 @@ img {
 	text-decoration: underline;
 }
 
-#header nav ul ul {
-	display: none;
-}
-
 #header nav ul li:hover > ul {
 	display: block;
 }
@@ -116,6 +112,7 @@ img {
 }
 
 #header nav ul ul {
+	display: none;
 	background: #5f6975;
 	border-radius: 0px;
 	padding: 0;
@@ -452,8 +449,8 @@ img {
 
 .archive-display {
 	border: 1px solid rgba(0, 0, 0, 0.342);
-	margin-bottom: 2%;
 	margin: auto;
+	margin-bottom: 2%;
 	max-width: 30% !important;
 	min-width: 200px;
 }
@@ -549,7 +546,7 @@ img {
 
 #footer p {
 	font-size: 0.9em;
-	margin: auto auto;
+	margin: auto;
 	padding: 15px 0;
 	text-align: left;
 	width: 940px;
