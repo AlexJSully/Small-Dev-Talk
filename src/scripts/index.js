@@ -24,7 +24,7 @@ class ArticleFiller {
 	retrieveArticleData() {
 		const xhr = new XMLHttpRequest();
 		const url =
-			"https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/articleData.json";
+			"https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/articleData.json";
 
 		xhr.responseType = "json";
 		xhr.onreadystatechange = () => {
@@ -84,7 +84,7 @@ class ArticleFiller {
 
 			// Call article
 			const xhr = new XMLHttpRequest();
-			const url = `https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleName}.md`;
+			const url = `https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleName}.md`;
 
 			xhr.responseType = "text";
 			xhr.onreadystatechange = () => {
@@ -220,7 +220,7 @@ class ChangeFeaturedArticles {
 	retrievePageData() {
 		const xhr = new XMLHttpRequest();
 		const url =
-			"https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/legacyPages/legacyPagesDisplay.json";
+			"https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/legacyPages/legacyPagesDisplay.json";
 
 		xhr.responseType = "json";
 		xhr.onreadystatechange = () => {
@@ -345,7 +345,7 @@ class ChangeFeaturedArticles {
 				const articleThumbnail = articleFiller.articleData[carouselList[c]].thumbnail;
 				const articleTitle = articleFiller.articleData[carouselList[c]].title;
 				const articleSummary = articleFiller.articleData[carouselList[c]].summary;
-				const url = `https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
+				const url = `https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
 
 				// Change indicators
 				let appendStr = `
@@ -411,7 +411,7 @@ class ChangeFeaturedArticles {
 					const articleTitle = articleFiller.articleData[displayList[d]].title;
 					const articleSummary = articleFiller.articleData[displayList[d]].summary;
 					const articleDate = articleFiller.articleData[displayList[d]].date;
-					const url = `https://raw.githubusercontent.com/ASully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
+					const url = `https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
 
 					// Change indicators
 					const appendStr = `

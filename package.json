@@ -23,11 +23,11 @@
 		"workbox": "workbox generateSW"
 	},
 	"bugs": {
-		"url": "https://github.com/ASully/Small-Dev-Talk/issues"
+		"url": "https://github.com/AlexJSully/Small-Dev-Talk/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/ASully/Small-Dev-Talk.git"
+		"url": "git+https://github.com/AlexJSully/Small-Dev-Talk.git"
 	},
 	"keywords": [
 		"game",
@@ -45,5 +45,5 @@
 		"entertainment"
 	],
 	"license": "GPL-3.0",
-	"homepage": "https://github.com/ASully/Small-Dev-Talk#readme"
+	"homepage": "https://github.com/AlexJSully/Small-Dev-Talk#readme"
 }
