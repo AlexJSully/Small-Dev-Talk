@@ -108,9 +108,9 @@
 		<!-- END META DATA -->
 
 		<!-- Scripts -->
-		<link rel="stylesheet" type="text/css" href="./src/style.min.css" />
+		<link rel="stylesheet preload" type="text/css" href="./src/style.min.css" as="style" />
 		<script rel="preload" as="script" src="./src/scripts/libraries/jquery/jquery.min.js"></script>
-		<link rel="stylesheet" href="./src/scripts/libraries/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet preload" href="./src/scripts/libraries/bootstrap/css/bootstrap.min.css" as="style" />
 		<script rel="preload" as="script" src="./src/scripts/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
 		<script rel="preload" as="script" src="./src/scripts/libraries/showdown/showdown.min.js"></script>
 		<script>
@@ -242,7 +242,8 @@
 								border-color: #212529;
 							"
 							alt="Small Dev Talk"
-							loading="lazy"
+							fetchpriority="high"
+							loading="auto"
 					/></a>
 				</h1>
 				<!-- END header -->

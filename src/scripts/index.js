@@ -302,7 +302,7 @@ class ChangeFeaturedArticles {
 							aria-label="Redirect to ${value.title}"
 						>
 							<p class="archive-title">${value.title}</p>
-							<img src=${imgURL} alt="${value.title}'s thumbnail">
+							<img src=${imgURL} alt="${value.title}'s thumbnail" loading="lazy">
 						</a>
 					</div>
 				`;

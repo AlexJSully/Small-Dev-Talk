@@ -1,6 +1,10 @@
 version = 1
 
 exclude_patterns = [
+  "# dependencies",
+  "**/node_modules/**",
+  "/.pnp",
+  ".pnp.js",
   "# Build files",
   "*.min.js",
   "*.min.css",
