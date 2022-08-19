@@ -18,32 +18,15 @@ img {
 	width: 0;
 }
 
-.alignleft {
-	float: left;
-	margin: 4px 10px 5px 0;
-}
-
-.alignright {
-	float: right;
-	margin: 4px 0 5px 10px;
-}
-
-.aligncenter {
-	text-align: center;
-}
-
 /** BEGIN wrapper **/
-
 #wrapper {
 	margin: auto;
 	text-align: left;
 	width: 1050px;
 }
-
 /** END wrapper **/
 
 /** BEGIN header **/
-
 #header {
 	height: 200px;
 	padding: 0 8px;
@@ -148,11 +131,9 @@ img {
 	float: right;
 	padding-top: 30px;
 }
-
 /** END header **/
 
 /** BEGIN body **/
-
 #body {
 	padding: 10px 0;
 }
@@ -169,11 +150,9 @@ img {
 	vertical-align: middle;
 	width: 100%;
 }
-
 /** END body **/
 
 /** BEGIN content **/
-
 #content {
 	background: url(images/contentbody.gif) repeat-y 0 0;
 	clear: both;
@@ -432,11 +411,9 @@ img {
 	font-size: 1.2em;
 	margin-bottom: 5px;
 }
-
 /** END content **/
 
 /** BEGIN archive **/
-
 .archive-title {
 	color: #000000;
 	text-align: center;
@@ -533,11 +510,9 @@ img {
 	text-transform: uppercase;
 	width: 38px;
 }
-
 /** END sidebar **/
 
 /** BEGIN footer **/
-
 #footer {
 	background-color: #212121;
 	clear: both;
