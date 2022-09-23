@@ -34,19 +34,19 @@
 		"url": "git+https://github.com/AlexJSully/Small-Dev-Talk.git"
 	},
 	"keywords": [
-		"game",
-		"website",
-		"gamedev",
+		"comics",
 		"design",
+		"entertainment",
+		"fashion",
+		"game",
+		"game-development",
+		"gamedev",
+		"indie",
 		"movies",
 		"news",
-		"fashion",
-		"tumblr",
 		"technology",
-		"game-development",
-		"indie",
-		"comics",
-		"entertainment"
+		"tumblr",
+		"website"
 	],
 	"license": "GPL-3.0",
 	"homepage": "https://github.com/AlexJSully/Small-Dev-Talk#readme"

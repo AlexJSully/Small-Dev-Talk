@@ -91,13 +91,55 @@
 		},
 		{
 			"src": "./src/icon/maskable_icon.png",
+			"size": "any",
 			"type": "image/png",
 			"purpose": "any maskable"
 		},
 		{
 			"src": "./src/icon/safari-pinned-tab.svg",
+			"size": "any",
 			"purpose": "monochrome",
 			"type": "image/svg+xml"
+		},
+		{
+			"src": "./src/icon/favicon.ico",
+			"sizes": "any",
+			"type": "image/x-icon"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "./src/icon/screenshot1.webp",
+			"sizes": "1600x1089",
+			"type": "image/webp",
+			"platform": "wide",
+			"label": "Landing Page"
+		},
+		{
+			"src": "./src/icon/screenshot2.webp",
+			"sizes": "1600x1032",
+			"type": "image/webp",
+			"platform": "wide",
+			"label": "Example article with Caravaneer 2 interview"
+		},
+		{
+			"src": "./src/icon/screenshot3.webp",
+			"sizes": "1600x1089",
+			"type": "image/webp",
+			"platform": "wide",
+			"label": "Archive of articles from Small Dev Talk"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Archive",
+			"url": "/index.html?pages&archive",
+			"description": "Archive of articles from Small Dev Talk"
+		},
+		{
+			"name": "Game articles",
+			"url": "/index.html?pages&games",
+			"description": "Small Dev Talk's game related articles including interviews, reviews and videos"
 		}
 	],
 	"theme_color": "#ffffff",
@@ -105,7 +147,22 @@
 	"display": "standalone",
 	"description": "Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene",
 	"prefer_related_applications": false,
-	"start_url": "https://smalldevtalk.net/",
+	"start_url": "https://www.smalldevtalk.net/",
 	"id": "/",
-	"orientation": "any"
+	"orientation": "any",
+	"categories": [
+		"comics",
+		"design",
+		"entertainment",
+		"fashion",
+		"game",
+		"game-development",
+		"gamedev",
+		"indie",
+		"movies",
+		"news",
+		"technology",
+		"tumblr",
+		"website"
+	]
 }
