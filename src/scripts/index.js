@@ -21,7 +21,7 @@ class ArticleFiller {
 	/**
 	 * Retrieve all article information
 	 */
-	retrieveArticleData() {
+	static retrieveArticleData() {
 		const xhr = new XMLHttpRequest();
 		const url =
 			"https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/articleData.json";
@@ -29,9 +29,9 @@ class ArticleFiller {
 		xhr.responseType = "json";
 		xhr.onreadystatechange = () => {
 			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-				articleFiller.articleData = xhr.response;
+				ArticleFiller.articleData = xhr.response;
 
-				articleFiller.callArticle();
+				ArticleFiller.callArticle();
 			}
 		};
 
@@ -42,23 +42,23 @@ class ArticleFiller {
 	/**
 	 * Call desired article as denoted by index.html?ArticleTitle
 	 */
-	callArticle() {
+	static callArticle() {
 		const docURL = document.URL;
 		const findArticle = docURL.split("?");
 		if (findArticle.length === 2) {
 			const sep = findArticle[1].split("&");
 			if (sep.length === 1) {
-				articleFiller.grabArticle(sep[0]);
+				ArticleFiller.grabArticle(sep[0]);
 
 				// Reset page
 				document.getElementById("featuredArticles").setAttribute("hidden", true);
 				document.getElementById("displayArticles").setAttribute("hidden", true);
 				document.getElementById("articleBody").removeAttribute("hidden");
 			} else {
-				changeFeaturedArticles.callDisplay();
+				ChangeFeaturedArticles.callDisplay();
 			}
 		} else {
-			changeFeaturedArticles.callDisplay();
+			ChangeFeaturedArticles.callDisplay();
 		}
 	}
 
@@ -66,7 +66,7 @@ class ArticleFiller {
 	 * Grab article markdown file
 	 * @param {String} articleName Name of article
 	 */
-	grabArticle(articleName) {
+	static grabArticle(articleName) {
 		// Change article name to fit format
 		const tempName = articleName.split(" ");
 		articleName = "";
@@ -75,12 +75,12 @@ class ArticleFiller {
 			articleName += change;
 		}
 
-		if (articleFiller.articleData[articleName]) {
-			this.updateMetaData(articleFiller.articleData[articleName], articleName);
+		if (ArticleFiller.articleData[articleName]) {
+			this.updateMetaData(ArticleFiller.articleData[articleName], articleName);
 
 			// Create URL
-			const authorFolder = `author${articleFiller.articleData[articleName].author.split(" ").join("")}`;
-			const articleFolder = `${articleFiller.articleData[articleName].date}_${articleName}`;
+			const authorFolder = `author${ArticleFiller.articleData[articleName].author.split(" ").join("")}`;
+			const articleFolder = `${ArticleFiller.articleData[articleName].date}_${articleName}`;
 
 			// Call article
 			const xhr = new XMLHttpRequest();
@@ -89,18 +89,18 @@ class ArticleFiller {
 			xhr.responseType = "text";
 			xhr.onreadystatechange = () => {
 				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-					articleFiller.articleMd = xhr.response;
+					ArticleFiller.articleMd = xhr.response;
 
-					articleFiller.addToPage();
+					ArticleFiller.addToPage();
 				}
 			};
 
 			xhr.open("GET", url);
 			xhr.send();
 		} else {
-			articleFiller.articleMd = "Error retrieving article";
+			ArticleFiller.articleMd = "Error retrieving article";
 
-			articleFiller.addToPage();
+			ArticleFiller.addToPage();
 		}
 	}
 
@@ -117,7 +117,7 @@ class ArticleFiller {
 	 * updateMetaData({"author": "Alexander Sullivan","date": "2013-03-26","summary": "The great sequel to Caravaneer is coming soon and I got the chance to talk with the developer, Dmitry Zheltobriukhov from GamesOfHonor.com for their upcoming game Caravaneer 2!","thumbnail": "image1.jpg","title": "Caravaneer 2"}, 'Caravaneer2');
 	 * // returns null (does not return anything but updates the meta-data accordingly)
 	 */
-	updateMetaData(articleData, articleKey) {
+	static updateMetaData(articleData, articleKey) {
 		// If article data object is not empty
 		if (Object.keys(articleData)?.length > 0) {
 			/** Structured data */
@@ -192,16 +192,12 @@ class ArticleFiller {
 	/**
 	 * Convert article into HTML and add to page
 	 */
-	addToPage() {
+	static addToPage() {
 		// Add article:
-		articleFiller.article = converter.makeHtml(articleFiller.articleMd);
-		document.getElementById("articleBody").innerHTML = articleFiller.article;
+		ArticleFiller.article = converter.makeHtml(ArticleFiller.articleMd);
+		document.getElementById("articleBody").innerHTML = ArticleFiller.article;
 	}
 }
-/**
- * Create and fill the page with the desired article
- */
-const articleFiller = new ArticleFiller();
 
 /**
  * Change which page (non-article) is displayed
@@ -217,7 +213,7 @@ class ChangeFeaturedArticles {
 	/**
 	 * Retrieve page information of all possible pages
 	 */
-	retrievePageData() {
+	static retrievePageData() {
 		const xhr = new XMLHttpRequest();
 		const url =
 			"https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/legacyPages/legacyPagesDisplay.json";
@@ -225,7 +221,7 @@ class ChangeFeaturedArticles {
 		xhr.responseType = "json";
 		xhr.onreadystatechange = () => {
 			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-				changeFeaturedArticles.pageData = xhr.response;
+				ChangeFeaturedArticles.pageData = xhr.response;
 			}
 		};
 
@@ -236,28 +232,28 @@ class ChangeFeaturedArticles {
 	/**
 	 * Call the appropriate page
 	 */
-	callDisplay() {
+	static callDisplay() {
 		let useURL = [];
 		const docURL = document.URL;
 		const sep = docURL.split("?");
 		if (sep.length > 1) {
 			useURL = sep[1].split("&");
-			changeFeaturedArticles.whatPageDisplay = useURL[1];
+			ChangeFeaturedArticles.whatPageDisplay = useURL[1];
 		} else {
 			useURL = [];
-			changeFeaturedArticles.whatPageDisplay = "index";
+			ChangeFeaturedArticles.whatPageDisplay = "index";
 		}
-		changeFeaturedArticles.pageURL = useURL;
+		ChangeFeaturedArticles.pageURL = useURL;
 
-		if (changeFeaturedArticles.pageURL.length === 1) {
-			changeFeaturedArticles.callPageDisplay = false;
+		if (ChangeFeaturedArticles.pageURL.length === 1) {
+			ChangeFeaturedArticles.callPageDisplay = false;
 		} else {
-			changeFeaturedArticles.callPageDisplay = true;
+			ChangeFeaturedArticles.callPageDisplay = true;
 
-			if (changeFeaturedArticles.whatPageDisplay === "archive") {
-				changeFeaturedArticles.displayArchive();
+			if (ChangeFeaturedArticles.whatPageDisplay === "archive") {
+				ChangeFeaturedArticles.displayArchive();
 			} else {
-				changeFeaturedArticles.changeCarousel();
+				ChangeFeaturedArticles.changeCarousel();
 			}
 		}
 	}
@@ -265,7 +261,7 @@ class ChangeFeaturedArticles {
 	/**
 	 * Display archive of articles
 	 */
-	displayArchive() {
+	static displayArchive() {
 		// Reset page
 		if (document.getElementById("featuredArticles")) {
 			document.getElementById("featuredArticles").setAttribute("hidden", true);
@@ -277,7 +273,7 @@ class ChangeFeaturedArticles {
 		/** String form of the articles to display */
 		let archiveDisplay = "";
 		/** All article's data */
-		const articleData = articleFiller.articleData;
+		const articleData = ArticleFiller.articleData;
 
 		for (const [key, value] of Object.entries(articleData)) {
 			if (value.title && value.author && value.date && value.thumbnail) {
@@ -320,31 +316,31 @@ class ChangeFeaturedArticles {
 	/**
 	 * Change what articles are displayed in the carousel
 	 */
-	changeCarousel() {
+	static changeCarousel() {
 		// Change title:
 		const docTitle =
-			changeFeaturedArticles.whatPageDisplay[0].toUpperCase() +
-			changeFeaturedArticles.whatPageDisplay.substring(1, changeFeaturedArticles.whatPageDisplay.length);
+			ChangeFeaturedArticles.whatPageDisplay[0].toUpperCase() +
+			ChangeFeaturedArticles.whatPageDisplay.substring(1, ChangeFeaturedArticles.whatPageDisplay.length);
 		document.getElementById("pageTitle").innerText = `Small Dev Talk: ${docTitle}`;
 
 		if (
-			changeFeaturedArticles &&
-			changeFeaturedArticles.pageData &&
-			changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay] &&
-			changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay].carousel
+			ChangeFeaturedArticles &&
+			ChangeFeaturedArticles.pageData &&
+			ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay] &&
+			ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay].carousel
 		) {
-			const carouselList = changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay].carousel;
+			const carouselList = ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay].carousel;
 			// Reset carousel
 			document.getElementById("carouselIndicator").innerHTML = "";
 			document.getElementById("carouselInner").innerHTML = "";
 			// Fill carousel
 			for (let c = 0; c < carouselList.length; c++) {
 				// Create URL
-				const authorFolder = `author${articleFiller.articleData[carouselList[c]].author.split(" ").join("")}`;
-				const articleFolder = `${articleFiller.articleData[carouselList[c]].date}_${carouselList[c]}`;
-				const articleThumbnail = articleFiller.articleData[carouselList[c]].thumbnail;
-				const articleTitle = articleFiller.articleData[carouselList[c]].title;
-				const articleSummary = articleFiller.articleData[carouselList[c]].summary;
+				const authorFolder = `author${ArticleFiller.articleData[carouselList[c]].author.split(" ").join("")}`;
+				const articleFolder = `${ArticleFiller.articleData[carouselList[c]].date}_${carouselList[c]}`;
+				const articleThumbnail = ArticleFiller.articleData[carouselList[c]].thumbnail;
+				const articleTitle = ArticleFiller.articleData[carouselList[c]].title;
+				const articleSummary = ArticleFiller.articleData[carouselList[c]].summary;
 				const url = `https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
 
 				// Change indicators
@@ -383,96 +379,94 @@ class ChangeFeaturedArticles {
 			}
 		}
 
-		changeFeaturedArticles.changeFeaturedArticles();
+		ChangeFeaturedArticles.ChangeFeaturedArticles();
 	}
 
 	/**
 	 * Change list of featured articles
 	 */
-	changeFeaturedArticles() {
+	static ChangeFeaturedArticles() {
 		if (
-			changeFeaturedArticles &&
-			changeFeaturedArticles.pageData &&
-			changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay] &&
-			changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay].displayArticles
+			ChangeFeaturedArticles &&
+			ChangeFeaturedArticles.pageData &&
+			ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay] &&
+			ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay].displayArticles
 		) {
-			const displayList = changeFeaturedArticles.pageData[changeFeaturedArticles.whatPageDisplay].displayArticles;
+			const displayList = ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay].displayArticles;
 			// Reset featured articles
 			document.getElementById("displayArticles").innerHTML = "";
 			// Fill featured articles
 			if (displayList && displayList.length > 0) {
 				for (const d in displayList) {
-					// Create URL
-					const authorFolder = `author${articleFiller.articleData[displayList[d]].author
-						.split(" ")
-						.join("")}`;
-					const articleFolder = `${articleFiller.articleData[displayList[d]].date}_${displayList[d]}`;
-					const articleThumbnail = articleFiller.articleData[displayList[d]].thumbnail;
-					const articleTitle = articleFiller.articleData[displayList[d]].title;
-					const articleSummary = articleFiller.articleData[displayList[d]].summary;
-					const articleDate = articleFiller.articleData[displayList[d]].date;
-					const url = `https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
+					if (ArticleFiller.articleData[displayList[d]]) {
+						// Create URL
+						const authorFolder = `author${ArticleFiller.articleData[displayList[d]].author
+							.split(" ")
+							.join("")}`;
+						const articleFolder = `${ArticleFiller.articleData[displayList[d]].date}_${displayList[d]}`;
+						const articleThumbnail = ArticleFiller.articleData[displayList[d]].thumbnail;
+						const articleTitle = ArticleFiller.articleData[displayList[d]].title;
+						const articleSummary = ArticleFiller.articleData[displayList[d]].summary;
+						const articleDate = ArticleFiller.articleData[displayList[d]].date;
+						const url = `https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
 
-					// Change indicators
-					const appendStr = `
-					<div class="post" id="featuredArticle${d}">
-						<div class="l">
-							<a
-								href="index.html?${displayList[d]}"
-								aria-label="Redirect to ${articleTitle}"
-							>
-								<img
-									src="${url}"
-									width="134"
-									loading="lazy"
-									alt="Thumbnail for ${articleTitle}"
-								>
-							</a>
-						</div>
-						<div class="r">
-							<h2>
-								<a
-									href="index.html?${displayList[d]}"
-									aria-label="Redirect to ${articleTitle}"
-								>
-									${articleTitle}
-								</a>
-							</h2>
-							<p>
-								${articleSummary}
-								<a
-									href="index.html?${displayList[d]}"
-									aria-label="Read more of ${articleTitle}"
-								>
-									Read More
-								</a>
-							</p>
-							<p class="details">
-								<a
-									href="index.html?${displayList[d]}"
-									aria-label="Redirect to ${articleTitle}"
-								>
-									${articleDate}
-								</a>
-							</p>
-						</div>
-					</div>
-				`;
+						// Change indicators
+						const appendStr = `
+							<div class="post" id="featuredArticle${d}">
+								<div class="l">
+									<a
+										href="index.html?${displayList[d]}"
+										aria-label="Redirect to ${articleTitle}"
+									>
+										<img
+											src="${url}"
+											width="134"
+											loading="lazy"
+											alt="Thumbnail for ${articleTitle}"
+										>
+									</a>
+								</div>
+								<div class="r">
+									<h2>
+										<a
+											href="index.html?${displayList[d]}"
+											aria-label="Redirect to ${articleTitle}"
+										>
+											${articleTitle}
+										</a>
+									</h2>
+									<p>
+										${articleSummary}
+										<a
+											href="index.html?${displayList[d]}"
+											aria-label="Read more of ${articleTitle}"
+										>
+											Read More
+										</a>
+									</p>
+									<p class="details">
+										<a
+											href="index.html?${displayList[d]}"
+											aria-label="Redirect to ${articleTitle}"
+										>
+											${articleDate}
+										</a>
+									</p>
+								</div>
+							</div>
+						`;
 
-					document.getElementById("displayArticles").innerHTML += appendStr;
+						document.getElementById("displayArticles").innerHTML += appendStr;
+					}
 				}
 			}
 		}
 	}
 }
-/**
- * Change which page (non-article) is displayed
- */
-const changeFeaturedArticles = new ChangeFeaturedArticles();
 
 function init() {
 	// Init data
-	changeFeaturedArticles.retrievePageData();
-	articleFiller.retrieveArticleData();
+	ChangeFeaturedArticles.retrievePageData();
+	ArticleFiller.retrieveArticleData();
 }
 init();
