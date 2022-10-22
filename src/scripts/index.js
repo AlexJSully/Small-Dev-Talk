@@ -51,9 +51,17 @@ class ArticleFiller {
 				ArticleFiller.grabArticle(sep[0]);
 
 				// Reset page
-				document.getElementById("featuredArticles").setAttribute("hidden", true);
-				document.getElementById("displayArticles").setAttribute("hidden", true);
-				document.getElementById("articleBody").removeAttribute("hidden");
+				if (document.getElementById("featuredArticles")) {
+					document.getElementById("featuredArticles").setAttribute("hidden", true);
+				}
+
+				if (document.getElementById("displayArticles")) {
+					document.getElementById("displayArticles").setAttribute("hidden", true);
+				}
+
+				if (document.getElementById("articleBody")) {
+					document.getElementById("articleBody").removeAttribute("hidden");
+				}
 			} else {
 				ChangeFeaturedArticles.callDisplay();
 			}
@@ -187,6 +195,9 @@ class ArticleFiller {
 					JSON.stringify(structuredData);
 			}
 		}
+
+		// Update canonical URL
+		document.querySelector("link[rel='canonical']").setAttribute("href", window.location.href);
 	}
 
 	/**
@@ -195,7 +206,9 @@ class ArticleFiller {
 	static addToPage() {
 		// Add article:
 		ArticleFiller.article = converter.makeHtml(ArticleFiller.articleMd);
-		document.getElementById("articleBody").innerHTML = ArticleFiller.article;
+		if (document.getElementById("articleBody")) {
+			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
+		}
 	}
 }
 
