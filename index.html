@@ -127,20 +127,20 @@
 		<script rel="preload" as="script" src="./src/scripts/index.min.js"></script>
 		<!-- Sentry -->
 		<script
-			src="https://browser.sentry-cdn.com/7.16.0/bundle.min.js"
-			integrity="sha384-70hBom53vQV6XVoqnEzSlfP8AYzEm6CSuti85YyRLtmm/jbx0GryCQ1z5StcQwsz"
+			src="https://browser.sentry-cdn.com/7.17.4/bundle.min.js"
+			integrity="sha384-XHC4Ua4bFZF23Rgwkuf3FJGT1/W1dWbIaICyTr+qKjMcJ0cC96rK7J7L0wCTn2xC"
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.16.0/bundle.tracing.min.js"
-			integrity="sha384-wXU9CL14HxNQidSEdsPNgsvTyYYWogbqur94ac59B5M+zWrBqgC7NRLzv1AHdz0j"
+			src="https://browser.sentry-cdn.com/7.17.4/bundle.tracing.min.js"
+			integrity="sha384-TbvxjRMxGc03ZKS5QFUgAb3QnBcVgfzrHMnYJv0ZMl1JYGdbtq7wJs+RkoZxpVOM"
 			crossorigin="anonymous"
 		></script>
 		<script>
 			Sentry.init({
 				dsn: "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.sentry.io/6600431",
 				// @AlexJSully when updating the package version number in package.json, update the version number here as well.
-				release: "small-dev-talk@1.2.3",
+				release: "small-dev-talk@1.3.0",
 				integrations: [new Sentry.BrowserTracing()],
 
 				// We recommend adjusting this value in production, or using tracesSampler for finer control
@@ -149,7 +149,7 @@
 
 			Sentry.configureScope((scope) => {
 				// @AlexJSully when updating the package version number in package.json, update the version number here as well.
-				scope.setTag("app-version", "1.2.3");
+				scope.setTag("app-version", "1.3.0");
 			});
 		</script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
