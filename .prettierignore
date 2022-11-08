@@ -27,3 +27,6 @@ src/serviceWorker
 # Visual Studio Code
 .vscode/settings.json
 .vscode/launch.json
+
+# Ignore minified files
+*.min.*
