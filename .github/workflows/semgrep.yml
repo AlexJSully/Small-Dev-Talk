@@ -13,9 +13,13 @@ name: Semgrep
 on:
     push:
         branches: [master]
+        paths-ignore:
+            - "src/scripts/libraries/**"
     pull_request:
         # The branches below must be a subset of the branches above
         branches: [master]
+        paths-ignore:
+            - "src/scripts/libraries/**"
 
 permissions:
     contents: read
