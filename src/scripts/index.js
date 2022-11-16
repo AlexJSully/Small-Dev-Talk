@@ -195,9 +195,6 @@ class ArticleFiller {
 					JSON.stringify(structuredData);
 			}
 		}
-
-		// Update canonical URL
-		document.querySelector("link[rel='canonical']").setAttribute("href", window.location.href);
 	}
 
 	/**
