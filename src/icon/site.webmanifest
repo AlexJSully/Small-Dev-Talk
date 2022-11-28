@@ -93,7 +93,7 @@
 			"src": "./src/icon/maskable_icon.png",
 			"size": "any",
 			"type": "image/png",
-			"purpose": "any maskable"
+			"purpose": "any"
 		},
 		{
 			"src": "./src/icon/safari-pinned-tab.svg",
@@ -144,12 +144,16 @@
 	],
 	"theme_color": "#ffffff",
 	"background_color": "#ffffff",
+	"display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
 	"display": "standalone",
 	"description": "Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene",
 	"prefer_related_applications": false,
 	"start_url": "https://www.smalldevtalk.net/",
 	"id": "/",
 	"orientation": "any",
+	"dir": "ltr",
+	"lang": "en",
+	"scope": "/",
 	"categories": [
 		"comics",
 		"design",
