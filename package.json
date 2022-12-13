@@ -19,11 +19,11 @@
 	"description": "Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene.",
 	"main": "index.html",
 	"devDependencies": {
-		"prettier": "^2.8.0",
+		"prettier": "^2.8.1",
 		"workbox-cli": "^6.5.4"
 	},
 	"scripts": {
-		"prettier": "prettier --write --end-of-line auto ./",
+		"prettier": "prettier --write ./",
 		"workbox": "workbox generateSW"
 	},
 	"bugs": {
