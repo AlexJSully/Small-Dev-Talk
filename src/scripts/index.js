@@ -474,26 +474,7 @@ class ChangeFeaturedArticles {
 	}
 }
 
-/** Determines if the URL is valid and if so, adjust the canonical URL */
-function adjustCanonicalURL() {
-	// Looks at the URL and changes the rel="canonical" to current URL if valid
-	let validHost = "smalldevtalk.net";
-
-	// Get the current URL
-	let currentURL = document?.location?.href;
-
-	// Check if the host is valid
-	if (document?.location?.host === validHost) {
-		if (document.querySelector('link[rel="canonical"]')) {
-			document.querySelector('link[rel="canonical"]').setAttribute("href", currentURL);
-		}
-	}
-}
-
 function init() {
-	// Adjust canonical URL
-	adjustCanonicalURL();
-
 	// Init data
 	ChangeFeaturedArticles.retrievePageData();
 	ArticleFiller.retrieveArticleData();

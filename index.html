@@ -192,8 +192,17 @@
 				f.parentNode.insertBefore(j, f);
 			})(window, document, "script", "dataLayer", "GTM-5H259MB");
 		</script>
-		<!-- End Google Tag Manager -->
+		<!-- Cloudflare -->
 		<meta name="cf-2fa-verify" content="e5b76f5064222a2" />
+		<!-- Adjust user canonical URL -->
+		<script>
+			// Check if the host is valid and adjust the canonical URL if it is.
+			if (document?.location?.host === "smalldevtalk.net") {
+				if (document.querySelector('link[rel="canonical"]')) {
+					document.querySelector('link[rel="canonical"]').setAttribute("href", document.location.href);
+				}
+			}
+		</script>
 	</head>
 
 	<body>
