@@ -16,6 +16,10 @@ class ArticleFiller {
 		this.articleData;
 		this.articleMd;
 		this.article;
+		this.pageData;
+		this.pageURL;
+		this.callPageDisplay = true;
+		this.whatPageDisplay = "index";
 	}
 
 	/**
@@ -63,10 +67,10 @@ class ArticleFiller {
 					document.getElementById("articleBody").removeAttribute("hidden");
 				}
 			} else {
-				ChangeFeaturedArticles.callDisplay();
+				ArticleFiller.callDisplay();
 			}
 		} else {
-			ChangeFeaturedArticles.callDisplay();
+			ArticleFiller.callDisplay();
 		}
 	}
 
@@ -207,18 +211,8 @@ class ArticleFiller {
 			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
 		}
 	}
-}
 
-/**
- * Change which page (non-article) is displayed
- */
-class ChangeFeaturedArticles {
-	constructor() {
-		this.pageData;
-		this.pageURL;
-		this.callPageDisplay = true;
-		this.whatPageDisplay = "index";
-	}
+	// Functions related to changing the featured article
 
 	/**
 	 * Retrieve page information of all possible pages
@@ -231,7 +225,7 @@ class ChangeFeaturedArticles {
 		xhr.responseType = "json";
 		xhr.onreadystatechange = () => {
 			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-				ChangeFeaturedArticles.pageData = xhr.response;
+				ArticleFiller.pageData = xhr.response;
 			}
 		};
 
@@ -248,22 +242,22 @@ class ChangeFeaturedArticles {
 		const sep = docURL.split("?");
 		if (sep.length > 1) {
 			useURL = sep[1].split("&");
-			ChangeFeaturedArticles.whatPageDisplay = useURL[1];
+			ArticleFiller.whatPageDisplay = useURL[1];
 		} else {
 			useURL = [];
-			ChangeFeaturedArticles.whatPageDisplay = "index";
+			ArticleFiller.whatPageDisplay = "index";
 		}
-		ChangeFeaturedArticles.pageURL = useURL;
+		ArticleFiller.pageURL = useURL;
 
-		if (ChangeFeaturedArticles.pageURL.length === 1) {
-			ChangeFeaturedArticles.callPageDisplay = false;
+		if (ArticleFiller.pageURL.length === 1) {
+			ArticleFiller.callPageDisplay = false;
 		} else {
-			ChangeFeaturedArticles.callPageDisplay = true;
+			ArticleFiller.callPageDisplay = true;
 
-			if (ChangeFeaturedArticles.whatPageDisplay === "archive") {
-				ChangeFeaturedArticles.displayArchive();
+			if (ArticleFiller.whatPageDisplay === "archive") {
+				ArticleFiller.displayArchive();
 			} else {
-				ChangeFeaturedArticles.changeCarousel();
+				ArticleFiller.changeCarousel();
 			}
 		}
 	}
@@ -329,19 +323,26 @@ class ChangeFeaturedArticles {
 	static changeCarousel() {
 		// Change title:
 		const docTitle =
-			ChangeFeaturedArticles.whatPageDisplay[0].toUpperCase() +
-			ChangeFeaturedArticles.whatPageDisplay.substring(1, ChangeFeaturedArticles.whatPageDisplay.length);
-		document.getElementById("pageTitle").innerText = `Small Dev Talk: ${docTitle}`;
+			ArticleFiller.whatPageDisplay[0].toUpperCase() +
+			ArticleFiller.whatPageDisplay.substring(1, ArticleFiller.whatPageDisplay.length);
 
+		if (document.getElementById("pageTitle")) {
+			document.getElementById("pageTitle").innerText = `Small Dev Talk: ${docTitle}`;
+		}
+
+		console.log(document.getElementById("carouselInner"));
 		if (
-			ChangeFeaturedArticles &&
-			ChangeFeaturedArticles.pageData &&
-			ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay] &&
-			ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay].carousel
+			ArticleFiller &&
+			ArticleFiller.pageData &&
+			ArticleFiller.pageData[ArticleFiller.whatPageDisplay] &&
+			ArticleFiller.pageData[ArticleFiller.whatPageDisplay].carousel &&
+			document.getElementById("carouselInner")
 		) {
-			const carouselList = ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay].carousel;
+			const carouselList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].carousel;
 			// Reset carousel
-			document.getElementById("carouselIndicator").innerHTML = "";
+			if (document.getElementById("carouselIndicator")) {
+				document.getElementById("carouselIndicator").innerHTML = "";
+			}
 			document.getElementById("carouselInner").innerHTML = "";
 			// Fill carousel
 			for (let c = 0; c < carouselList.length; c++) {
@@ -355,13 +356,19 @@ class ChangeFeaturedArticles {
 
 				// Change indicators
 				let appendStr = `
-					<li data-target="#carouselExampleIndicators" data-slide-to="${c}" ${c === 0 ? `class="active"` : ""}></li>
+					<li
+						data-target="#carouselExampleIndicators"
+						data-slide-to="${c}"
+						${c === 0 ? `class="active"` : ""}
+					></li>
 				`;
-				document.getElementById("carouselIndicator").innerHTML += appendStr;
+				if (document.getElementById("carouselIndicator")) {
+					document.getElementById("carouselIndicator").innerHTML += appendStr;
+				}
 
 				// Change content
 				appendStr = `
-					<div class="carousel-item ${c === 0 ? "active" : ""}>
+					<div class="carousel-item ${c === 0 ? "active" : ""}">
 						<a
 							id="carouselLink${c}"
 							href="index.html?${carouselList[c]}"
@@ -385,24 +392,25 @@ class ChangeFeaturedArticles {
 						</a>
 					</div>
 				`;
+
 				document.getElementById("carouselInner").innerHTML += appendStr;
 			}
 		}
 
-		ChangeFeaturedArticles.ChangeFeaturedArticles();
+		ArticleFiller.ArticleFiller();
 	}
 
 	/**
 	 * Change list of featured articles
 	 */
-	static ChangeFeaturedArticles() {
+	static ArticleFiller() {
 		if (
-			ChangeFeaturedArticles &&
-			ChangeFeaturedArticles.pageData &&
-			ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay] &&
-			ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay].displayArticles
+			ArticleFiller &&
+			ArticleFiller.pageData &&
+			ArticleFiller.pageData[ArticleFiller.whatPageDisplay] &&
+			ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles
 		) {
-			const displayList = ChangeFeaturedArticles.pageData[ChangeFeaturedArticles.whatPageDisplay].displayArticles;
+			const displayList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles;
 			// Reset featured articles
 			document.getElementById("displayArticles").innerHTML = "";
 			// Fill featured articles
@@ -476,7 +484,38 @@ class ChangeFeaturedArticles {
 
 function init() {
 	// Init data
-	ChangeFeaturedArticles.retrievePageData();
+	ArticleFiller.retrievePageData();
 	ArticleFiller.retrieveArticleData();
 }
-init();
+
+// On load
+window.onload = init;
+
+// Functions related to changing carousel
+function changeCarouselSlide(direction) {
+	// Look at which className "carousel-item" has "active", if next, add 1, if prev, subtract 1
+	const carouselItems = document.getElementsByClassName("carousel-item");
+	for (let c = 0; c < carouselItems.length; c++) {
+		if (carouselItems[c].className.includes("active")) {
+			// Remove active from this one
+			carouselItems[c].classList.remove("active");
+
+			// Add active to next (or prev) one
+			if (direction === "next") {
+				if (carouselItems[c + 1]) {
+					carouselItems[c + 1].className += " active";
+				} else {
+					carouselItems[0].className += " active";
+				}
+			} else if (direction === "prev") {
+				if (carouselItems[c - 1]) {
+					carouselItems[c - 1].className += " active";
+				} else {
+					carouselItems[carouselItems.length - 1].className += " active";
+				}
+			}
+
+			break;
+		}
+	}
+}

@@ -285,11 +285,16 @@
 									<h2 class="title">Featured Articles</h2>
 
 									<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+										<!-- Indicators -->
 										<ol class="carousel-indicators" id="carouselIndicator"></ol>
+
+										<!-- Carousel -->
 										<div class="carousel-inner" id="carouselInner"></div>
+
+										<!-- Control buttons -->
 										<a
 											class="carousel-control-prev"
-											onClick="$('.carousel').carousel('prev')"
+											onClick="changeCarouselSlide('prev')"
 											role="button"
 											data-slide="prev"
 											aria-label="Go back to previous featured article slide"
@@ -299,7 +304,7 @@
 										</a>
 										<a
 											class="carousel-control-next"
-											onClick="$('.carousel').carousel('next')"
+											onClick="changeCarouselSlide('next')"
 											role="button"
 											data-slide="next"
 											aria-label="Go forward to next featured article slide"
