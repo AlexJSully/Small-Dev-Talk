@@ -5,7 +5,6 @@
 			"HearthstoneDownWithTheSickness",
 			"EarlyAccessPhantasmal",
 			"COLORINO",
-			"HOYO",
 			"CENTS",
 			"LinkedPathways",
 			"ChampionOfDema",
@@ -69,8 +68,8 @@
 		]
 	},
 	"electronics": {
-		"carousel": ["Wave", "FluoroVu", "HOYO"],
-		"displayArticles": ["HOYO", "FluoroVu", "Wave"]
+		"carousel": ["Wave", "FluoroVu"],
+		"displayArticles": ["FluoroVu", "Wave"]
 	},
 	"fashion": {
 		"carousel": ["DClic"],
