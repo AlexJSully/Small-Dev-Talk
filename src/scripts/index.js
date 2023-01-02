@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 //= =========================== Alexander Sullivan =============================
 //
 // Purpose: General functions for Small Dev Talk
@@ -7,6 +8,7 @@
 /**
  * Convert markdown files into HTML
  */
+// eslint-disable-next-line no-undef
 const converter = new showdown.Converter();
 /**
  * Create and fill the page with the desired article
@@ -242,6 +244,7 @@ class ArticleFiller {
 		const sep = docURL.split("?");
 		if (sep.length > 1) {
 			useURL = sep[1].split("&");
+			// eslint-disable-next-line prefer-destructuring
 			ArticleFiller.whatPageDisplay = useURL[1];
 		} else {
 			useURL = [];
@@ -277,7 +280,7 @@ class ArticleFiller {
 		/** String form of the articles to display */
 		let archiveDisplay = "";
 		/** All article's data */
-		const articleData = ArticleFiller.articleData;
+		const { articleData } = ArticleFiller;
 
 		for (const [key, value] of Object.entries(articleData)) {
 			if (value.title && value.author && value.date && value.thumbnail) {
@@ -345,7 +348,7 @@ class ArticleFiller {
 			}
 			document.getElementById("carouselInner").innerHTML = "";
 			// Fill carousel
-			for (let c = 0; c < carouselList.length; c++) {
+			for (let c = 0; c < carouselList.length; c += 1) {
 				// Create URL
 				const authorFolder = `author${ArticleFiller.articleData[carouselList[c]].author.split(" ").join("")}`;
 				const articleFolder = `${ArticleFiller.articleData[carouselList[c]].date}_${carouselList[c]}`;
@@ -492,10 +495,11 @@ function init() {
 window.onload = init;
 
 // Functions related to changing carousel
+// eslint-disable-next-line no-unused-vars
 function changeCarouselSlide(direction) {
 	// Look at which className "carousel-item" has "active", if next, add 1, if prev, subtract 1
 	const carouselItems = document.getElementsByClassName("carousel-item");
-	for (let c = 0; c < carouselItems.length; c++) {
+	for (let c = 0; c < carouselItems.length; c += 1) {
 		if (carouselItems[c].className.includes("active")) {
 			// Remove active from this one
 			carouselItems[c].classList.remove("active");
