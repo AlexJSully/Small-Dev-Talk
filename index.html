@@ -127,23 +127,28 @@
 		<script rel="preload" as="script" src="./src/scripts/index.min.js"></script>
 		<!-- Sentry -->
 		<script
-			src="https://browser.sentry-cdn.com/7.28.1/bundle.min.js"
-			integrity="sha384-AJ+5L2JR76RFL3vSbZEM+KVELzQwqK5tEqWwarOHANgNdBKX2kg80Bw5A2aQiDrn"
+			src="https://browser.sentry-cdn.com/7.31.1/bundle.min.js"
+			integrity="sha384-X9//nkuXwQtKfa1Xtrr5X6G1Sw+5V5w6Tln0nWE4ltNwNTeZ8wkFvn8fz6RnLnws"
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.28.1/bundle.tracing.min.js"
-			integrity="sha384-yEys4sKnFIKxWjh4XQG/PbxsC/mKhpRjQtzoyrIjOixWdgm29gwspFtd07YO6ajG"
+			src="https://browser.sentry-cdn.com/7.31.1/bundle.tracing.min.js"
+			integrity="sha384-voXCfVU1Ba1m+p4UM25SadmIkYt1ihMAhvXhjm+LCB1MOLoceN0u7nveK/ifF/C2"
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.28.1/captureconsole.min.js"
-			integrity="sha384-eho6DuisCz6x319fp8/iEa7D1W4C1dfwoZAp6yZg31vGOT95461Fk9T6iRZJThH9"
+			src="https://browser.sentry-cdn.com/7.31.1/captureconsole.min.js"
+			integrity="sha384-sWOSaCUpeQibftopXaC6DrfxvAxAbwRLH4JnTUwJ49jP4D5qT4rlYVirL9w2eX/r"
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.28.1/offline.min.js"
-			integrity="sha384-LlcndnFvTp4F95mJp2kagyhGWdys115frt18Sf0m21UgwqFXKJ28Vs7K0J8Uo0Kr"
+			src="https://browser.sentry-cdn.com/7.31.1/offline.min.js"
+			integrity="sha384-vO9Do0Jk1lexLBHcnqXphCvdej6fdBtLpJEHaqs52ThroxGbwARwAo83g6O/R+ug"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://browser.sentry-cdn.com/7.31.1/replay.min.js"
+			integrity="sha384-c0ZuHtSPyw+hXxOL7TIN8INSRB+NtwwnLHeibe53/1a+rTpqAXeWnUjzeOgVQGjh"
 			crossorigin="anonymous"
 		></script>
 		<script>
@@ -151,6 +156,14 @@
 				dsn: "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.sentry.io/6600431",
 				// @AlexJSully when updating the package version number in package.json, update the version number here as well.
 				release: "small-dev-talk@1.3.0",
+
+				// This sets the sample rate to be 10%. You may want this to be 100% while
+				// in development and sample at a lower rate in production
+				replaysSessionSampleRate: 0.1,
+				// If the entire session is not sampled, use the below sample rate to sample
+				// sessions when an error occurs.
+				replaysOnErrorSampleRate: 1.0,
+
 				integrations: [
 					new Sentry.BrowserTracing(),
 					new Sentry.Integrations.CaptureConsole({
