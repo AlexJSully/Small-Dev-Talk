@@ -20,9 +20,9 @@ To visit specific articles, just change the directory to end with '?' + article 
 
 ## Browser Compatibilities
 
-| Chrome | Firefox | IE  | Edge | Safari | Opera | Mobile |
-| ------ | ------- | --- | ---- | ------ | ----- | ------ |
-| ✔      | ✔       | X   | ✔    | ?      | ✔     | ✔      |
+| Chrome | Firefox | Edge | Safari | Opera | Mobile |
+| ------ | ------- | ---- | ------ | ----- | ------ |
+| ✔      | ✔       | ✔    | ?      | ✔     | ✔      |
 
 ## Known issues
 
