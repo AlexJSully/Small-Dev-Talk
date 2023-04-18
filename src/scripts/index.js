@@ -29,8 +29,7 @@ class ArticleFiller {
 	 */
 	static retrieveArticleData() {
 		const xhr = new XMLHttpRequest();
-		const url =
-			"https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/articleData.json";
+		const url = "/src/articleArchive/articleData.json";
 
 		xhr.responseType = "json";
 		xhr.onreadystatechange = () => {
@@ -51,26 +50,24 @@ class ArticleFiller {
 	static callArticle() {
 		const docURL = document.URL;
 		const findArticle = docURL.split("?");
-		if (findArticle.length === 2) {
-			const sep = findArticle[1].split("&");
-			if (sep.length === 1) {
-				ArticleFiller.grabArticle(sep[0]);
+		if (findArticle.length !== 2) {
+			ArticleFiller.callDisplay();
+			return;
+		}
 
-				// Reset page
-				if (document.getElementById("featuredArticles")) {
-					document.getElementById("featuredArticles").setAttribute("hidden", true);
-				}
+		const sep = findArticle[1].split("&");
+		if (sep.length === 1) {
+			ArticleFiller.grabArticle(sep[0]);
 
-				if (document.getElementById("displayArticles")) {
-					document.getElementById("displayArticles").setAttribute("hidden", true);
-				}
+			// Reset page
+			const featuredArticles = document.getElementById("featuredArticles");
+			if (featuredArticles) featuredArticles.setAttribute("hidden", true);
 
-				if (document.getElementById("articleBody")) {
-					document.getElementById("articleBody").removeAttribute("hidden");
-				}
-			} else {
-				ArticleFiller.callDisplay();
-			}
+			const displayArticles = document.getElementById("displayArticles");
+			if (displayArticles) displayArticles.setAttribute("hidden", true);
+
+			const articleBody = document.getElementById("articleBody");
+			if (articleBody) articleBody.removeAttribute("hidden");
 		} else {
 			ArticleFiller.callDisplay();
 		}
@@ -98,7 +95,7 @@ class ArticleFiller {
 
 			// Call article
 			const xhr = new XMLHttpRequest();
-			const url = `https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleName}.md`;
+			const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleName}.md`;
 
 			xhr.responseType = "text";
 			xhr.onreadystatechange = () => {
@@ -221,13 +218,14 @@ class ArticleFiller {
 	 */
 	static retrievePageData() {
 		const xhr = new XMLHttpRequest();
-		const url =
-			"https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/legacyPages/legacyPagesDisplay.json";
+		const url = "/src/legacyPages/legacyPagesDisplay.json";
 
 		xhr.responseType = "json";
 		xhr.onreadystatechange = () => {
 			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
 				ArticleFiller.pageData = xhr.response;
+
+				ArticleFiller.callArticle();
 			}
 		};
 
@@ -333,7 +331,6 @@ class ArticleFiller {
 			document.getElementById("pageTitle").innerText = `Small Dev Talk: ${docTitle}`;
 		}
 
-		console.log(document.getElementById("carouselInner"));
 		if (
 			ArticleFiller &&
 			ArticleFiller.pageData &&
@@ -355,7 +352,7 @@ class ArticleFiller {
 				const articleThumbnail = ArticleFiller.articleData[carouselList[c]].thumbnail;
 				const articleTitle = ArticleFiller.articleData[carouselList[c]].title;
 				const articleSummary = ArticleFiller.articleData[carouselList[c]].summary;
-				const url = `https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
+				const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
 
 				// Change indicators
 				let appendStr = `
@@ -429,7 +426,7 @@ class ArticleFiller {
 						const articleTitle = ArticleFiller.articleData[displayList[d]].title;
 						const articleSummary = ArticleFiller.articleData[displayList[d]].summary;
 						const articleDate = ArticleFiller.articleData[displayList[d]].date;
-						const url = `https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
+						const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
 
 						// Change indicators
 						const appendStr = `
