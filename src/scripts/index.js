@@ -280,22 +280,23 @@ class ArticleFiller {
 		/** All article's data */
 		const { articleData } = ArticleFiller;
 
-		for (const [key, value] of Object.entries(articleData)) {
-			if (value.title && value.author && value.date && value.thumbnail) {
-				// Create bootstrap container
-				if (archiveDisplay.trim().length < 1) {
-					archiveDisplay += `
+		if (articleData) {
+			for (const [key, value] of Object.entries(articleData)) {
+				if (value && value.title && value.author && value.date && value.thumbnail) {
+					// Create bootstrap container
+					if (archiveDisplay.trim().length < 1) {
+						archiveDisplay += `
 						<div class="container-fluid">
 						<div class="row">
 					`;
-				}
+					}
 
-				/** Article's thumbnail URL */
-				const imgURL = `src/articleArchive/author${value.author.split(" ").join("")}/${value.date}_${key}/${
-					value.thumbnail
-				}`;
+					/** Article's thumbnail URL */
+					const imgURL = `src/articleArchive/author${value.author.split(" ").join("")}/${value.date}_${key}/${
+						value.thumbnail
+					}`;
 
-				archiveDisplay += `
+					archiveDisplay += `
 					<div class="col-sm archive-display">
 						<a
 							class="archive-link"
@@ -307,6 +308,7 @@ class ArticleFiller {
 						</a>
 					</div>
 				`;
+				}
 			}
 		}
 
@@ -334,6 +336,7 @@ class ArticleFiller {
 		if (
 			ArticleFiller &&
 			ArticleFiller.pageData &&
+			ArticleFiller.articleData &&
 			ArticleFiller.pageData[ArticleFiller.whatPageDisplay] &&
 			ArticleFiller.pageData[ArticleFiller.whatPageDisplay].carousel &&
 			document.getElementById("carouselInner")
@@ -407,6 +410,7 @@ class ArticleFiller {
 		if (
 			ArticleFiller &&
 			ArticleFiller.pageData &&
+			ArticleFiller.articleData &&
 			ArticleFiller.pageData[ArticleFiller.whatPageDisplay] &&
 			ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles
 		) {
@@ -492,31 +496,39 @@ function init() {
 window.onload = init;
 
 // Functions related to changing carousel
+/**
+ * Changes the active slide in a carousel based on the given direction.
+ * @param {string} direction The direction in which to change the active slide.
+ * @returns {void}
+ */
 // eslint-disable-next-line no-unused-vars
 function changeCarouselSlide(direction) {
-	// Look at which className "carousel-item" has "active", if next, add 1, if prev, subtract 1
+	/** Define the name of the class that represents the active slide */
+	const activeClass = "active";
+	/** Elements with the class "carousel-item" */
 	const carouselItems = document.getElementsByClassName("carousel-item");
-	for (let c = 0; c < carouselItems.length; c += 1) {
-		if (carouselItems[c].className.includes("active")) {
-			// Remove active from this one
-			carouselItems[c].classList.remove("active");
 
-			// Add active to next (or prev) one
-			if (direction === "next") {
-				if (carouselItems[c + 1]) {
-					carouselItems[c + 1].className += " active";
-				} else {
-					carouselItems[0].className += " active";
-				}
-			} else if (direction === "prev") {
-				if (carouselItems[c - 1]) {
-					carouselItems[c - 1].className += " active";
-				} else {
-					carouselItems[carouselItems.length - 1].className += " active";
-				}
-			}
-
-			break;
-		}
+	// If there are no carousel items, return without doing anything
+	if (!carouselItems || !carouselItems.length) {
+		return;
 	}
+
+	/** Currently active slide by searching through the carousel items for the one with the active class */
+	const activeItem = Array.from(carouselItems).find((item) => item.classList.contains(activeClass));
+
+	// If there is no active slide, add the active class to the first carousel item and return
+	if (!activeItem) {
+		carouselItems[0].classList.add(activeClass);
+		return;
+	}
+
+	/** The index of the next slide based on the direction and the current active slide */
+	const nextIndex =
+		direction === "next"
+			? (Array.from(carouselItems).indexOf(activeItem) + 1) % carouselItems.length
+			: (Array.from(carouselItems).indexOf(activeItem) - 1 + carouselItems.length) % carouselItems.length;
+
+	// Remove the active class from the current active slide and add it to the next slide
+	activeItem.classList.remove(activeClass);
+	carouselItems[nextIndex].classList.add(activeClass);
 }
