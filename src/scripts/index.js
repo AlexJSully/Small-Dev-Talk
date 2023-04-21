@@ -24,50 +24,51 @@ class ArticleFiller {
 		this.whatPageDisplay = "index";
 	}
 
-	/**
-	 * Retrieve all article information
-	 */
+	/** Retrieve all article information */
 	static retrieveArticleData() {
-		const xhr = new XMLHttpRequest();
-		const url = "/src/articleArchive/articleData.json";
+		const articleDataUrl = "/src/articleArchive/articleData.json";
 
-		xhr.responseType = "json";
-		xhr.onreadystatechange = () => {
-			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-				ArticleFiller.articleData = xhr.response;
-
+		fetch(articleDataUrl)
+			.then((response) => response.json())
+			.then((articleData) => {
+				ArticleFiller.articleData = articleData;
 				ArticleFiller.callArticle();
-			}
-		};
-
-		xhr.open("GET", url);
-		xhr.send();
+			})
+			.catch((error) => {
+				console.error("Error retrieving article data:", error);
+			});
 	}
 
-	/**
-	 * Call desired article as denoted by index.html?ArticleTitle
-	 */
+	/** Call desired article as denoted by index.html?ArticleTitle */
 	static callArticle() {
 		const docURL = document.URL;
-		const findArticle = docURL.split("?");
-		if (findArticle.length !== 2) {
+		const [, query] = docURL.split("?"); // Using destructuring to get the query string
+
+		if (!query) {
 			ArticleFiller.callDisplay();
 			return;
 		}
 
-		const sep = findArticle[1].split("&");
-		if (sep.length === 1) {
-			ArticleFiller.grabArticle(sep[0]);
+		const [articleTitle] = query.split("&"); // Using destructuring to get the article title
+		const isSingleArticle = query.split("&").length === 1;
 
-			// Reset page
+		if (isSingleArticle) {
+			ArticleFiller.grabArticle(articleTitle);
+
+			// Caching frequently used DOM elements
 			const featuredArticles = document.getElementById("featuredArticles");
-			if (featuredArticles) featuredArticles.setAttribute("hidden", true);
-
 			const displayArticles = document.getElementById("displayArticles");
-			if (displayArticles) displayArticles.setAttribute("hidden", true);
-
 			const articleBody = document.getElementById("articleBody");
-			if (articleBody) articleBody.removeAttribute("hidden");
+
+			if (featuredArticles) {
+				featuredArticles.setAttribute("hidden", true);
+			}
+			if (displayArticles) {
+				displayArticles.setAttribute("hidden", true);
+			}
+			if (articleBody) {
+				articleBody.removeAttribute("hidden");
+			}
 		} else {
 			ArticleFiller.callDisplay();
 		}
@@ -82,36 +83,36 @@ class ArticleFiller {
 		const tempName = articleName.split(" ");
 		articleName = "";
 		for (const name of tempName) {
-			const change = name[0].toUpperCase() + name.substring(1, name.length);
+			const change = name[0].toUpperCase() + name.slice(1);
 			articleName += change;
 		}
 
-		if (ArticleFiller.articleData[articleName]) {
-			this.updateMetaData(ArticleFiller.articleData[articleName], articleName);
+		if (ArticleFiller.articleData && articleName) {
+			const articleData = ArticleFiller.articleData[articleName];
+			if (articleData) {
+				this.updateMetaData(articleData, articleName);
 
-			// Create URL
-			const authorFolder = `author${ArticleFiller.articleData[articleName].author.split(" ").join("")}`;
-			const articleFolder = `${ArticleFiller.articleData[articleName].date}_${articleName}`;
+				// Create URL
+				const authorFolder = `author${articleData.author.replace(/\s/g, "")}`;
+				const articleFolder = `${articleData.date}_${articleName}`;
+				const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleName}.md`;
 
-			// Call article
-			const xhr = new XMLHttpRequest();
-			const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleName}.md`;
-
-			xhr.responseType = "text";
-			xhr.onreadystatechange = () => {
-				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-					ArticleFiller.articleMd = xhr.response;
-
-					ArticleFiller.addToPage();
-				}
-			};
-
-			xhr.open("GET", url);
-			xhr.send();
-		} else {
-			ArticleFiller.articleMd = "Error retrieving article";
-
-			ArticleFiller.addToPage();
+				// Call article
+				fetch(url)
+					.then((response) => response.text())
+					.then((articleMd) => {
+						ArticleFiller.articleMd = articleMd;
+						ArticleFiller.addToPage();
+					})
+					.catch((error) => {
+						console.error(error);
+						ArticleFiller.articleMd = "Error retrieving article";
+						ArticleFiller.addToPage();
+					});
+			} else {
+				ArticleFiller.articleMd = "Error retrieving article";
+				ArticleFiller.addToPage();
+			}
 		}
 	}
 
