@@ -117,8 +117,7 @@
 		<script rel="preload" as="script" src="./src/scripts/libraries/showdown/showdown.min.js"></script>
 		<script>
 			// Add service workers
-			if ("serviceWorker" in navigator) {
-				// Use the window load event to keep the page load performant
+			if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
 				window.addEventListener("load", () => {
 					navigator.serviceWorker.register("./src/serviceWorker/sw.js");
 				});
@@ -131,18 +130,18 @@
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.54.0/bundle.tracing.min.js"
-			integrity="sha384-+h0OKHbAGUGuqyOQt8GPxoAlivqJAJnscoCE5ftl2SV77nWLjqoXvT4p6QLPjEh1"
+			src="https://browser.sentry-cdn.com/7.55.2/bundle.tracing.min.js"
+			integrity="sha384-u0VnF/CCtmgYR2cShUDrGNHOlH3jdsqBHK+yrIo7uqFygjVXak8CMh+/81vtqNBF"
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.54.0/bundle.tracing.replay.min.js"
-			integrity="sha384-8wl63sykJEt5wJGcyNxwRPnLlRq8LtOMYzWhhRmdZS2PeYLAkgr8ILtC5ns+akjI"
+			src="https://browser.sentry-cdn.com/7.55.2/bundle.tracing.replay.min.js"
+			integrity="sha384-gcN4PI+eloXUU+AVUgV5gJT83csMy9XzHmru5hCpeLG74/tINGdKjYdz6sDkMYZv"
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.54.0/captureconsole.min.js"
-			integrity="sha384-V6ZvJlQ8y5xx82GkSzpKcRIgWVOAioJf0ObTuguNAg4liORrTqSpGqlfPXP5pvEn"
+			src="https://browser.sentry-cdn.com/7.55.2/captureconsole.min.js"
+			integrity="sha384-ka7B5c22R3OzKh9rjpsaTgTp+iCxkGesNOzCV0cws6Atx6KEluJlIbbXHbl1DMff"
 			crossorigin="anonymous"
 		></script>
 		<script>
