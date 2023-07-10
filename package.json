@@ -19,7 +19,7 @@
 	"description": "Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene.",
 	"main": "index.html",
 	"devDependencies": {
-		"eslint": "^8.43.0",
+		"eslint": "^8.44.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-prettier": "^4.2.1",
