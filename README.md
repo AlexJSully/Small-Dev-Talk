@@ -22,7 +22,7 @@ To visit specific articles, just change the directory to end with '?' + article 
 
 | Chrome | Firefox | Edge | Safari | Opera | Mobile |
 | ------ | ------- | ---- | ------ | ----- | ------ |
-| ✔      | ✔       | ✔    | ?      | ✔     | ✔      |
+| ✔     | ✔      | ✔   | ?      | ✔    | ✔     |
 
 ## Known issues
 
