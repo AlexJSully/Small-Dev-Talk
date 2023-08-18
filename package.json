@@ -19,11 +19,11 @@
 	"description": "Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene.",
 	"main": "index.html",
 	"devDependencies": {
-		"eslint": "^8.46.0",
+		"eslint": "^8.47.0",
 		"eslint-config-airbnb": "^19.0.4",
-		"eslint-config-prettier": "^8.10.0",
+		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.0",
-		"prettier": "^3.0.1",
+		"prettier": "^3.0.2",
 		"workbox-cli": "^7.0.0"
 	},
 	"scripts": {
