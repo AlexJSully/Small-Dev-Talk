@@ -130,18 +130,18 @@
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.77.0/bundle.tracing.min.js"
-			integrity="sha384-KWw4l2g7vAMbNpcjTDR/CT94Pb5WFr8Q51KiuuZ+RPsfbLe4X5kc/OQVg9SBIg6x"
+			src="https://browser.sentry-cdn.com/7.87.0/bundle.tracing.min.js"
+			integrity="sha384-/tvmI6Begi0ByupnTi5AUHWQuXcCwahbrULAfJ+6YHFMIyzHI6wWbNiD6r6MKAVI"
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.77.0/bundle.tracing.replay.min.js"
-			integrity="sha384-OKHElBQJJIwDxyzJNjyBXH6DF/kK6MJO1iN/cSS4BjCOr76ChDkzpIYOQ9/XPOuW"
+			src="https://browser.sentry-cdn.com/7.87.0/bundle.tracing.replay.min.js"
+			integrity="sha384-tM+htpi3LOboWUZbwMA4kqVv7BnV9bs6sH3M4l1aDurJ4UuKbhFiOq1O9dj5sMHW"
 			crossorigin="anonymous"
 		></script>
 		<script
-			src="https://browser.sentry-cdn.com/7.77.0/captureconsole.min.js"
-			integrity="sha384-X8P82gLSiE0b/hfnZncMQGWhnKjHDeDpfg5K7J8ZJhCnEHPtDBPlANw4s587IZ2D"
+			src="https://browser.sentry-cdn.com/7.87.0/captureconsole.min.js"
+			integrity="sha384-GtZuSZtwZlNXV8EsLbRqn6bMe61OdvgGr2MYtNPn+wFg5iGAsysv1y/UwPd4hUiP"
 			crossorigin="anonymous"
 		></script>
 		<script>
@@ -193,7 +193,7 @@
 		<!-- Adjust user canonical URL -->
 		<script>
 			// Check if the host is valid and adjust the canonical URL if it is.
-			if (document && document.location && document.location.host === "smalldevtalk.net") {
+			if (document?.location?.host === "smalldevtalk.net") {
 				if (document.querySelector('link[rel="canonical"]')) {
 					document.querySelector('link[rel="canonical"]').setAttribute("href", document.location.href);
 				}
