@@ -6,20 +6,26 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 To see tags and releases, please go to [Tags](https://github.com/AlexJSully/Small-Dev-Talk/tags) on [GitHub](https://github.com/AlexJSully/Small-Dev-Talk).
 
+## [1.3.2] - 2024-01-04
+
+Update:
+
+-   Updated Sentry packages
+
 ## [1.3.1] - 2023-08-03
 
 No longer supports Internet Explorer.
 
-**Optimizations**:
+Optimizations:
 
 -   Optimized images
 -   Updated web manifest
 
-**Update**:
+Update:
 
 -   Updated OSSAR workflow
 
-**Bug fixes**:
+Bug fixes:
 
 -   Fix calling article data before getting article data
 -   Fix carousel trying to update before getting data
@@ -34,16 +40,16 @@ No longer supports Internet Explorer.
 
 ## [1.3.0] - 2022-11-03
 
-**A brand new version of the [Small Dev Talk](https://smalldevtalk.net/) has dropped!**
+A brand new version of the [Small Dev Talk](https://smalldevtalk.net/) has dropped!
 
 Version 1.3.0 mostly includes bug fixes and optimizations
 
-**Security**:
+Security:
 
 -   Added Content Security Policy
 -   Added Strict-Transport-Security
 
-**Optimizations**:
+Optimizations:
 
 -   Added CI/CDs and GitHub Actions
 -   Added Sentry
@@ -61,19 +67,19 @@ Version 1.3.0 mostly includes bug fixes and optimizations
 -   Updated favicons
 -   Updated metadata and SEO optimizations
 
-**Update**:
+Update:
 
 -   Update packages
 -   Update service workers scripts
 
-**Documentation**:
+Documentation:
 
 -   Prettified code and improved readability
 -   Sorted uncategorized CSS styles
 -   Updated README
 -   Updated prettier to ignore line endings
 
-**Bug fix**:
+Bug fix:
 
 -   Fixed articles missing thumbnails and summaries
 -   Fixed issue with background gradient colour
@@ -83,21 +89,21 @@ Version 1.3.0 mostly includes bug fixes and optimizations
 
 ## [1.2.0] - 2021-11-18
 
-**A brand new version of the [Small Dev Talk](https://smalldevtalk.net/) has dropped!**
+A brand new version of the [Small Dev Talk](https://smalldevtalk.net/) has dropped!
 
 Version 1.2 mostly includes bug fixes and optimizations
 
-**New feature**:
+New feature:
 
 -   Added an archive page that lists all articles that Small Dev Talk ever written
 -   Add offline/caching service worker for instance if a user loses connection mid-usage
 -   Updated Google Analytics tracking options and added Google Tag Manager for bug tracking
 
-**Update**:
+Update:
 
 -   Updated packages including Bootstrap, showdown and jQuery
 
-**Optimization**:
+Optimization:
 
 -   Optimized images
 -   Added Clourflare meta data
@@ -107,11 +113,11 @@ Version 1.2 mostly includes bug fixes and optimizations
 -   Added lazy loading support
 -   Converted some images to SVGs
 
-**Documentation**:
+Documentation:
 
 -   Updated my author details to include personal website
 
-**Bug fix**:
+Bug fix:
 
 -   Added space before 'Read More'
 -   Fixed issue where if an unknown page was loaded, it would just crash
