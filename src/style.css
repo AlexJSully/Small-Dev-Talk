@@ -23,6 +23,7 @@ img {
 	margin: auto;
 	text-align: left;
 	width: 1050px;
+	max-width: 100%;
 }
 /** END wrapper **/
 
@@ -154,13 +155,20 @@ img {
 
 /** BEGIN content **/
 #content {
-    border: 1px solid rgb(175, 175, 175)(128, 128, 128, 0.568);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    clear: both;
-    float: left;
-    font-family: Arial;
-    width: 676px;
+	border: 1px solid rgb(175, 175, 175) (128, 128, 128, 0.568);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+	clear: both;
+	float: left;
+	font-family: Arial;
+	width: 676px;
 }
+
+@media screen and (max-width: 1035px) {
+	#content {
+		width: 100%;
+	}
+}
+
 #content .foot {
 	padding: 25px 8px;
 }
@@ -438,6 +446,13 @@ img {
 #sidebar {
 	float: right;
 	width: 330px;
+}
+
+@media screen and (max-width: 1035px) {
+	#sidebar {
+		margin-top: 1%;
+		width: 100%;
+	}
 }
 
 #sidebar .box {
