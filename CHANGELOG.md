@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 To see tags and releases, please go to [Tags](https://github.com/AlexJSully/Small-Dev-Talk/tags) on [GitHub](https://github.com/AlexJSully/Small-Dev-Talk).
 
+## [1.3.3] - 2024-01-30
+
+Optimizations:
+
+-   Reduce size of images
+
+Update:
+
+-   Update packages
+
+Documentation:
+
+-   Updated public facing email
+
+Bug fix:
+
+-   Fixed content body image by replacing it with a CSS box-shadow
+-   Fixed responsive UI not working
+
 ## [1.3.2] - 2024-01-04
 
 Update:
