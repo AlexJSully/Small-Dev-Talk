@@ -193,9 +193,12 @@
 		<!-- Adjust user canonical URL -->
 		<script>
 			// Check if the host is valid and adjust the canonical URL if it is.
-			if (document?.location?.host === "smalldevtalk.net") {
-				if (document.querySelector('link[rel="canonical"]')) {
-					document.querySelector('link[rel="canonical"]').setAttribute("href", document.location.href);
+			// Not using optional chaining because it's not supported in all browsers.
+			if (document && document.location && document.location.host === "smalldevtalk.net") {
+				/** Adjust the canonical URL to the current URL */
+				let canonicalLink = document.querySelector('link[rel="canonical"]');
+				if (canonicalLink) {
+					canonicalLink.setAttribute("href", document.location.href);
 				}
 			}
 		</script>
