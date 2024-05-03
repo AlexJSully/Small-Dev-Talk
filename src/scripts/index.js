@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 //= =========================== Alexander Sullivan =============================
 //
 // Purpose: General functions for Small Dev Talk
@@ -8,7 +7,7 @@
 /**
  * Convert markdown files into HTML
  */
-// eslint-disable-next-line no-undef
+
 const converter = new showdown.Converter();
 /**
  * Create and fill the page with the desired article
@@ -243,7 +242,7 @@ class ArticleFiller {
 		const sep = docURL.split("?");
 		if (sep.length > 1) {
 			useURL = sep[1].split("&");
-			// eslint-disable-next-line prefer-destructuring
+
 			ArticleFiller.whatPageDisplay = useURL[1];
 		} else {
 			useURL = [];
