@@ -30,6 +30,13 @@ We aim to make the Small Dev Talk as perfect as possible but unfortunately, ther
 
 -   None at the moment... Help us find some!
 
+## Maintenance Mode
+
+This project is currently in maintenance mode. This means that:
+
+*   Only critical bug fixes and security updates will be addressed.
+*   New feature requests are unlikely to be implemented.
+
 ## Sponsorship
 
 If you want to support my work, you can through the following methods:
