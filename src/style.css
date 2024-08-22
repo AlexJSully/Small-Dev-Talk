@@ -545,3 +545,16 @@ img {
 #footer a:hover {
 	text-decoration: underline;
 }
+
+/* For improved visual feedback, add user-valid and user-invalid classes to input and textarea elements. */
+input:user-valid,
+textarea:user-valid,
+select:user-valid {
+	border: 1px solid #28a745;
+}
+
+input:user-invalid,
+textarea:user-invalid,
+select:user-invalid {
+	border: 1px solid #dc3545;
+}
