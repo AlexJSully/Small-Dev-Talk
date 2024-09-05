@@ -1,5 +1,4 @@
 body {
-	background: url(images/backgroundnew.gif) repeat-x 0 0;
 	color: #000000;
 	font: 12px Verdana;
 	text-align: center;
@@ -22,7 +21,6 @@ img {
 #wrapper {
 	margin: auto;
 	text-align: left;
-	width: 1050px;
 	max-width: 100%;
 }
 /** END wrapper **/
@@ -30,7 +28,6 @@ img {
 /** BEGIN header **/
 #header {
 	height: 200px;
-	padding: 0 8px;
 }
 
 #header ul {
@@ -43,7 +40,9 @@ img {
 }
 
 #header .pages {
+	display: flex;
 	float: left;
+	margin-bottom: 0;
 }
 
 #header .pages li {
@@ -63,6 +62,13 @@ img {
 	text-decoration: underline;
 }
 
+#header nav {
+	width: 100%;
+	background-color: #000;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
 #header nav ul li:hover > ul {
 	display: block;
 }
@@ -74,7 +80,7 @@ img {
 	box-shadow: 0px 0px 9px rgba (0, 0, 0, 0.15);
 	display: inline-table;
 	list-style: none;
-	padding: 0 20px;
+	padding: 0 2%;
 	position: relative;
 }
 
@@ -125,7 +131,7 @@ img {
 #header h1 {
 	clear: both;
 	float: left;
-	padding: 35px 0 40px;
+	padding: min(1%, 10px);
 }
 
 #header .ad {
@@ -136,7 +142,10 @@ img {
 
 /** BEGIN body **/
 #body {
-	padding: 10px 0;
+	padding: 10px 8px;
+	display: flex;
+	justify-content: center;
+	gap: min(20px, 10%);
 }
 
 .articleBody {
@@ -160,13 +169,8 @@ img {
 	clear: both;
 	float: left;
 	font-family: Arial;
-	width: 676px;
-}
-
-@media screen and (max-width: 1035px) {
-	#content {
-		width: 100%;
-	}
+	max-width: 676px;
+	width: 100%;
 }
 
 #content .foot {
@@ -296,9 +300,9 @@ img {
 }
 
 #content .post .r {
-	float: right;
 	padding: 15px 0;
-	width: 430px;
+	width: 100%;
+	max-width: 430px;
 }
 
 #content .post h2 {
@@ -347,7 +351,7 @@ img {
 #content .postnav {
 	clear: both;
 	float: right;
-	padding: 0 20px;
+	padding: 0 2%;
 }
 
 #content .postnav ul {
@@ -448,10 +452,18 @@ img {
 	width: 330px;
 }
 
-@media screen and (max-width: 1035px) {
+@media screen and (max-width: 900px) {
+	#body {
+		display: block;
+	}
+
 	#sidebar {
 		margin-top: 1%;
 		width: 100%;
+	}
+
+	#content {
+		max-width: 100%;
 	}
 }
 

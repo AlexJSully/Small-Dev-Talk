@@ -381,12 +381,12 @@ class ArticleFiller {
 								id="carouselImage${c}"
 								src="${url}"
 								class="d-block w-100"
-								style="width:100%; height: 400px !important;"
+								style="width:100%; max-height: 400px !important;"
 								loading="lazy"
 								alt="Carousel image for ${articleTitle}"
 							>
 							<div
-								class="carousel-caption d-none d-md-block"
+								class="carousel-caption d-md-block"
 								style="text-shadow: 0 0 3px #000000;"
 							>
 								<h5 id="carouselHeader${c}">${articleTitle}</h5>
