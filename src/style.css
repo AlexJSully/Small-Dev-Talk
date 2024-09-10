@@ -43,6 +43,7 @@ img {
 	display: flex;
 	float: left;
 	margin-bottom: 0;
+	width: 100%;
 }
 
 #header .pages li {
@@ -131,7 +132,7 @@ img {
 #header h1 {
 	clear: both;
 	float: left;
-	padding: min(1%, 10px);
+	padding: min(1%, 10px) 2%;
 }
 
 #header .ad {
@@ -302,7 +303,6 @@ img {
 #content .post .r {
 	padding: 15px 0;
 	width: 100%;
-	max-width: 430px;
 }
 
 #content .post h2 {

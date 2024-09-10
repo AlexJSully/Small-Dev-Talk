@@ -434,21 +434,21 @@ class ArticleFiller {
 
 						// Change indicators
 						const appendStr = `
-							<div class="post" id="featuredArticle${d}">
-								<div class="l">
+							<div class="post row" id="featuredArticle${d}">
+								<div class="col-md-4" style="margin-top: 0.5rem;">
 									<a
 										href="index.html?${displayList[d]}"
 										aria-label="Redirect to ${articleTitle}"
 									>
 										<img
 											src="${url}"
-											width="134"
+											class="img-fluid"
 											loading="lazy"
 											alt="Thumbnail for ${articleTitle}"
 										>
 									</a>
 								</div>
-								<div class="r">
+								<div class="col-md-8" style="margin-top: 0.5rem;">
 									<h2>
 										<a
 											href="index.html?${displayList[d]}"
@@ -457,6 +457,8 @@ class ArticleFiller {
 											${articleTitle}
 										</a>
 									</h2>
+								</div>
+								<div class="col-12" style="margin-top: 0.5rem;">
 									<p>
 										${articleSummary}
 										<a
@@ -466,6 +468,8 @@ class ArticleFiller {
 											Read More
 										</a>
 									</p>
+								</div>
+								<div class="col-12">
 									<p class="details">
 										<a
 											href="index.html?${displayList[d]}"
@@ -474,6 +478,7 @@ class ArticleFiller {
 											${articleDate}
 										</a>
 									</p>
+								</div>
 								</div>
 							</div>
 						`;
