@@ -6,3 +6,6 @@
 # VS code
 .vscode/settings.json
 .vscode/launch.json
+
+# Tests
+/coverage
