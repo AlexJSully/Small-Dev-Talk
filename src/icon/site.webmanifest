@@ -126,6 +126,7 @@
 			"sizes": "1600x1089",
 			"type": "image/webp",
 			"platform": "wide",
+			"form_factor": "wide",
 			"label": "Landing Page"
 		},
 		{
@@ -133,6 +134,7 @@
 			"sizes": "1600x1032",
 			"type": "image/webp",
 			"platform": "wide",
+			"form_factor": "wide",
 			"label": "Example article with Caravaneer 2 interview"
 		},
 		{
@@ -140,6 +142,7 @@
 			"sizes": "1600x1089",
 			"type": "image/webp",
 			"platform": "wide",
+			"form_factor": "wide",
 			"label": "Archive of articles from Small Dev Talk"
 		}
 	],
