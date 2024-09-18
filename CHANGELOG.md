@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 To see tags and releases, please go to [Tags](https://github.com/AlexJSully/Small-Dev-Talk/tags) on [GitHub](https://github.com/AlexJSully/Small-Dev-Talk).
 
+## [1.3.4] - 2024-09-17
+
+UI/UX:
+
+-   Added user highlight to input fields
+
+Optimizations:
+
+-   Reran service worker script to update cache
+
+Update:
+
+-   Update packages
+
+Documentation:
+
+-   Updated README and code styling
+
+Bug fix:
+
+-   Fixed canonical check compatibility with older JavaScript versions
+-   Fixed inconsistent width of landing content
+-   Fixed missing screenshots form factor prevent rich PWA install on desktop
+-   Fixed mobile responsiveness of landing page
+
 ## [1.3.3] - 2024-01-30
 
 Optimizations:

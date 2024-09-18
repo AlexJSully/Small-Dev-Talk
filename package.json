@@ -14,7 +14,7 @@
 			"url": "https://www.jefferycen.com"
 		}
 	],
-	"version": "1.3.3",
+	"version": "1.3.4",
 	"private": true,
 	"description": "Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene.",
 	"main": "index.html",
