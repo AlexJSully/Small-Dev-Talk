@@ -2,14 +2,14 @@ name: Markdown Lint
 
 on:
     push:
-        branches: [main]
+        branches: [master]
         paths:
             - "**/*.md"
             - ".markdownlint.json"
             - ".markdownlintignore"
             - ".github/workflows/markdown-lint.yaml"
     pull_request:
-        branches: [main]
+        branches: [master]
         paths:
             - "**/*.md"
             - ".markdownlint.json"
