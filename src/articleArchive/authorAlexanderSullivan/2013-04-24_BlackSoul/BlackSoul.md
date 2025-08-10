@@ -2,7 +2,7 @@
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-24_BlackSoul\image1.jpg)
 
-Recently, I got the opportunity to speak with Pierluigi from Xenios Vision about their game in development, BlackSoul. This game is a third-person survival horror based in 1970’s England; a strange and unknown infection breaks out in the English countryside and your goal is to survive in the quarantine zone and find out what’s really happening. Check out the interview and make sure to check out the game at http://www.xeniosvision.com .
+Recently, I got the opportunity to speak with Pierluigi from Xenios Vision about their game in development, BlackSoul. This game is a third-person survival horror based in 1970’s England; a strange and unknown infection breaks out in the English countryside and your goal is to survive in the quarantine zone and find out what’s really happening. Check out the interview and make sure to check out the game at <http://www.xeniosvision.com> .
 
 **Small Dev Talk: What kind of a game is BlackSoul?**
 

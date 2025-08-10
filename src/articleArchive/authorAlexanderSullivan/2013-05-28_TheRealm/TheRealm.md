@@ -2,7 +2,7 @@
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-05-28_TheRealm\image1.jpg)
 
-It’s time for a new adventure with Sarina and Toru in The Realm. Recently, we got the chance to talk with Tom Szirtes from Atomhawk Design who worked on other big name projects such as Dead Island regarding their new game, The Realm. You can find more about the game at http://www.therealmgame.com/
+It’s time for a new adventure with Sarina and Toru in The Realm. Recently, we got the chance to talk with Tom Szirtes from Atomhawk Design who worked on other big name projects such as Dead Island regarding their new game, The Realm. You can find more about the game at <http://www.therealmgame.com/>
 
 **Small Dev Talk: What is The Realm?**
 
