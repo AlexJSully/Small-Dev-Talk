@@ -78,4 +78,4 @@ Upload date: 2013-05-11. Last modified: 2013-05-11. Written by [Alexander Sulliv
 
 ## Archived public comments
 
-[Charles Fischer](https://www.facebook.com/charles.fischer.581): Very cool to be interviewed about my upcoming novel! http://smalldevtalk.com/post/50178611110/beyond-infinity
+[Charles Fischer](https://www.facebook.com/charles.fischer.581): Very cool to be interviewed about my upcoming novel! <http://smalldevtalk.com/post/50178611110/beyond-infinity>

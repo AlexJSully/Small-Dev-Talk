@@ -2,7 +2,7 @@
 
 ![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image1.jpg)
 
-Oceania is a new MMORPG coming out that lets the players create the world around them. Not long ago I got the chance to talk with the developers from Digital Engine about this new game Oceania which you can find at http://oceania-online.com/.
+Oceania is a new MMORPG coming out that lets the players create the world around them. Not long ago I got the chance to talk with the developers from Digital Engine about this new game Oceania which you can find at <http://oceania-online.com/>.
 
 **Small Dev Talk: What is Oceania?**
 

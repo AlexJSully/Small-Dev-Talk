@@ -100,11 +100,11 @@ Intenseness of development of the game sharply grew after I found out about Kick
 
 **Mr. Nixon:** If we get support on Kickstarter, I think we can expect this game to come out in around 1-2 years. If no, then we’re talking about 5 years. Here’s the simple math:
 
-Game = Time _ Money _ Perseverance.
+Game = Time _Money_ Perseverance.
 
 Money = Time \* Perseverance.
 
-Thus, Game = Time² _ Perseverance or Game = Money² _ Perseverance
+Thus, Game = Time² _Perseverance or Game = Money²_ Perseverance
 
 I’m not much for Perseverance, so the release date will be totally dependent on the wishes of the gamers.
 

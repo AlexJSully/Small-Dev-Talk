@@ -173,10 +173,10 @@ Bug fix:
 
 All articles posted onto Small Dev Talk have now been fully archived including all uploaded videos by Small Dev Talk. Read the README for more instructions and updates.
 
-Visit https://asully.github.io/Small-Dev-Talk/ to view Small Dev Talk's articles
+Visit <https://asully.github.io/Small-Dev-Talk/> to view Small Dev Talk's articles
 
 ## [1.0.0] - 2018-08-23
 
-This is the release of the code that was used in the Small Dev Talk's website between March 2013 and April 2016. You can visit the website for Small Dev Talk at http://smalldevtalk.net (or http://smalldevtalk.tumblr.com if that link no longer works).
+This is the release of the code that was used in the Small Dev Talk's website between March 2013 and April 2016. You can visit the website for Small Dev Talk at <http://smalldevtalk.net> (or <http://smalldevtalk.tumblr.com> if that link no longer works).
 
 We wish the best of luck to all those were involved in Small Dev Talk (Alexander Sullivan, Neil Rampone and Jeff Cen) and all those we had the pleasure of talking with during Small Dev Talk's active period. And most importantly, thank you to all of our readers who visited Small Dev Talk!
