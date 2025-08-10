@@ -23,6 +23,27 @@ class ArticleFiller {
 		this.whatPageDisplay = "index";
 	}
 
+	/**
+	 * Display and logs error messages
+	 * @param {string} msg The error message to display
+	 * @return {void} Does not return a value but updates the article content
+	 */
+	static displayError(msg) {
+		ArticleFiller.errMsg = msg.trim();
+		if (ArticleFiller.errMsg.length < 1) {
+			ArticleFiller.errMsg = "Unknown error";
+		}
+
+		// Log the error
+		console.error(ArticleFiller.errMsg);
+
+		// Display the error
+		ArticleFiller.article = `<p>ERROR: ${ArticleFiller.errMsg}</p>`;
+		if (document?.getElementById("articleBody")) {
+			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
+		}
+	}
+
 	/** Retrieve all article information */
 	static retrieveArticleData() {
 		const articleDataUrl = "/src/articleArchive/articleData.json";
@@ -207,9 +228,8 @@ class ArticleFiller {
 
 		// Check if the converted article is empty when the original content is not
 		if (ArticleFiller.article.trim().length < 1 && ArticleFiller.articleMd.trim().length > 0) {
-			errMsg = "Article content could not be converted to HTML.";
-			console.error(errMsg);
-			ArticleFiller.article = `<p>ERROR: ${errMsg}</p>`;
+			ArticleFiller.displayError("Article content could not be converted to HTML.");
+			return;
 		}
 
 		if (document?.getElementById("articleBody")) {

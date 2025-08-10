@@ -2,6 +2,56 @@ global.showdown = require("./libraries/showdown/showdown.min.js");
 
 const { ArticleFiller } = require("./index.js");
 
+describe("ArticleFiller: displayError", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+            <div id="articleBody"></div>
+            <div id="displayArticles"></div>
+            <div id="featuredArticles"></div>
+            <div id="carouselInner"></div>
+            <div id="carouselIndicator"></div>
+            <div id="pageTitle"></div>
+        `;
+		ArticleFiller.errMsg = "";
+		ArticleFiller.article = "";
+		jest.spyOn(console, "error").mockImplementation(() => {});
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
+	const testCases = [
+		{
+			name: "sets errMsg, logs error, and updates articleBody",
+			input: "Something went wrong!",
+			expectedHtml: "<p>ERROR: Something went wrong!</p>",
+		},
+		{
+			name: "handles empty error message",
+			input: "",
+			expectedErr: "Unknown error",
+			expectedHtml: "<p>ERROR: Unknown error</p>",
+		},
+	];
+
+	testCases.forEach(({ name, input, expectedErr, expectedHtml }) => {
+		test(name, () => {
+			ArticleFiller.displayError(input);
+
+			if (expectedErr) {
+				expect(ArticleFiller.errMsg).toBe(expectedErr);
+				expect(console.error).toHaveBeenCalledWith(expectedErr);
+			} else {
+				expect(ArticleFiller.errMsg).toBe(input);
+				expect(console.error).toHaveBeenCalledWith(input);
+			}
+			expect(ArticleFiller.article).toBe(expectedHtml);
+			expect(document.getElementById("articleBody").innerHTML).toBe(expectedHtml);
+		});
+	});
+});
+
 describe("ArticleFiller: addToPage", () => {
 	beforeEach(() => {
 		document.body.innerHTML = `
@@ -264,8 +314,6 @@ describe("ArticleFiller: changeCarousel", () => {
 				date: "2024-06-02",
 			},
 		};
-		// Spy on ArticleFiller.ArticleFiller to avoid side effects
-		jest.spyOn(ArticleFiller, "ArticleFiller").mockImplementation(() => {});
 	});
 
 	test("renders carousel items and indicators", () => {
