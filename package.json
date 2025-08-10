@@ -10,8 +10,7 @@
 			"name": "Neil Rampone"
 		},
 		{
-			"name": "Jeffery Cen",
-			"url": "https://www.jefferycen.com"
+			"name": "Jeffery Cen"
 		}
 	],
 	"version": "1.3.4",
@@ -20,13 +19,13 @@
 	"main": "index.html",
 	"type": "module",
 	"devDependencies": {
-		"eslint": "^9.11.1",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-prettier": "^5.2.1",
-		"globals": "^15.9.0",
+		"eslint": "^9.33.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.4",
+		"globals": "^16.3.0",
 		"http-server": "^14.1.1",
-		"prettier": "^3.3.3",
-		"workbox-cli": "^7.1.0"
+		"prettier": "^3.6.2",
+		"workbox-cli": "^7.3.0"
 	},
 	"scripts": {
 		"eslint": "eslint --fix ./",

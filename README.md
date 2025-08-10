@@ -28,22 +28,22 @@ To visit specific articles, just change the directory to end with '?' + article 
 
 We aim to make the Small Dev Talk as perfect as possible but unfortunately, there may be some unforeseen bugs. If you manage to find one that is not here, feel free to create a [bug report](https://github.com/AlexJSully/Small-Dev-Talk/issues/new?template=bug_report.md) so we can fix it.
 
--   None at the moment... Help us find some!
+- None at the moment... Help us find some!
 
 ## Maintenance Mode
 
 This project is currently in maintenance mode. This means that:
 
--   Only critical bug fixes and security updates will be addressed.
--   New feature requests are unlikely to be implemented.
+- Only critical bug fixes and security updates will be addressed.
+- New feature requests are unlikely to be implemented.
 
 ## Sponsorship
 
 If you want to support my work, you can through the following methods:
 
--   [BTC](3Lp4pwF5nXqwFA62BYx4DSvDswyYpskBog) - 3Lp4pwF5nXqwFA62BYx4DSvDswyYpskBog
--   [ETH](0xc6EB17BD7cbe5976Bfc4f845669cD66Ff340a1A2) - 0xc6EB17BD7cbe5976Bfc4f845669cD66Ff340a1A2
--   [PayPal](https://paypal.me/alexjsully) - paypal.me/alexjsully
+- [BTC](3Lp4pwF5nXqwFA62BYx4DSvDswyYpskBog) - 3Lp4pwF5nXqwFA62BYx4DSvDswyYpskBog
+- [ETH](0xc6EB17BD7cbe5976Bfc4f845669cD66Ff340a1A2) - 0xc6EB17BD7cbe5976Bfc4f845669cD66Ff340a1A2
+- [PayPal](https://paypal.me/alexjsully) - paypal.me/alexjsully
 
 ## Contributing
 
@@ -51,6 +51,6 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 ## Authors
 
--   Alexander Sullivan - [GitHub](https://github.com/AlexJSully), [Twitter](https://twitter.com/alexjsully), [LinkedIn](https://www.linkedin.com/in/alexanderjsullivan/), [Website](https://alexjsully.me/)
--   Neil Rampone - [Twitter](https://twitter.com/BaphometGMG)
--   Jeffery Cen - [GitHub](https://github.com/JCatt), [Website](https://www.jefferycen.com)
+- Alexander Sullivan - [GitHub](https://github.com/AlexJSully), [Twitter](https://twitter.com/alexjsully), [LinkedIn](https://www.linkedin.com/in/alexanderjsullivan/), [Website](https://alexjsully.me/)
+- Neil Rampone - [Twitter](https://twitter.com/BaphometGMG)
+- Jeffery Cen - [GitHub](https://github.com/JCatt), [Website](https://www.jefferycen.com)
