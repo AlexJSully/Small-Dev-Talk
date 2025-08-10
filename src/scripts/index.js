@@ -200,22 +200,26 @@ class ArticleFiller {
 		}
 	}
 
-	/**
-	 * Convert article into HTML and add to page
-	 */
+	/** Convert article into HTML and add to page */
 	static addToPage() {
 		// Add article:
 		ArticleFiller.article = converter.makeHtml(ArticleFiller.articleMd);
-		if (document.getElementById("articleBody")) {
+
+		// Check if the converted article is empty when the original content is not
+		if (ArticleFiller.article.trim().length < 1 && ArticleFiller.articleMd.trim().length > 0) {
+			errMsg = "Article content could not be converted to HTML.";
+			console.error(errMsg);
+			ArticleFiller.article = `<p>ERROR: ${errMsg}</p>`;
+		}
+
+		if (document?.getElementById("articleBody")) {
 			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
 		}
 	}
 
 	// Functions related to changing the featured article
 
-	/**
-	 * Retrieve page information of all possible pages
-	 */
+	/** Retrieve page information of all possible pages */
 	static retrievePageData() {
 		const xhr = new XMLHttpRequest();
 		const url = "/src/legacyPages/legacyPagesDisplay.json";
@@ -489,6 +493,10 @@ class ArticleFiller {
 			}
 		}
 	}
+}
+
+if (typeof module !== "undefined" && module.exports) {
+	module.exports = { ArticleFiller };
 }
 
 function init() {
