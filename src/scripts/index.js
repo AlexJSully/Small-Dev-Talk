@@ -23,6 +23,27 @@ class ArticleFiller {
 		this.whatPageDisplay = "index";
 	}
 
+	/**
+	 * Display and logs error messages
+	 * @param {string} msg The error message to display
+	 * @return {void} Does not return a value but updates the article content
+	 */
+	static displayError(msg) {
+		ArticleFiller.errMsg = msg.trim();
+		if (ArticleFiller.errMsg.length < 1) {
+			ArticleFiller.errMsg = "Unknown error";
+		}
+
+		// Log the error
+		console.error(ArticleFiller.errMsg);
+
+		// Display the error
+		ArticleFiller.article = `<p>ERROR: ${ArticleFiller.errMsg}</p>`;
+		if (document?.getElementById("articleBody")) {
+			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
+		}
+	}
+
 	/** Retrieve all article information */
 	static retrieveArticleData() {
 		const articleDataUrl = "/src/articleArchive/articleData.json";
@@ -200,22 +221,25 @@ class ArticleFiller {
 		}
 	}
 
-	/**
-	 * Convert article into HTML and add to page
-	 */
+	/** Convert article into HTML and add to page */
 	static addToPage() {
 		// Add article:
 		ArticleFiller.article = converter.makeHtml(ArticleFiller.articleMd);
-		if (document.getElementById("articleBody")) {
+
+		// Check if the converted article is empty when the original content is not
+		if (ArticleFiller.article.trim().length < 1 && ArticleFiller.articleMd.trim().length > 0) {
+			ArticleFiller.displayError("Article content could not be converted to HTML.");
+			return;
+		}
+
+		if (document?.getElementById("articleBody")) {
 			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
 		}
 	}
 
 	// Functions related to changing the featured article
 
-	/**
-	 * Retrieve page information of all possible pages
-	 */
+	/** Retrieve page information of all possible pages */
 	static retrievePageData() {
 		const xhr = new XMLHttpRequest();
 		const url = "/src/legacyPages/legacyPagesDisplay.json";
@@ -489,6 +513,10 @@ class ArticleFiller {
 			}
 		}
 	}
+}
+
+if (typeof module !== "undefined" && module.exports) {
+	module.exports = { ArticleFiller };
 }
 
 function init() {
