@@ -4,8 +4,8 @@
 .pnp.js
 
 # VS code
-.vscode/settings.json
-.vscode/launch.json
+.vscode/
 
 # Tests
 /coverage
+cypress/screenshots/
