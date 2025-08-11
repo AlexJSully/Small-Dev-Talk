@@ -44,3 +44,5 @@ jobs:
               run: npm run eslint:check
             - name: Quality check - unit testing (Jest)
               run: npm run test
+            - name: Quality check - end-to-end testing (Cypress)
+              run: npm run e2e:headless

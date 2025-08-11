@@ -3,7 +3,13 @@ import globals from "globals";
 
 export default [
 	{
-		ignores: ["**/*.min.js", "node_modules/**/*", "src/scripts/libraries/**/*", "src/serviceWorker/**/*"],
+		ignores: [
+			"**/*.min.js",
+			"cypress.config.js",
+			"node_modules/**/*",
+			"src/scripts/libraries/**/*",
+			"src/serviceWorker/**/*",
+		],
 	},
 	{
 		languageOptions: {
