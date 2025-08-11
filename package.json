@@ -19,8 +19,10 @@
 	"main": "index.html",
 	"type": "module",
 	"devDependencies": {
+		"cypress": "^14.5.4",
 		"eslint": "^9.33.0",
 		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-cypress": "^5.1.0",
 		"eslint-plugin-prettier": "^5.5.4",
 		"globals": "^16.3.0",
 		"http-server": "^14.1.1",
@@ -28,10 +30,13 @@
 		"jest-environment-jsdom": "^30.0.5",
 		"markdownlint-cli": "^0.45.0",
 		"prettier": "^3.6.2",
+		"start-server-and-test": "^2.0.13",
 		"workbox-cli": "^7.3.0"
 	},
 	"scripts": {
 		"audit:fix": "npm i && npm audit fix",
+		"cypress": "cypress open",
+		"e2e:headless": "start-server-and-test start http://localhost:3000 \"cypress run --e2e --browser electron\"",
 		"eslint": "eslint --fix ./",
 		"eslint:check": "eslint ./",
 		"lint:markdown": "markdownlint \"**/*.md\"",
@@ -40,7 +45,7 @@
 		"start": "http-server . -p 3000",
 		"test": "jest",
 		"test:verbose": "jest --verbose --silent=false",
-		"validate": "npm run prettier && npm run eslint && npm run test && npm run lint:markdown",
+		"validate": "npm run prettier && npm run eslint && npm run test && npm run e2e:headless && npm run lint:markdown",
 		"workbox": "workbox generateSW"
 	},
 	"bugs": {
