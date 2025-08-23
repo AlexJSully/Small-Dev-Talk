@@ -1,6 +1,6 @@
+name: Markdown Lint
 permissions:
     contents: read
-name: Markdown Lint
 
 on:
     push:
