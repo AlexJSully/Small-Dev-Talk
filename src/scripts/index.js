@@ -29,16 +29,39 @@ class ArticleFiller {
 	 * @return {void} Does not return a value but updates the article content
 	 */
 	static displayError(msg) {
-		ArticleFiller.errMsg = msg.trim();
-		if (ArticleFiller.errMsg.length < 1) {
+		ArticleFiller.errMsg = msg?.trim();
+		if (ArticleFiller.errMsg?.length < 1) {
 			ArticleFiller.errMsg = "Unknown error";
 		}
 
 		// Log the error
 		console.error(ArticleFiller.errMsg);
 
-		// Display the error
-		ArticleFiller.article = `<p>ERROR: ${ArticleFiller.errMsg}</p>`;
+		// Display the error with Bootstrap styling
+		ArticleFiller.article = `
+			<div style="width:100%; display:flex; justify-content:center; margin-top:2.5rem;">
+				<div style="text-align:center;">
+					<div style="font-size:2.5rem; font-weight:700; color:#dc3545; letter-spacing:1px;">
+						Error
+					</div>
+
+					<div style="font-size:1.25rem; color:#333; margin:1rem 0 2rem 0;">
+						${ArticleFiller.errMsg}
+					</div>
+
+					<div style="display:flex; gap:1rem; justify-content:center;">
+						<button class="btn btn-warning" style="font-size:1rem;" onclick="window.location.reload();">
+							Refresh
+						</button>
+
+						<button class="btn btn-primary" style="font-size:1rem;" onclick="window.location.href='index.html';">
+							Home
+						</button>
+					</div>
+				</div>
+			</div>
+		`;
+
 		if (document?.getElementById("articleBody")) {
 			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
 		}
@@ -119,19 +142,23 @@ class ArticleFiller {
 
 				// Call article
 				fetch(url)
-					.then((response) => response.text())
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error(`Failed to fetch article: ${response.status} ${response.statusText}`);
+						}
+						return response.text();
+					})
 					.then((articleMd) => {
 						ArticleFiller.articleMd = articleMd;
 						ArticleFiller.addToPage();
 					})
 					.catch((error) => {
-						console.error(error);
-						ArticleFiller.articleMd = "Error retrieving article";
-						ArticleFiller.addToPage();
+						ArticleFiller.displayError(
+							`Could not retrieve article. Please check the article name or try again later. (${error.message})`,
+						);
 					});
 			} else {
-				ArticleFiller.articleMd = "Error retrieving article";
-				ArticleFiller.addToPage();
+				ArticleFiller.displayError("Error retrieving article.");
 			}
 		}
 	}
@@ -227,7 +254,7 @@ class ArticleFiller {
 		ArticleFiller.article = converter.makeHtml(ArticleFiller.articleMd);
 
 		// Check if the converted article is empty when the original content is not
-		if (ArticleFiller.article.trim().length < 1 && ArticleFiller.articleMd.trim().length > 0) {
+		if (ArticleFiller?.article?.trim()?.length < 1 && ArticleFiller?.articleMd?.trim()?.length > 0) {
 			ArticleFiller.displayError("Article content could not be converted to HTML.");
 			return;
 		}

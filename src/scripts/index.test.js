@@ -25,17 +25,16 @@ describe("ArticleFiller: displayError", () => {
 		{
 			name: "sets errMsg, logs error, and updates articleBody",
 			input: "Something went wrong!",
-			expectedHtml: "<p>ERROR: Something went wrong!</p>",
+			expectedErr: "Something went wrong!",
 		},
 		{
 			name: "handles empty error message",
 			input: "",
 			expectedErr: "Unknown error",
-			expectedHtml: "<p>ERROR: Unknown error</p>",
 		},
 	];
 
-	testCases.forEach(({ name, input, expectedErr, expectedHtml }) => {
+	testCases.forEach(({ name, input, expectedErr }) => {
 		test(name, () => {
 			ArticleFiller.displayError(input);
 
@@ -46,8 +45,8 @@ describe("ArticleFiller: displayError", () => {
 				expect(ArticleFiller.errMsg).toBe(input);
 				expect(console.error).toHaveBeenCalledWith(input);
 			}
-			expect(ArticleFiller.article).toBe(expectedHtml);
-			expect(document.getElementById("articleBody").innerHTML).toBe(expectedHtml);
+
+			expect(document.getElementById("articleBody").innerHTML).toContain(expectedErr);
 		});
 	});
 });
@@ -102,6 +101,7 @@ describe("ArticleFiller: grabArticle", () => {
             <div id="carouselIndicator"></div>
             <div id="pageTitle"></div>
         `;
+		ArticleFiller.articleMd = undefined;
 		// Reset static properties
 		ArticleFiller.articleData = {
 			TestArticle: {
@@ -120,13 +120,14 @@ describe("ArticleFiller: grabArticle", () => {
 
 	test("loads markdown and updates DOM", async () => {
 		const mockMd = "# Test Article";
+
 		global.fetch = jest.fn().mockResolvedValue({
+			ok: true,
 			text: () => Promise.resolve(mockMd),
 		});
 
 		// updateMetaData is called inside grabArticle, so mock it to avoid DOM errors
 		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
-
 		await ArticleFiller.grabArticle("TestArticle");
 
 		// Wait for the fetch and DOM update
@@ -134,6 +135,36 @@ describe("ArticleFiller: grabArticle", () => {
 
 		expect(ArticleFiller.articleMd).toBe(mockMd);
 		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
+	});
+
+	test("shows error when fetch fails (non-OK response)", async () => {
+		ArticleFiller.articleData = {
+			MissingArticle: {
+				title: "Missing Article",
+				summary: "A summary.",
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+
+		global.fetch = jest.fn().mockResolvedValue({
+			ok: false,
+			status: 404,
+			statusText: "Not Found",
+			text: () => Promise.resolve(""),
+		});
+
+		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
+
+		await ArticleFiller.grabArticle("MissingArticle");
+
+		await new Promise((r) => setTimeout(r, 0));
+
+		expect(document.getElementById("articleBody").innerHTML).toContain(
+			"Could not retrieve article. Please check the article name or try again later. (Failed to fetch article: 404 Not Found)",
+		);
+		expect(ArticleFiller.articleMd).toBeUndefined();
 	});
 });
 
