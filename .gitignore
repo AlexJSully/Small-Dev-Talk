@@ -9,3 +9,7 @@
 # Tests
 /coverage
 cypress/screenshots/
+
+# OS
+.DS_Store
+Thumbs.db

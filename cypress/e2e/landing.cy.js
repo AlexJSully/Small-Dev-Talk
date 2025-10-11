@@ -27,4 +27,11 @@ describe("Landing Page", () => {
 		// Article body exists (may be hidden initially)
 		cy.get("#articleBody").should("exist");
 	});
+
+	it("should show error when article is missing", () => {
+		// Simulate navigating to a missing article
+		cy.visit("http://localhost:3000/index.html?NonExistentArticle");
+		cy.get("#articleBody").should("contain", "Error retrieving article");
+		cy.get("#articleBody").should("be.visible");
+	});
 });
