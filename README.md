@@ -2,9 +2,6 @@
 
 Small Dev Talk is an independent news source that covers all things from the indie world of entertainment, from games to movies to books to technology and more. Our focus of Small Dev Talk is simply to give the chance of having upcoming developers show off their projects in forms of interviews which include images and video and present it to our audience.
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/ed11eb461733c807d580/maintainability)](https://codeclimate.com/github/AlexJSully/Small-Dev-Talk/maintainability)
-[![CodeFactor](https://www.codefactor.io/repository/github/AlexJSully/small-dev-talk/badge)](https://www.codefactor.io/repository/github/AlexJSully/small-dev-talk)
-[![DeepSource](https://deepsource.io/gh/AlexJSully/Small-Dev-Talk.svg/?label=active+issues&show_trend=true&token=XwOjH3ktxwG4kKUkE0GZK0_p)](https://deepsource.io/gh/AlexJSully/Small-Dev-Talk/?ref=repository-badge)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/smalldevtalk?style=social)](https://twitter.com/smalldevtalk)
 [![GitHub repo size](https://img.shields.io/github/repo-size/AlexJSully/Small-Dev-Talk)](https://github.com/AlexJSully/Small-Dev-Talk)
 [![GitHub](https://img.shields.io/github/license/AlexJSully/Small-Dev-Talk)](https://github.com/AlexJSully/Small-Dev-Talk)
@@ -43,7 +40,6 @@ If you want to support my work, you can through the following methods:
 
 - [BTC](3Lp4pwF5nXqwFA62BYx4DSvDswyYpskBog) - 3Lp4pwF5nXqwFA62BYx4DSvDswyYpskBog
 - [ETH](0xc6EB17BD7cbe5976Bfc4f845669cD66Ff340a1A2) - 0xc6EB17BD7cbe5976Bfc4f845669cD66Ff340a1A2
-- [PayPal](https://paypal.me/alexjsully) - paypal.me/alexjsully
 
 ## Contributing
 
