@@ -2,6 +2,8 @@ global.showdown = require("./libraries/showdown/showdown.min.js");
 
 const { ArticleFiller } = require("./index.js");
 
+const { registerServiceWorker } = require("./index.js");
+
 describe("ArticleFiller: displayError", () => {
 	beforeEach(() => {
 		document.body.innerHTML = `
@@ -165,6 +167,33 @@ describe("ArticleFiller: grabArticle", () => {
 			"Could not retrieve article. Please check the article name or try again later. (Failed to fetch article: 404 Not Found)",
 		);
 		expect(ArticleFiller.articleMd).toBeUndefined();
+	});
+});
+
+describe("ServiceWorker registration", () => {
+	afterEach(() => {
+		jest.restoreAllMocks();
+		delete global.navigator;
+	});
+
+	test("registerServiceWorker returns null when navigator.serviceWorker not present", async () => {
+		global.navigator = {};
+		const res = await registerServiceWorker();
+		expect(res).toBeNull();
+	});
+
+	test("registerServiceWorker handles registration failure gracefully", async () => {
+		global.navigator = {
+			serviceWorker: {
+				register: jest.fn().mockRejectedValue(new Error("disallowed redirect")),
+			},
+		};
+
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		const res = await registerServiceWorker();
+		expect(res).toBeNull();
+		expect(console.error).toHaveBeenCalled();
 	});
 });
 

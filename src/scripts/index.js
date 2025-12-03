@@ -552,8 +552,27 @@ function init() {
 	ArticleFiller.retrieveArticleData();
 }
 
-// On load
-window.onload = init;
+async function registerServiceWorker() {
+	if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
+		try {
+			const reg = await navigator.serviceWorker.register("./src/serviceWorker/sw.js");
+			return reg;
+		} catch (e) {
+			console.error("ServiceWorker registration failed:", e && e.message ? e.message : e);
+			return null;
+		}
+	}
+	return null;
+}
+
+window.onload = async function () {
+	await registerServiceWorker();
+	init();
+};
+
+if (typeof module !== "undefined" && module.exports) {
+	module.exports = { ArticleFiller, registerServiceWorker };
+}
 
 // Functions related to changing carousel
 /**

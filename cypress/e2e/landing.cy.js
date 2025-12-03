@@ -30,7 +30,18 @@ describe("Landing Page", () => {
 
 	it("should show error when article is missing", () => {
 		// Simulate navigating to a missing article
-		cy.visit("http://localhost:3000/index.html?NonExistentArticle");
+		cy.visit("http://localhost:3000/index.html?NonExistentArticle", {
+			onBeforeLoad(win) {
+				// Simulate service worker registration throwing a disallowed redirect error
+				Object.defineProperty(win.navigator, "serviceWorker", {
+					value: {
+						register: () => Promise.reject(new Error("disallowed redirect")),
+					},
+					writable: true,
+				});
+			},
+		});
+
 		cy.get("#articleBody").should("contain", "Error retrieving article");
 		cy.get("#articleBody").should("be.visible");
 	});
