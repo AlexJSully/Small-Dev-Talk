@@ -104,13 +104,13 @@
 		},
 		{
 			"src": "./maskable_icon.png",
-			"size": "any",
+			"sizes": "1024x1024",
 			"type": "image/png",
 			"purpose": "any"
 		},
 		{
 			"src": "./safari-pinned-tab.svg",
-			"size": "any",
+			"sizes": "any",
 			"purpose": "monochrome",
 			"type": "image/svg+xml"
 		},
@@ -150,12 +150,26 @@
 		{
 			"name": "Archive",
 			"url": "/index.html?pages&archive",
-			"description": "Archive of articles from Small Dev Talk"
+			"description": "Archive of articles from Small Dev Talk",
+			"icons": [
+				{
+					"src": "./android-chrome-96x96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
 		},
 		{
 			"name": "Game articles",
 			"url": "/index.html?pages&games",
-			"description": "Small Dev Talk's game related articles including interviews, reviews and videos"
+			"description": "Small Dev Talk's game related articles including interviews, reviews and videos",
+			"icons": [
+				{
+					"src": "./android-chrome-96x96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
 		}
 	],
 	"categories": [
