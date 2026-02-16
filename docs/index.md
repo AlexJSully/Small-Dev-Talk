@@ -1,10 +1,10 @@
 # Small Dev Talk Documentation
 
-Welcome to the Small Dev Talk documentation. This directory contains comprehensive guides for understanding, maintaining, and extending the Small Dev Talk codebase.
+Welcome to the Small Dev Talk documentation. This directory contains guides for understanding, maintaining, and extending the Small Dev Talk codebase.
 
 ## Overview
 
-Small Dev Talk is a static web application that archives and displays interviews with indie developers, game developers, and creators across various entertainment industries. The site provides content from multiple authors spanning games, movies, technology, design, and more.
+Small Dev Talk is a static client-side site. On page load, the browser script fetches legacy page definitions and article metadata, then renders either a listing view or a single article based on the URL query string.
 
 The project is currently in **maintenance mode**, meaning focus is on bug fixes and security updates rather than new features.
 
@@ -32,22 +32,23 @@ Practical guides for developers working with the codebase.
 Detailed documentation for key modules and functions.
 
 - [ArticleFiller Class](./api/article-filler.md) — Core class for article loading and page rendering
-- [Sentry Integration](./api/sentry.md) — Error tracking and monitoring configuration
-- [Service Worker](./api/service-worker.md) — Caching strategy and offline support
-- [Build Tools & Scripts](./api/build-tools.md) — Configuration for tooling and automation
+- [Sentry Integration](./api/sentry.md) — Error tracking configuration
+- [Service Worker](./api/service-worker.md) — Precaching and runtime caching behavior
+- [Build Tools & Scripts](./api/build-tools.md) — Tooling and npm scripts
 
 ## Key Technologies
 
-| Technology                                                                   | Purpose                     | Version  |
-| ---------------------------------------------------------------------------- | --------------------------- | -------- |
-| [Bootstrap](https://getbootstrap.com/)                                       | UI framework                | Latest   |
-| [Showdown.js](http://showdownjs.com/)                                        | Markdown to HTML conversion | Latest   |
-| [Sentry](https://sentry.io/)                                                 | Error tracking              | v10.32.1 |
-| [Service Workers / Workbox](https://developers.google.com/web/tools/workbox) | Offline caching             | v7.4.0   |
-| [Jest](https://jestjs.io/)                                                   | Unit testing                | v30.2.0  |
-| [Cypress](https://cypress.io/)                                               | E2E testing                 | v15.8.1  |
-| [ESLint](https://eslint.org/)                                                | Code linting                | v9.39.2  |
-| [Prettier](https://prettier.io/)                                             | Code formatting             | v3.7.4   |
+| Technology                                                                   | Purpose                     | Version     |
+| ---------------------------------------------------------------------------- | --------------------------- | ---------- |
+| [Bootstrap](https://getbootstrap.com/)                                       | UI framework (local bundle) | Local copy |
+| [jQuery](https://jquery.com/)                                                | DOM utilities (local bundle) | Local copy |
+| [Showdown.js](http://showdownjs.com/)                                        | Markdown to HTML conversion | Local copy |
+| [Sentry](https://sentry.io/)                                                 | Error tracking              | v10.32.1   |
+| [Service Workers / Workbox](https://developers.google.com/web/tools/workbox) | Precaching and caching      | v7.4.0     |
+| [Jest](https://jestjs.io/)                                                   | Unit testing                | v30.2.0    |
+| [Cypress](https://cypress.io/)                                               | E2E testing                 | v15.10.0   |
+| [ESLint](https://eslint.org/)                                                | Code linting                | v10.0.0    |
+| [Prettier](https://prettier.io/)                                             | Code formatting             | v3.8.1     |
 
 ## Quick Links
 
@@ -61,12 +62,8 @@ Detailed documentation for key modules and functions.
 - **Project Status:** Maintenance Mode
 - **Latest Version:** 1.3.4
 - **License:** GPL-3.0
-- **Build Status:** Automated via GitHub Actions
+- **Automation:** Code quality and CodeQL workflows run in GitHub Actions
 
 ## Contributing
 
-To contribute, see [CONTRIBUTING.md](../CONTRIBUTING.md) at the repository root. Focus areas for contributions include:
-
-- Bug fixes (priority)
-- Security updates (priority)
-- Documentation improvements
+To contribute, see [CONTRIBUTING.md](../CONTRIBUTING.md) at the repository root.

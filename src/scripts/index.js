@@ -546,12 +546,20 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = { ArticleFiller };
 }
 
+/**
+ * Initialize page and article metadata fetches.
+ * @returns {void}
+ */
 function init() {
 	// Init data
 	ArticleFiller.retrievePageData();
 	ArticleFiller.retrieveArticleData();
 }
 
+/**
+ * Register the service worker if the browser supports it.
+ * @returns {Promise<ServiceWorkerRegistration|null>} Registration or null on failure/unsupported.
+ */
 async function registerServiceWorker() {
 	if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
 		try {

@@ -4,7 +4,7 @@ This section contains practical guides for developers working with the Small Dev
 
 ## Overview
 
-The developer guides provide step-by-step instructions for common tasks, from setting up your local environment to publishing new articles and deploying to production. These guides are designed for both internal maintainers and external contributors.
+The developer guides provide step-by-step instructions for common tasks, from setting up a local environment to publishing new articles and running validation scripts.
 
 ## Available Guides
 
@@ -18,9 +18,6 @@ Complete setup guide for local development.
 - Running the local development server
 - Understanding the project structure
 - Configuring development tools (ESLint, Prettier, Markdownlint)
-- Debugging with browser DevTools
-- Working with Service Workers
-- Common troubleshooting steps
 
 ### [Adding & Publishing Articles](./articles.md)
 
@@ -48,22 +45,16 @@ Guide to running tests and ensuring code quality.
 - Code formatting with Prettier
 - Markdown validation
 - Full validation pipeline
-- Debugging test failures
 - Continuous Integration (CI) process
 
 ### [Deployment & Build](./deployment.md)
 
-Build process and deployment to GitHub Pages.
+Deployment and build notes based on repository scripts and workflows.
 
 **What you'll learn:**
 
-- Building production files (CSS, JS, Service Worker)
-- Understanding the deployment pipeline
-- GitHub Actions workflow
-- Pre-deployment checklist
-- Rollback procedures
-- Environment configuration
-- Performance optimization
+- Service worker generation for precaching
+- Repository deployment notes based on current workflows
 
 ## Common Commands
 
@@ -81,14 +72,14 @@ npm run eslint             # Fix ESLint errors
 npm run prettier           # Format all files
 npm run lint:markdown      # Validate markdown files
 
-# Build
-npm run build:css          # Compile CSS
-npm run build:js           # Minify JavaScript
+# Service worker
 npm run workbox            # Regenerate Service Worker cache
 
 # Full Validation
-npm run validate           # Run all checks (required before merge)
+npm run validate           # Run all checks
 ```
+
+Implementation: [package.json](../../package.json)
 
 ## Related Documentation
 
