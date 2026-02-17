@@ -1,10 +1,10 @@
 # Developer Guides
 
-This section contains practical guides for developers working with the Small Dev Talk codebase.
+This section contains practical guides for external contributors and users working with Small Dev Talk.
 
 ## Overview
 
-The developer guides provide step-by-step instructions for common tasks, from setting up a local environment to publishing new articles and running validation scripts.
+The guides provide step-by-step instructions for common tasks such as running the site locally and adding articles.
 
 ## Available Guides
 
@@ -17,7 +17,7 @@ Complete setup guide for local development.
 - Installing dependencies
 - Running the local development server
 - Understanding the project structure
-- Configuring development tools (ESLint, Prettier, Markdownlint)
+- Running formatting and linting tools (ESLint, Prettier, Markdownlint)
 
 ### [Adding & Publishing Articles](./articles.md)
 
@@ -35,26 +35,25 @@ Step-by-step guide for adding new articles to Small Dev Talk.
 
 ### [Testing & Validation](./testing.md)
 
-Guide to running tests and ensuring code quality.
+Guide to running tests and validation checks.
 
 **What you'll learn:**
 
 - Running Jest unit tests
-- Running Cypress E2E tests
+- Running Cypress end-to-end (E2E) tests
 - Code linting with ESLint
 - Code formatting with Prettier
 - Markdown validation
 - Full validation pipeline
-- Continuous Integration (CI) process
 
 ### [Deployment & Build](./deployment.md)
 
-Deployment and build notes based on repository scripts and workflows.
+Deployment and build notes based on repository scripts.
 
 **What you'll learn:**
 
 - Service worker generation for precaching
-- Repository deployment notes based on current workflows
+- Repository deployment notes based on current scripts
 
 ## Common Commands
 
@@ -83,6 +82,4 @@ Implementation: [package.json](../../package.json)
 
 ## Related Documentation
 
-- [System Architecture](../architecture/system.md) — Understanding the codebase structure
-- [Data Flow](../architecture/data-flow.md) — How data moves through the application
-- [ArticleFiller API](../api/article-filler.md) — Core module documentation
+- [ArticleFiller API](../api/article-filler.md) — URL-based access

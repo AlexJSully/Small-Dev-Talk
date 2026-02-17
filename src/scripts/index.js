@@ -4,14 +4,9 @@
 //
 //= ============================================================================
 
-/**
- * Convert markdown files into HTML
- */
-
+/** Convert markdown files into HTML */
 const converter = new showdown.Converter();
-/**
- * Create and fill the page with the desired article
- */
+/** Create and fill the page with the desired article */
 class ArticleFiller {
 	constructor() {
 		this.articleData;
@@ -24,9 +19,9 @@ class ArticleFiller {
 	}
 
 	/**
-	 * Display and logs error messages
-	 * @param {string} msg The error message to display
-	 * @return {void} Does not return a value but updates the article content
+	 * Display and log error messages.
+	 * @param {string} msg The error message to display.
+	 * @return {void} Does not return a value but updates the article content.
 	 */
 	static displayError(msg) {
 		ArticleFiller.errMsg = msg?.trim();
@@ -34,7 +29,6 @@ class ArticleFiller {
 			ArticleFiller.errMsg = "Unknown error";
 		}
 
-		// Log the error
 		console.error(ArticleFiller.errMsg);
 
 		// Display the error with Bootstrap styling
@@ -122,7 +116,6 @@ class ArticleFiller {
 	 * @param {String} articleName Name of article
 	 */
 	static grabArticle(articleName) {
-		// Change article name to fit format
 		const tempName = articleName.split(" ");
 		articleName = "";
 		for (const name of tempName) {
@@ -164,22 +157,18 @@ class ArticleFiller {
 	}
 
 	/**
-	 * Dynamically update the article's meta-data based on article content
-	 * @param {Object} articleData The article's data
-	 * @param {String} [articleData.title] Article's title
-	 * @param {String} [articleData.summary] Article's summary
-	 * @param {String} [articleData.thumbnail] The filename of the thumbnail/resoc image of the article
-	 * @param {String} [articleData.author] Author of the article
-	 * @param {String} [articleData.date] Date the article was published (YYYY-MM-DD)
-	 * @param {String} articleKey Article in-code name (key name in articleData.json)
-	 * @example <caption>Use this function to dynamically update the article's meta-data based on article content. Each individual's content of articleData is optional</caption>
-	 * updateMetaData({"author": "Alexander Sullivan","date": "2013-03-26","summary": "The great sequel to Caravaneer is coming soon and I got the chance to talk with the developer, Dmitry Zheltobriukhov from GamesOfHonor.com for their upcoming game Caravaneer 2!","thumbnail": "image1.jpg","title": "Caravaneer 2"}, 'Caravaneer2');
-	 * // returns null (does not return anything but updates the meta-data accordingly)
+	 * Dynamically update the article's meta-data based on article content.
+	 * @param {Object} articleData The article's data.
+	 * @param {String} [articleData.title] Article's title.
+	 * @param {String} [articleData.summary] Article's summary.
+	 * @param {String} [articleData.thumbnail] The filename of the thumbnail/resoc image of the article.
+	 * @param {String} [articleData.author] Author of the article.
+	 * @param {String} [articleData.date] Date the article was published (YYYY-MM-DD).
+	 * @param {String} articleKey Article in-code name (key name in articleData.json).
 	 */
 	static updateMetaData(articleData, articleKey) {
 		// If article data object is not empty
 		if (Object.keys(articleData)?.length > 0) {
-			/** Structured data */
 			let structuredData = document?.querySelector("script[type='application/ld+json']")?.textContent;
 			// Convert structured data into a usable JSON object
 			if (structuredData) {
@@ -190,7 +179,6 @@ class ArticleFiller {
 
 			// Update title
 			if (articleData?.title) {
-				/** Title of article */
 				const title = `${articleData.title} | Small Dev Talk`;
 				// Document
 				document.title = title;
@@ -207,7 +195,6 @@ class ArticleFiller {
 
 			// Update description
 			if (articleData?.summary) {
-				/** Summary/description of the article */
 				const description = `${articleData.summary} | Small Dev Talk`;
 
 				// Document
@@ -225,7 +212,6 @@ class ArticleFiller {
 
 			// Update image
 			if (articleData?.thumbnail && articleData?.author && articleData?.date && articleKey) {
-				/** Image URL */
 				const imgURL = `https://smalldevtalk.net/src/articleArchive/author${articleData.author
 					.split(" ")
 					.join("")}/${articleData.date}_${articleKey}/${articleData.thumbnail}`;
@@ -250,7 +236,6 @@ class ArticleFiller {
 
 	/** Convert article into HTML and add to page */
 	static addToPage() {
-		// Add article:
 		ArticleFiller.article = converter.makeHtml(ArticleFiller.articleMd);
 
 		// Check if the converted article is empty when the original content is not
@@ -264,7 +249,7 @@ class ArticleFiller {
 		}
 	}
 
-	// Functions related to changing the featured article
+	// ---- Functions related to changing the featured article -----
 
 	/** Retrieve page information of all possible pages */
 	static retrievePageData() {
@@ -371,11 +356,8 @@ class ArticleFiller {
 		}
 	}
 
-	/**
-	 * Change what articles are displayed in the carousel
-	 */
+	/** Change what articles are displayed in the carousel */
 	static changeCarousel() {
-		// Change title:
 		const docTitle =
 			ArticleFiller.whatPageDisplay[0].toUpperCase() +
 			ArticleFiller.whatPageDisplay.substring(1, ArticleFiller.whatPageDisplay.length);
@@ -393,11 +375,13 @@ class ArticleFiller {
 			document.getElementById("carouselInner")
 		) {
 			const carouselList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].carousel;
+
 			// Reset carousel
 			if (document.getElementById("carouselIndicator")) {
 				document.getElementById("carouselIndicator").innerHTML = "";
 			}
 			document.getElementById("carouselInner").innerHTML = "";
+
 			// Fill carousel
 			for (let c = 0; c < carouselList.length; c += 1) {
 				// Create URL
@@ -466,8 +450,10 @@ class ArticleFiller {
 			ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles
 		) {
 			const displayList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles;
+
 			// Reset featured articles
 			document.getElementById("displayArticles").innerHTML = "";
+
 			// Fill featured articles
 			if (displayList && displayList.length > 0) {
 				for (const d in displayList) {
@@ -582,7 +568,8 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = { ArticleFiller, registerServiceWorker };
 }
 
-// Functions related to changing carousel
+// ----- Functions related to changing carousel -----
+
 /**
  * Changes the active slide in a carousel based on the given direction.
  * @param {string} direction The direction in which to change the active slide.

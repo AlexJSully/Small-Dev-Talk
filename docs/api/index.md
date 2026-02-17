@@ -1,42 +1,22 @@
 # API Reference
 
-This section provides detailed API documentation for the core modules and integrations in Small Dev Talk.
+This section provides Application Programming Interface (API) documentation for external use of Small Dev Talk.
 
 ## Overview
 
-The API reference documents the internal structure, method signatures, and usage patterns for the key components that power Small Dev Talk. Each document includes practical examples, parameter descriptions, and integration guidelines.
+The API reference focuses on public entry points and supported usage from outside the codebase.
 
 ## Available Documentation
 
-### [ArticleFiller Class](./article-filler.md)
+### [ArticleFiller API](./article-filler.md)
 
-The core module responsible for managing article data, rendering content, and handling navigation.
+Public entry points for linking to articles or page views via URL query strings.
 
-**Key Topics:**
+### [Service Worker](./service-worker.md)
 
-- State management and class properties
-- Article metadata retrieval
-- Dynamic content loading and rendering
-- Markdown to HTML conversion
-- Error handling and user feedback
-- URL parameter parsing and routing
-
-**Use this when:** You need to understand how articles are loaded, rendered, or displayed on the site.
-
-## Quick Reference
-
-### ArticleFiller Core Methods
-
-```javascript
-ArticleFiller.retrieveArticleData(); // Fetch article metadata
-ArticleFiller.callArticle(); // Route to appropriate display
-ArticleFiller.grabArticle(articleName); // Load specific article
-ArticleFiller.updateMetaData(data, key); // Update page metadata
-ArticleFiller.displayError(msg); // Show error to user
-```
+Service worker registration and Workbox caching rules.
 
 ## Related Documentation
 
-- [System Architecture](../architecture/system.md) — High-level system design
-- [Data Flow](../architecture/data-flow.md) — How data moves through the application
 - [Getting Started Guide](../guide/getting-started.md) — Local development setup
+- [Adding & Publishing Articles](../guide/articles.md) — Article keys and archive structure

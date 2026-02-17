@@ -1,6 +1,6 @@
 # System Architecture
 
-Small Dev Talk is a client-side static web application that loads article metadata and content on-demand. The architecture prioritizes offline availability through service workers and progressive caching.
+Small Dev Talk is a client-side static web application that loads article metadata and content on-demand. A service worker precaches assets and applies runtime caching rules for images.
 
 ## Architecture Overview
 
@@ -8,7 +8,7 @@ Small Dev Talk is a client-side static web application that loads article metada
 graph TB
     subgraph Client["Browser / Client Layer"]
         HTML["index.html<br/>Entry Point"]
-        CSS["CSS Stylesheets<br/>style.css, Bootstrap"]
+        CSS["Cascading Style Sheets (CSS)<br/>style.css, Bootstrap"]
         JS["JavaScript Runtime"]
     end
 
@@ -26,15 +26,14 @@ graph TB
     end
 
     subgraph Services["External Services & Features"]
-        Sentry["Sentry v10.32.1<br/>Error Tracking"]
-        SW["Service Worker<br/>Offline Caching"]
-        Analytics["Analytics<br/>GA + Cloudflare"]
+        Sentry["Sentry Software Development Kit (SDK)<br/>Client Initialization"]
+        SW["Service Worker<br/>Caching"]
     end
 
     subgraph Libraries["UI Libraries"]
-        Bootstrap["Bootstrap v5<br/>Styling & Components"]
+        Bootstrap["Bootstrap<br/>Styling & Components"]
         Showdown["Showdown.js<br/>Markdown Parser"]
-        jQuery["jQuery<br/>DOM Utilities"]
+        jQuery["jQuery<br/>Document Object Model (DOM) Utilities"]
     end
 
     HTML -->|loads| CSS
@@ -44,53 +43,59 @@ graph TB
     AF -->|fetches| ArticleArchive
     AF -->|renders with| Showdown
     AF -->|updates| HTML
-    AF -->|reports errors| Sentry
+    HTML -->|initializes| Sentry
     SW -->|caches| Images
     SW -->|caches| ArticleArchive
-    JS -->|styles with| Bootstrap
-    AF -->|updates meta| Analytics
+    HTML -->|loads| Bootstrap
 ```
 
 ## Core Components
 
 ### 1. Application Entry Point: [index.html](../../index.html)
 
-The single HTML document that serves as the application shell. Key responsibilities:
+The single Hypertext Markup Language (HTML) document that serves as the application shell. Key responsibilities:
 
-- Meta tag configuration (SEO, Open Graph, Twitter Card, security headers)
+- Meta tag configuration (Search Engine Optimization (SEO), Open Graph, Twitter Card, security headers)
 - Script and stylesheet loading
-- DOM structure with placeholders for dynamic content:
+- Document Object Model (DOM) structure with placeholders for dynamic content:
     - `#featuredArticles` — Homepage featured articles section
     - `#displayArticles` — Full article grid
     - `#articleBody` — Individual article container
-- Sentry initialization and error tracking setup
-- Service worker registration
+- Sentry Software Development Kit (SDK) initialization
+
+Implementation: [index.html](../../index.html)
 
 ### 2. Core Logic: [ArticleFiller Class](./../../src/scripts/index.js)
 
-The `ArticleFiller` class is the central orchestrator for loading, rendering, and displaying articles. See [ArticleFiller API documentation](../api/article-filler.md) for detailed method signatures.
+The `ArticleFiller` class is the central orchestrator for loading, rendering, and displaying articles.
 
 **Key Responsibilities:**
 
 - **Data Retrieval:** Fetches `articleData.json` to build the article registry
-- **Article Loading:** Retrieves markdown files based on article name and author
-- **Rendering:** Converts markdown to HTML using Showdown.js
-- **Meta Tagging:** Dynamically updates page title, Open Graph, Twitter Card, and structured data
-- **Error Handling:** Displays user-friendly error messages when content fails to load
+- **Page Retrieval:** Fetches legacy page definitions to drive carousel and featured lists
+- **Article Loading:** Retrieves Markdown files based on article name and author
+- **Rendering:** Converts Markdown to Hypertext Markup Language (HTML) using Showdown.js
+- **Meta Tagging:** Updates page title, Open Graph, Twitter Card, and structured data
+- **Error Handling:** Displays user-facing error output when content fails to load
 
 **State Management:**
 
 Static class properties maintain:
 
 - `articleData` — Complete article metadata registry
-- `articleMd` — Raw markdown content of the current article
+- `articleMd` — Raw Markdown content of the current article
 - `article` — Rendered HTML content
-- `whatPageDisplay` — Current view state (e.g., "index", article name)
+- `pageData` — Legacy page definitions
+- `pageURL` — Parsed query tokens
+- `callPageDisplay` — Flag for page display logic
+- `whatPageDisplay` — Current view state (for example, "index" or a page category)
 - `errMsg` — Error message display
+
+Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
 ### 3. Data Layer: [Article Metadata](../../src/articleArchive/articleData.json)
 
-A JSON file containing metadata for all published articles:
+A JavaScript Object Notation (JSON) file containing metadata for all published articles:
 
 ```json
 {
@@ -106,13 +111,15 @@ A JSON file containing metadata for all published articles:
 
 **Metadata Fields:**
 
-| Field       | Type   | Required | Description                               |
-| ----------- | ------ | -------- | ----------------------------------------- |
-| `title`     | string | Yes      | Display title for the article             |
-| `summary`   | string | No       | Brief summary for listings                |
-| `author`    | string | Yes      | Author name (must match folder structure) |
-| `date`      | string | Yes      | Publication date (YYYY-MM-DD format)      |
-| `thumbnail` | string | No       | Filename of the thumbnail image           |
+| Field       | Type   | Used by                                      | Notes                                                          |
+| ----------- | ------ | -------------------------------------------- | -------------------------------------------------------------- |
+| `title`     | string | Metadata updates and list rendering          | Display title for listings and page metadata                   |
+| `summary`   | string | Carousel and featured list rendering         | Displayed when the article is included in these lists          |
+| `author`    | string | Article path construction and list rendering | Used to build `author{AuthorNameNoSpaces}`                     |
+| `date`      | string | Article path construction and list rendering | Used to build `YYYY-MM-DD_{ArticleKey}`                        |
+| `thumbnail` | string | List rendering and metadata image updates    | Used for carousel, featured list, archive, and social metadata |
+
+Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
 ### 4. Article Storage: [Archive Directory](../../src/articleArchive/)
 
@@ -136,39 +143,29 @@ src/articleArchive/
 
 **Important:** The key name in `articleData.json` must match the folder name exactly (case-sensitive, no spaces).
 
+Implementation: [src/scripts/index.js](../../src/scripts/index.js)
+
 ### 5. Service Worker & Caching: [Service Worker Module](../../src/serviceWorker/sw.js)
 
 Managed by Workbox, the service worker provides:
 
-- **Precaching:** Articles, images, and assets are cached on first load
-- **Cache-First Strategy:** Images use cache-first approach with 10-item limit
-- **Offline Support:** Users can browse cached articles without internet
-- **Updated via:** [workbox-config.js](../../workbox-config.js)
+- **Precaching:** Assets under `./src` matching the configured glob patterns
+- **Cache-First Strategy:** Images use a cache-first approach with a 10-item limit
 
-**Note:** Service workers are regenerated during build via the `npm run workbox` script.
+The service worker is regenerated by running `npm run workbox`.
 
-### 6. Error Tracking: [Sentry Integration](../../index.html#L122-L145)
-
-Sentry v10.32.1 is integrated for production error monitoring:
-
-- **Configuration:**
-    - DSN: Sentry project DSN (configured in index.html)
-    - Tracing enabled (1.0 sample rate in development)
-    - Session replay: 10% of sessions, 100% of error sessions
-    - Console error capture: Enabled via `enableLogs: true`
-
-- **Behavior:** Errors are captured and sent to Sentry for analysis and alerting
-
-See [Sentry Integration](../api/sentry.md) for configuration details.
+Implementation: [workbox-config.js](../../workbox-config.js), [src/serviceWorker/sw.js](../../src/serviceWorker/sw.js), [package.json](../../package.json)
 
 ## Data Flow: Article Loading
+
+The flow below uses the Uniform Resource Locator (URL) query string to decide whether to render an article or a page view.
 
 ```mermaid
 sequenceDiagram
     participant Browser
     participant AF as ArticleFiller
     participant JSON as articleData.json
-    participant API as Article File
+    participant Archive as Article File
     participant Showdown
 
     Browser->>AF: Page loads, calls retrieveArticleData()
@@ -176,9 +173,9 @@ sequenceDiagram
     JSON-->>AF: Return article registry
     AF->>AF: callArticle() checks URL query string
     alt Article Requested
-        AF->>API: Fetch YYYY-MM-DD_Title/Title.md
-        API-->>AF: Return markdown content
-        AF->>Showdown: Convert markdown to HTML
+        AF->>Archive: Fetch YYYY-MM-DD_Title/Title.md
+        Archive-->>AF: Return Markdown content
+        AF->>Showdown: Convert Markdown to HTML
         Showdown-->>AF: Return HTML
         AF->>AF: updateMetaData() updates page tags
         AF->>Browser: Render article HTML
@@ -187,19 +184,29 @@ sequenceDiagram
     end
 ```
 
+Implementation: [src/scripts/index.js](../../src/scripts/index.js)
+
 ## Navigation & URL Structure
 
-Small Dev Talk uses **URL query parameters** for client-side navigation:
+Small Dev Talk uses **Uniform Resource Locator (URL) query parameters** for client-side navigation:
 
-| URL                          | Purpose                         |
-| ---------------------------- | ------------------------------- |
-| `/?` or `/index.html`        | Homepage with article grid      |
-| `/?ArticleTitle`             | Display single article          |
-| `/?ArticleTitle&param=value` | (Additional parameters ignored) |
+| URL                   | Purpose                                            |
+| --------------------- | -------------------------------------------------- |
+| `/?` or `/index.html` | Homepage with article grid                         |
+| `/?ArticleTitle`      | Display single article                             |
+| `/?pages&archive`     | Display archive view                               |
+| `/?pages&{category}`  | Display carousel and featured lists for a category |
 
 **Example:**
 
 - `smalldevtalk.net/?Playsets` → Loads the "Playsets" article
 - `smalldevtalk.net/?Caravaneer2` → Loads the "Caravaneer 2" article
 
-Article names in the URL are converted to match the key in `articleData.json` (spaces removed, capitalized).
+Article names in the URL are converted to match the key in `articleData.json` (spaces removed, first letter of each segment uppercased).
+
+Implementation: [src/scripts/index.js](../../src/scripts/index.js)
+
+## Related Documentation
+
+- [Data Flow](./data-flow.md)
+- [ArticleFiller API](../api/article-filler.md)

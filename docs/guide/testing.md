@@ -7,7 +7,7 @@ This guide covers running tests and validating code quality in Small Dev Talk.
 Small Dev Talk uses four types of automated testing:
 
 1. **Unit Tests (Jest)** — Test individual functions and modules
-2. **E2E Tests (Cypress)** — Test complete user workflows
+2. **End-to-end (E2E) Tests (Cypress)** — Test complete user workflows
 3. **Linting** — Verify code quality and style
 4. **Markdown Validation** — Ensure documentation quality
 
@@ -43,7 +43,7 @@ Cypress tests are in [cypress/e2e/](../../cypress/e2e/).
 npm run cypress
 ```
 
-**Run E2E tests headless (CI mode):**
+**Run E2E tests headless:**
 
 ```bash
 npm run e2e:headless
@@ -100,14 +100,6 @@ This runs:
 3. Jest unit tests
 4. Cypress E2E tests
 5. Markdownlint validation
-
-## Continuous Integration
-
-GitHub Actions workflows in this repository:
-
-- Run Prettier, ESLint, Jest, and Cypress on pushes and pull requests
-- Run Markdownlint on markdown-only changes
-- Run CodeQL analysis on pushes and pull requests
 
 ## Related Documentation
 

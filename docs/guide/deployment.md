@@ -1,15 +1,22 @@
 # Deployment & Build
 
-This guide explains the Small Dev Talk build process and deployment strategy.
+This guide documents the build-related scripts present in the repository.
 
-Small Dev Talk is a static site deployed on GitHub Pages.
+## Build Scripts
 
-## GitHub Pages Deployment
+The repository does not define an `npm run build` script. The only build-like step defined is service worker generation.
 
-When PR is merged to `master`:
+### Regenerate the Service Worker
 
-1. GitHub Actions automatically:
-    - Runs `npm run validate`
-    - Runs `npm run build`
-    - Deploys to `gh-pages` branch
-    - Updates live site at [Small Dev Talk](https://smalldevtalk.net/)
+```bash
+npm run workbox
+```
+
+This command runs Workbox to generate `src/serviceWorker/sw.js` using the configuration in `workbox-config.js`.
+
+Implementation: [package.json](../../package.json), [workbox-config.js](../../workbox-config.js), [src/serviceWorker/sw.js](../../src/serviceWorker/sw.js)
+
+## Related Documentation
+
+- [Getting Started Guide](./getting-started.md)
+- [Service Worker](../api/service-worker.md)
