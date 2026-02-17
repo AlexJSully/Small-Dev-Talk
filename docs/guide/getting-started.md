@@ -2,10 +2,6 @@
 
 Welcome to the Small Dev Talk development environment. This guide covers installation, configuration, and running the project locally.
 
-## System Requirements
-
-- **Node.js:** v20.19.0+ (required by the ESLint toolchain)
-
 ## Installation
 
 ### 1. Clone the Repository
@@ -37,7 +33,7 @@ npm run start
 
 **What it does:**
 
-- Starts an HTTP server on `http://localhost:3000`
+- Starts a Hypertext Transfer Protocol (HTTP) server on `http://localhost:3000`
 - Serves all files from the project root
 
 **Access:** Open `http://localhost:3000` in your browser
@@ -48,10 +44,14 @@ npm run start
 - `retrievePageData()` fetches legacy page definitions
 - `retrieveArticleData()` fetches article metadata and triggers rendering
 
+Implementation: [src/scripts/index.js](../../src/scripts/index.js)
+
 ### Third-Party Scripts
 
-- Sentry is initialized in `index.html`
+- Sentry Software Development Kit (SDK) scripts are loaded and initialized in `index.html`
 - Google Analytics and Google Tag Manager scripts are loaded in `index.html`
+
+Implementation: [index.html](../../index.html)
 
 ## Project Structure
 
@@ -158,3 +158,8 @@ Small Dev Talk does not reference environment variables in runtime scripts. Conf
 
 - [index.html](../../index.html) — Sentry and analytics configuration, meta tags, security policies
 - [workbox-config.js](../../workbox-config.js) — Precaching configuration
+
+## Related Documentation
+
+- [System Architecture](../architecture/system.md)
+- [Testing & Validation](./testing.md)

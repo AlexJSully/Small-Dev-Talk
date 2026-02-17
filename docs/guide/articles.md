@@ -8,7 +8,7 @@ Articles are organized by author in the [articleArchive](../../src/articleArchiv
 
 ```text
 src/articleArchive/
-├── authorName/
+├── authorAuthorNameNoSpaces/
 │   └── YYYY-MM-DD_ArticleTitle/
 │       ├── ArticleTitle.md
 │       ├── image1.jpg
@@ -18,7 +18,7 @@ src/articleArchive/
 
 ## Step 1: Register Article Metadata
 
-Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.json) and add:
+Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.json) and add. This file uses JavaScript Object Notation (JSON):
 
 ```json
 {
@@ -34,18 +34,18 @@ Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.
 
 **Field Requirements:**
 
-- `title`: Display title (required for listings and carousel)
-- `author`: Used to build the `author{AuthorNameNoSpaces}` folder (required for loading)
-- `date`: Used in article folder naming (required for loading)
-- `summary`: Used in listings and carousel text (optional)
-- `thumbnail`: Used in listings, carousel, and Open Graph image (required for listings and carousel)
+- `title`: Display title used in listings and metadata updates
+- `author`: Used to build the `author{AuthorNameNoSpaces}` folder
+- `date`: Used to build the `YYYY-MM-DD_{ArticleKey}` folder
+- `summary`: Displayed in carousel and featured lists
+- `thumbnail`: Used for carousel, featured list, archive list, and social metadata images
 
 ## Step 2: Create Article Directory
 
 Create the directory structure using the exact naming pattern:
 
 ```bash
-mkdir -p src/articleArchive/author{AuthorName}/{YYYY-MM-DD}_{ArticleTitle}/
+mkdir -p src/articleArchive/author{AuthorNameNoSpaces}/{YYYY-MM-DD}_{ArticleTitle}/
 ```
 
 **Example:**
@@ -148,9 +148,7 @@ Once validated locally:
 4. Merge to master
 5. GitHub Actions automatically builds and deploys
 
----
-
-See also:
+## Related Documentation
 
 - [System Architecture](../architecture/system.md)
 - [Getting Started Guide](./getting-started.md)

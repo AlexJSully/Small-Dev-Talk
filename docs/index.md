@@ -4,23 +4,24 @@ Welcome to the Small Dev Talk documentation. This directory contains guides for 
 
 ## Overview
 
-Small Dev Talk is a static client-side site. On page load, the browser script fetches legacy page definitions and article metadata, then renders either a listing view or a single article based on the URL query string.
+Small Dev Talk is a static client-side site. On page load, the browser script fetches legacy page definitions and article metadata from JavaScript Object Notation (JSON) files, then renders either a listing view or a single article based on the Uniform Resource Locator (URL) query string.
 
 The project is currently in **maintenance mode**, meaning focus is on bug fixes and security updates rather than new features.
+
+Implementation: [src/scripts/index.js](../src/scripts/index.js)
 
 ## Documentation Structure
 
 ### [Architecture](./architecture/)
 
-Understand the system design, data flows, and core components that power Small Dev Talk.
+Internal documentation for maintainers covering system design, data flows, and core components.
 
 - [System Architecture](./architecture/system.md) — Overview of modules, components, and interactions
 - [Data Flow](./architecture/data-flow.md) — How articles flow through the application
-- [Dependencies & Integrations](./architecture/dependencies.md) — External services and libraries
 
 ### [Guides](./guide/)
 
-Practical guides for developers working with the codebase.
+Guides for external contributors and users working with Small Dev Talk.
 
 - [Developer Setup & Getting Started](./guide/getting-started.md) — Installation, configuration, and local development
 - [Adding & Publishing Articles](./guide/articles.md) — How to add new articles and manage article metadata
@@ -29,26 +30,26 @@ Practical guides for developers working with the codebase.
 
 ### [API Reference](./api/)
 
-Detailed documentation for key modules and functions.
+Application Programming Interface (API) documentation for external usage and public entry points.
 
 - [ArticleFiller Class](./api/article-filler.md) — Core class for article loading and page rendering
-- [Sentry Integration](./api/sentry.md) — Error tracking configuration
 - [Service Worker](./api/service-worker.md) — Precaching and runtime caching behavior
-- [Build Tools & Scripts](./api/build-tools.md) — Tooling and npm scripts
 
 ## Key Technologies
 
-| Technology                                                                   | Purpose                      | Version    |
-| ---------------------------------------------------------------------------- | ---------------------------- | ---------- |
-| [Bootstrap](https://getbootstrap.com/)                                       | UI framework (local bundle)  | Local copy |
-| [jQuery](https://jquery.com/)                                                | DOM utilities (local bundle) | Local copy |
-| [Showdown.js](http://showdownjs.com/)                                        | Markdown to HTML conversion  | Local copy |
-| [Sentry](https://sentry.io/)                                                 | Error tracking               | v10.32.1   |
-| [Service Workers / Workbox](https://developers.google.com/web/tools/workbox) | Precaching and caching       | v7.4.0     |
-| [Jest](https://jestjs.io/)                                                   | Unit testing                 | v30.2.0    |
-| [Cypress](https://cypress.io/)                                               | E2E testing                  | v15.10.0   |
-| [ESLint](https://eslint.org/)                                                | Code linting                 | v10.0.0    |
-| [Prettier](https://prettier.io/)                                             | Code formatting              | v3.8.1     |
+| Technology                                                                   | Purpose                               | Version    |
+| ---------------------------------------------------------------------------- | ------------------------------------- | ---------- |
+| [Bootstrap](https://getbootstrap.com/)                                       | UI framework (local bundle)           | Local copy |
+| [jQuery](https://jquery.com/)                                                | Document Object Model (DOM) utilities | Local copy |
+| [Showdown.js](http://showdownjs.com/)                                        | Markdown to HTML conversion           | Local copy |
+| [Sentry](https://sentry.io/)                                                 | Error tracking                        | v10.32.1   |
+| [Service Workers / Workbox](https://developers.google.com/web/tools/workbox) | Precaching and caching                | ^7.4.0     |
+| [Jest](https://jestjs.io/)                                                   | Unit testing                          | ^30.2.0    |
+| [Cypress](https://cypress.io/)                                               | End-to-end (E2E) testing              | ^15.10.0   |
+| [ESLint](https://eslint.org/)                                                | Code linting                          | ^10.0.0    |
+| [Prettier](https://prettier.io/)                                             | Code formatting                       | ^3.8.1     |
+
+Implementation: [index.html](../index.html), [package.json](../package.json)
 
 ## Quick Links
 
@@ -62,7 +63,6 @@ Detailed documentation for key modules and functions.
 - **Project Status:** Maintenance Mode
 - **Latest Version:** 1.3.4
 - **License:** GPL-3.0
-- **Automation:** Code quality and CodeQL workflows run in GitHub Actions
 
 ## Contributing
 

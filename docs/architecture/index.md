@@ -16,7 +16,7 @@ Complete overview of the system design and component interactions.
 
 - High-level architecture diagram
 - Component breakdown (Client Layer, Core Logic, Data Layer, Services)
-- ArticleFiller singleton pattern
+- ArticleFiller static-method usage pattern
 - Article metadata registry
 - Service Worker and caching strategy
 - Security and Content Security Policy (CSP)
@@ -79,6 +79,5 @@ graph TB
 
 ## Related Documentation
 
-- [ArticleFiller API](../api/article-filler.md) — Core class implementation details
-- [Getting Started Guide](../guide/getting-started.md) — Local development setup
-- [Deployment Guide](../guide/deployment.md) — Build and deployment process
+- [System Architecture](./system.md)
+- [Data Flow](./data-flow.md)
