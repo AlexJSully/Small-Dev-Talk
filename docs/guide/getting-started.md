@@ -5,7 +5,6 @@ Welcome to the Small Dev Talk development environment. This guide covers install
 ## System Requirements
 
 - **Node.js:** v20.19.0+ (required by the ESLint toolchain)
-Implementation: [package-lock.json](../../package-lock.json), [package.json](../../package.json)
 
 ## Installation
 
@@ -53,7 +52,6 @@ npm run start
 
 - Sentry is initialized in `index.html`
 - Google Analytics and Google Tag Manager scripts are loaded in `index.html`
-Implementation: [index.html](../../index.html)
 
 ## Project Structure
 

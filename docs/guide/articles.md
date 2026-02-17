@@ -39,7 +39,6 @@ Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.
 - `date`: Used in article folder naming (required for loading)
 - `summary`: Used in listings and carousel text (optional)
 - `thumbnail`: Used in listings, carousel, and Open Graph image (required for listings and carousel)
-Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
 ## Step 2: Create Article Directory
 

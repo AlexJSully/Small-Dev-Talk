@@ -38,17 +38,17 @@ Detailed documentation for key modules and functions.
 
 ## Key Technologies
 
-| Technology                                                                   | Purpose                     | Version     |
-| ---------------------------------------------------------------------------- | --------------------------- | ---------- |
-| [Bootstrap](https://getbootstrap.com/)                                       | UI framework (local bundle) | Local copy |
+| Technology                                                                   | Purpose                      | Version    |
+| ---------------------------------------------------------------------------- | ---------------------------- | ---------- |
+| [Bootstrap](https://getbootstrap.com/)                                       | UI framework (local bundle)  | Local copy |
 | [jQuery](https://jquery.com/)                                                | DOM utilities (local bundle) | Local copy |
-| [Showdown.js](http://showdownjs.com/)                                        | Markdown to HTML conversion | Local copy |
-| [Sentry](https://sentry.io/)                                                 | Error tracking              | v10.32.1   |
-| [Service Workers / Workbox](https://developers.google.com/web/tools/workbox) | Precaching and caching      | v7.4.0     |
-| [Jest](https://jestjs.io/)                                                   | Unit testing                | v30.2.0    |
-| [Cypress](https://cypress.io/)                                               | E2E testing                 | v15.10.0   |
-| [ESLint](https://eslint.org/)                                                | Code linting                | v10.0.0    |
-| [Prettier](https://prettier.io/)                                             | Code formatting             | v3.8.1     |
+| [Showdown.js](http://showdownjs.com/)                                        | Markdown to HTML conversion  | Local copy |
+| [Sentry](https://sentry.io/)                                                 | Error tracking               | v10.32.1   |
+| [Service Workers / Workbox](https://developers.google.com/web/tools/workbox) | Precaching and caching       | v7.4.0     |
+| [Jest](https://jestjs.io/)                                                   | Unit testing                 | v30.2.0    |
+| [Cypress](https://cypress.io/)                                               | E2E testing                  | v15.10.0   |
+| [ESLint](https://eslint.org/)                                                | Code linting                 | v10.0.0    |
+| [Prettier](https://prettier.io/)                                             | Code formatting              | v3.8.1     |
 
 ## Quick Links
 
