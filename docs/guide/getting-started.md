@@ -4,10 +4,7 @@ Welcome to the Small Dev Talk development environment. This guide covers install
 
 ## System Requirements
 
-- **Node.js:** v18+ (for npm and development tools)
-- **npm:** v8+
-- **Browser:** Chrome, Firefox, Safari, or Edge (recent versions)
-- **macOS/Linux/Windows:** All supported with appropriate shell environment
+- **Node.js:** v20.19.0+ (required by the ESLint toolchain)
 
 ## Installation
 
@@ -42,18 +39,19 @@ npm run start
 
 - Starts an HTTP server on `http://localhost:3000`
 - Serves all files from the project root
-- Allows browser access to the site with live reload capabilities
 
 **Access:** Open `http://localhost:3000` in your browser
 
-### Environment
+### Runtime Initialization
 
-The local server will run with:
+- `window.onload` calls `registerServiceWorker()` and then initializes data loading
+- `retrievePageData()` fetches legacy page definitions
+- `retrieveArticleData()` fetches article metadata and triggers rendering
 
-- No authentication required
-- All articles loaded from the local archive
-- Sentry tracing enabled (data sent to Sentry project)
-- Service workers active (caching enabled)
+### Third-Party Scripts
+
+- Sentry is initialized in `index.html`
+- Google Analytics and Google Tag Manager scripts are loaded in `index.html`
 
 ## Project Structure
 
@@ -152,16 +150,11 @@ npm run validate            # Run full validation pipeline:
 npm run workbox             # Generate precaching manifest for service worker
 ```
 
-This is needed after:
-
-- Adding new images or assets
-- Modifying build structure
-- Updating offline caching strategy
+This command regenerates `src/serviceWorker/sw.js` with the current precache manifest.
 
 ## Environment Variables
 
-Currently, Small Dev Talk does not use environment variables. Configuration is primarily done through:
+Small Dev Talk does not reference environment variables in runtime scripts. Configuration is done through:
 
-- [index.html](../../index.html) — Sentry DSN, meta tags, security policies
-- [package.json](../../package.json) — Version number
+- [index.html](../../index.html) — Sentry and analytics configuration, meta tags, security policies
 - [workbox-config.js](../../workbox-config.js) — Precaching configuration

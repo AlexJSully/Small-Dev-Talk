@@ -4,7 +4,7 @@ This guide covers running tests and validating code quality in Small Dev Talk.
 
 ## Test Types
 
-Small Dev Talk uses three types of automated testing:
+Small Dev Talk uses four types of automated testing:
 
 1. **Unit Tests (Jest)** — Test individual functions and modules
 2. **E2E Tests (Cypress)** — Test complete user workflows
@@ -101,13 +101,14 @@ This runs:
 4. Cypress E2E tests
 5. Markdownlint validation
 
-**Must pass before merging to master.**
-
 ## Continuous Integration
 
-GitHub Actions automatically:
+GitHub Actions workflows in this repository:
 
-- Runs all tests on pull requests
-- Reports status in PR
-- Blocks merging if tests fail
-- Deploys on merge to master
+- Run Prettier, ESLint, Jest, and Cypress on pushes and pull requests
+- Run Markdownlint on markdown-only changes
+- Run CodeQL analysis on pushes and pull requests
+
+## Related Documentation
+
+- [Developer Setup & Getting Started](./getting-started.md)

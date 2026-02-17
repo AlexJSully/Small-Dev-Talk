@@ -11,9 +11,9 @@ Small Dev Talk is an independent news source that covers all things from the ind
 
 It is recommended that you use the web-version of Small Dev Talk available at [https://smalldevtalk.net/](https://smalldevtalk.net/) which is an archived version of the original site that is being hosted on [Tumblr](https://smalldevtalk.tumblr.com/). This does require an internet connection to load.
 
-If you would like to run this offline, you can download the Github and remove all of <https://raw.githubusercontent.com/AlexJSully/Small-Dev-Talk/master/> from index.js & index.min.js and it would load offline as well.
+For local usage, the app loads metadata from `/src/articleArchive/articleData.json` and article content from `/src/articleArchive/author{AuthorNameNoSpaces}/{YYYY-MM-DD}_{ArticleKey}/{ArticleKey}.md`. You can serve the repository root with `npm run start` and regenerate the service worker with `npm run workbox` after adding assets.
 
-To visit specific articles, just change the directory to end with '?' + article name (list of article names can be found in [articleData.json](src\articleArchive\articleData.json)). For example, if you would like to read the Playsets' interview, just change the directory to [https://smalldevtalk.net/index.html?Playsets](https://smalldevtalk.net/index.html?Playsets).
+To visit specific articles, use the first query parameter as the article key from [src/articleArchive/articleData.json](src/articleArchive/articleData.json). For example, [https://smalldevtalk.net/index.html?Playsets](https://smalldevtalk.net/index.html?Playsets).
 
 ## Browser Compatibilities
 

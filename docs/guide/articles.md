@@ -34,18 +34,18 @@ Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.
 
 **Field Requirements:**
 
-- `title`: Display title (required)
-- `author`: Must match author folder name (required)
-- `date`: Publication date in YYYY-MM-DD format (required)
-- `summary`: Brief description (optional)
-- `thumbnail`: Filename of cover image (optional)
+- `title`: Display title (required for listings and carousel)
+- `author`: Used to build the `author{AuthorNameNoSpaces}` folder (required for loading)
+- `date`: Used in article folder naming (required for loading)
+- `summary`: Used in listings and carousel text (optional)
+- `thumbnail`: Used in listings, carousel, and Open Graph image (required for listings and carousel)
 
 ## Step 2: Create Article Directory
 
 Create the directory structure using the exact naming pattern:
 
 ```bash
-mkdir -p src/articleArchive/author{AuthorFirstNameLastName}/{YYYY-MM-DD}_{ArticleTitle}/
+mkdir -p src/articleArchive/author{AuthorName}/{YYYY-MM-DD}_{ArticleTitle}/
 ```
 
 **Example:**
@@ -93,12 +93,9 @@ src/articleArchive/authorAlexanderSullivan/2013-03-26_Caravaneer2/
 └── ...
 ```
 
-**Supported Formats:**
+**Precaching Formats:**
 
-- JPEG (.jpg, .jpeg)
-- PNG (.png)
-- WebP (.webp)
-- GIF (.gif)
+Workbox precaches assets that match the extensions in `workbox-config.js`, including `jpg`, `jpeg`, `png`, `webp`, `gif`, `svg`, and `ico`.
 
 ## Step 5: Update Service Worker Cache
 
