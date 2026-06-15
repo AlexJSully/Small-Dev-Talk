@@ -95,7 +95,7 @@ src/articleArchive/authorAlexanderSullivan/2013-03-26_Caravaneer2/
 
 **Precaching Formats:**
 
-Workbox precaches assets that match the extensions in `workbox-config.js`, including `jpg`, `jpeg`, `png`, `webp`, `gif`, `svg`, and `ico`.
+Workbox precaches assets that match the extensions in `workbox-config.js`, including `jpg`, `png`, `webp`, `gif`, `svg`, and `ico`.
 
 ## Step 5: Update Service Worker Cache
 
@@ -146,7 +146,7 @@ Once validated locally:
 2. Create a pull request
 3. Request review
 4. Merge to master
-5. GitHub Actions automatically builds and deploys
+5. GitHub Actions runs quality checks (Prettier, ESLint, Jest, Cypress, markdownlint, and CodeQL); there is no build step. The site is hosted on GitHub Pages (see [CNAME](../../CNAME)) and updates when changes land on master
 
 ## Related Documentation
 
