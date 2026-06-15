@@ -6,6 +6,8 @@ This document illustrates how data flows through Small Dev Talk from initial pag
 
 ```mermaid
 flowchart TD
+    accTitle: Complete data flow from page load to rendered article
+    accDescr: A user request triggers script loading and Sentry initialization, service worker registration, article metadata fetch, a URL decision between homepage and single article, article content fetch, page metadata update, Showdown Markdown to HTML rendering, caching, error tracking, and final display to the user.
     subgraph Request["User Request"]
         A1["User visits index.html<br/>or clicks article link"]
         A2["URL contains query parameter<br/>?ArticleName"]
@@ -121,6 +123,8 @@ When [index.html](../../index.html) loads:
 
 ```mermaid
 sequenceDiagram
+    accTitle: Article data retrieval sequence
+    accDescr: After the browser completes loading, ArticleFiller fetches articleData.json from /src/articleArchive/, stores it in the articleData static property, then calls callArticle().
     participant Browser
     participant AF as ArticleFiller
     participant Server
@@ -138,6 +142,8 @@ The `callArticle()` method determines what to display:
 
 ```mermaid
 flowchart TD
+    accTitle: Article loading logic in callArticle()
+    accDescr: callArticle() checks for a query string. No query or multiple parameters shows the homepage. A single article triggers grabArticle, which hides the featured and display sections, shows articleBody, fetches the Markdown, converts it with Showdown, updates metadata, and renders to articleBody.
     A["callArticle()"] --> B{"URL has<br/>query string?"}
     B -->|No query| C["callDisplay()<br/>Show homepage"]
     B -->|Has query| D["Parse article name<br/>from query"]
@@ -155,6 +161,8 @@ flowchart TD
 
 ```mermaid
 flowchart TD
+    accTitle: Error handling flow
+    accDescr: A failed or invalid fetch, or a parse error, calls displayError, which logs to the console and reports to Sentry, then shows an error UI with a refresh button and lets the user return to the homepage.
     A["Fetch article"] -->|Success| B["Parse & render"]
     A -->|Fetch fails| C["displayError<br/>Log to console"]
     A -->|Invalid article| C
@@ -183,13 +191,13 @@ twitter:description → article summary
 twitter:image → article thumbnail
 
 // 4. Structured data (Schema.org)
+// updateMetaData updates only the name, description, and image keys of the
+// existing WebSite object; @type is never changed.
 {
-  "@type": "NewsArticle",
-  "headline": article title,
-  "description": article summary,
-  "image": article thumbnail,
-  "author": article author,
-  "datePublished": article date
+  "@type": "WebSite",
+  "name": article title + " | Small Dev Talk",
+  "description": article summary + " | Small Dev Talk",
+  "image": article thumbnail URL
 }
 ```
 
@@ -199,6 +207,8 @@ ArticleFiller maintains state through static properties:
 
 ```mermaid
 stateDiagram-v2
+    accTitle: ArticleFiller state transitions
+    accDescr: States move from Uninitialized to MetadataLoaded after retrieveArticleData(), then to DisplayingHome or FetchingArticle, then RenderingArticle and DisplayingArticle. A failed fetch enters ErrorState, with paths back to the homepage or a retry.
     [*] --> Uninitialized
     Uninitialized --> MetadataLoaded: retrieveArticleData()<br/>completes
     MetadataLoaded --> DisplayingHome: callArticle()<br/>no query
@@ -232,5 +242,4 @@ stateDiagram-v2
 See also:
 
 - [System Architecture](./system.md)
-- [Dependencies & Integrations](./dependencies.md)
 - [ArticleFiller API](../api/article-filler.md)

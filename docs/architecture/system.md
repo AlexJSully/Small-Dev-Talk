@@ -6,6 +6,8 @@ Small Dev Talk is a client-side static web application that loads article metada
 
 ```mermaid
 graph TB
+    accTitle: System architecture overview
+    accDescr: Layered diagram showing the browser client layer (index.html entry point, CSS and Bootstrap styles, JavaScript runtime) driving the ArticleFiller core (retrieveArticleData, grabArticle, updateMetaData), which fetches articleData.json metadata and the Markdown article archive and renders content via Showdown before updating the HTML. External services include the Sentry SDK and a caching service worker, and UI libraries include Bootstrap, Showdown.js, and jQuery.
     subgraph Client["Browser / Client Layer"]
         HTML["index.html<br/>Entry Point"]
         CSS["Cascading Style Sheets (CSS)<br/>style.css, Bootstrap"]
@@ -162,6 +164,8 @@ The flow below uses the Uniform Resource Locator (URL) query string to decide wh
 
 ```mermaid
 sequenceDiagram
+    accTitle: Article loading data flow
+    accDescr: Sequence showing the browser calling ArticleFiller.retrieveArticleData() on page load, which fetches metadata from articleData.json and receives the article registry. callArticle() then checks the URL query string. If an article is requested, ArticleFiller fetches the Markdown file, converts it to HTML with Showdown, calls updateMetaData() to update page tags, and renders the article. Otherwise it renders the homepage article grid.
     participant Browser
     participant AF as ArticleFiller
     participant JSON as articleData.json

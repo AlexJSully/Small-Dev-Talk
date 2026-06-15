@@ -54,6 +54,8 @@ Small Dev Talk follows these core architectural principles:
 
 ```mermaid
 graph TB
+    accTitle: High-level architecture
+    accDescr: The user browser loads index.html, which invokes the ArticleFiller class and registers the service worker. ArticleFiller reads articleData.json and the article archive, and reports to Sentry monitoring.
     User[User Browser]
     HTML[index.html]
     AF[ArticleFiller Class]
