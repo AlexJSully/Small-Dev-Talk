@@ -12,28 +12,28 @@ Implementation: [src/scripts/index.js](../src/scripts/index.js)
 
 ## Documentation Structure
 
-### [Architecture](./architecture/)
+### [Architecture](./architecture/index.md)
 
 Internal documentation for maintainers covering system design, data flows, and core components.
 
-- [System Architecture](./architecture/system.md) — Overview of modules, components, and interactions
-- [Data Flow](./architecture/data-flow.md) — How articles flow through the application
+- [System Architecture](./architecture/system.md) - Overview of modules, components, and interactions
+- [Data Flow](./architecture/data-flow.md) - How articles flow through the application
 
-### [Guides](./guide/)
+### [Guides](./guide/index.md)
 
 Guides for external contributors and users working with Small Dev Talk.
 
-- [Developer Setup & Getting Started](./guide/getting-started.md) — Installation, configuration, and local development
-- [Adding & Publishing Articles](./guide/articles.md) — How to add new articles and manage article metadata
-- [Testing & Validation](./guide/testing.md) — Running tests, linting, and validation scripts
-- [Deployment & Build Process](./guide/deployment.md) — Building, testing, and deploying to production
+- [Developer Setup & Getting Started](./guide/getting-started.md) - Installation, configuration, and local development
+- [Adding & Publishing Articles](./guide/articles.md) - How to add new articles and manage article metadata
+- [Testing & Validation](./guide/testing.md) - Running tests, linting, and validation scripts
+- [Deployment & Build Process](./guide/deployment.md) - Building, testing, and deploying to production
 
-### [API Reference](./api/)
+### [API Reference](./api/index.md)
 
 Application Programming Interface (API) documentation for external usage and public entry points.
 
-- [ArticleFiller Class](./api/article-filler.md) — Core class for article loading and page rendering
-- [Service Worker](./api/service-worker.md) — Precaching and runtime caching behavior
+- [ArticleFiller Class](./api/article-filler.md) - Core class for article loading and page rendering
+- [Service Worker](./api/service-worker.md) - Precaching and runtime caching behavior
 
 ## Key Technologies
 
@@ -45,9 +45,10 @@ Application Programming Interface (API) documentation for external usage and pub
 | [Sentry](https://sentry.io/)                                                 | Error tracking                        | v10.32.1   |
 | [Service Workers / Workbox](https://developers.google.com/web/tools/workbox) | Precaching and caching                | ^7.4.1     |
 | [Jest](https://jestjs.io/)                                                   | Unit testing                          | ^30.4.2    |
-| [Cypress](https://cypress.io/)                                               | End-to-end (E2E) testing              | ^15.10.0   |
-| [ESLint](https://eslint.org/)                                                | Code linting                          | ^10.0.0    |
-| [Prettier](https://prettier.io/)                                             | Code formatting                       | ^3.8.1     |
+| [Cypress](https://cypress.io/)                                               | End-to-end (E2E) testing              | ^15.20.1   |
+| [ESLint](https://eslint.org/)                                                | Code linting                          | ^10.8.1    |
+| [Prettier](https://prettier.io/)                                             | Code formatting                       | ^3.9.6     |
+| [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2)         | Markdown linting                      | ^0.23.2    |
 
 Implementation: [index.html](../index.html), [package.json](../package.json)
 

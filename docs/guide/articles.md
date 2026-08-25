@@ -4,7 +4,7 @@ This guide explains how to add new articles to Small Dev Talk.
 
 ## Article Directory Structure
 
-Articles are organized by author in the [articleArchive](../../src/articleArchive/) directory:
+Articles are organized by author under `src/articleArchive/`, indexed by [articleData.json](../../src/articleArchive/articleData.json):
 
 ```text
 src/articleArchive/
@@ -18,7 +18,7 @@ src/articleArchive/
 
 ## Step 1: Register Article Metadata
 
-Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.json) and add. This file uses JavaScript Object Notation (JSON):
+Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.json) and add an entry. This file uses JavaScript Object Notation (JSON):
 
 ```json
 {

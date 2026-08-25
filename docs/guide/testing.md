@@ -6,10 +6,10 @@ This guide covers running tests and validating code quality in Small Dev Talk.
 
 Small Dev Talk uses four types of automated testing:
 
-1. **Unit Tests (Jest)** — Test individual functions and modules
-2. **End-to-end (E2E) Tests (Cypress)** — Test complete user workflows
-3. **Linting** — Verify code quality and style
-4. **Markdown Validation** — Ensure documentation quality
+1. **Unit Tests (Jest)** - Test individual functions and modules
+2. **End-to-end (E2E) Tests (Cypress)** - Test complete user workflows
+3. **Linting** - Verify code quality and style
+4. **Markdown Validation** - Ensure documentation quality
 
 ## Unit Testing with Jest
 
@@ -35,7 +35,7 @@ npm run test -- src/scripts/index.test.js
 
 ## End-to-End Testing with Cypress
 
-Cypress tests are in [cypress/e2e/](../../cypress/e2e/).
+Cypress tests are in [cypress/e2e/landing.cy.js](../../cypress/e2e/landing.cy.js).
 
 **Open Cypress Test Runner:**
 
@@ -80,10 +80,11 @@ npm run prettier:check      # Check only
 Lint all markdown files:
 
 ```bash
-npm run lint:markdown
+npm run lint:markdown        # Auto-fix
+npm run lint:markdown:check  # Check only
 ```
 
-**Configuration:** [.markdownlint.json](../../.markdownlint.json)
+Configuration is split across two files. [.markdownlint.json](../../.markdownlint.json) holds the rule settings, and [.markdownlint-cli2.jsonc](../../.markdownlint-cli2.jsonc) holds the file selection: which paths are linted and which are ignored. Keep rule settings in the former, because a `.markdownlint.json` file overrides the `config` property of a `.markdownlint-cli2.jsonc` file in the same directory.
 
 ## Full Validation Pipeline
 
