@@ -69,7 +69,7 @@ npm run e2e:headless       # Run E2E tests in CI mode
 # Code Quality
 npm run eslint             # Fix ESLint errors
 npm run prettier           # Format all files
-npm run lint:markdown      # Validate markdown files
+npm run lint:markdown      # Fix markdown issues
 
 # Service worker
 npm run workbox            # Regenerate Service Worker cache
@@ -82,4 +82,4 @@ Implementation: [package.json](../../package.json)
 
 ## Related Documentation
 
-- [ArticleFiller API](../api/article-filler.md) — URL-based access
+- [ArticleFiller API](../api/article-filler.md) - URL-based access

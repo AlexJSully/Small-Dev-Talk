@@ -2,6 +2,12 @@
 
 Welcome to the Small Dev Talk development environment. This guide covers installation, configuration, and running the project locally.
 
+## Prerequisites
+
+Install Node.js 24 and the npm version bundled with it. Continuous integration pins Node.js 24 for both the JavaScript and markdown quality workflows ([code-qa-js.yaml](../../.github/workflows/code-qa-js.yaml), [code-qa-md.yaml](../../.github/workflows/code-qa-md.yaml)), so matching it locally keeps local results and pipeline results aligned.
+
+Dependency installation reads [.npmrc](../../.npmrc), which sets `min-release-age` to 14 so that a package version must be at least 14 days old before it is installed. The setting exists to reduce exposure to npm supply-chain attacks. Expect a freshly published release to be unavailable until it reaches that age.
+
 ## Installation
 
 ### 1. Clone the Repository
@@ -78,7 +84,8 @@ Small-Dev-Talk/
 ├── package.json                 # Project metadata & dependencies
 ├── eslint.config.js             # ESLint configuration
 ├── .prettierrc                  # Prettier configuration
-├── .markdownlint.json           # Markdown linter configuration
+├── .markdownlint.json           # Markdown linter rule settings
+├── .markdownlint-cli2.jsonc     # Markdown linter file selection
 └── workbox-config.js            # Service worker precaching configuration
 ```
 
@@ -110,12 +117,13 @@ npm run prettier:check      # Check formatting
 
 ### Markdown Linting
 
-File: [.markdownlint.json](../../.markdownlint.json)
+Files: [.markdownlint.json](../../.markdownlint.json) and [.markdownlint-cli2.jsonc](../../.markdownlint-cli2.jsonc)
 
-Ensures markdown files follow consistent formatting standards.
+Ensures markdown files follow consistent formatting standards. The rule settings live in `.markdownlint.json`; the set of files to lint, and the paths to ignore, live in `.markdownlint-cli2.jsonc`. Because the linter reads the glob patterns from configuration, the commands below take no arguments.
 
 ```bash
-npm run lint:markdown       # Lint all markdown files
+npm run lint:markdown        # Lint with auto-fix
+npm run lint:markdown:check  # Check without fixing
 ```
 
 ## Common Development Tasks
@@ -156,8 +164,8 @@ This command regenerates `src/serviceWorker/sw.js` with the current precache man
 
 Small Dev Talk does not reference environment variables in runtime scripts. Configuration is done through:
 
-- [index.html](../../index.html) — Sentry and analytics configuration, meta tags, security policies
-- [workbox-config.js](../../workbox-config.js) — Precaching configuration
+- [index.html](../../index.html) - Sentry and analytics configuration, meta tags, security policies
+- [workbox-config.js](../../workbox-config.js) - Precaching configuration
 
 ## Related Documentation
 

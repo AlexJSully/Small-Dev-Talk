@@ -16,7 +16,7 @@ flowchart TD
     subgraph Init["Initialization"]
         B1["Scripts load:<br/>jQuery, Showdown,<br/>Bootstrap, Sentry"]
         B2["Sentry error tracking<br/>is configured"]
-        B3["Service worker<br/>registers if offline<br/>caching enabled"]
+        B3["Service worker registers<br/>if the browser<br/>supports it"]
     end
 
     subgraph Metadata["Load Metadata"]
@@ -34,7 +34,7 @@ flowchart TD
 
     subgraph Fetch["Fetch Article Content"]
         E1["Construct article path:<br/>authorAuthorName/<br/>YYYY-MM-DD_Title/<br/>Title.md"]
-        E2["Fetch markdown file<br/>from CDN or cache"]
+        E2["Fetch markdown file<br/>from site origin<br/>or service worker cache"]
         E3["Store raw markdown<br/>ArticleFiller.articleMd"]
     end
 
@@ -107,17 +107,18 @@ flowchart TD
 When [index.html](../../index.html) loads:
 
 1. HTML is parsed
-2. External scripts and stylesheets are downloaded:
-    - Bootstrap CSS (from CDN)
-    - jQuery (from CDN)
-    - Showdown.js (from CDN)
-    - Sentry SDK (from sentry-cdn.com)
-    - Custom [index.js](../../src/scripts/index.js) (local)
+2. Scripts and stylesheets are downloaded. Everything except Sentry is served from this repository rather than a content delivery network (CDN):
+    - `style.min.css` and the Bootstrap stylesheet, both under the site root
+    - jQuery, the Bootstrap JavaScript bundle, and Showdown.js, all under `src/scripts/libraries/`
+    - `src/scripts/index.min.js`, the minified build of [index.js](../../src/scripts/index.js)
+    - Sentry SDK, the one remote dependency, from `js.sentry-cdn.com` and `browser.sentry-cdn.com`
 
-3. Inline `<script>` block initializes:
+3. Inline `<script>` blocks initialize:
     - `Sentry.init()` with configuration
-    - `Sentry.configureScope()` with user context
-    - `ArticleFiller.retrieveArticleData()` to start loading metadata
+    - `Sentry.configureScope()` with the `app-version` tag
+    - Google Tag Manager, and a canonical URL adjustment applied only on the `smalldevtalk.net` host
+
+Metadata loading starts from [index.js](../../src/scripts/index.js) rather than from the inline blocks. That file assigns `window.onload`, which awaits `registerServiceWorker()` and then calls `init()`; `init()` calls `retrievePageData()` followed by `retrieveArticleData()`.
 
 ### 2. Article Data Retrieval
 

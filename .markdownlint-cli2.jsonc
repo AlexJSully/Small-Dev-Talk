@@ -1,0 +1,7 @@
+{
+	// Files to lint. Replaces the glob previously passed on the command line.
+	"globs": ["**/*.md"],
+	// markdownlint-cli2 does not read .markdownlintignore and does not skip
+	// node_modules by default, unlike markdownlint-cli.
+	"ignores": ["**/node_modules/**"],
+}

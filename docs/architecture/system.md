@@ -60,9 +60,9 @@ The single Hypertext Markup Language (HTML) document that serves as the applicat
 - Meta tag configuration (Search Engine Optimization (SEO), Open Graph, Twitter Card, security headers)
 - Script and stylesheet loading
 - Document Object Model (DOM) structure with placeholders for dynamic content:
-    - `#featuredArticles` — Homepage featured articles section
-    - `#displayArticles` — Full article grid
-    - `#articleBody` — Individual article container
+    - `#featuredArticles` - Homepage featured articles section
+    - `#displayArticles` - Full article grid
+    - `#articleBody` - Individual article container
 - Sentry Software Development Kit (SDK) initialization
 
 Implementation: [index.html](../../index.html)
@@ -84,14 +84,14 @@ The `ArticleFiller` class is the central orchestrator for loading, rendering, an
 
 Static class properties maintain:
 
-- `articleData` — Complete article metadata registry
-- `articleMd` — Raw Markdown content of the current article
-- `article` — Rendered HTML content
-- `pageData` — Legacy page definitions
-- `pageURL` — Parsed query tokens
-- `callPageDisplay` — Flag for page display logic
-- `whatPageDisplay` — Current view state (for example, "index" or a page category)
-- `errMsg` — Error message display
+- `articleData` - Complete article metadata registry
+- `articleMd` - Raw Markdown content of the current article
+- `article` - Rendered HTML content
+- `pageData` - Legacy page definitions
+- `pageURL` - Parsed query tokens
+- `callPageDisplay` - Flag for page display logic
+- `whatPageDisplay` - Current view state (for example, "index" or a page category)
+- `errMsg` - Error message display
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
@@ -123,7 +123,7 @@ A JavaScript Object Notation (JSON) file containing metadata for all published a
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
-### 4. Article Storage: [Archive Directory](../../src/articleArchive/)
+### 4. Article Storage: the archive under src/articleArchive
 
 Directory structure follows a consistent pattern organized by author:
 
