@@ -65,8 +65,14 @@ class ArticleFiller {
 	static retrieveArticleData() {
 		const articleDataUrl = "/src/articleArchive/articleData.json";
 
-		fetch(articleDataUrl)
-			.then((response) => response.json())
+		return fetch(articleDataUrl)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Failed to fetch article data: ${response.status} ${response.statusText}`);
+				}
+
+				return response.json();
+			})
 			.then((articleData) => {
 				ArticleFiller.articleData = articleData;
 				ArticleFiller.callArticle();

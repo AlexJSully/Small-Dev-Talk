@@ -4,6 +4,8 @@ const { ArticleFiller } = require("./index.js");
 
 const { registerServiceWorker } = require("./index.js");
 
+window.onload = null;
+
 describe("ArticleFiller: displayError", () => {
 	beforeEach(() => {
 		document.body.innerHTML = `
@@ -118,6 +120,7 @@ describe("ArticleFiller: grabArticle", () => {
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		delete global.fetch;
 	});
 
 	test("loads markdown and updates DOM", async () => {
@@ -167,6 +170,100 @@ describe("ArticleFiller: grabArticle", () => {
 			"Could not retrieve article. Please check the article name or try again later. (Failed to fetch article: 404 Not Found)",
 		);
 		expect(ArticleFiller.articleMd).toBeUndefined();
+	});
+});
+
+describe("ArticleFiller: retrieveArticleData", () => {
+	beforeEach(() => {
+		ArticleFiller.articleData = undefined;
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+		delete global.fetch;
+		delete document.URL;
+	});
+
+	test("fetches and processes article data", async () => {
+		const articleData = {
+			TestArticle: {
+				title: "Test Article",
+				summary: "A summary.",
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+		document.body.innerHTML = `
+			<div id="articleBody"></div>
+			<meta name="description" content="">
+			<meta property="og:title" content="">
+			<meta property="twitter:title" content="">
+			<meta property="og:description" content="">
+			<meta property="twitter:description" content="">
+			<meta property="og:image" content="">
+			<meta property="twitter:image" content="">
+			<script type="application/ld+json">{}</script>
+		`;
+		Object.defineProperty(document, "URL", {
+			value: "http://localhost/index.html?TestArticle",
+			configurable: true,
+		});
+		const markdown = "# Test Article";
+		const fetchSpy = (global.fetch = jest.fn((url) => {
+			if (url === "/src/articleArchive/articleData.json") {
+				return Promise.resolve({ ok: true, json: () => Promise.resolve(articleData) });
+			}
+
+			return Promise.resolve({ ok: true, text: () => Promise.resolve(markdown) });
+		}));
+
+		await ArticleFiller.retrieveArticleData();
+		await new Promise((resolve) => setTimeout(resolve, 0));
+
+		expect(fetchSpy).toHaveBeenCalledWith("/src/articleArchive/articleData.json");
+		expect(fetchSpy).toHaveBeenCalledWith(
+			"/src/articleArchive/authorJaneDoe/2024-06-01_TestArticle/TestArticle.md",
+		);
+		expect(ArticleFiller.articleData).toEqual(articleData);
+		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
+	});
+
+	test("logs network failures without processing article data", async () => {
+		const error = new Error("Network unavailable");
+		global.fetch = jest.fn().mockRejectedValue(error);
+		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
+		await ArticleFiller.retrieveArticleData();
+
+		expect(consoleErrorSpy).toHaveBeenCalledWith("Error retrieving article data:", error);
+		expect(ArticleFiller.articleData).toBeUndefined();
+	});
+
+	test("logs non-OK responses without parsing or processing article data", async () => {
+		const response = { ok: false, status: 500, statusText: "Internal Server Error", json: jest.fn() };
+		global.fetch = jest.fn().mockResolvedValue(response);
+		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
+		await ArticleFiller.retrieveArticleData();
+
+		expect(response.json).not.toHaveBeenCalled();
+		expect(consoleErrorSpy).toHaveBeenCalledWith(
+			"Error retrieving article data:",
+			expect.objectContaining({ message: "Failed to fetch article data: 500 Internal Server Error" }),
+		);
+		expect(ArticleFiller.articleData).toBeUndefined();
+	});
+
+	test("logs JSON parsing failures without processing article data", async () => {
+		const error = new SyntaxError("Unexpected token");
+		global.fetch = jest.fn().mockResolvedValue({ ok: true, json: () => Promise.reject(error) });
+		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
+		await ArticleFiller.retrieveArticleData();
+
+		expect(consoleErrorSpy).toHaveBeenCalledWith("Error retrieving article data:", error);
+		expect(ArticleFiller.articleData).toBeUndefined();
 	});
 });
 
