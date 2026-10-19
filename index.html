@@ -9,7 +9,7 @@
 		<meta http-equiv="Cache-Control" content="public, max-age=604800" />
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'self' 'unsafe-inline' data: *.cloudflareinsights.com *.cloudflare.com *.github.com *.twitter.com *.googletagmanager.com *.githubusercontent.com *.google-analytics.com *.twimg.com *.youtube.com *.sentry-cdn.com *.sentry.io; object-src 'self'; base-uri 'self'; form-action 'self';"
+			content="default-src 'self' 'unsafe-inline' data: *.cloudflareinsights.com *.cloudflare.com *.github.com *.twitter.com *.googletagmanager.com *.githubusercontent.com *.google-analytics.com *.twimg.com *.youtube.com *.sentry-cdn.com *.sentry.io; worker-src 'self' blob:; object-src 'self'; base-uri 'self'; form-action 'self';"
 		/>
 		<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
 
@@ -118,10 +118,6 @@
 		<script rel="preload" as="script" src="./src/scripts/index.min.js"></script>
 		<!-- Sentry -->
 		<script
-			src="https://js.sentry-cdn.com/c74a8d7e001f45c8bb4ebfa5a1e92664.min.js"
-			crossorigin="anonymous"
-		></script>
-		<script
 			src="https://browser.sentry-cdn.com/10.32.1/bundle.tracing.replay.min.js"
 			integrity="sha384-s+BQx+x7H3WSg8yxXYpSU50E6bL5JlJPzwIBPfSB0kXLFbgPIIwYZSgg68cUA2t4"
 			crossorigin="anonymous"
@@ -132,28 +128,41 @@
 			crossorigin="anonymous"
 		></script>
 		<script>
-			Sentry.init({
-				dsn: "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.us.sentry.io/6600431",
-				// When updating the package version number in package.json, update the version number here as well.
-				release: "small-dev-talk@1.3.4",
+			if (
+				window.Sentry &&
+				typeof Sentry.init === "function" &&
+				typeof Sentry.browserTracingIntegration === "function" &&
+				typeof Sentry.replayIntegration === "function" &&
+				typeof Sentry.captureConsoleIntegration === "function" &&
+				typeof Sentry.getCurrentScope === "function"
+			) {
+				Sentry.init({
+					dsn: "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.us.sentry.io/6600431",
+					// When updating the package version number in package.json, update the version number here as well.
+					release: "small-dev-talk@1.3.4",
 
-				integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
+					integrations: [
+						Sentry.browserTracingIntegration(),
+						Sentry.replayIntegration(),
+						Sentry.captureConsoleIntegration(),
+					],
 
-				// Enable logs to be sent to Sentry
-				enableLogs: true,
+					// Enable logs to be sent to Sentry
+					enableLogs: true,
 
-				tracesSampleRate: 1.0,
+					tracesSampleRate: 1.0,
 
-				// Capture Replay for 10% of all sessions,
-				// plus for 100% of sessions with an error
-				replaysSessionSampleRate: 0.1,
-				replaysOnErrorSampleRate: 1.0,
-			});
+					// Capture Replay for 10% of all sessions,
+					// plus for 100% of sessions with an error
+					replaysSessionSampleRate: 0.1,
+					replaysOnErrorSampleRate: 1.0,
+				});
 
-			Sentry.configureScope((scope) => {
 				// @AlexJSully when updating the package version number in package.json, update the version number here as well.
-				scope.setTag("app-version", "1.3.4");
-			});
+				Sentry.getCurrentScope().setTag("app-version", "1.3.4");
+			} else {
+				console.error("Sentry initialization skipped: the SDK or a required integration failed to load.");
+			}
 		</script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-W05GNF3X55"></script>

@@ -111,11 +111,11 @@ When [index.html](../../index.html) loads:
     - `style.min.css` and the Bootstrap stylesheet, both under the site root
     - jQuery, the Bootstrap JavaScript bundle, and Showdown.js, all under `src/scripts/libraries/`
     - `src/scripts/index.min.js`, the minified build of [index.js](../../src/scripts/index.js)
-    - Sentry SDK, the one remote dependency, from `js.sentry-cdn.com` and `browser.sentry-cdn.com`
+    - Sentry SDK and Capture Console integration, from the version-pinned `browser.sentry-cdn.com` bundle
 
 3. Inline `<script>` blocks initialize:
     - `Sentry.init()` with configuration
-    - `Sentry.configureScope()` with the `app-version` tag
+    - `Sentry.getCurrentScope()` with the `app-version` tag
     - Google Tag Manager, and a canonical URL adjustment applied only on the `smalldevtalk.net` host
 
 Metadata loading starts from [index.js](../../src/scripts/index.js) rather than from the inline blocks. That file assigns `window.onload`, which awaits `registerServiceWorker()` and then calls `init()`; `init()` calls `retrievePageData()` followed by `retrieveArticleData()`.
