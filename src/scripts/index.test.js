@@ -1,6 +1,6 @@
 global.showdown = require("./libraries/showdown/showdown.min.js");
 
-const { ArticleFiller } = require("./index.js");
+const { ArticleFiller, escapeHtml } = require("./index.js");
 
 const { registerServiceWorker } = require("./index.js");
 
@@ -487,5 +487,130 @@ describe("ArticleFiller: changeCarousel", () => {
 		expect(carouselIndicator).toContain('data-slide-to="0"');
 		expect(carouselIndicator).toContain('data-slide-to="1"');
 		expect(pageTitle).toContain("Small Dev Talk: Featured");
+	});
+});
+
+describe("escapeHtml", () => {
+	test("escapes HTML special characters", () => {
+		expect(escapeHtml(`<script>alert('x')</script>`)).toBe("&lt;script&gt;alert(&#039;x&#039;)&lt;/script&gt;");
+		expect(escapeHtml(`a"b&c`)).toBe("a&quot;b&amp;c");
+		expect(escapeHtml(null)).toBe("");
+		expect(escapeHtml(undefined)).toBe("");
+	});
+
+	test("is exposed via ArticleFiller.escapeHtml", () => {
+		expect(ArticleFiller.escapeHtml(`<b>`)).toBe("&lt;b&gt;");
+	});
+});
+
+describe("ArticleFiller: XSS sanitization", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+            <div id="articleBody"></div>
+            <div id="displayArticles"></div>
+            <div id="featuredArticles"></div>
+            <div id="carouselInner"></div>
+            <div id="carouselIndicator"></div>
+            <div id="pageTitle"></div>
+        `;
+	});
+
+	test("displayArchive escapes malicious titles in text content", () => {
+		ArticleFiller.articleData = {
+			ArticleOne: {
+				title: `<b>evil</b>`,
+				summary: "Summary",
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+		ArticleFiller.displayArchive();
+		const html = document.getElementById("displayArticles").innerHTML;
+		expect(html).toContain("&lt;b&gt;evil&lt;/b&gt;");
+	});
+
+	test("displayArchive prevents attribute breakout", () => {
+		ArticleFiller.articleData = {
+			ArticleOne: {
+				title: `" onclick="alert(1)`,
+				summary: "Summary",
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+		ArticleFiller.displayArchive();
+		const html = document.getElementById("displayArticles").innerHTML;
+		expect(html).not.toContain('onclick="alert(1)"');
+	});
+
+	test("changeCarousel escapes malicious titles in text content", () => {
+		ArticleFiller.whatPageDisplay = "featured";
+		ArticleFiller.pageData = { featured: { carousel: ["ArticleOne"] } };
+		ArticleFiller.articleData = {
+			ArticleOne: {
+				title: `<b>evil</b>`,
+				summary: `<i>x</i>`,
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+		ArticleFiller.changeCarousel();
+		const html = document.getElementById("carouselInner").innerHTML;
+		expect(html).toContain("&lt;b&gt;evil&lt;/b&gt;");
+		expect(html).toContain("&lt;i&gt;x&lt;/i&gt;");
+	});
+
+	test("changeCarousel prevents attribute breakout", () => {
+		ArticleFiller.whatPageDisplay = "featured";
+		ArticleFiller.pageData = { featured: { carousel: ["ArticleOne"] } };
+		ArticleFiller.articleData = {
+			ArticleOne: {
+				title: `" onclick="alert(1)`,
+				summary: "Summary",
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+		ArticleFiller.changeCarousel();
+		const html = document.getElementById("carouselInner").innerHTML;
+		expect(html).not.toContain('onclick="alert(1)"');
+	});
+
+	test("ArticleFiller (featured) escapes malicious titles in text content", () => {
+		ArticleFiller.whatPageDisplay = "featured";
+		ArticleFiller.pageData = { featured: { displayArticles: ["ArticleOne"] } };
+		ArticleFiller.articleData = {
+			ArticleOne: {
+				title: `<script>alert(3)</script>`,
+				summary: `<script>alert(4)</script>`,
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+		ArticleFiller.ArticleFiller();
+		const html = document.getElementById("displayArticles").innerHTML;
+		expect(html).toContain("&lt;script&gt;alert(3)&lt;/script&gt;");
+	});
+
+	test("ArticleFiller (featured) prevents attribute breakout", () => {
+		ArticleFiller.whatPageDisplay = "featured";
+		ArticleFiller.pageData = { featured: { displayArticles: ["ArticleOne"] } };
+		ArticleFiller.articleData = {
+			ArticleOne: {
+				title: `" onclick="alert(1)`,
+				summary: "Summary",
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+		ArticleFiller.ArticleFiller();
+		const html = document.getElementById("displayArticles").innerHTML;
+		expect(html).not.toContain('onclick="alert(1)"');
 	});
 });
