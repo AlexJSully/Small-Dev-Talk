@@ -6,6 +6,24 @@
 
 /** Convert markdown files into HTML */
 const converter = new showdown.Converter();
+
+/**
+ * Escape HTML special characters to prevent XSS injection.
+ * @param {*} unsafe The value to escape.
+ * @returns {string} The escaped string.
+ */
+function escapeHtml(unsafe) {
+	if (unsafe == null) {
+		return "";
+	}
+	return String(unsafe)
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#039;");
+}
+
 /** Create and fill the page with the desired article */
 class ArticleFiller {
 	constructor() {
@@ -16,6 +34,15 @@ class ArticleFiller {
 		this.pageURL;
 		this.callPageDisplay = true;
 		this.whatPageDisplay = "index";
+	}
+
+	/**
+	 * Escape HTML special characters to prevent XSS injection.
+	 * @param {*} unsafe The value to escape.
+	 * @returns {string} The escaped string.
+	 */
+	static escapeHtml(unsafe) {
+		return escapeHtml(unsafe);
 	}
 
 	/**
@@ -40,7 +67,7 @@ class ArticleFiller {
 					</div>
 
 					<div style="font-size:1.25rem; color:#333; margin:1rem 0 2rem 0;">
-						${ArticleFiller.errMsg}
+						${escapeHtml(ArticleFiller.errMsg)}
 					</div>
 
 					<div style="display:flex; gap:1rem; justify-content:center;">
@@ -342,11 +369,11 @@ class ArticleFiller {
 					<div class="col-sm archive-display">
 						<a
 							class="archive-link"
-							href="${document.location.origin}/index.html?${key}"
-							aria-label="Redirect to ${value.title}"
+							href="${document.location.origin}/index.html?${escapeHtml(key)}"
+							aria-label="Redirect to ${escapeHtml(value.title)}"
 						>
-							<p class="archive-title">${value.title}</p>
-							<img src=${imgURL} alt="${value.title}'s thumbnail" loading="lazy">
+							<p class="archive-title">${escapeHtml(value.title)}</p>
+							<img src="${escapeHtml(imgURL)}" alt="${escapeHtml(value.title)}'s thumbnail" loading="lazy">
 						</a>
 					</div>
 				`;
@@ -415,23 +442,23 @@ class ArticleFiller {
 					<div class="carousel-item ${c === 0 ? "active" : ""}">
 						<a
 							id="carouselLink${c}"
-							href="index.html?${carouselList[c]}"
-							aria-label="Redirect to ${articleTitle}"
+							href="index.html?${escapeHtml(carouselList[c])}"
+							aria-label="Redirect to ${escapeHtml(articleTitle)}"
 						>
 							<img
 								id="carouselImage${c}"
-								src="${url}"
+								src="${escapeHtml(url)}"
 								class="d-block w-100"
 								style="width:100%; max-height: 400px !important;"
 								loading="lazy"
-								alt="Carousel image for ${articleTitle}"
+								alt="Carousel image for ${escapeHtml(articleTitle)}"
 							>
 							<div
 								class="carousel-caption d-md-block"
 								style="text-shadow: 0 0 3px #000000;"
 							>
-								<h5 id="carouselHeader${c}">${articleTitle}</h5>
-								<p id="carouselParagraph${c}">${articleSummary}</p>
+								<h5 id="carouselHeader${c}">${escapeHtml(articleTitle)}</h5>
+								<p id="carouselParagraph${c}">${escapeHtml(articleSummary)}</p>
 							</div>
 						</a>
 					</div>
@@ -480,33 +507,33 @@ class ArticleFiller {
 							<div class="post row" id="featuredArticle${d}">
 								<div class="col-md-4" style="margin-top: 0.5rem;">
 									<a
-										href="index.html?${displayList[d]}"
-										aria-label="Redirect to ${articleTitle}"
+										href="index.html?${escapeHtml(displayList[d])}"
+										aria-label="Redirect to ${escapeHtml(articleTitle)}"
 									>
 										<img
-											src="${url}"
+											src="${escapeHtml(url)}"
 											class="img-fluid"
 											loading="lazy"
-											alt="Thumbnail for ${articleTitle}"
+											alt="Thumbnail for ${escapeHtml(articleTitle)}"
 										>
 									</a>
 								</div>
 								<div class="col-md-8" style="margin-top: 0.5rem;">
 									<h2>
 										<a
-											href="index.html?${displayList[d]}"
-											aria-label="Redirect to ${articleTitle}"
+											href="index.html?${escapeHtml(displayList[d])}"
+											aria-label="Redirect to ${escapeHtml(articleTitle)}"
 										>
-											${articleTitle}
+											${escapeHtml(articleTitle)}
 										</a>
 									</h2>
 								</div>
 								<div class="col-12" style="margin-top: 0.5rem;">
 									<p>
-										${articleSummary}
+										${escapeHtml(articleSummary)}
 										<a
-											href="index.html?${displayList[d]}"
-											aria-label="Read more of ${articleTitle}"
+											href="index.html?${escapeHtml(displayList[d])}"
+											aria-label="Read more of ${escapeHtml(articleTitle)}"
 										>
 											Read More
 										</a>
@@ -515,10 +542,10 @@ class ArticleFiller {
 								<div class="col-12">
 									<p class="details">
 										<a
-											href="index.html?${displayList[d]}"
-											aria-label="Redirect to ${articleTitle}"
+											href="index.html?${escapeHtml(displayList[d])}"
+											aria-label="Redirect to ${escapeHtml(articleTitle)}"
 										>
-											${articleDate}
+											${escapeHtml(articleDate)}
 										</a>
 									</p>
 								</div>
@@ -535,7 +562,7 @@ class ArticleFiller {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-	module.exports = { ArticleFiller };
+	module.exports = { ArticleFiller, escapeHtml };
 }
 
 /**
@@ -571,7 +598,7 @@ window.onload = async function () {
 };
 
 if (typeof module !== "undefined" && module.exports) {
-	module.exports = { ArticleFiller, registerServiceWorker };
+	module.exports = { ArticleFiller, escapeHtml, registerServiceWorker };
 }
 
 // ----- Functions related to changing carousel -----

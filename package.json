@@ -30,7 +30,7 @@
 		"jest-environment-jsdom": "^30.5.2",
 		"markdownlint-cli2": "^0.23.3",
 		"prettier": "^3.9.9",
-		"start-server-and-test": "^3.0.12",
+		"start-server-and-test": "^3.0.13",
 		"workbox-cli": "^7.4.1"
 	},
 	"scripts": {
