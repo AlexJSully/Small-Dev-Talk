@@ -24,6 +24,59 @@ function escapeHtml(unsafe) {
 		.replace(/'/g, "&#039;");
 }
 
+/**
+ * Sanitize an HTML string by removing dangerous elements, event handlers,
+ * and dangerous URL schemes. Uses the browser's HTML parser via a
+ * (inert) <template> element, so parsing never executes scripts.
+ * @param {*} unsafe The HTML string to sanitize.
+ * @returns {string} The sanitized HTML string.
+ */
+function sanitizeHtml(unsafe) {
+	if (unsafe == null) {
+		return "";
+	}
+
+	const template = document.createElement("template");
+	template.innerHTML = String(unsafe);
+
+	const root = template.content;
+
+	// Remove dangerous elements entirely.
+	const dangerousTags = ["script", "iframe", "object", "embed", "link", "style", "meta", "base"];
+	root.querySelectorAll(dangerousTags.join(",")).forEach((element) => {
+		element.remove();
+	});
+
+	// Remove event handlers and dangerous URL schemes from every element.
+	const urlAttributes = ["href", "src", "action", "formaction", "poster", "xlink:href"];
+
+	root.querySelectorAll("*").forEach((element) => {
+		Array.from(element.attributes).forEach((attribute) => {
+			const name = attribute.name.toLowerCase();
+
+			if (name.startsWith("on")) {
+				element.removeAttribute(attribute.name);
+
+				return;
+			}
+
+			if (urlAttributes.includes(name)) {
+				const value = attribute.value.trim().toLowerCase();
+				const isDangerousScheme =
+					value.startsWith("javascript:") ||
+					value.startsWith("vbscript:") ||
+					(value.startsWith("data:") && !(name === "src" && value.startsWith("data:image/")));
+
+				if (isDangerousScheme) {
+					element.removeAttribute(attribute.name);
+				}
+			}
+		});
+	});
+
+	return template.innerHTML;
+}
+
 /** Create and fill the page with the desired article */
 class ArticleFiller {
 	constructor() {
@@ -43,6 +96,15 @@ class ArticleFiller {
 	 */
 	static escapeHtml(unsafe) {
 		return escapeHtml(unsafe);
+	}
+
+	/**
+	 * Sanitize an HTML string to remove XSS vectors.
+	 * @param {*} unsafe The HTML string to sanitize.
+	 * @returns {string} The sanitized HTML string.
+	 */
+	static sanitizeHtml(unsafe) {
+		return sanitizeHtml(unsafe);
 	}
 
 	/**
@@ -269,7 +331,7 @@ class ArticleFiller {
 
 	/** Convert article into HTML and add to page */
 	static addToPage() {
-		ArticleFiller.article = converter.makeHtml(ArticleFiller.articleMd);
+		ArticleFiller.article = sanitizeHtml(converter.makeHtml(ArticleFiller.articleMd));
 
 		// Check if the converted article is empty when the original content is not
 		if (ArticleFiller?.article?.trim()?.length < 1 && ArticleFiller?.articleMd?.trim()?.length > 0) {
@@ -562,7 +624,13 @@ class ArticleFiller {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-	module.exports = { ArticleFiller, escapeHtml };
+	module.exports = {
+		ArticleFiller,
+		escapeHtml,
+		sanitizeHtml,
+		sanitize: sanitizeHtml,
+		sanitizeHTML: sanitizeHtml,
+	};
 }
 
 /**
@@ -598,7 +666,14 @@ window.onload = async function () {
 };
 
 if (typeof module !== "undefined" && module.exports) {
-	module.exports = { ArticleFiller, escapeHtml, registerServiceWorker };
+	module.exports = {
+		ArticleFiller,
+		escapeHtml,
+		sanitizeHtml,
+		sanitize: sanitizeHtml,
+		sanitizeHTML: sanitizeHtml,
+		registerServiceWorker,
+	};
 }
 
 // ----- Functions related to changing carousel -----

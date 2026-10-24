@@ -1,6 +1,6 @@
 global.showdown = require("./libraries/showdown/showdown.min.js");
 
-const { ArticleFiller, escapeHtml } = require("./index.js");
+const { ArticleFiller, escapeHtml, sanitizeHtml } = require("./index.js");
 
 const { registerServiceWorker } = require("./index.js");
 
@@ -639,5 +639,74 @@ describe("ArticleFiller: XSS sanitization", () => {
 		ArticleFiller.ArticleFiller();
 		const html = document.getElementById("displayArticles").innerHTML;
 		expect(html).not.toContain('onclick="alert(1)"');
+	});
+});
+
+describe("sanitizeHtml", () => {
+	beforeEach(() => {
+		document.body.innerHTML = "";
+	});
+
+	test("removes script tags", () => {
+		const html = sanitizeHtml("<p>ok</p><script>alert(1)</script>");
+		expect(html).toContain("<p>ok</p>");
+		expect(html).not.toContain("<script");
+		expect(html).not.toContain("alert(1)");
+	});
+
+	test("removes event handler attributes", () => {
+		const html = sanitizeHtml('<img src="x.png" onerror="alert(1)">');
+		expect(html).not.toContain("onerror");
+		expect(html).not.toContain("alert(1)");
+	});
+
+	test("removes dangerous URL schemes", () => {
+		expect(sanitizeHtml('<a href="javascript:alert(1)">x</a>')).not.toContain("javascript:");
+		expect(sanitizeHtml('<a href="vbscript:msgbox(1)">x</a>')).not.toContain("vbscript:");
+		expect(sanitizeHtml('<a href="data:text/html;base64,AAAA">x</a>')).not.toContain("data:");
+	});
+
+	test("preserves safe HTML", () => {
+		const html = sanitizeHtml('<h1>Title</h1><a href="https://example.com">link</a><img src="img.png" alt="a">');
+		expect(html).toContain("<h1>Title</h1>");
+		expect(html).toContain('href="https://example.com"');
+		expect(html).toContain('src="img.png"');
+	});
+
+	test("preserves data:image on src", () => {
+		const html = sanitizeHtml('<img src="data:image/png;base64,AAAA">');
+		expect(html).toContain("data:image/png;base64,AAAA");
+	});
+
+	test("handles null/undefined/empty", () => {
+		expect(sanitizeHtml(null)).toBe("");
+		expect(sanitizeHtml(undefined)).toBe("");
+		expect(sanitizeHtml("")).toBe("");
+	});
+
+	test("is exposed via ArticleFiller.sanitizeHtml", () => {
+		expect(ArticleFiller.sanitizeHtml("<script>x</script>")).not.toContain("<script");
+	});
+});
+
+describe("ArticleFiller: addToPage XSS", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `<div id="articleBody"></div>`;
+	});
+
+	test("sanitizes script tags in markdown output", () => {
+		ArticleFiller.articleMd = "# Hello <script>alert(1)</script>";
+		ArticleFiller.addToPage();
+		const html = document.getElementById("articleBody").innerHTML;
+		expect(html).toContain("<h1");
+		expect(html).not.toContain("<script");
+		expect(html).not.toContain("alert(1)");
+	});
+
+	test("sanitizes dangerous attributes in markdown output", () => {
+		ArticleFiller.articleMd = '<img src="img.png" onerror="alert(1)">';
+		ArticleFiller.addToPage();
+		const html = document.getElementById("articleBody").innerHTML;
+		expect(html).not.toContain("onerror");
 	});
 });
