@@ -42,7 +42,20 @@ function sanitizeHtml(unsafe) {
 	const root = template.content;
 
 	// Remove dangerous elements entirely.
-	const dangerousTags = ["script", "iframe", "object", "embed", "link", "style", "meta", "base"];
+	const dangerousTags = [
+		"script",
+		"iframe",
+		"object",
+		"embed",
+		"link",
+		"style",
+		"meta",
+		"base",
+		"animate",
+		"set",
+		"animatemotion",
+		"animatetransform",
+	];
 	root.querySelectorAll(dangerousTags.join(",")).forEach((element) => {
 		element.remove();
 	});
@@ -62,10 +75,14 @@ function sanitizeHtml(unsafe) {
 
 			if (urlAttributes.includes(name)) {
 				const value = attribute.value.trim().toLowerCase();
+				// Browsers strip embedded tabs/newlines from URLs, so remove them
+				// before checking the scheme to prevent encoded-whitespace bypasses.
+				const normalizedValue = value.replace(/[\t\n\r]/g, "");
 				const isDangerousScheme =
-					value.startsWith("javascript:") ||
-					value.startsWith("vbscript:") ||
-					(value.startsWith("data:") && !(name === "src" && value.startsWith("data:image/")));
+					normalizedValue.startsWith("javascript:") ||
+					normalizedValue.startsWith("vbscript:") ||
+					(normalizedValue.startsWith("data:") &&
+						!(name === "src" && normalizedValue.startsWith("data:image/")));
 
 				if (isDangerousScheme) {
 					element.removeAttribute(attribute.name);

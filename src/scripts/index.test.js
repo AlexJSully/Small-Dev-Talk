@@ -687,6 +687,20 @@ describe("sanitizeHtml", () => {
 	test("is exposed via ArticleFiller.sanitizeHtml", () => {
 		expect(ArticleFiller.sanitizeHtml("<script>x</script>")).not.toContain("<script");
 	});
+
+	test("removes SVG animation elements that mutate URLs", () => {
+		const html = sanitizeHtml(
+			'<svg><a href="#"><animate attributeName="href" values="javascript:alert(1)"/><text x="20" y="20">click</text></a></svg>',
+		);
+		expect(html).not.toContain("<animate");
+		expect(html).not.toContain("javascript:");
+	});
+
+	test("blocks encoded whitespace bypasses in URL schemes", () => {
+		expect(sanitizeHtml('<a href="java&#9;script:alert(1)">click</a>')).not.toContain("javascript:");
+		expect(sanitizeHtml('<a href="java&#10;script:alert(1)">click</a>')).not.toContain("javascript:");
+		expect(sanitizeHtml('<a href="java&#13;script:alert(1)">click</a>')).not.toContain("javascript:");
+	});
 });
 
 describe("ArticleFiller: addToPage XSS", () => {
