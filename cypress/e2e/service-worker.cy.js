@@ -1,7 +1,7 @@
 const origin = "http://localhost:3000";
 
 describe("Service worker", () => {
-	it("controls the page once registered", () => {
+	it("registers at the site root, controls the page and precaches only the app shell", () => {
 		cy.visit(`${origin}/index.html`);
 
 		cy.window()
@@ -9,18 +9,12 @@ describe("Service worker", () => {
 			.its("scope")
 			.should("equal", `${origin}/`);
 
-		cy.reload();
-
+		// The worker claims the page when it first activates, so the page is controlled without a reload. A reload would
+		// be served from the precached index.html, which bypasses the Cypress proxy that instruments the page.
 		cy.window().its("navigator.serviceWorker.controller").should("not.be.null");
-	});
-
-	it("precaches the app shell and no article content", () => {
-		cy.visit(`${origin}/index.html`);
 
 		cy.window()
-			.then((win) =>
-				win.navigator.serviceWorker.ready.then(() => win.caches.open(`workbox-precache-v2-${origin}/`)),
-			)
+			.then((win) => win.caches.open(`workbox-precache-v2-${origin}/`))
 			.then((cache) => cache.keys())
 			.then((requests) => {
 				const paths = requests.map((request) => new URL(request.url).pathname);

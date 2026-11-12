@@ -24,11 +24,15 @@ module.exports = {
 	// Pages are addressed as index.html?ArticleKey, so match precached URLs with every query parameter removed.
 	"ignoreURLParametersMatching": [/.*/],
 
+	// On a first visit the page loads before the worker exists. Claiming lets the worker control that page as soon as it
+	// activates, so the article and images it fetches next go through the runtime caches.
+	"clientsClaim": true,
+
 	// Define runtime caching rules.
 	"runtimeCaching": [
 		{
-			// Match any request that ends with .png, .jpg, .jpeg, .webp, .ico or .svg
-			"urlPattern": /\.(?:png|jpg|jpeg|webp|ico|svg)$/,
+			// Match any request that ends with .png, .jpg, .jpeg, .gif, .webp, .ico or .svg
+			"urlPattern": /\.(?:png|jpg|jpeg|gif|webp|ico|svg)$/,
 
 			// Apply a cache-first strategy.
 			"handler": 'CacheFirst',

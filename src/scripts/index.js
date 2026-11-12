@@ -717,8 +717,43 @@ async function removeLegacyServiceWorker() {
 	}
 }
 
+/** Longest wait, in milliseconds, for a newly installed service worker to take control of the page. */
+const SERVICE_WORKER_CONTROL_TIMEOUT_MS = 3000;
+
 /**
- * Register the service worker if the browser supports it.
+ * On a first visit the page has no controller until the new worker installs, activates and claims it.
+ * Wait for that, so the article and images fetched next go through the worker's runtime caches.
+ * Resolves at once when the page is already controlled or no worker is installing, and after the timeout when
+ * the worker never takes control, so a failed activation never blocks rendering.
+ * @param {ServiceWorkerRegistration} registration The registration returned by `register()`.
+ * @returns {Promise<void>} Resolves once the page is controlled, or after the timeout.
+ */
+function waitForServiceWorkerControl(registration) {
+	const container = navigator.serviceWorker;
+
+	if (
+		container.controller ||
+		!registration ||
+		!(registration.installing || registration.waiting) ||
+		typeof container.addEventListener !== "function"
+	) {
+		return Promise.resolve();
+	}
+
+	return new Promise((resolve) => {
+		const finish = () => {
+			clearTimeout(timer);
+			container.removeEventListener("controllerchange", finish);
+			resolve();
+		};
+		const timer = setTimeout(finish, SERVICE_WORKER_CONTROL_TIMEOUT_MS);
+
+		container.addEventListener("controllerchange", finish);
+	});
+}
+
+/**
+ * Register the service worker if the browser supports it, then wait for it to control the page.
  * @returns {Promise<ServiceWorkerRegistration|null>} Registration or null on failure/unsupported.
  */
 async function registerServiceWorker() {
@@ -727,6 +762,8 @@ async function registerServiceWorker() {
 
 		try {
 			const reg = await navigator.serviceWorker.register("./sw.js");
+			await waitForServiceWorkerControl(reg);
+
 			return reg;
 		} catch (e) {
 			console.error("ServiceWorker registration failed:", e && e.message ? e.message : e);

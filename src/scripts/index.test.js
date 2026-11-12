@@ -512,6 +512,79 @@ describe("ServiceWorker registration", () => {
 		);
 	});
 
+	test("registerServiceWorker waits for the installing worker to take control of the page", async () => {
+		const listeners = {};
+		const registration = { ...createRegistration("http://localhost/"), installing: {} };
+		global.navigator = {
+			serviceWorker: {
+				controller: null,
+				getRegistrations: jest.fn().mockResolvedValue([]),
+				register: jest.fn().mockResolvedValue(registration),
+				addEventListener: jest.fn((name, listener) => {
+					listeners[name] = listener;
+				}),
+				removeEventListener: jest.fn(),
+			},
+		};
+		let settled = false;
+
+		const pending = registerServiceWorker().then(() => {
+			settled = true;
+		});
+		await new Promise((resolve) => setTimeout(resolve, 0));
+
+		expect(settled).toBe(false);
+
+		listeners.controllerchange();
+		await pending;
+
+		expect(settled).toBe(true);
+		expect(global.navigator.serviceWorker.removeEventListener).toHaveBeenCalledWith(
+			"controllerchange",
+			listeners.controllerchange,
+		);
+	});
+
+	test("registerServiceWorker does not wait when the page already has a controller", async () => {
+		const registration = { ...createRegistration("http://localhost/"), waiting: {} };
+		global.navigator = {
+			serviceWorker: {
+				controller: {},
+				getRegistrations: jest.fn().mockResolvedValue([]),
+				register: jest.fn().mockResolvedValue(registration),
+				addEventListener: jest.fn(),
+				removeEventListener: jest.fn(),
+			},
+		};
+
+		await expect(registerServiceWorker()).resolves.toBe(registration);
+		expect(global.navigator.serviceWorker.addEventListener).not.toHaveBeenCalled();
+	});
+
+	test("registerServiceWorker stops waiting after the timeout when the worker never takes control", async () => {
+		jest.useFakeTimers();
+		const registration = { ...createRegistration("http://localhost/"), installing: {} };
+		global.navigator = {
+			serviceWorker: {
+				controller: null,
+				getRegistrations: jest.fn().mockResolvedValue([]),
+				register: jest.fn().mockResolvedValue(registration),
+				addEventListener: jest.fn(),
+				removeEventListener: jest.fn(),
+			},
+		};
+
+		try {
+			const pending = registerServiceWorker();
+
+			await jest.advanceTimersByTimeAsync(3000);
+
+			await expect(pending).resolves.toBe(registration);
+		} finally {
+			jest.useRealTimers();
+		}
+	});
+
 	test("a failed legacy cleanup is reported to Sentry and the root worker still registers", async () => {
 		const cleanupError = new Error("getRegistrations failed");
 		global.navigator = {
