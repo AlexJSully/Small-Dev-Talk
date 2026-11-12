@@ -144,8 +144,23 @@
 					integrations: [
 						Sentry.browserTracingIntegration(),
 						Sentry.replayIntegration(),
-						Sentry.captureConsoleIntegration(),
+						// The site only logs through console.error; other levels carry third-party noise.
+						Sentry.captureConsoleIntegration({ levels: ["error"] }),
 					],
+
+					// Drop errors from scripts that browser automation injects through Playwright's UtilityScript.evaluate.
+					beforeSend: function (event) {
+						const exceptions = (event.exception && event.exception.values) || [];
+						const isAutomationScriptError = exceptions.some(function (exception) {
+							const frames = (exception.stacktrace && exception.stacktrace.frames) || [];
+							return frames.some(function (frame) {
+								return (
+									typeof frame.function === "string" && frame.function.indexOf("UtilityScript.") === 0
+								);
+							});
+						});
+						return isAutomationScriptError ? null : event;
+					},
 
 					// Enable logs to be sent to Sentry
 					enableLogs: true,

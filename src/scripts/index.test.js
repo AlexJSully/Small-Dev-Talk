@@ -445,6 +445,13 @@ describe("ArticleFiller: displayArchive", () => {
 		expect(html).toContain("thumb1.png");
 		expect(html).toContain("thumb2.png");
 	});
+
+	test("renders each archive article once when called again after both data loads", () => {
+		ArticleFiller.displayArchive();
+		ArticleFiller.displayArchive();
+
+		expect(document.querySelectorAll("#displayArticles .archive-display")).toHaveLength(2);
+	});
 });
 
 describe("ArticleFiller: changeCarousel", () => {

@@ -59,7 +59,7 @@ flowchart TD
 
     subgraph Monitor["Error Tracking"]
         I1["Sentry monitors for<br/>fetch errors"]
-        I2["Console errors logged<br/>via enableLogs: true"]
+        I2["console.error calls captured;<br/>automation script errors dropped"]
         I3["Network errors reported<br/>with context"]
     end
 
@@ -114,7 +114,7 @@ When [index.html](../../index.html) loads:
     - Sentry SDK and Capture Console integration, from the version-pinned `browser.sentry-cdn.com` bundle
 
 3. Inline `<script>` blocks initialize:
-    - `Sentry.init()` with configuration
+    - `Sentry.init()` with configuration, including console capture limited to `console.error` and a `beforeSend` filter that drops errors thrown by scripts that Playwright browser automation injects (stack frames named `UtilityScript.*`)
     - `Sentry.getCurrentScope()` with the `app-version` tag
     - Google Tag Manager, and a canonical URL adjustment applied only on the `smalldevtalk.net` host
 

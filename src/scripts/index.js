@@ -464,7 +464,7 @@ class ArticleFiller {
 		if (archiveDisplay.trim().length > 0) {
 			archiveDisplay += "</div></div>";
 
-			document.getElementById("displayArticles").innerHTML += archiveDisplay;
+			document.getElementById("displayArticles").innerHTML = archiveDisplay;
 		}
 	}
 
