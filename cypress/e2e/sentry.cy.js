@@ -84,6 +84,13 @@ describe("Sentry initialization", () => {
 			win.console.log("Detected and blocked setInterval with interval:", 86400000);
 			win.console.log("重写的 setInterval 被调用");
 
+			// The console output the embedded X timeline logs on the production site.
+			win.console.info(
+				"%c[Update] There have been recent updates to Embedded X Timelines and supported parameters.%c\n\t•For more information on what has changed visit: https://twittercommunity.com/t/embedded-timelines-update-parameters-support/177112\n\t•Please submit feedback or report any bugs: https://twittercommunity.com/c/publisher/websites/",
+				"font-weight:bold;color:#006FD6",
+				"color:#006FD6",
+			);
+
 			return win.Sentry.flush(10000);
 		});
 
@@ -94,6 +101,7 @@ describe("Sentry initialization", () => {
 			expect(sentText).not.to.contain("Iframe 3");
 			expect(sentText).not.to.contain("Detected and blocked");
 			expect(sentText).not.to.contain("重写的 setInterval");
+			expect(sentText).not.to.contain("Embedded X Timelines");
 		});
 	});
 
