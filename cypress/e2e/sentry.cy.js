@@ -77,9 +77,10 @@ describe("Sentry initialization", () => {
 			);
 			win.console.info("Iframe 3 内容已成功填充到新div中！");
 
-			// The console output a visitor's timer-blocking script logged on the production site when it blocked the
-			// Sentry tracing timeouts and the Google tag's daily interval.
+			// The console output that visitors' scripts overriding setTimeout and setInterval logged on the production site.
+			// The blocked timers were the Sentry tracing timeouts and the Google tag's daily interval.
 			win.console.log("Detected and blocked setTimeout with timeout:", 15000);
+			win.console.log("Detected and blocked setTimeout with timeout:", 30000);
 			win.console.log("Detected and blocked setInterval with interval:", 86400000);
 			win.console.log("重写的 setInterval 被调用");
 
