@@ -35,7 +35,7 @@ npm run test -- src/scripts/index.test.js
 
 ## End-to-End Testing with Cypress
 
-Cypress tests are in [cypress/e2e/landing.cy.js](../../cypress/e2e/landing.cy.js).
+Cypress tests are in [cypress/e2e/landing.cy.js](../../cypress/e2e/landing.cy.js), which covers page rendering and the missing-article error, and [cypress/e2e/sentry.cy.js](../../cypress/e2e/sentry.cy.js), which covers Sentry initialization and error reporting.
 
 **Open Cypress Test Runner:**
 
