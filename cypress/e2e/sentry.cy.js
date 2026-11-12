@@ -77,6 +77,12 @@ describe("Sentry initialization", () => {
 			);
 			win.console.info("Iframe 3 内容已成功填充到新div中！");
 
+			// The console output a visitor's timer-blocking script logged on the production site when it blocked the
+			// Sentry tracing timeouts and the Google tag's daily interval.
+			win.console.log("Detected and blocked setTimeout with timeout:", 15000);
+			win.console.log("Detected and blocked setInterval with interval:", 86400000);
+			win.console.log("重写的 setInterval 被调用");
+
 			return win.Sentry.flush(10000);
 		});
 
@@ -85,6 +91,8 @@ describe("Sentry initialization", () => {
 			expect(sentText).to.contain("Error retrieving article.");
 			expect(sentText).not.to.contain("cross-origin frame");
 			expect(sentText).not.to.contain("Iframe 3");
+			expect(sentText).not.to.contain("Detected and blocked");
+			expect(sentText).not.to.contain("重写的 setInterval");
 		});
 	});
 
