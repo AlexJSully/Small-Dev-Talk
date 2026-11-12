@@ -2,7 +2,7 @@ global.showdown = require("./libraries/showdown/showdown.min.js");
 
 const { ArticleFiller, escapeHtml, sanitizeHtml } = require("./index.js");
 
-const { registerServiceWorker } = require("./index.js");
+const { registerServiceWorker, init } = require("./index.js");
 
 window.onload = null;
 
@@ -23,6 +23,7 @@ describe("ArticleFiller: displayError", () => {
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		delete global.Sentry;
 	});
 
 	const testCases = [
@@ -60,6 +61,26 @@ describe("ArticleFiller: displayError", () => {
 		expect(html).toContain("&lt;script&gt;alert('xss')&lt;/script&gt;");
 		expect(html).not.toContain("<script>");
 		expect(document.getElementById("articleBody").querySelector("script")).toBeNull();
+	});
+
+	test("reports the error message to Sentry as an Error", () => {
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn() };
+
+		ArticleFiller.displayError("Error retrieving article.");
+
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(
+			expect.objectContaining({ message: "Error retrieving article." }),
+		);
+		expect(global.Sentry.captureException.mock.calls[0][0]).toBeInstanceOf(Error);
+	});
+
+	test("shows the error when the Sentry SDK did not load", () => {
+		expect(global.Sentry).toBeUndefined();
+
+		ArticleFiller.displayError("Error retrieving article.");
+
+		expect(document.getElementById("articleBody").innerHTML).toContain("Error retrieving article.");
 	});
 });
 
@@ -190,51 +211,20 @@ describe("ArticleFiller: retrieveArticleData", () => {
 		jest.restoreAllMocks();
 		delete global.fetch;
 		delete document.URL;
+		delete global.Sentry;
 	});
 
-	test("fetches and processes article data", async () => {
-		const articleData = {
-			TestArticle: {
-				title: "Test Article",
-				summary: "A summary.",
-				thumbnail: "thumb.png",
-				author: "Jane Doe",
-				date: "2024-06-01",
-			},
-		};
-		document.body.innerHTML = `
-			<div id="articleBody"></div>
-			<meta name="description" content="">
-			<meta property="og:title" content="">
-			<meta property="twitter:title" content="">
-			<meta property="og:description" content="">
-			<meta property="twitter:description" content="">
-			<meta property="og:image" content="">
-			<meta property="twitter:image" content="">
-			<script type="application/ld+json">{}</script>
-		`;
-		Object.defineProperty(document, "URL", {
-			value: "http://localhost/index.html?TestArticle",
-			configurable: true,
-		});
-		const markdown = "# Test Article";
-		const fetchSpy = (global.fetch = jest.fn((url) => {
-			if (url === "/src/articleArchive/articleData.json") {
-				return Promise.resolve({ ok: true, json: () => Promise.resolve(articleData) });
-			}
-
-			return Promise.resolve({ ok: true, text: () => Promise.resolve(markdown) });
-		}));
+	test("fetches and stores article data without rendering", async () => {
+		const articleData = { TestArticle: { title: "Test Article" } };
+		const fetchSpy = (global.fetch = jest
+			.fn()
+			.mockResolvedValue({ ok: true, json: () => Promise.resolve(articleData) }));
 
 		await ArticleFiller.retrieveArticleData();
-		await new Promise((resolve) => setTimeout(resolve, 0));
 
+		expect(fetchSpy).toHaveBeenCalledTimes(1);
 		expect(fetchSpy).toHaveBeenCalledWith("/src/articleArchive/articleData.json");
-		expect(fetchSpy).toHaveBeenCalledWith(
-			"/src/articleArchive/authorJaneDoe/2024-06-01_TestArticle/TestArticle.md",
-		);
 		expect(ArticleFiller.articleData).toEqual(articleData);
-		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
 	});
 
 	test("logs network failures without processing article data", async () => {
@@ -246,6 +236,18 @@ describe("ArticleFiller: retrieveArticleData", () => {
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith("Error retrieving article data:", error);
 		expect(ArticleFiller.articleData).toBeUndefined();
+	});
+
+	test("reports the original error to Sentry when the fetch fails", async () => {
+		const error = new Error("Network unavailable");
+		global.fetch = jest.fn().mockRejectedValue(error);
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn() };
+
+		await ArticleFiller.retrieveArticleData();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
 	});
 
 	test("logs non-OK responses without parsing or processing article data", async () => {
@@ -272,6 +274,127 @@ describe("ArticleFiller: retrieveArticleData", () => {
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith("Error retrieving article data:", error);
 		expect(ArticleFiller.articleData).toBeUndefined();
+	});
+});
+
+describe("ArticleFiller: retrievePageData", () => {
+	beforeEach(() => {
+		ArticleFiller.pageData = undefined;
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+		delete global.fetch;
+		delete global.Sentry;
+	});
+
+	test("fetches and stores page data", async () => {
+		const pageData = { index: { carousel: [], displayArticles: [] } };
+		global.fetch = jest.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve(pageData) });
+
+		await ArticleFiller.retrievePageData();
+
+		expect(global.fetch).toHaveBeenCalledWith("/src/legacyPages/legacyPagesDisplay.json");
+		expect(ArticleFiller.pageData).toEqual(pageData);
+	});
+
+	test("logs and reports non-OK responses without storing page data", async () => {
+		global.fetch = jest
+			.fn()
+			.mockResolvedValue({ ok: false, status: 404, statusText: "Not Found", json: jest.fn() });
+		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn() };
+
+		await ArticleFiller.retrievePageData();
+
+		const expectedError = expect.objectContaining({ message: "Failed to fetch page data: 404 Not Found" });
+		expect(consoleErrorSpy).toHaveBeenCalledWith("Error retrieving page data:", expectedError);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(expectedError);
+		expect(ArticleFiller.pageData).toBeUndefined();
+	});
+});
+
+describe("init", () => {
+	afterEach(() => {
+		jest.restoreAllMocks();
+		delete global.fetch;
+		delete document.URL;
+		ArticleFiller.articleData = undefined;
+		ArticleFiller.pageData = undefined;
+	});
+
+	test("renders the requested article once after both data requests settle", async () => {
+		const articleData = {
+			TestArticle: {
+				title: "Test Article",
+				summary: "A summary.",
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+		const markdownUrl = "/src/articleArchive/authorJaneDoe/2024-06-01_TestArticle/TestArticle.md";
+		document.body.innerHTML = `
+			<div id="articleBody"></div>
+			<meta name="description" content="">
+			<meta property="og:title" content="">
+			<meta property="twitter:title" content="">
+			<meta property="og:description" content="">
+			<meta property="twitter:description" content="">
+			<meta property="og:image" content="">
+			<meta property="twitter:image" content="">
+			<script type="application/ld+json">{}</script>
+		`;
+		Object.defineProperty(document, "URL", {
+			value: "http://localhost/index.html?TestArticle",
+			configurable: true,
+		});
+		// Page data resolves after article data, the order in which each loader used to render on its own.
+		global.fetch = jest.fn((url) => {
+			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
+				return new Promise((resolve) => {
+					setTimeout(() => resolve({ ok: true, json: () => Promise.resolve({}) }), 0);
+				});
+			}
+			if (url === "/src/articleArchive/articleData.json") {
+				return Promise.resolve({ ok: true, json: () => Promise.resolve(articleData) });
+			}
+
+			return Promise.resolve({ ok: true, text: () => Promise.resolve("# Test Article") });
+		});
+
+		await init();
+		await new Promise((resolve) => setTimeout(resolve, 0));
+
+		expect(global.fetch.mock.calls.filter(([url]) => url === markdownUrl)).toHaveLength(1);
+		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
+	});
+
+	test("still renders the article when the page data request fails", async () => {
+		const articleData = { TestArticle: { title: "Test Article", author: "Jane Doe", date: "2024-06-01" } };
+		document.body.innerHTML = `<div id="articleBody"></div>`;
+		Object.defineProperty(document, "URL", {
+			value: "http://localhost/index.html?TestArticle",
+			configurable: true,
+		});
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
+		global.fetch = jest.fn((url) => {
+			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
+				return Promise.reject(new Error("Network unavailable"));
+			}
+			if (url === "/src/articleArchive/articleData.json") {
+				return Promise.resolve({ ok: true, json: () => Promise.resolve(articleData) });
+			}
+
+			return Promise.resolve({ ok: true, text: () => Promise.resolve("# Test Article") });
+		});
+
+		await init();
+		await new Promise((resolve) => setTimeout(resolve, 0));
+
+		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
 	});
 });
 
@@ -446,7 +569,7 @@ describe("ArticleFiller: displayArchive", () => {
 		expect(html).toContain("thumb2.png");
 	});
 
-	test("renders each archive article once when called again after both data loads", () => {
+	test("renders each archive article once when called twice", () => {
 		ArticleFiller.displayArchive();
 		ArticleFiller.displayArchive();
 

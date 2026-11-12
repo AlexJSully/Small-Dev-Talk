@@ -122,18 +122,12 @@
 			integrity="sha384-s+BQx+x7H3WSg8yxXYpSU50E6bL5JlJPzwIBPfSB0kXLFbgPIIwYZSgg68cUA2t4"
 			crossorigin="anonymous"
 		></script>
-		<script
-			src="https://browser.sentry-cdn.com/10.32.1/captureconsole.min.js"
-			integrity="sha384-n1EDDTBm8n6jrDs8cT8XGEK4TKzeefAwaBC8N9NYi/olGXl3qkmV2ISKdYjuskDp"
-			crossorigin="anonymous"
-		></script>
 		<script>
 			if (
 				window.Sentry &&
 				typeof Sentry.init === "function" &&
 				typeof Sentry.browserTracingIntegration === "function" &&
 				typeof Sentry.replayIntegration === "function" &&
-				typeof Sentry.captureConsoleIntegration === "function" &&
 				typeof Sentry.getCurrentScope === "function"
 			) {
 				Sentry.init({
@@ -141,26 +135,9 @@
 					// When updating the package version number in package.json, update the version number here as well.
 					release: "small-dev-talk@1.3.4",
 
-					integrations: [
-						Sentry.browserTracingIntegration(),
-						Sentry.replayIntegration(),
-						// The site only logs through console.error; other levels carry third-party noise.
-						Sentry.captureConsoleIntegration({ levels: ["error"] }),
-					],
-
-					// Drop errors from scripts that browser automation injects through Playwright's UtilityScript.evaluate.
-					beforeSend: function (event) {
-						const exceptions = (event.exception && event.exception.values) || [];
-						const isAutomationScriptError = exceptions.some(function (exception) {
-							const frames = (exception.stacktrace && exception.stacktrace.frames) || [];
-							return frames.some(function (frame) {
-								return (
-									typeof frame.function === "string" && frame.function.indexOf("UtilityScript.") === 0
-								);
-							});
-						});
-						return isAutomationScriptError ? null : event;
-					},
+					// The site reports its own errors through reportToSentry in index.js. No console integration is
+					// installed, so console output from extensions or injected automation scripts is not reported.
+					integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
 
 					// Enable logs to be sent to Sentry
 					enableLogs: true,

@@ -1,13 +1,26 @@
 const sentrySdkUrl = "https://browser.sentry-cdn.com/10.32.1/bundle.tracing.replay.min.js";
-const sentryCaptureConsoleUrl = "https://browser.sentry-cdn.com/10.32.1/captureconsole.min.js";
 
 /**
- * Collect the text of every error and message event in the captured Sentry envelopes.
+ * Intercept every Sentry envelope the page sends, reply with success, and collect the request bodies.
+ * @returns {string[]} The array the intercepted envelope bodies are pushed into.
+ */
+function captureSentryEnvelopes() {
+	const envelopeBodies = [];
+	cy.intercept("POST", "**/api/6600431/envelope/**", (request) => {
+		envelopeBodies.push(request.body);
+		request.reply({ statusCode: 200, body: "" });
+	});
+
+	return envelopeBodies;
+}
+
+/**
+ * Join the text of every error and message event in the captured Sentry envelopes.
  * Breadcrumbs are ignored, because they record earlier console calls inside unrelated events.
  * @param {string[]} envelopeBodies Raw envelope request bodies.
- * @returns {string[]} Each event's message, or its exception values joined by a space.
+ * @returns {string} Each event's message, or its exception values, one event per line.
  */
-function sentEventTexts(envelopeBodies) {
+function sentEventText(envelopeBodies) {
 	return envelopeBodies
 		.flatMap((body) => String(body).split("\n"))
 		.map((line) => {
@@ -20,16 +33,13 @@ function sentEventTexts(envelopeBodies) {
 		.filter((item) => item && (item.message || item.exception))
 		.map((event) =>
 			event.message ? String(event.message) : event.exception.values.map((value) => value.value).join(" "),
-		);
+		)
+		.join("\n");
 }
 
 describe("Sentry initialization", () => {
 	it("loads compatible integrations and captures errors and tracing events", () => {
-		const envelopeBodies = [];
-		cy.intercept("POST", "**/api/6600431/envelope/**", (request) => {
-			envelopeBodies.push(request.body);
-			request.reply({ statusCode: 200, body: "" });
-		}).as("sentryEnvelope");
+		const envelopeBodies = captureSentryEnvelopes();
 
 		cy.visit("http://localhost:3000");
 
@@ -38,7 +48,6 @@ describe("Sentry initialization", () => {
 			expect(win.Sentry.getClient()).to.exist;
 			expect(win.Sentry.browserTracingIntegration).to.be.a("function");
 			expect(win.Sentry.replayIntegration).to.be.a("function");
-			expect(win.Sentry.captureConsoleIntegration).to.be.a("function");
 			expect(win.Sentry.getCurrentScope().getScopeData().tags["app-version"]).to.equal("1.3.4");
 		});
 
@@ -54,47 +63,28 @@ describe("Sentry initialization", () => {
 		});
 	});
 
-	it("drops console output from Playwright-injected scripts and keeps the site's console errors", () => {
-		const envelopeBodies = [];
-		cy.intercept("POST", "**/api/6600431/envelope/**", (request) => {
-			envelopeBodies.push(request.body);
-			request.reply({ statusCode: 200, body: "" });
-		});
+	it("reports the site's own errors and ignores third-party console output", () => {
+		const envelopeBodies = captureSentryEnvelopes();
 
-		cy.visit("http://localhost:3000");
-		cy.window().should((win) => {
-			expect(win.Sentry.getClient()).to.exist;
-		});
+		cy.visit("http://localhost:3000/index.html?NonExistentArticle");
+		cy.get("#articleBody").should("contain", "Error retrieving article.");
 
 		cy.window().then((win) => {
-			// Mirrors the production event: Playwright's page.evaluate ran a script that read a cross-origin iframe.
-			const automationError = new win.Error(
-				"Failed to read a named property 'document' from 'Window': Blocked a frame with origin \"https://smalldevtalk.net\" from accessing a cross-origin frame.",
+			// The console output a visitor's Playwright script logged on the production site.
+			win.console.error(
+				"无法访问Iframe 1 的内容，可能是由于跨域限制:",
+				new win.Error("Blocked a frame with origin from accessing a cross-origin frame."),
 			);
-			automationError.name = "SecurityError";
-			automationError.stack = [
-				`SecurityError: ${automationError.message}`,
-				"    at NodeList.forEach (<anonymous>)",
-				"    at eval (eval at evaluate (:291:30), <anonymous>:5:9)",
-				"    at eval (<anonymous>)",
-				"    at UtilityScript.evaluate (<anonymous>:291:30)",
-				"    at UtilityScript.<anonymous> (<anonymous>:1:44)",
-			].join("\n");
-
-			win.console.error("无法访问Iframe 1 的内容，可能是由于跨域限制:", automationError);
 			win.console.info("Iframe 3 内容已成功填充到新div中！");
-			win.console.error("Sentry console capture control");
-			win.console.error("Error retrieving article data:", new win.Error("Sentry console exception control"));
 
 			return win.Sentry.flush(10000);
 		});
 
 		cy.wrap(null).should(() => {
-			const texts = sentEventTexts(envelopeBodies);
-			expect(texts.join("\n")).to.contain("Sentry console capture control");
-			expect(texts.join("\n")).to.contain("Sentry console exception control");
-			expect(texts.filter((text) => text.includes("cross-origin frame"))).to.be.empty;
-			expect(texts.filter((text) => text.includes("Iframe 3"))).to.be.empty;
+			const sentText = sentEventText(envelopeBodies);
+			expect(sentText).to.contain("Error retrieving article.");
+			expect(sentText).not.to.contain("cross-origin frame");
+			expect(sentText).not.to.contain("Iframe 3");
 		});
 	});
 
@@ -106,7 +96,6 @@ describe("Sentry initialization", () => {
 			}),
 		);
 		cy.intercept(`${sentrySdkUrl}*`, { forceNetworkError: true });
-		cy.intercept(`${sentryCaptureConsoleUrl}*`, { forceNetworkError: true });
 		cy.visit("http://localhost:3000", {
 			onBeforeLoad(win) {
 				win.__consoleErrors = [];

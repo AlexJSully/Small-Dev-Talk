@@ -94,6 +94,19 @@ function sanitizeHtml(unsafe) {
 	return template.innerHTML;
 }
 
+/**
+ * Send an error to Sentry when the Sentry SDK has loaded, and do nothing otherwise.
+ * @param {Error|string} error The error, or a message to wrap in an Error.
+ * @returns {void}
+ */
+function reportToSentry(error) {
+	if (typeof Sentry === "undefined" || typeof Sentry.captureException !== "function") {
+		return;
+	}
+
+	Sentry.captureException(error instanceof Error ? error : new Error(String(error)));
+}
+
 /** Create and fill the page with the desired article */
 class ArticleFiller {
 	constructor() {
@@ -136,6 +149,7 @@ class ArticleFiller {
 		}
 
 		console.error(ArticleFiller.errMsg);
+		reportToSentry(ArticleFiller.errMsg);
 
 		// Display the error with Bootstrap styling
 		ArticleFiller.article = `
@@ -181,10 +195,10 @@ class ArticleFiller {
 			})
 			.then((articleData) => {
 				ArticleFiller.articleData = articleData;
-				ArticleFiller.callArticle();
 			})
 			.catch((error) => {
 				console.error("Error retrieving article data:", error);
+				reportToSentry(error);
 			});
 	}
 
@@ -365,20 +379,23 @@ class ArticleFiller {
 
 	/** Retrieve page information of all possible pages */
 	static retrievePageData() {
-		const xhr = new XMLHttpRequest();
-		const url = "/src/legacyPages/legacyPagesDisplay.json";
+		const pageDataUrl = "/src/legacyPages/legacyPagesDisplay.json";
 
-		xhr.responseType = "json";
-		xhr.onreadystatechange = () => {
-			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-				ArticleFiller.pageData = xhr.response;
+		return fetch(pageDataUrl)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Failed to fetch page data: ${response.status} ${response.statusText}`);
+				}
 
-				ArticleFiller.callArticle();
-			}
-		};
-
-		xhr.open("GET", url);
-		xhr.send();
+				return response.json();
+			})
+			.then((pageData) => {
+				ArticleFiller.pageData = pageData;
+			})
+			.catch((error) => {
+				console.error("Error retrieving page data:", error);
+				reportToSentry(error);
+			});
 	}
 
 	/**
@@ -651,13 +668,13 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 /**
- * Initialize page and article metadata fetches.
- * @returns {void}
+ * Fetch page and article metadata, then render the requested view once both requests settle.
+ * @returns {Promise<void>} Resolves after the view renders; both fetches catch their own errors.
  */
 function init() {
-	// Init data
-	ArticleFiller.retrievePageData();
-	ArticleFiller.retrieveArticleData();
+	return Promise.all([ArticleFiller.retrievePageData(), ArticleFiller.retrieveArticleData()]).then(() =>
+		ArticleFiller.callArticle(),
+	);
 }
 
 /**
@@ -671,6 +688,8 @@ async function registerServiceWorker() {
 			return reg;
 		} catch (e) {
 			console.error("ServiceWorker registration failed:", e && e.message ? e.message : e);
+			reportToSentry(e);
+
 			return null;
 		}
 	}
@@ -690,6 +709,7 @@ if (typeof module !== "undefined" && module.exports) {
 		sanitize: sanitizeHtml,
 		sanitizeHTML: sanitizeHtml,
 		registerServiceWorker,
+		init,
 	};
 }
 

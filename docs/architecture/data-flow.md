@@ -59,7 +59,7 @@ flowchart TD
 
     subgraph Monitor["Error Tracking"]
         I1["Sentry monitors for<br/>fetch errors"]
-        I2["console.error calls captured;<br/>automation script errors dropped"]
+        I2["Site errors reported<br/>via reportToSentry()"]
         I3["Network errors reported<br/>with context"]
     end
 
@@ -111,30 +111,36 @@ When [index.html](../../index.html) loads:
     - `style.min.css` and the Bootstrap stylesheet, both under the site root
     - jQuery, the Bootstrap JavaScript bundle, and Showdown.js, all under `src/scripts/libraries/`
     - `src/scripts/index.min.js`, the minified build of [index.js](../../src/scripts/index.js)
-    - Sentry SDK and Capture Console integration, from the version-pinned `browser.sentry-cdn.com` bundle
+    - Sentry SDK, from the version-pinned `browser.sentry-cdn.com` bundle
 
 3. Inline `<script>` blocks initialize:
-    - `Sentry.init()` with configuration, including console capture limited to `console.error` and a `beforeSend` filter that drops errors thrown by scripts that Playwright browser automation injects (stack frames named `UtilityScript.*`)
+    - `Sentry.init()` with the tracing and replay integrations and no console integration, so console output from browser extensions or injected scripts is not reported. The site reports its own errors by calling `reportToSentry()` in [index.js](../../src/scripts/index.js) from `displayError()` and from the page data, article data, and service worker catch handlers
     - `Sentry.getCurrentScope()` with the `app-version` tag
     - Google Tag Manager, and a canonical URL adjustment applied only on the `smalldevtalk.net` host
 
-Metadata loading starts from [index.js](../../src/scripts/index.js) rather than from the inline blocks. That file assigns `window.onload`, which awaits `registerServiceWorker()` and then calls `init()`; `init()` calls `retrievePageData()` followed by `retrieveArticleData()`.
+Metadata loading starts from [index.js](../../src/scripts/index.js) rather than from the inline blocks. That file assigns `window.onload`, which awaits `registerServiceWorker()` and then calls `init()`. `init()` starts `retrievePageData()` and `retrieveArticleData()` together and calls `callArticle()` once, after both requests settle; each request catches its own failure, so the view still renders when one of them fails.
 
 ### 2. Article Data Retrieval
 
 ```mermaid
 sequenceDiagram
     accTitle: Article data retrieval sequence
-    accDescr: After the browser completes loading, ArticleFiller fetches articleData.json from /src/articleArchive/, stores it in the articleData static property, then calls callArticle().
+    accDescr: After the browser completes loading, init() has ArticleFiller fetch legacyPagesDisplay.json and articleData.json together, store them in the pageData and articleData static properties, then call callArticle() once both requests settle.
     participant Browser
     participant AF as ArticleFiller
     participant Server
 
-    Browser->>AF: Page load complete
-    AF->>Server: GET /src/articleArchive/articleData.json
-    Server-->>AF: JSON with article metadata
-    AF->>AF: Store in articleData static property
-    AF->>AF: Call callArticle()
+    Browser->>AF: Page load complete, init()
+    par Page data
+        AF->>Server: GET /src/legacyPages/legacyPagesDisplay.json
+        Server-->>AF: JSON with page definitions
+        AF->>AF: Store in pageData static property
+    and Article data
+        AF->>Server: GET /src/articleArchive/articleData.json
+        Server-->>AF: JSON with article metadata
+        AF->>AF: Store in articleData static property
+    end
+    AF->>AF: Call callArticle() once
 ```
 
 ### 3. Article Loading Logic
@@ -168,7 +174,7 @@ flowchart TD
     A -->|Fetch fails| C["displayError<br/>Log to console"]
     A -->|Invalid article| C
     B -->|Parse error| C
-    C --> D["Sentry.captureException<br/>or console.error"]
+    C --> D["reportToSentry()<br/>sends it to Sentry"]
     D --> E["Show error UI<br/>with refresh button"]
     E --> F["User can return<br/>to homepage"]
 ```

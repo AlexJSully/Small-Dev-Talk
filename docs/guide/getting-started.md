@@ -48,7 +48,8 @@ npm run start
 
 - `window.onload` calls `registerServiceWorker()` and then initializes data loading
 - `retrievePageData()` fetches legacy page definitions
-- `retrieveArticleData()` fetches article metadata and triggers rendering
+- `retrieveArticleData()` fetches article metadata
+- `init()` calls `callArticle()` to render the page once both requests settle
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
