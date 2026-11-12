@@ -8,7 +8,8 @@ export default [
 			"cypress.config.js",
 			"node_modules/**/*",
 			"src/scripts/libraries/**/*",
-			"src/serviceWorker/**/*",
+			"sw.js",
+			"workbox-[0-9a-f]*.js",
 		],
 	},
 	{

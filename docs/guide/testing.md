@@ -35,7 +35,7 @@ npm run test -- src/scripts/index.test.js
 
 ## End-to-End Testing with Cypress
 
-Cypress tests are in [cypress/e2e/landing.cy.js](../../cypress/e2e/landing.cy.js), which covers page rendering and the missing-article error, and [cypress/e2e/sentry.cy.js](../../cypress/e2e/sentry.cy.js), which covers Sentry initialization and error reporting.
+Cypress tests are in [cypress/e2e/landing.cy.js](../../cypress/e2e/landing.cy.js), which covers page rendering and the missing-article error, [cypress/e2e/sentry.cy.js](../../cypress/e2e/sentry.cy.js), which covers Sentry initialization and error reporting, and [cypress/e2e/service-worker.cy.js](../../cypress/e2e/service-worker.cy.js), which covers the service worker scope and precache. [cypress/support/e2e.js](../../cypress/support/e2e.js) unregisters service workers before each test, because Cypress test isolation does not.
 
 **Open Cypress Test Runner:**
 

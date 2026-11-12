@@ -7,7 +7,7 @@ This document illustrates how data flows through Small Dev Talk from initial pag
 ```mermaid
 flowchart TD
     accTitle: Complete data flow from page load to rendered article
-    accDescr: A user request triggers script loading and Sentry initialization, service worker registration, article metadata fetch, a URL decision between homepage and single article, article content fetch, page metadata update, Showdown Markdown to HTML rendering, caching, error tracking, and final display to the user.
+    accDescr: A user request triggers script loading and Sentry initialization, a move from the www host to the canonical host when needed, service worker registration, article metadata fetch, a URL decision between homepage and single article, article content fetch, page metadata update, Showdown Markdown to HTML rendering, caching, error tracking, and final display to the user.
     subgraph Request["User Request"]
         A1["User visits index.html<br/>or clicks article link"]
         A2["URL contains query parameter<br/>?ArticleName"]
@@ -16,6 +16,7 @@ flowchart TD
     subgraph Init["Initialization"]
         B1["Scripts load:<br/>jQuery, Showdown,<br/>Bootstrap, Sentry"]
         B2["Sentry error tracking<br/>is configured"]
+        B4["Page on www.smalldevtalk.net<br/>moves to smalldevtalk.net"]
         B3["Service worker registers<br/>if the browser<br/>supports it"]
     end
 
@@ -34,7 +35,7 @@ flowchart TD
 
     subgraph Fetch["Fetch Article Content"]
         E1["Construct article path:<br/>authorAuthorName/<br/>YYYY-MM-DD_Title/<br/>Title.md"]
-        E2["Fetch markdown file<br/>from site origin<br/>or service worker cache"]
+        E2["Fetch markdown file<br/>from the network, or the<br/>service worker cache offline"]
         E3["Store raw markdown<br/>ArticleFiller.articleMd"]
     end
 
@@ -52,9 +53,9 @@ flowchart TD
     end
 
     subgraph Cache["Cache & Service Worker"]
-        H1["Service Worker<br/>precaches article assets"]
-        H2["Images, CSS, JS<br/>stored in cache"]
-        H3["Subsequent visits<br/>load from cache first"]
+        H1["Service Worker<br/>precaches the app shell"]
+        H2["Article images and markdown<br/>cached as they are read"]
+        H3["Subsequent visits load<br/>the shell and images from cache"]
     end
 
     subgraph Monitor["Error Tracking"]
@@ -72,7 +73,8 @@ flowchart TD
     A1 --> A2
     A2 --> B1
     B1 --> B2
-    B2 --> B3
+    B2 --> B4
+    B4 --> B3
     B3 --> C1
     C1 --> C2
     C2 --> C3
@@ -118,7 +120,7 @@ When [index.html](../../index.html) loads:
     - `Sentry.getCurrentScope()` with the `app-version` tag
     - Google Tag Manager, and a canonical URL adjustment applied only on the `smalldevtalk.net` host
 
-Metadata loading starts from [index.js](../../src/scripts/index.js) rather than from the inline blocks. That file assigns `window.onload`, which awaits `registerServiceWorker()` and then calls `init()`. `init()` starts `retrievePageData()` and `retrieveArticleData()` together and calls `callArticle()` once, after both requests settle; each request catches its own failure, so the view still renders when one of them fails.
+Metadata loading starts from [index.js](../../src/scripts/index.js) rather than from the inline blocks. That file assigns `window.onload` to `start()`. When the page runs on `www.smalldevtalk.net`, `start()` moves it to the same path, query and hash on `smalldevtalk.net` and does nothing else, because GitHub Pages redirects every `www.` request to that host and the redirected data requests and service worker script fail. Otherwise it awaits `registerServiceWorker()` and then `init()`. `init()` starts `retrievePageData()` and `retrieveArticleData()` together and calls `callArticle()` once, after both requests settle; each request catches its own failure, so the view still renders when one of them fails.
 
 ### 2. Article Data Retrieval
 
