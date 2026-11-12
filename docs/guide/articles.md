@@ -93,19 +93,19 @@ src/articleArchive/authorAlexanderSullivan/2013-03-26_Caravaneer2/
 └── ...
 ```
 
-**Precaching Formats:**
+**Caching:**
 
-Workbox precaches assets that match the extensions in `workbox-config.js`, including `jpg`, `png`, `webp`, `gif`, `svg`, and `ico`.
+Article images and markdown are not precached. The service worker caches them at runtime as readers open the article.
 
 ## Step 5: Update Service Worker Cache
 
-Rebuild the service worker to include new assets:
+`articleData.json` is precached, so rebuild the service worker after adding the article's entry:
 
 ```bash
 npm run workbox
 ```
 
-This regenerates [src/serviceWorker/sw.js](../../src/serviceWorker/sw.js) with new article assets.
+This regenerates [sw.js](../../sw.js) with the new `articleData.json` revision.
 
 ## Step 6: Test Locally
 

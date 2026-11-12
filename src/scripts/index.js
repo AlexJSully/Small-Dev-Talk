@@ -657,16 +657,6 @@ class ArticleFiller {
 	}
 }
 
-if (typeof module !== "undefined" && module.exports) {
-	module.exports = {
-		ArticleFiller,
-		escapeHtml,
-		sanitizeHtml,
-		sanitize: sanitizeHtml,
-		sanitizeHTML: sanitizeHtml,
-	};
-}
-
 /**
  * Fetch page and article metadata, then render the requested view once both requests settle.
  * @returns {Promise<void>} Resolves after the view renders; both fetches catch their own errors.
@@ -677,14 +667,66 @@ function init() {
 	);
 }
 
+/** Host that serves the site. GitHub Pages answers every request on `www.` + this host with a 301 to it. */
+const CANONICAL_HOST = "smalldevtalk.net";
+
+/** Scope path of the service worker that earlier releases registered from `/src/serviceWorker/sw.js`. */
+const LEGACY_SERVICE_WORKER_SCOPE_PATH = "/src/serviceWorker/";
+
+/**
+ * Send a page running on the `www.` host to the same path, query and hash on the canonical host.
+ * On the `www.` host every same-origin request is redirected cross-origin, so data fetches and
+ * service worker registration fail there.
+ * @param {Location} location The page location.
+ * @returns {boolean} True when navigation to the canonical host was started.
+ */
+function redirectToCanonicalHost(location) {
+	if (location.hostname !== `www.${CANONICAL_HOST}`) {
+		return false;
+	}
+
+	location.replace(`https://${CANONICAL_HOST}${location.pathname}${location.search}${location.hash}`);
+
+	return true;
+}
+
+/**
+ * Unregister the service worker registered from `/src/serviceWorker/sw.js` and delete its precache.
+ * Its scope covered no page, so it never served its cache and never updates on its own.
+ * @returns {Promise<void>} Resolves once cleanup finishes; failures are logged and reported.
+ */
+async function removeLegacyServiceWorker() {
+	try {
+		const registrations = await navigator.serviceWorker.getRegistrations();
+		const legacyRegistrations = registrations.filter(
+			(registration) => new URL(registration.scope).pathname === LEGACY_SERVICE_WORKER_SCOPE_PATH,
+		);
+
+		await Promise.all(
+			legacyRegistrations.map(async (registration) => {
+				await registration.unregister();
+
+				if (typeof caches !== "undefined") {
+					await caches.delete(`workbox-precache-v2-${registration.scope}`);
+				}
+			}),
+		);
+	} catch (e) {
+		console.error("Legacy ServiceWorker cleanup failed:", e && e.message ? e.message : e);
+		reportToSentry(e);
+	}
+}
+
 /**
  * Register the service worker if the browser supports it.
  * @returns {Promise<ServiceWorkerRegistration|null>} Registration or null on failure/unsupported.
  */
 async function registerServiceWorker() {
 	if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
+		await removeLegacyServiceWorker();
+
 		try {
-			const reg = await navigator.serviceWorker.register("./src/serviceWorker/sw.js");
+			const reg = await navigator.serviceWorker.register("./sw.js");
 			return reg;
 		} catch (e) {
 			console.error("ServiceWorker registration failed:", e && e.message ? e.message : e);
@@ -696,10 +738,21 @@ async function registerServiceWorker() {
 	return null;
 }
 
-window.onload = async function () {
+/**
+ * Move the page to the canonical host when needed, otherwise register the service worker and render the view.
+ * @param {Location} location The page location.
+ * @returns {Promise<void>} Resolves once the view renders, or at once when the page is redirected.
+ */
+async function start(location) {
+	if (redirectToCanonicalHost(location)) {
+		return;
+	}
+
 	await registerServiceWorker();
-	init();
-};
+	await init();
+}
+
+window.onload = () => start(window.location);
 
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = {
@@ -708,8 +761,11 @@ if (typeof module !== "undefined" && module.exports) {
 		sanitizeHtml,
 		sanitize: sanitizeHtml,
 		sanitizeHTML: sanitizeHtml,
+		redirectToCanonicalHost,
+		removeLegacyServiceWorker,
 		registerServiceWorker,
 		init,
+		start,
 	};
 }
 

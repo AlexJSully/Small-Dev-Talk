@@ -2,7 +2,13 @@ global.showdown = require("./libraries/showdown/showdown.min.js");
 
 const { ArticleFiller, escapeHtml, sanitizeHtml } = require("./index.js");
 
-const { registerServiceWorker, init } = require("./index.js");
+const {
+	redirectToCanonicalHost,
+	removeLegacyServiceWorker,
+	registerServiceWorker,
+	init,
+	start,
+} = require("./index.js");
 
 window.onload = null;
 
@@ -398,10 +404,58 @@ describe("init", () => {
 	});
 });
 
+/**
+ * Build a stand-in for `window.location`, which jsdom does not let a test navigate.
+ * @param {string} href The page URL.
+ * @returns {{hostname: string, pathname: string, search: string, hash: string, replace: jest.Mock}} The location.
+ */
+function createLocation(href) {
+	const { hostname, pathname, search, hash } = new URL(href);
+
+	return { hostname, pathname, search, hash, replace: jest.fn() };
+}
+
+/**
+ * Build a stand-in service worker registration.
+ * @param {string} scope The registration scope URL.
+ * @returns {{scope: string, unregister: jest.Mock}} The registration.
+ */
+function createRegistration(scope) {
+	return { scope, unregister: jest.fn().mockResolvedValue(true) };
+}
+
+describe("redirectToCanonicalHost", () => {
+	test("moves a www page to the same path, query and hash on the canonical host", () => {
+		const location = createLocation("https://www.smalldevtalk.net/index.html?Caravaneer2#top");
+
+		expect(redirectToCanonicalHost(location)).toBe(true);
+		expect(location.replace).toHaveBeenCalledWith("https://smalldevtalk.net/index.html?Caravaneer2#top");
+	});
+
+	test("moves an http www page to https on the canonical host", () => {
+		const location = createLocation("http://www.smalldevtalk.net/");
+
+		expect(redirectToCanonicalHost(location)).toBe(true);
+		expect(location.replace).toHaveBeenCalledWith("https://smalldevtalk.net/");
+	});
+
+	test.each(["https://smalldevtalk.net/index.html?Caravaneer2", "http://localhost:3000/index.html"])(
+		"leaves %s where it is",
+		(href) => {
+			const location = createLocation(href);
+
+			expect(redirectToCanonicalHost(location)).toBe(false);
+			expect(location.replace).not.toHaveBeenCalled();
+		},
+	);
+});
+
 describe("ServiceWorker registration", () => {
 	afterEach(() => {
 		jest.restoreAllMocks();
 		delete global.navigator;
+		delete global.caches;
+		delete global.Sentry;
 	});
 
 	test("registerServiceWorker returns null when navigator.serviceWorker not present", async () => {
@@ -410,9 +464,25 @@ describe("ServiceWorker registration", () => {
 		expect(res).toBeNull();
 	});
 
+	test("registerServiceWorker registers the root worker so its scope covers the page", async () => {
+		const registration = createRegistration("http://localhost/");
+		global.navigator = {
+			serviceWorker: {
+				getRegistrations: jest.fn().mockResolvedValue([]),
+				register: jest.fn().mockResolvedValue(registration),
+			},
+		};
+
+		const res = await registerServiceWorker();
+
+		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
+		expect(res).toBe(registration);
+	});
+
 	test("registerServiceWorker handles registration failure gracefully", async () => {
 		global.navigator = {
 			serviceWorker: {
+				getRegistrations: jest.fn().mockResolvedValue([]),
 				register: jest.fn().mockRejectedValue(new Error("disallowed redirect")),
 			},
 		};
@@ -422,6 +492,106 @@ describe("ServiceWorker registration", () => {
 		const res = await registerServiceWorker();
 		expect(res).toBeNull();
 		expect(console.error).toHaveBeenCalled();
+	});
+
+	test("removeLegacyServiceWorker unregisters only the /src/serviceWorker/ worker and deletes only its precache", async () => {
+		const legacy = createRegistration("https://smalldevtalk.net/src/serviceWorker/");
+		const current = createRegistration("https://smalldevtalk.net/");
+		global.navigator = {
+			serviceWorker: { getRegistrations: jest.fn().mockResolvedValue([legacy, current]) },
+		};
+		global.caches = { delete: jest.fn().mockResolvedValue(true) };
+
+		await removeLegacyServiceWorker();
+
+		expect(legacy.unregister).toHaveBeenCalledTimes(1);
+		expect(current.unregister).not.toHaveBeenCalled();
+		expect(global.caches.delete).toHaveBeenCalledTimes(1);
+		expect(global.caches.delete).toHaveBeenCalledWith(
+			"workbox-precache-v2-https://smalldevtalk.net/src/serviceWorker/",
+		);
+	});
+
+	test("a failed legacy cleanup is reported to Sentry and the root worker still registers", async () => {
+		const cleanupError = new Error("getRegistrations failed");
+		global.navigator = {
+			serviceWorker: {
+				getRegistrations: jest.fn().mockRejectedValue(cleanupError),
+				register: jest.fn().mockResolvedValue(createRegistration("http://localhost/")),
+			},
+		};
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn() };
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		await registerServiceWorker();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(cleanupError);
+		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
+	});
+});
+
+describe("start", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `<div id="articleBody"></div>`;
+		Object.defineProperty(document, "URL", {
+			value: "http://localhost/index.html?TestArticle",
+			configurable: true,
+		});
+		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
+		global.navigator = {
+			serviceWorker: {
+				getRegistrations: jest.fn().mockResolvedValue([]),
+				register: jest.fn().mockResolvedValue(createRegistration("http://localhost/")),
+			},
+		};
+		global.fetch = jest.fn((url) => {
+			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
+				return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
+			}
+			if (url === "/src/articleArchive/articleData.json") {
+				return Promise.resolve({
+					ok: true,
+					json: () =>
+						Promise.resolve({
+							TestArticle: { title: "Test Article", author: "Jane Doe", date: "2024-06-01" },
+						}),
+				});
+			}
+
+			return Promise.resolve({ ok: true, text: () => Promise.resolve("# Test Article") });
+		});
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+		delete global.fetch;
+		delete global.navigator;
+		delete document.URL;
+		ArticleFiller.articleData = undefined;
+		ArticleFiller.pageData = undefined;
+	});
+
+	test("on the www host, redirects before registering the worker or fetching any data", async () => {
+		const location = createLocation("https://www.smalldevtalk.net/index.html?TestArticle");
+
+		await start(location);
+
+		expect(location.replace).toHaveBeenCalledWith("https://smalldevtalk.net/index.html?TestArticle");
+		expect(global.navigator.serviceWorker.register).not.toHaveBeenCalled();
+		expect(global.fetch).not.toHaveBeenCalled();
+		expect(document.getElementById("articleBody").innerHTML).toBe("");
+	});
+
+	test("on the canonical host, registers the root worker and renders the requested article", async () => {
+		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
+
+		await start(location);
+		await new Promise((resolve) => setTimeout(resolve, 0));
+
+		expect(location.replace).not.toHaveBeenCalled();
+		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
+		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
 	});
 });
 

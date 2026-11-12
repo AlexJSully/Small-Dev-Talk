@@ -22,7 +22,7 @@ src/scripts/libraries
 
 # workbox
 workbox-config.js
-src/serviceWorker
+workbox-[0-9a-f]*.js
 
 # Visual Studio Code
 .vscode/settings.json

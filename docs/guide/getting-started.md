@@ -76,12 +76,12 @@ Small-Dev-Talk/
 │   │   ├── authorAlexanderSullivan/
 │   │   ├── authorJeffCen/
 │   │   └── authorNeilRampone/
-│   ├── serviceWorker/           # Service worker configuration
 │   ├── style.css                # Main stylesheet
 │   └── icon/                    # App icons and manifest
 ├── docs/                        # Documentation (this directory)
 ├── cypress/                     # E2E tests
 ├── index.html                   # Main HTML file
+├── sw.js                        # Generated service worker (npm run workbox)
 ├── package.json                 # Project metadata & dependencies
 ├── eslint.config.js             # ESLint configuration
 ├── .prettierrc                  # Prettier configuration
@@ -148,6 +148,8 @@ npm run e2e:headless        # Run E2E tests in headless mode
 npm run validate            # Run full validation pipeline:
                             # - prettier
                             # - eslint
+                            # - minify
+                            # - workbox
                             # - jest
                             # - e2e tests
                             # - markdownlint
@@ -159,7 +161,7 @@ npm run validate            # Run full validation pipeline:
 npm run workbox             # Generate precaching manifest for service worker
 ```
 
-This command regenerates `src/serviceWorker/sw.js` with the current precache manifest.
+This command regenerates `sw.js` at the repository root with the current precache manifest.
 
 ## Environment Variables
 

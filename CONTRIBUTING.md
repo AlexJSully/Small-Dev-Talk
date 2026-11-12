@@ -13,7 +13,7 @@ Please note we have a [code of conduct](CODE_OF_CONDUCT.md), please follow it in
 5. Wait for the pull request checks to pass. [code-qa-js.yaml](.github/workflows/code-qa-js.yaml) covers the JavaScript quality gates, [code-qa-md.yaml](.github/workflows/code-qa-md.yaml) covers markdown, and [codeql-analysis.yaml](.github/workflows/codeql-analysis.yaml) runs CodeQL analysis.
 6. You may merge the pull request once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
 
-There is no build step in this repository. The one generated artifact is the service worker, regenerated with `npm run workbox` after adding or renaming assets that need precaching.
+There is no build step in this repository. The generated artifacts are `src/scripts/index.min.js` and `src/style.min.css` from `npm run minify`, and the service worker `sw.js` from `npm run workbox`. Regenerate `sw.js` after changing any precached file listed in `workbox-config.js`.
 
 ## Code of Conduct
 
