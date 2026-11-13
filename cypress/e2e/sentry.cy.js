@@ -1,4 +1,4 @@
-const sentrySdkUrl = "https://browser.sentry-cdn.com/10.32.1/bundle.tracing.replay.min.js";
+const sentrySdkUrl = "https://browser.sentry-cdn.com/11.12.0/bundle.tracing.replay.min.js";
 
 /**
  * Intercept every Sentry envelope the page sends, reply with success, and collect the request bodies.

@@ -42,7 +42,7 @@ Application Programming Interface (API) documentation for external usage and pub
 | [Bootstrap](https://getbootstrap.com/)                                       | UI framework (local bundle)           | Local copy |
 | [jQuery](https://jquery.com/)                                                | Document Object Model (DOM) utilities | Local copy |
 | [Showdown.js](http://showdownjs.com/)                                        | Markdown to HTML conversion           | Local copy |
-| [Sentry](https://sentry.io/)                                                 | Error tracking                        | v10.32.1   |
+| [Sentry](https://sentry.io/)                                                 | Error tracking                        | v11.12.0   |
 | [Service Workers / Workbox](https://developers.google.com/web/tools/workbox) | Precaching and caching                | ^7.4.1     |
 | [Jest](https://jestjs.io/)                                                   | Unit testing                          | ^30.4.2    |
 | [Cypress](https://cypress.io/)                                               | End-to-end (E2E) testing              | ^15.20.1   |

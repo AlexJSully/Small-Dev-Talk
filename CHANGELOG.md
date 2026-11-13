@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 To see tags and releases, please go to [Tags](https://github.com/AlexJSully/Small-Dev-Talk/tags) on [GitHub](https://github.com/AlexJSully/Small-Dev-Talk).
 
+## [Unreleased]
+
+### Update
+
+- Updated the inlined Sentry browser SDK reference to v11.12.0 and refreshed the SRI hash.
+
 ## [1.3.4] - 2024-09-17
 
 UI/UX:
