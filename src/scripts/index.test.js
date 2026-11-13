@@ -14,8 +14,9 @@ window.onload = null;
 
 describe("ArticleFiller: displayError", () => {
 	beforeEach(() => {
+		// articleBody starts with hidden attribute in production HTML (index.html)
 		document.body.innerHTML = `
-            <div id="articleBody"></div>
+            <div id="articleBody" hidden></div>
             <div id="displayArticles"></div>
             <div id="featuredArticles"></div>
             <div id="carouselInner"></div>
@@ -58,6 +59,7 @@ describe("ArticleFiller: displayError", () => {
 			}
 
 			expect(document.getElementById("articleBody").innerHTML).toContain(expectedErr);
+			expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
 		});
 	});
 
@@ -67,6 +69,7 @@ describe("ArticleFiller: displayError", () => {
 		expect(html).toContain("&lt;script&gt;alert('xss')&lt;/script&gt;");
 		expect(html).not.toContain("<script>");
 		expect(document.getElementById("articleBody").querySelector("script")).toBeNull();
+		expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
 	});
 
 	test("reports the error message to Sentry as an Error", () => {
@@ -87,6 +90,7 @@ describe("ArticleFiller: displayError", () => {
 		ArticleFiller.displayError("Error retrieving article.");
 
 		expect(document.getElementById("articleBody").innerHTML).toContain("Error retrieving article.");
+		expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
 	});
 });
 

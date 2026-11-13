@@ -177,7 +177,9 @@ class ArticleFiller {
 		`;
 
 		if (document?.getElementById("articleBody")) {
-			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
+			const articleBody = document.getElementById("articleBody");
+			articleBody.removeAttribute("hidden");
+			articleBody.innerHTML = ArticleFiller.article;
 		}
 	}
 
