@@ -14,8 +14,9 @@ window.onload = null;
 
 describe("ArticleFiller: displayError", () => {
 	beforeEach(() => {
+		// articleBody starts with hidden attribute in production HTML (index.html)
 		document.body.innerHTML = `
-            <div id="articleBody"></div>
+            <div id="articleBody" hidden></div>
             <div id="displayArticles"></div>
             <div id="featuredArticles"></div>
             <div id="carouselInner"></div>
@@ -58,6 +59,7 @@ describe("ArticleFiller: displayError", () => {
 			}
 
 			expect(document.getElementById("articleBody").innerHTML).toContain(expectedErr);
+			expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
 		});
 	});
 
@@ -67,6 +69,7 @@ describe("ArticleFiller: displayError", () => {
 		expect(html).toContain("&lt;script&gt;alert('xss')&lt;/script&gt;");
 		expect(html).not.toContain("<script>");
 		expect(document.getElementById("articleBody").querySelector("script")).toBeNull();
+		expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
 	});
 
 	test("reports the error message to Sentry as an Error", () => {
@@ -87,6 +90,7 @@ describe("ArticleFiller: displayError", () => {
 		ArticleFiller.displayError("Error retrieving article.");
 
 		expect(document.getElementById("articleBody").innerHTML).toContain("Error retrieving article.");
+		expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
 	});
 });
 
@@ -233,35 +237,37 @@ describe("ArticleFiller: retrieveArticleData", () => {
 		expect(ArticleFiller.articleData).toEqual(articleData);
 	});
 
-	test("logs network failures without processing article data", async () => {
+	test("logs network failures and re-throws the error", async () => {
 		const error = new Error("Network unavailable");
 		global.fetch = jest.fn().mockRejectedValue(error);
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
-		await ArticleFiller.retrieveArticleData();
+		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow("Network unavailable");
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith("Error retrieving article data:", error);
 		expect(ArticleFiller.articleData).toBeUndefined();
 	});
 
-	test("reports the original error to Sentry when the fetch fails", async () => {
+	test("reports the original error to Sentry and re-throws when the fetch fails", async () => {
 		const error = new Error("Network unavailable");
 		global.fetch = jest.fn().mockRejectedValue(error);
 		jest.spyOn(console, "error").mockImplementation(() => {});
 		// Sentry is a third-party SDK that sends events over the network.
 		global.Sentry = { captureException: jest.fn() };
 
-		await ArticleFiller.retrieveArticleData();
+		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow("Network unavailable");
 
 		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
 	});
 
-	test("logs non-OK responses without parsing or processing article data", async () => {
+	test("logs non-OK responses and re-throws without parsing or processing article data", async () => {
 		const response = { ok: false, status: 500, statusText: "Internal Server Error", json: jest.fn() };
 		global.fetch = jest.fn().mockResolvedValue(response);
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
-		await ArticleFiller.retrieveArticleData();
+		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow(
+			"Failed to fetch article data: 500 Internal Server Error",
+		);
 
 		expect(response.json).not.toHaveBeenCalled();
 		expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -271,12 +277,12 @@ describe("ArticleFiller: retrieveArticleData", () => {
 		expect(ArticleFiller.articleData).toBeUndefined();
 	});
 
-	test("logs JSON parsing failures without processing article data", async () => {
+	test("logs JSON parsing failures and re-throws without processing article data", async () => {
 		const error = new SyntaxError("Unexpected token");
 		global.fetch = jest.fn().mockResolvedValue({ ok: true, json: () => Promise.reject(error) });
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
-		await ArticleFiller.retrieveArticleData();
+		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow("Unexpected token");
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith("Error retrieving article data:", error);
 		expect(ArticleFiller.articleData).toBeUndefined();
@@ -304,7 +310,7 @@ describe("ArticleFiller: retrievePageData", () => {
 		expect(ArticleFiller.pageData).toEqual(pageData);
 	});
 
-	test("logs and reports non-OK responses without storing page data", async () => {
+	test("logs and reports non-OK responses and re-throws without storing page data", async () => {
 		global.fetch = jest
 			.fn()
 			.mockResolvedValue({ ok: false, status: 404, statusText: "Not Found", json: jest.fn() });
@@ -312,7 +318,7 @@ describe("ArticleFiller: retrievePageData", () => {
 		// Sentry is a third-party SDK that sends events over the network.
 		global.Sentry = { captureException: jest.fn() };
 
-		await ArticleFiller.retrievePageData();
+		await expect(ArticleFiller.retrievePageData()).rejects.toThrow("Failed to fetch page data: 404 Not Found");
 
 		const expectedError = expect.objectContaining({ message: "Failed to fetch page data: 404 Not Found" });
 		expect(consoleErrorSpy).toHaveBeenCalledWith("Error retrieving page data:", expectedError);
@@ -377,9 +383,8 @@ describe("init", () => {
 		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
 	});
 
-	test("still renders the article when the page data request fails", async () => {
+	test("rejects when page data request fails", async () => {
 		const articleData = { TestArticle: { title: "Test Article", author: "Jane Doe", date: "2024-06-01" } };
-		document.body.innerHTML = `<div id="articleBody"></div>`;
 		Object.defineProperty(document, "URL", {
 			value: "http://localhost/index.html?TestArticle",
 			configurable: true,
@@ -397,10 +402,7 @@ describe("init", () => {
 			return Promise.resolve({ ok: true, text: () => Promise.resolve("# Test Article") });
 		});
 
-		await init();
-		await new Promise((resolve) => setTimeout(resolve, 0));
-
-		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
+		await expect(init()).rejects.toThrow("Network unavailable");
 	});
 });
 
@@ -663,6 +665,118 @@ describe("start", () => {
 		await new Promise((resolve) => setTimeout(resolve, 0));
 
 		expect(location.replace).not.toHaveBeenCalled();
+		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
+		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
+	});
+
+	test("shows error message when retrievePageData fails", async () => {
+		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		jest.spyOn(ArticleFiller, "displayError").mockImplementation(() => {});
+		global.fetch = jest.fn((url) => {
+			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
+				return Promise.reject(new Error("Network unavailable"));
+			}
+			if (url === "/src/articleArchive/articleData.json") {
+				return Promise.resolve({
+					ok: true,
+					json: () =>
+						Promise.resolve({
+							TestArticle: { title: "Test Article", author: "Jane Doe", date: "2024-06-01" },
+						}),
+				});
+			}
+
+			return Promise.resolve({ ok: true, text: () => Promise.resolve("# Test Article") });
+		});
+
+		await start(location);
+
+		expect(ArticleFiller.displayError).toHaveBeenCalledWith(
+			"Failed to load page. Please refresh or try again later.",
+		);
+	});
+
+	test("shows error message when retrieveArticleData fails", async () => {
+		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		jest.spyOn(ArticleFiller, "displayError").mockImplementation(() => {});
+		global.fetch = jest.fn((url) => {
+			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
+				return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
+			}
+			if (url === "/src/articleArchive/articleData.json") {
+				return Promise.reject(new Error("Network unavailable"));
+			}
+
+			return Promise.resolve({ ok: true, text: () => Promise.resolve("# Test Article") });
+		});
+
+		await start(location);
+
+		expect(ArticleFiller.displayError).toHaveBeenCalledWith(
+			"Failed to load page. Please refresh or try again later.",
+		);
+	});
+
+	test("grabArticle handles markdown fetch failure and displays specific error", async () => {
+		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		jest.spyOn(ArticleFiller, "displayError").mockImplementation(() => {});
+		global.fetch = jest.fn((url) => {
+			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
+				return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
+			}
+			if (url === "/src/articleArchive/articleData.json") {
+				return Promise.resolve({
+					ok: true,
+					json: () =>
+						Promise.resolve({
+							TestArticle: { title: "Test Article", author: "Jane Doe", date: "2024-06-01" },
+						}),
+				});
+			}
+
+			return Promise.reject(new Error("Article fetch failed"));
+		});
+
+		await start(location);
+		await new Promise((resolve) => setTimeout(resolve, 0));
+
+		// grabArticle catches its own error and displays a specific message
+		expect(ArticleFiller.displayError).toHaveBeenCalledWith(
+			expect.stringContaining("Could not retrieve article. Please check the article name or try again later."),
+		);
+	});
+
+	test("service worker registration failure does not block rendering", async () => {
+		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
+		global.navigator = {
+			serviceWorker: {
+				getRegistrations: jest.fn().mockResolvedValue([]),
+				register: jest.fn().mockRejectedValue(new Error("disallowed redirect")),
+			},
+		};
+		global.fetch = jest.fn((url) => {
+			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
+				return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
+			}
+			if (url === "/src/articleArchive/articleData.json") {
+				return Promise.resolve({
+					ok: true,
+					json: () =>
+						Promise.resolve({
+							TestArticle: { title: "Test Article", author: "Jane Doe", date: "2024-06-01" },
+						}),
+				});
+			}
+
+			return Promise.resolve({ ok: true, text: () => Promise.resolve("# Test Article") });
+		});
+
+		await start(location);
+		await new Promise((resolve) => setTimeout(resolve, 0));
+
 		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
 		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
 	});

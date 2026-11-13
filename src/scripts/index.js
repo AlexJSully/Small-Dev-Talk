@@ -177,7 +177,9 @@ class ArticleFiller {
 		`;
 
 		if (document?.getElementById("articleBody")) {
-			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
+			const articleBody = document.getElementById("articleBody");
+			articleBody.removeAttribute("hidden");
+			articleBody.innerHTML = ArticleFiller.article;
 		}
 	}
 
@@ -199,6 +201,7 @@ class ArticleFiller {
 			.catch((error) => {
 				console.error("Error retrieving article data:", error);
 				reportToSentry(error);
+				throw error;
 			});
 	}
 
@@ -395,6 +398,7 @@ class ArticleFiller {
 			.catch((error) => {
 				console.error("Error retrieving page data:", error);
 				reportToSentry(error);
+				throw error;
 			});
 	}
 
@@ -785,8 +789,14 @@ async function start(location) {
 		return;
 	}
 
-	await registerServiceWorker();
-	await init();
+	try {
+		await registerServiceWorker();
+		await init();
+	} catch (error) {
+		console.error("Page initialization failed:", error);
+		reportToSentry(error);
+		ArticleFiller.displayError("Failed to load page. Please refresh or try again later.");
+	}
 }
 
 window.onload = () => start(window.location);
