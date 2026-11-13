@@ -1,4 +1,4 @@
-const sentrySdkUrl = "https://browser.sentry-cdn.com/10.32.1/bundle.tracing.replay.min.js";
+const sentrySdkUrl = "https://browser.sentry-cdn.com/11.12.0/bundle.tracing.replay.min.js";
 
 /**
  * Intercept every Sentry envelope the page sends, reply with success, and collect the request bodies.
@@ -59,7 +59,7 @@ describe("Sentry initialization", () => {
 		cy.wrap(null).should(() => {
 			const envelopes = envelopeBodies.join("\n");
 			expect(envelopes).to.contain("Sentry capture smoke test");
-			expect(envelopes).to.contain('"type":"transaction"');
+			expect(envelopes).to.contain("Sentry tracing smoke test");
 		});
 	});
 
