@@ -59,7 +59,7 @@ describe("Sentry initialization", () => {
 		cy.wrap(null).should(() => {
 			const envelopes = envelopeBodies.join("\n");
 			expect(envelopes).to.contain("Sentry capture smoke test");
-			expect(envelopes).to.contain('"type":"transaction"');
+			expect(envelopes).to.contain("Sentry tracing smoke test");
 		});
 	});
 
