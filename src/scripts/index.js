@@ -700,6 +700,14 @@ function redirectToCanonicalHost(location) {
  * @returns {Promise<void>} Resolves once cleanup finishes; failures are logged and reported.
  */
 async function removeLegacyServiceWorker() {
+	if (
+		typeof navigator === "undefined" ||
+		!navigator.serviceWorker ||
+		typeof navigator.serviceWorker.getRegistrations !== "function"
+	) {
+		return;
+	}
+
 	try {
 		const registrations = await navigator.serviceWorker.getRegistrations();
 		const legacyRegistrations = registrations.filter(

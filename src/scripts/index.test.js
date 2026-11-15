@@ -441,6 +441,13 @@ describe("redirectToCanonicalHost", () => {
 		expect(location.replace).toHaveBeenCalledWith("https://smalldevtalk.net/");
 	});
 
+	test("moves a www page with index.html and no query to the canonical host", () => {
+		const location = createLocation("https://www.smalldevtalk.net/index.html");
+
+		expect(redirectToCanonicalHost(location)).toBe(true);
+		expect(location.replace).toHaveBeenCalledWith("https://smalldevtalk.net/index.html");
+	});
+
 	test.each(["https://smalldevtalk.net/index.html?Caravaneer2", "http://localhost:3000/index.html"])(
 		"leaves %s where it is",
 		(href) => {
@@ -496,6 +503,29 @@ describe("ServiceWorker registration", () => {
 		expect(console.error).toHaveBeenCalled();
 	});
 
+	test("registerServiceWorker handles SecurityError from disallowed redirect and reports to Sentry", async () => {
+		const securityError = new Error(
+			"Failed to register a ServiceWorker for scope ('https://www.smalldevtalk.net/src/serviceWorker/') with script ('https://www.smalldevtalk.net/src/serviceWorker/sw.js'): The script resource is behind a redirect, which is disallowed.",
+		);
+		securityError.name = "SecurityError";
+		securityError.code = 18;
+
+		global.navigator = {
+			serviceWorker: {
+				getRegistrations: jest.fn().mockResolvedValue([]),
+				register: jest.fn().mockRejectedValue(securityError),
+			},
+		};
+		global.Sentry = { captureException: jest.fn() };
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		const res = await registerServiceWorker();
+
+		expect(res).toBeNull();
+		expect(console.error).toHaveBeenCalledWith("ServiceWorker registration failed:", securityError.message);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(securityError);
+	});
+
 	test("removeLegacyServiceWorker unregisters only the /src/serviceWorker/ worker and deletes only its precache", async () => {
 		const legacy = createRegistration("https://smalldevtalk.net/src/serviceWorker/");
 		const current = createRegistration("https://smalldevtalk.net/");
@@ -512,6 +542,29 @@ describe("ServiceWorker registration", () => {
 		expect(global.caches.delete).toHaveBeenCalledWith(
 			"workbox-precache-v2-https://smalldevtalk.net/src/serviceWorker/",
 		);
+	});
+
+	test("removeLegacyServiceWorker unregisters legacy worker with www origin scope", async () => {
+		const legacyWww = createRegistration("https://www.smalldevtalk.net/src/serviceWorker/");
+		global.navigator = {
+			serviceWorker: { getRegistrations: jest.fn().mockResolvedValue([legacyWww]) },
+		};
+		global.caches = { delete: jest.fn().mockResolvedValue(true) };
+
+		await removeLegacyServiceWorker();
+
+		expect(legacyWww.unregister).toHaveBeenCalledTimes(1);
+		expect(global.caches.delete).toHaveBeenCalledWith(
+			"workbox-precache-v2-https://www.smalldevtalk.net/src/serviceWorker/",
+		);
+	});
+
+	test("removeLegacyServiceWorker exits cleanly when getRegistrations is not supported", async () => {
+		global.navigator = { serviceWorker: {} };
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		await expect(removeLegacyServiceWorker()).resolves.toBeUndefined();
+		expect(console.error).not.toHaveBeenCalled();
 	});
 
 	test("registerServiceWorker waits for the installing worker to take control of the page", async () => {
