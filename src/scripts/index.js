@@ -701,6 +701,14 @@ function redirectToCanonicalHost(location) {
  */
 async function removeLegacyServiceWorker() {
 	try {
+		if (
+			typeof navigator === "undefined" ||
+			!navigator.serviceWorker ||
+			typeof navigator.serviceWorker.getRegistrations !== "function"
+		) {
+			return;
+		}
+
 		const registrations = await navigator.serviceWorker.getRegistrations();
 		const legacyRegistrations = registrations.filter(
 			(registration) => new URL(registration.scope).pathname === LEGACY_SERVICE_WORKER_SCOPE_PATH,
@@ -733,9 +741,10 @@ const SERVICE_WORKER_CONTROL_TIMEOUT_MS = 3000;
  * @returns {Promise<void>} Resolves once the page is controlled, or after the timeout.
  */
 function waitForServiceWorkerControl(registration) {
-	const container = navigator.serviceWorker;
+	const container = typeof navigator !== "undefined" ? navigator.serviceWorker : null;
 
 	if (
+		!container ||
 		container.controller ||
 		!registration ||
 		!(registration.installing || registration.waiting) ||
@@ -761,22 +770,27 @@ function waitForServiceWorkerControl(registration) {
  * @returns {Promise<ServiceWorkerRegistration|null>} Registration or null on failure/unsupported.
  */
 async function registerServiceWorker() {
-	if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
-		await removeLegacyServiceWorker();
-
-		try {
-			const reg = await navigator.serviceWorker.register("./sw.js");
-			await waitForServiceWorkerControl(reg);
-
-			return reg;
-		} catch (e) {
-			console.error("ServiceWorker registration failed:", e && e.message ? e.message : e);
-			reportToSentry(e);
-
+	try {
+		if (
+			typeof navigator === "undefined" ||
+			!navigator.serviceWorker ||
+			typeof navigator.serviceWorker.register !== "function"
+		) {
 			return null;
 		}
+
+		await removeLegacyServiceWorker();
+
+		const reg = await navigator.serviceWorker.register("./sw.js");
+		await waitForServiceWorkerControl(reg);
+
+		return reg;
+	} catch (e) {
+		console.error("ServiceWorker registration failed:", e && e.message ? e.message : e);
+		reportToSentry(e);
+
+		return null;
 	}
-	return null;
 }
 
 /**
