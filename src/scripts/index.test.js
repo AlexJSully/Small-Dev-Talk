@@ -567,6 +567,24 @@ describe("ServiceWorker registration", () => {
 		expect(console.error).not.toHaveBeenCalled();
 	});
 
+	test("removeLegacyServiceWorker catches SecurityError when accessing navigator.serviceWorker and does not throw", async () => {
+		const securityError = new Error("Access to service worker is denied by browser policy");
+		securityError.name = "SecurityError";
+
+		global.navigator = {};
+		Object.defineProperty(global.navigator, "serviceWorker", {
+			get() {
+				throw securityError;
+			},
+		});
+		global.Sentry = { captureException: jest.fn() };
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		await expect(removeLegacyServiceWorker()).resolves.toBeUndefined();
+		expect(console.error).toHaveBeenCalledWith("Legacy ServiceWorker cleanup failed:", securityError.message);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(securityError);
+	});
+
 	test("registerServiceWorker waits for the installing worker to take control of the page", async () => {
 		const listeners = {};
 		const registration = { ...createRegistration("http://localhost/"), installing: {} };
@@ -831,6 +849,46 @@ describe("start", () => {
 		await new Promise((resolve) => setTimeout(resolve, 0));
 
 		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
+		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
+	});
+
+	test("service worker access SecurityError does not block rendering", async () => {
+		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
+		const securityError = new Error("Access to service worker is denied by browser policy");
+		securityError.name = "SecurityError";
+
+		global.navigator = {};
+		let accessed = 0;
+		Object.defineProperty(global.navigator, "serviceWorker", {
+			get() {
+				accessed++;
+				if (accessed === 1) {
+					return true;
+				}
+				throw securityError;
+			},
+		});
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		global.fetch = jest.fn((url) => {
+			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
+				return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
+			}
+			if (url === "/src/articleArchive/articleData.json") {
+				return Promise.resolve({
+					ok: true,
+					json: () =>
+						Promise.resolve({
+							TestArticle: { title: "Test Article", author: "Jane Doe", date: "2024-06-01" },
+						}),
+				});
+			}
+
+			return Promise.resolve({ ok: true, text: () => Promise.resolve("# Test Article") });
+		});
+
+		await start(location);
+		await new Promise((resolve) => setTimeout(resolve, 0));
+
 		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
 	});
 });
