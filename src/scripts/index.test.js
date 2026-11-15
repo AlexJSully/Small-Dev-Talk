@@ -473,6 +473,16 @@ describe("ServiceWorker registration", () => {
 		expect(res).toBeNull();
 	});
 
+	test("registerServiceWorker returns null cleanly when register is not supported", async () => {
+		global.navigator = { serviceWorker: {} };
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		const res = await registerServiceWorker();
+
+		expect(res).toBeNull();
+		expect(console.error).not.toHaveBeenCalled();
+	});
+
 	test("registerServiceWorker registers the root worker so its scope covers the page", async () => {
 		const registration = createRegistration("http://localhost/");
 		global.navigator = {
@@ -858,13 +868,8 @@ describe("start", () => {
 		securityError.name = "SecurityError";
 
 		global.navigator = {};
-		let accessed = 0;
 		Object.defineProperty(global.navigator, "serviceWorker", {
 			get() {
-				accessed++;
-				if (accessed === 1) {
-					return true;
-				}
 				throw securityError;
 			},
 		});
