@@ -105,6 +105,18 @@ describe("Sentry initialization", () => {
 		});
 	});
 
+	it("loads third-party scripts with CORS so their errors report a message and stack, not 'Script error.'", () => {
+		cy.visit("http://localhost:3000");
+
+		// Browsers hide the message and stack of an error thrown by a cross-origin script loaded without CORS.
+		cy.get('script[src^="https://www.googletagmanager.com/gtag/js"]').should(
+			"have.attr",
+			"crossorigin",
+			"anonymous",
+		);
+		cy.get('script[src="https://platform.twitter.com/widgets.js"]').should("have.attr", "crossorigin", "anonymous");
+	});
+
 	it("reports a missing SDK and continues rendering the page", () => {
 		// Clear Chromium's HTTP cache so a previously loaded SDK cannot bypass the intercept.
 		cy.then(() =>
