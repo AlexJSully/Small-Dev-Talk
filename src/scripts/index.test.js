@@ -210,6 +210,35 @@ describe("ArticleFiller: grabArticle", () => {
 		);
 		expect(ArticleFiller.articleMd).toBeUndefined();
 	});
+
+	test("normalizes a multi-word article name by title-casing each word", async () => {
+		const mockMd = "# Ghost Ship";
+		ArticleFiller.articleData = {
+			GhostShip: {
+				title: "Ghost Ship",
+				summary: "A summary.",
+				thumbnail: "thumb.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+		};
+
+		global.fetch = jest.fn().mockResolvedValue({
+			ok: true,
+			text: () => Promise.resolve(mockMd),
+		});
+
+		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
+
+		await ArticleFiller.grabArticle("ghost ship");
+
+		await new Promise((r) => setTimeout(r, 0));
+
+		expect(global.fetch).toHaveBeenCalledWith(
+			"/src/articleArchive/authorJaneDoe/2024-06-01_GhostShip/GhostShip.md",
+		);
+		expect(ArticleFiller.articleMd).toBe(mockMd);
+	});
 });
 
 describe("ArticleFiller: retrieveArticleData", () => {

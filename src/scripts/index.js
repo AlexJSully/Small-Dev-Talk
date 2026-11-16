@@ -242,25 +242,23 @@ class ArticleFiller {
 
 	/**
 	 * Grab article markdown file
-	 * @param {String} articleName Name of article
+	 * @param {String} rawArticleName Name of article
 	 */
-	static grabArticle(articleName) {
-		const tempName = articleName.split(" ");
-		articleName = "";
-		for (const name of tempName) {
-			const change = name[0].toUpperCase() + name.slice(1);
-			articleName += change;
-		}
+	static grabArticle(rawArticleName) {
+		const normalizedName = rawArticleName
+			.split(" ")
+			.map((word) => word[0].toUpperCase() + word.slice(1))
+			.join("");
 
-		if (ArticleFiller.articleData && articleName) {
-			const articleData = ArticleFiller.articleData[articleName];
+		if (ArticleFiller.articleData && normalizedName) {
+			const articleData = ArticleFiller.articleData[normalizedName];
 			if (articleData) {
-				this.updateMetaData(articleData, articleName);
+				this.updateMetaData(articleData, normalizedName);
 
 				// Create URL
 				const authorFolder = `author${articleData.author.replace(/\s/g, "")}`;
-				const articleFolder = `${articleData.date}_${articleName}`;
-				const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleName}.md`;
+				const articleFolder = `${articleData.date}_${normalizedName}`;
+				const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${normalizedName}.md`;
 
 				// Call article
 				fetch(url)
