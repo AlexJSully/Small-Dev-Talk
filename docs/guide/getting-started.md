@@ -57,6 +57,7 @@ Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
 - Sentry Software Development Kit (SDK) scripts are loaded and initialized in `index.html`
 - Google Analytics and Google Tag Manager scripts are loaded in `index.html`
+- The Google tag, the Google Tag Manager loader, and the X `widgets.js` script load with `crossorigin="anonymous"`, so an error they throw reports its message and stack instead of `Script error.`
 
 Implementation: [index.html](../../index.html)
 

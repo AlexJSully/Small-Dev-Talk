@@ -176,6 +176,8 @@
 					j = d.createElement(s),
 					dl = l != "dataLayer" ? "&l=" + l : "";
 				j.async = true;
+				// Without CORS, the browser reports an error thrown by this script as "Script error." with no details.
+				j.crossOrigin = "anonymous";
 				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
 				f.parentNode.insertBefore(j, f);
 			})(window, document, "script", "dataLayer", "GTM-5H259MB");

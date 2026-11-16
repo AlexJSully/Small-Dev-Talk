@@ -109,12 +109,14 @@ describe("Sentry initialization", () => {
 		cy.visit("http://localhost:3000");
 
 		// Browsers hide the message and stack of an error thrown by a cross-origin script loaded without CORS.
-		cy.get('script[src^="https://www.googletagmanager.com/gtag/js"]').should(
-			"have.attr",
-			"crossorigin",
-			"anonymous",
-		);
-		cy.get('script[src="https://platform.twitter.com/widgets.js"]').should("have.attr", "crossorigin", "anonymous");
+		// The gtm.js script is created at runtime by the Google Tag Manager loader, so its property must reach the attribute.
+		[
+			'script[src^="https://www.googletagmanager.com/gtag/js"]',
+			'script[src^="https://www.googletagmanager.com/gtm.js"]',
+			'script[src="https://platform.twitter.com/widgets.js"]',
+		].forEach((selector) => {
+			cy.get(selector).should("have.attr", "crossorigin", "anonymous");
+		});
 	});
 
 	it("reports a missing SDK and continues rendering the page", () => {
