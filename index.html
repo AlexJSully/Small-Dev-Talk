@@ -344,19 +344,26 @@
 						<!-- begin twitter -->
 						<div class="box">
 							<h2>Twitter</h2>
-							<a
-								class="twitter-timeline"
-								data-height="1000"
-								href="https://twitter.com/SmallDevTalk?ref_src=twsrc%5Etfw"
-							>
-								Tweets by SmallDevTalk
-							</a>
-							<script
-								async
-								src="https://platform.twitter.com/widgets.js"
-								charset="utf-8"
-								crossorigin="anonymous"
-							></script>
+							<!-- Follow link shown until watchTwitterTimeline sees X render the timeline below -->
+							<p class="twitterFallback">
+								<a href="https://twitter.com/SmallDevTalk">Follow @SmallDevTalk on X</a>
+							</p>
+							<div id="twitterTimeline" class="twitterTimelinePending">
+								<a
+									class="twitter-timeline"
+									data-height="1000"
+									data-dnt="true"
+									href="https://twitter.com/SmallDevTalk?ref_src=twsrc%5Etfw"
+								>
+									Tweets by SmallDevTalk
+								</a>
+								<script
+									async
+									src="https://platform.twitter.com/widgets.js"
+									charset="utf-8"
+									crossorigin="anonymous"
+								></script>
+							</div>
 						</div>
 						<!-- end twitter -->
 					</div>

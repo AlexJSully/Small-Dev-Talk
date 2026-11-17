@@ -499,6 +499,21 @@ img {
 	text-decoration: none;
 }
 
+#sidebar .twitterFallback a {
+	color: #0d6efd;
+	text-decoration: none;
+}
+
+#sidebar .twitterFallback a:hover {
+	color: #0a58ca;
+}
+
+/* Keeps the X timeline laid out, so its iframe can size itself, while showing nothing until X renders it. */
+#sidebar .twitterTimelinePending {
+	height: 0;
+	overflow: hidden;
+}
+
 #sidebar .ads {
 	margin-bottom: 10px;
 	text-align: center;
