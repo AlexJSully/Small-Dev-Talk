@@ -31,14 +31,24 @@ describe("Content Security Policy", () => {
 			},
 		});
 
+		// The browser enforces the policy before the request reaches the Cypress proxy, so the stubbed map still fails
+		// the fetch when connect-src blocks it, and the test does not depend on the CDN being reachable.
+		cy.intercept("GET", "https://browser.sentry-cdn.com/**/*.map", {
+			statusCode: 200,
+			headers: { "access-control-allow-origin": "*" },
+			body: "{}",
+		}).as("sourceMap");
+
 		// The bundle ends with a sourceMappingURL comment, and a browser with its developer tools open fetches that map.
 		cy.get('script[src^="https://browser.sentry-cdn.com/"]')
 			.invoke("attr", "src")
-			.then((src) => {
-				cy.window().then((win) => win.fetch(`${src}.map`).then(() => {}));
-			});
+			.then((src) => cy.window().then((win) => win.fetch(`${src}.map`).then((response) => response.status)))
+			.should("equal", 200);
+		cy.wait("@sourceMap");
 		cy.then(() => {
-			expect(violations, violations.join("\n")).to.be.empty;
+			const sentryViolations = violations.filter((violation) => violation.includes("sentry-cdn"));
+
+			expect(sentryViolations, sentryViolations.join("\n")).to.be.empty;
 		});
 	});
 

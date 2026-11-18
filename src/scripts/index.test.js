@@ -23,14 +23,14 @@ const {
 } = require("./index.js");
 const { version: packageVersion } = require("../../package.json");
 
-describe("reportToSentry before Sentry initializes", () => {
-	afterEach(() => {
-		// Empty the module's buffer so one test's errors never reach another.
-		global.Sentry = { captureException: jest.fn() };
-		flushPendingSentryErrors();
-		delete global.Sentry;
-	});
+afterEach(() => {
+	// Empty the module's buffer of errors reported without a Sentry client, so one test's errors never reach another.
+	global.Sentry = { captureException: jest.fn() };
+	flushPendingSentryErrors();
+	delete global.Sentry;
+});
 
+describe("reportToSentry before Sentry initializes", () => {
 	test("keeps an error until the SDK has a client, then flushPendingSentryErrors sends it once", () => {
 		// Sentry is a third-party SDK that sends events over the network.
 		global.Sentry = { captureException: jest.fn(), getClient: jest.fn(() => undefined) };
@@ -45,7 +45,7 @@ describe("reportToSentry before Sentry initializes", () => {
 		flushPendingSentryErrors();
 
 		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
-		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error, undefined);
 	});
 
 	test("wraps a message in an Error before keeping it", () => {
@@ -65,7 +65,7 @@ describe("reportToSentry before Sentry initializes", () => {
 
 		reportToSentry(error);
 
-		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error, undefined);
 	});
 
 	test("passes the capture context to Sentry, at once or after the buffer is flushed", () => {
@@ -109,7 +109,7 @@ describe("reportToSentry before Sentry initializes", () => {
 		flushPendingSentryErrors();
 
 		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
-		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error, undefined);
 	});
 });
 
@@ -134,31 +134,7 @@ describe("ArticleFiller: displayError", () => {
 		delete global.Sentry;
 	});
 
-	const DEFAULT_MESSAGE = "Something went wrong while loading this page. Refresh the page or try again later.";
-
-	test("shows the message it is given, sets errMsg, and reveals articleBody", () => {
-		ArticleFiller.displayError("Something went wrong!");
-
-		expect(ArticleFiller.errMsg).toBe("Something went wrong!");
-		expect(document.getElementById("articleBody").innerHTML).toContain("Something went wrong!");
-		expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
-	});
-
-	[
-		["an empty string", ""],
-		["whitespace", "   "],
-		["undefined", undefined],
-		["null", null],
-		["an Error", new Error("not a string")],
-	].forEach(([name, input]) => {
-		test(`shows a helpful message, not a blank or "Unknown error", when given ${name}`, () => {
-			expect(() => ArticleFiller.displayError(input)).not.toThrow();
-
-			expect(ArticleFiller.errMsg).toBe(DEFAULT_MESSAGE);
-			expect(document.getElementById("articleBody").innerHTML).toContain(DEFAULT_MESSAGE);
-			expect(document.getElementById("articleBody").innerHTML).not.toContain("Unknown error");
-		});
-	});
+	const UNKNOWN_MESSAGE = "Something went wrong while loading this page. Refresh the page or try again later.";
 
 	[
 		["network", "We could not reach Small Dev Talk. Check your internet connection, then refresh the page."],
@@ -172,32 +148,70 @@ describe("ArticleFiller: displayError", () => {
 		test(`shows the ${kind} message, and keeps the technical detail of the error off the page`, () => {
 			const error = new LoadError("Failed to fetch article: 503 Service Unavailable", { kind });
 
-			ArticleFiller.displayError(undefined, { error });
+			ArticleFiller.displayError(error);
 
 			expect(ArticleFiller.errMsg).toBe(message);
 			expect(document.getElementById("articleBody").textContent).toContain(message);
 			expect(document.getElementById("articleBody").innerHTML).not.toContain("503");
+			expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
 		});
 	});
 
-	test("logs one object with the original error, its operation, the article and the page", () => {
-		const error = new LoadError("Failed to fetch article: 404 Not Found", {
+	test("shows the unknown message for an error without a kind, and keeps its markup off the page", () => {
+		ArticleFiller.displayError(new Error("<script>alert('xss')</script>"));
+
+		const articleBody = document.getElementById("articleBody");
+		expect(ArticleFiller.errMsg).toBe(UNKNOWN_MESSAGE);
+		expect(articleBody.textContent).toContain(UNKNOWN_MESSAGE);
+		expect(articleBody.innerHTML).not.toContain("alert");
+		expect(articleBody.querySelector("script")).toBeNull();
+	});
+
+	test("reports the Error it is given, with its stack, rather than a new one", () => {
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
+		const error = new TypeError("x is not a function");
+
+		ArticleFiller.displayError(error, { operation: "load article" });
+
+		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
+		expect(global.Sentry.captureException.mock.calls[0][0]).toBe(error);
+		expect(global.Sentry.captureException.mock.calls[0][1]).toMatchObject({
+			level: "error",
+			tags: { operation: "load article", kind: "unknown" },
+		});
+	});
+
+	test("wraps a failure that is not an Error, and shows the unknown message", () => {
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
+
+		ArticleFiller.displayError("plain failure");
+
+		const [reported] = global.Sentry.captureException.mock.calls[0];
+		expect(reported).toBeInstanceOf(Error);
+		expect(reported.message).toBe("plain failure");
+		expect(ArticleFiller.errMsg).toBe(UNKNOWN_MESSAGE);
+	});
+
+	test("logs one object with the original error and its context, preferring the error's own operation and article", () => {
+		const error = new LoadError("Failed to fetch article: 500 Internal Server Error", {
 			kind: "http",
 			operation: "retrieve article",
 			url: "/src/articleArchive/a.md",
-			status: 404,
+			status: 500,
+			article: "TestArticle",
 		});
 
-		ArticleFiller.displayError(undefined, { error, operation: "load article", article: "TestArticle" });
+		ArticleFiller.displayError(error, { operation: "load article", article: "OtherArticle" });
 
 		expect(console.error).toHaveBeenCalledTimes(1);
 		expect(console.error).toHaveBeenCalledWith("ArticleFiller error:", {
-			message: "Failed to fetch article: 404 Not Found",
+			message: "Failed to fetch article: 500 Internal Server Error",
 			kind: "http",
 			operation: "retrieve article",
 			article: "TestArticle",
 			url: "/src/articleArchive/a.md",
-			status: 404,
+			status: 500,
 			page: document.URL,
 			timestamp: expect.any(String),
 			error,
@@ -205,8 +219,16 @@ describe("ArticleFiller: displayError", () => {
 		expect(console.error.mock.calls[0][1].error.stack).toEqual(expect.any(String));
 	});
 
+	test("fills the operation and article from the context when the error has none", () => {
+		ArticleFiller.displayError(new Error("boom"), { operation: "load article", article: "TestArticle" });
+
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({ operation: "load article", article: "TestArticle", kind: "unknown" }),
+		);
+	});
+
 	test("reports the original error to Sentry with its level, tags and extra context", () => {
-		// Sentry is a third-party SDK that sends events over the network.
 		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		const error = new LoadError("Article not found in article data: Nope", {
 			kind: "missing",
@@ -214,7 +236,7 @@ describe("ArticleFiller: displayError", () => {
 			article: "Nope",
 		});
 
-		ArticleFiller.displayError(undefined, { error });
+		ArticleFiller.displayError(error);
 
 		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
 		expect(global.Sentry.captureException).toHaveBeenCalledWith(error, {
@@ -224,57 +246,24 @@ describe("ArticleFiller: displayError", () => {
 		});
 	});
 
-	test("reports a failure that is not a warning at error level", () => {
-		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
-
-		ArticleFiller.displayError(undefined, {
-			error: new TypeError("x is not a function"),
-			operation: "load article",
-		});
-
-		expect(global.Sentry.captureException.mock.calls[0][1]).toMatchObject({
-			level: "error",
-			tags: { operation: "load article", kind: "unknown" },
-		});
-	});
-
-	test("makes an Error from the message when no error is given, and reports it", () => {
-		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
-
-		ArticleFiller.displayError("Error retrieving article.", { operation: "load article" });
-
-		const [reported] = global.Sentry.captureException.mock.calls[0];
-		expect(reported).toBeInstanceOf(Error);
-		expect(reported.message).toBe("Error retrieving article.");
-	});
-
 	test("logs and reports an error that passed through several handlers once", () => {
 		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		const error = new LoadError("Failed to fetch article data: Network unavailable", { kind: "network" });
 
 		reportError(error);
-		ArticleFiller.displayError(undefined, { error, operation: "initialize page" });
+		ArticleFiller.displayError(error, { operation: "initialize page" });
 
 		expect(console.error).toHaveBeenCalledTimes(1);
 		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
 		expect(ArticleFiller.errMsg).toContain("We could not reach Small Dev Talk");
 	});
 
-	test("escapes HTML in error message to prevent XSS", () => {
-		ArticleFiller.displayError("<script>alert('xss')</script>");
-		const html = document.getElementById("articleBody").innerHTML;
-		expect(html).toContain("&lt;script&gt;alert('xss')&lt;/script&gt;");
-		expect(html).not.toContain("<script>");
-		expect(document.getElementById("articleBody").querySelector("script")).toBeNull();
-		expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
-	});
-
 	test("shows the error when the Sentry SDK did not load", () => {
 		expect(global.Sentry).toBeUndefined();
 
-		ArticleFiller.displayError("Error retrieving article.");
+		ArticleFiller.displayError(new LoadError("Article not found in article data: Nope", { kind: "missing" }));
 
-		expect(document.getElementById("articleBody").innerHTML).toContain("Error retrieving article.");
+		expect(document.getElementById("articleBody").textContent).toContain("We could not find that article.");
 		expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
 	});
 });
@@ -288,7 +277,7 @@ describe("fetchResource", () => {
 	test("resolves with the body that readBody returns", async () => {
 		global.fetch = jest.fn().mockResolvedValue({ ok: true, text: () => Promise.resolve("# Hi") });
 
-		await expect(fetchResource("/a.md", "retrieve article", (response) => response.text())).resolves.toBe("# Hi");
+		await expect(fetchResource("/a.md", "article", (response) => response.text())).resolves.toBe("# Hi");
 		expect(global.fetch).toHaveBeenCalledWith("/a.md");
 	});
 
@@ -296,7 +285,7 @@ describe("fetchResource", () => {
 		const cause = new TypeError("Failed to fetch");
 		global.fetch = jest.fn().mockRejectedValue(cause);
 
-		const error = await fetchResource("/a.json", "retrieve page data", jest.fn()).catch((e) => e);
+		const error = await fetchResource("/a.json", "page data", jest.fn()).catch((e) => e);
 
 		expect(error).toBeInstanceOf(LoadError);
 		expect(error).toMatchObject({
@@ -310,51 +299,51 @@ describe("fetchResource", () => {
 
 	test("rejects with an http LoadError carrying the status, without reading the body", async () => {
 		const readBody = jest.fn();
-		global.fetch = jest.fn().mockResolvedValue({ ok: false, status: 404, statusText: "Not Found" });
+		global.fetch = jest.fn().mockResolvedValue({ ok: false, status: 503, statusText: "Service Unavailable" });
 
-		const error = await fetchResource("/a.md", "retrieve article", readBody, { article: "TestArticle" }).catch(
-			(e) => e,
-		);
+		const error = await fetchResource("/a.md", "article", readBody, { article: "TestArticle" }).catch((e) => e);
 
 		expect(error).toMatchObject({
 			kind: "http",
-			status: 404,
+			status: 503,
 			article: "TestArticle",
-			message: "Failed to fetch article: 404 Not Found",
+			message: "Failed to fetch article: 503 Service Unavailable",
 		});
 		expect(readBody).not.toHaveBeenCalled();
+	});
+
+	test("rejects with a missing LoadError carrying the status when the server answers 404", async () => {
+		global.fetch = jest.fn().mockResolvedValue({ ok: false, status: 404, statusText: "Not Found" });
+
+		const error = await fetchResource("/a.md", "article", jest.fn()).catch((e) => e);
+
+		expect(error).toMatchObject({
+			kind: "missing",
+			status: 404,
+			operation: "retrieve article",
+			message: "Failed to fetch article: 404 Not Found",
+		});
 	});
 
 	test("rejects with a parse LoadError when the body is not valid JSON", async () => {
 		const cause = new SyntaxError("Unexpected token");
 		global.fetch = jest.fn().mockResolvedValue({ ok: true, json: () => Promise.reject(cause) });
 
-		const error = await fetchResource("/a.json", "retrieve article data", (response) => response.json()).catch(
-			(e) => e,
-		);
+		const error = await fetchResource("/a.json", "article data", (response) => response.json()).catch((e) => e);
 
 		expect(error).toMatchObject({ kind: "parse", message: "Failed to parse article data: Unexpected token" });
 		expect(error.cause).toBe(cause);
 	});
 
-	[
-		["response.text()", (response) => response.text()],
-		["response.json()", (response) => response.json()],
-	].forEach(([name, readBody]) => {
-		test(`rejects with a network LoadError when the connection drops while ${name} downloads the body`, async () => {
-			// fetch resolves once the headers arrive. A body stream that errors rejects text() and json() with a TypeError.
-			const cause = new TypeError("network error");
-			global.fetch = jest.fn().mockResolvedValue({
-				ok: true,
-				text: () => Promise.reject(cause),
-				json: () => Promise.reject(cause),
-			});
+	test("rejects with a network LoadError when the connection drops while the body downloads", async () => {
+		// fetch resolves once the headers arrive. A body stream that errors rejects text() and json() with a TypeError.
+		const cause = new TypeError("network error");
+		global.fetch = jest.fn().mockResolvedValue({ ok: true, text: () => Promise.reject(cause) });
 
-			const error = await fetchResource("/a.md", "retrieve article", readBody).catch((e) => e);
+		const error = await fetchResource("/a.md", "article", (response) => response.text()).catch((e) => e);
 
-			expect(error).toMatchObject({ kind: "network", message: "Failed to download article: network error" });
-			expect(error.cause).toBe(cause);
-		});
+		expect(error).toMatchObject({ kind: "network", message: "Failed to download article: network error" });
+		expect(error.cause).toBe(cause);
 	});
 });
 
@@ -427,6 +416,14 @@ describe("ArticleFiller: grabArticle", () => {
             <div id="carouselInner"></div>
             <div id="carouselIndicator"></div>
             <div id="pageTitle"></div>
+            <meta name="description" content="">
+            <meta property="og:title" content="">
+            <meta name="twitter:title" content="">
+            <meta property="og:description" content="">
+            <meta name="twitter:description" content="">
+            <meta property="og:image" content="">
+            <meta name="twitter:image" content="">
+            <script type="application/ld+json">{}</script>
         `;
 		ArticleFiller.articleMd = undefined;
 		// Reset static properties
@@ -444,6 +441,7 @@ describe("ArticleFiller: grabArticle", () => {
 	afterEach(() => {
 		jest.restoreAllMocks();
 		delete global.fetch;
+		delete global.Sentry;
 	});
 
 	test("loads markdown and updates DOM", async () => {
@@ -454,8 +452,6 @@ describe("ArticleFiller: grabArticle", () => {
 			text: () => Promise.resolve(mockMd),
 		});
 
-		// updateMetaData is called inside grabArticle, so mock it to avoid DOM errors
-		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
 		await ArticleFiller.grabArticle("TestArticle");
 
 		// Wait for the fetch and DOM update
@@ -465,7 +461,7 @@ describe("ArticleFiller: grabArticle", () => {
 		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
 	});
 
-	test("shows error when fetch fails (non-OK response)", async () => {
+	test("shows the missing message when the article file answers 404", async () => {
 		ArticleFiller.articleData = {
 			MissingArticle: {
 				title: "Missing Article",
@@ -483,7 +479,6 @@ describe("ArticleFiller: grabArticle", () => {
 			text: () => Promise.resolve(""),
 		});
 
-		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		await ArticleFiller.grabArticle("MissingArticle");
@@ -491,7 +486,7 @@ describe("ArticleFiller: grabArticle", () => {
 		await new Promise((r) => setTimeout(r, 0));
 
 		const html = document.getElementById("articleBody").innerHTML;
-		expect(html).toContain("Small Dev Talk could not load this content right now.");
+		expect(html).toContain("We could not find that article.");
 		expect(html).not.toContain("404");
 		expect(ArticleFiller.articleMd).toBeUndefined();
 	});
@@ -500,7 +495,6 @@ describe("ArticleFiller: grabArticle", () => {
 		global.fetch = jest
 			.fn()
 			.mockResolvedValue({ ok: true, text: () => Promise.reject(new TypeError("network error")) });
-		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
 		jest.spyOn(console, "error").mockImplementation(() => {});
 		// Sentry is a third-party SDK that sends events over the network.
 		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
@@ -514,12 +508,10 @@ describe("ArticleFiller: grabArticle", () => {
 			level: "warning",
 			tags: { operation: "retrieve article", kind: "network" },
 		});
-		delete global.Sentry;
 	});
 
 	test("shows the network message and logs the article when the request does not complete", async () => {
 		global.fetch = jest.fn().mockRejectedValue(new TypeError("Failed to fetch"));
-		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		await ArticleFiller.grabArticle("TestArticle");
@@ -547,31 +539,31 @@ describe("ArticleFiller: grabArticle", () => {
 				extra: expect.objectContaining({ article: "NoSuchArticle" }),
 			},
 		);
-		delete global.Sentry;
 	});
 
-	test("does not show a rendering failure as a retrieval failure", async () => {
-		global.fetch = jest.fn().mockResolvedValue({ ok: true, text: () => Promise.resolve("# Test Article") });
-		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
-		jest.spyOn(ArticleFiller, "addToPage").mockImplementation(() => {
-			throw new TypeError("converter failed");
-		});
+	test("shows a rendering failure as an unknown failure of loading the article, not a retrieval failure", async () => {
+		// showdown's makeHtml calls replace() on its input, so a body that is not a string throws inside addToPage.
+		global.fetch = jest.fn().mockResolvedValue({ ok: true, text: () => Promise.resolve({}) });
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		await ArticleFiller.grabArticle("TestArticle");
 
-		const html = document.getElementById("articleBody").innerHTML;
-		expect(html).toContain("Something went wrong while loading this page.");
-		expect(html).not.toContain("Could not retrieve article");
+		expect(document.getElementById("articleBody").textContent).toContain(
+			"Something went wrong while loading this page.",
+		);
 		expect(console.error).toHaveBeenCalledWith(
 			"ArticleFiller error:",
-			expect.objectContaining({ message: "converter failed", operation: "load article" }),
+			expect.objectContaining({
+				kind: "unknown",
+				operation: "load article",
+				article: "TestArticle",
+				error: expect.any(TypeError),
+			}),
 		);
 	});
 
 	test("returns a promise that settles once the article is on the page", async () => {
 		global.fetch = jest.fn().mockResolvedValue({ ok: true, text: () => Promise.resolve("# Test Article") });
-		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
 
 		await ArticleFiller.grabArticle("TestArticle");
 
@@ -594,8 +586,6 @@ describe("ArticleFiller: grabArticle", () => {
 			ok: true,
 			text: () => Promise.resolve(mockMd),
 		});
-
-		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
 
 		await ArticleFiller.grabArticle("ghost ship");
 
@@ -731,17 +721,21 @@ describe("ArticleFiller: retrievePageData", () => {
 	test("logs and reports non-OK responses and re-throws without storing page data", async () => {
 		global.fetch = jest
 			.fn()
-			.mockResolvedValue({ ok: false, status: 404, statusText: "Not Found", json: jest.fn() });
+			.mockResolvedValue({ ok: false, status: 503, statusText: "Service Unavailable", json: jest.fn() });
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 		// Sentry is a third-party SDK that sends events over the network.
 		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 
-		await expect(ArticleFiller.retrievePageData()).rejects.toThrow("Failed to fetch page data: 404 Not Found");
+		await expect(ArticleFiller.retrievePageData()).rejects.toThrow(
+			"Failed to fetch page data: 503 Service Unavailable",
+		);
 
-		const expectedError = expect.objectContaining({ message: "Failed to fetch page data: 404 Not Found" });
+		const expectedError = expect.objectContaining({
+			message: "Failed to fetch page data: 503 Service Unavailable",
+		});
 		expect(consoleErrorSpy).toHaveBeenCalledWith(
 			"ArticleFiller error:",
-			expect.objectContaining({ kind: "http", status: 404, operation: "retrieve page data" }),
+			expect.objectContaining({ kind: "http", status: 503, operation: "retrieve page data" }),
 		);
 		expect(global.Sentry.captureException).toHaveBeenCalledWith(
 			expectedError,
@@ -956,8 +950,17 @@ describe("ServiceWorker registration", () => {
 		const res = await registerServiceWorker();
 
 		expect(res).toBeNull();
-		expect(console.error).toHaveBeenCalledWith("ServiceWorker registration failed:", securityError.message);
-		expect(global.Sentry.captureException).toHaveBeenCalledWith(securityError);
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({ operation: "register service worker", message: securityError.message }),
+		);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(
+			securityError,
+			expect.objectContaining({
+				level: "error",
+				tags: { operation: "register service worker", kind: "unknown" },
+			}),
+		);
 	});
 
 	test("removeLegacyServiceWorker unregisters only the /src/serviceWorker/ worker and deletes only its precache", async () => {
@@ -1015,8 +1018,14 @@ describe("ServiceWorker registration", () => {
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		await expect(removeLegacyServiceWorker()).resolves.toBeUndefined();
-		expect(console.error).toHaveBeenCalledWith("Legacy ServiceWorker cleanup failed:", securityError.message);
-		expect(global.Sentry.captureException).toHaveBeenCalledWith(securityError);
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({ operation: "remove legacy service worker", message: securityError.message }),
+		);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(
+			securityError,
+			expect.objectContaining({ tags: { operation: "remove legacy service worker", kind: "unknown" } }),
+		);
 	});
 
 	test("a failed legacy cleanup is reported to Sentry and the root worker still registers", async () => {
@@ -1033,7 +1042,10 @@ describe("ServiceWorker registration", () => {
 
 		await registerServiceWorker();
 
-		expect(global.Sentry.captureException).toHaveBeenCalledWith(cleanupError);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(
+			cleanupError,
+			expect.objectContaining({ tags: { operation: "remove legacy service worker", kind: "unknown" } }),
+		);
 		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
 	});
 });
@@ -1119,19 +1131,17 @@ describe("start", () => {
 	test("still registers the worker after the view fails to render", async () => {
 		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
 		jest.spyOn(console, "error").mockImplementation(() => {});
-		jest.spyOn(ArticleFiller, "displayError").mockImplementation(() => {});
 		global.fetch = jest.fn(() => Promise.reject(new Error("Network unavailable")));
 
 		await start(location);
 
-		expect(ArticleFiller.displayError).toHaveBeenCalled();
+		expect(document.getElementById("articleBody").textContent).toContain("We could not reach Small Dev Talk.");
 		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
 	});
 
 	test("shows error message when retrievePageData fails", async () => {
 		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
 		jest.spyOn(console, "error").mockImplementation(() => {});
-		jest.spyOn(ArticleFiller, "displayError").mockImplementation(() => {});
 		global.fetch = jest.fn((url) => {
 			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
 				return Promise.reject(new Error("Network unavailable"));
@@ -1151,19 +1161,20 @@ describe("start", () => {
 
 		await start(location);
 
-		expect(ArticleFiller.displayError).toHaveBeenCalledWith(undefined, {
-			error: expect.objectContaining({
+		expect(document.getElementById("articleBody").textContent).toContain("We could not reach Small Dev Talk.");
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({
 				kind: "network",
+				operation: "retrieve page data",
 				message: expect.stringContaining("Network unavailable"),
 			}),
-			operation: "initialize page",
-		});
+		);
 	});
 
 	test("shows error message when retrieveArticleData fails", async () => {
 		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
 		jest.spyOn(console, "error").mockImplementation(() => {});
-		jest.spyOn(ArticleFiller, "displayError").mockImplementation(() => {});
 		global.fetch = jest.fn((url) => {
 			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
 				return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
@@ -1177,19 +1188,20 @@ describe("start", () => {
 
 		await start(location);
 
-		expect(ArticleFiller.displayError).toHaveBeenCalledWith(undefined, {
-			error: expect.objectContaining({
+		expect(document.getElementById("articleBody").textContent).toContain("We could not reach Small Dev Talk.");
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({
 				kind: "network",
+				operation: "retrieve article data",
 				message: expect.stringContaining("Network unavailable"),
 			}),
-			operation: "initialize page",
-		});
+		);
 	});
 
 	test("grabArticle handles markdown fetch failure and displays specific error", async () => {
 		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
 		jest.spyOn(console, "error").mockImplementation(() => {});
-		jest.spyOn(ArticleFiller, "displayError").mockImplementation(() => {});
 		global.fetch = jest.fn((url) => {
 			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
 				return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
@@ -1210,15 +1222,17 @@ describe("start", () => {
 		await start(location);
 		await new Promise((resolve) => setTimeout(resolve, 0));
 
-		// grabArticle catches its own error and displays a specific message
-		expect(ArticleFiller.displayError).toHaveBeenCalledWith(undefined, {
-			error: expect.objectContaining({
+		// grabArticle catches its own error and shows the message for its kind
+		expect(document.getElementById("articleBody").textContent).toContain("We could not reach Small Dev Talk.");
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({
 				kind: "network",
+				operation: "retrieve article",
+				article: "TestArticle",
 				message: "Failed to fetch article: Article fetch failed",
 			}),
-			operation: "load article",
-			article: "TestArticle",
-		});
+		);
 	});
 
 	test("reports a failed data request to Sentry once, not once per handler it passes through", async () => {
@@ -1239,7 +1253,6 @@ describe("start", () => {
 		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
 		expect(console.error).toHaveBeenCalledTimes(1);
 		expect(document.getElementById("articleBody").textContent).toContain("We could not reach Small Dev Talk.");
-		delete global.Sentry;
 	});
 
 	test("service worker registration failure does not block rendering", async () => {
@@ -2070,7 +2083,7 @@ describe("handleControlClick", () => {
 		document.body.innerHTML = '<div id="articleBody" hidden></div>';
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
-		ArticleFiller.displayError("Boom");
+		ArticleFiller.displayError(new Error("Boom"));
 
 		const html = document.getElementById("articleBody").innerHTML;
 		expect(html).not.toMatch(/\sonclick=/i);

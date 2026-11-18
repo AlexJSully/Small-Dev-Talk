@@ -114,20 +114,6 @@ function sentryHasClient() {
 }
 
 /**
- * Hand an error to `Sentry.captureException()`, passing the capture context only when there is one.
- * @param {Error} error The error to send.
- * @param {object} [captureContext] Sentry scope data for this event: `level`, `tags` and `extra`.
- * @returns {void}
- */
-function captureInSentry(error, captureContext) {
-	if (captureContext === undefined) {
-		Sentry.captureException(error);
-	} else {
-		Sentry.captureException(error, captureContext);
-	}
-}
-
-/**
  * Send an error to Sentry. `index.min.js` runs before the deferred Sentry SDK has executed and run `Sentry.init()`,
  * and the SDK drops an error captured without a client, so an error reported until then waits for
  * `flushPendingSentryErrors()`. It stays in the buffer when the SDK never loads.
@@ -139,7 +125,7 @@ function reportToSentry(error, captureContext) {
 	const reported = error instanceof Error ? error : new Error(String(error));
 
 	if (sentryHasClient()) {
-		captureInSentry(reported, captureContext);
+		Sentry.captureException(reported, captureContext);
 	} else if (pendingSentryErrors.length < MAX_PENDING_SENTRY_ERRORS) {
 		pendingSentryErrors.push({ error: reported, captureContext });
 	}
@@ -155,7 +141,9 @@ function flushPendingSentryErrors() {
 		return;
 	}
 
-	pendingSentryErrors.splice(0).forEach(({ error, captureContext }) => captureInSentry(error, captureContext));
+	pendingSentryErrors
+		.splice(0)
+		.forEach(({ error, captureContext }) => Sentry.captureException(error, captureContext));
 }
 
 /**
@@ -167,8 +155,8 @@ class LoadError extends Error {
 	 * @param {string} message What failed, for developers.
 	 * @param {object} [details] Where and why it failed.
 	 * @param {"network"|"http"|"parse"|"missing"} [details.kind] The failure type: the request or the download of its
-	 * body did not complete, the server answered with an error status, the content could not be parsed, or the content
-	 * does not exist.
+	 * body did not complete, the server answered with an error status other than 404, the content could not be parsed,
+	 * or the content does not exist.
 	 * @param {string} [details.operation] What the page was doing, for example "retrieve article data".
 	 * @param {string} [details.url] The requested URL.
 	 * @param {number} [details.status] The HTTP status code of a `http` failure.
@@ -178,10 +166,15 @@ class LoadError extends Error {
 	constructor(message, { kind, operation, url, status, article, cause } = {}) {
 		super(message, { cause });
 		this.name = "LoadError";
+		/** @type {"network"|"http"|"parse"|"missing"|undefined} What failed. */
 		this.kind = kind;
+		/** @type {string|undefined} What the page was doing when it failed. */
 		this.operation = operation;
+		/** @type {string|undefined} The requested URL. */
 		this.url = url;
+		/** @type {number|undefined} The HTTP status code of the response. */
 		this.status = status;
+		/** @type {string|undefined} The key of the article being loaded. */
 		this.article = article;
 	}
 }
@@ -224,22 +217,22 @@ function errorDetailsFor(kind) {
 }
 
 /**
- * Fetch a resource and read its body, naming the kind of failure when it does not work.
+ * Fetch a resource and read its body, naming the kind of failure when it does not work. A 404 is a `missing` failure.
  * @param {string} url The URL to request.
- * @param {string} operation What the page is doing, for example "retrieve article data".
+ * @param {string} resource What is requested, for example "article data". The operation is "retrieve" and this name.
  * @param {(response: Response) => Promise<*>} readBody Reads the body, for example `(response) => response.json()`.
  * @param {object} [details] More context for a failure.
  * @param {string} [details.article] The key of the article being loaded.
  * @returns {Promise<*>} Resolves with what `readBody` returns; rejects with a `LoadError`.
  */
-async function fetchResource(url, operation, readBody, { article } = {}) {
-	const target = operation.replace(/^retrieve /, "");
+async function fetchResource(url, resource, readBody, { article } = {}) {
+	const operation = `retrieve ${resource}`;
 	let response;
 
 	try {
 		response = await fetch(url);
 	} catch (cause) {
-		throw new LoadError(`Failed to fetch ${target}: ${cause?.message}`, {
+		throw new LoadError(`Failed to fetch ${resource}: ${cause?.message}`, {
 			kind: "network",
 			operation,
 			url,
@@ -249,8 +242,8 @@ async function fetchResource(url, operation, readBody, { article } = {}) {
 	}
 
 	if (!response.ok) {
-		throw new LoadError(`Failed to fetch ${target}: ${response.status} ${response.statusText}`, {
-			kind: "http",
+		throw new LoadError(`Failed to fetch ${resource}: ${response.status} ${response.statusText}`, {
+			kind: response.status === 404 ? "missing" : "http",
 			operation,
 			url,
 			status: response.status,
@@ -265,7 +258,7 @@ async function fetchResource(url, operation, readBody, { article } = {}) {
 		// Only a SyntaxError from `response.json()` means the content itself is unreadable.
 		const isParseFailure = cause instanceof SyntaxError;
 
-		throw new LoadError(`Failed to ${isParseFailure ? "parse" : "download"} ${target}: ${cause?.message}`, {
+		throw new LoadError(`Failed to ${isParseFailure ? "parse" : "download"} ${resource}: ${cause?.message}`, {
 			kind: isParseFailure ? "parse" : "network",
 			operation,
 			url,
@@ -281,9 +274,8 @@ const reportedErrors = new WeakSet();
 /**
  * Log an error with its context and report it to Sentry, once per error object.
  * @param {*} error The failure. A value that is not an Error is wrapped in one.
- * @param {object} [context] Where the failure happened.
- * @param {string} [context.operation] What the page was doing. Used when the error has no operation of its own.
- * @param {string} [context.kind] The failure kind. Defaults to the error's own kind.
+ * @param {object} [context] Where the failure happened. The error's own operation and article win over these.
+ * @param {string} [context.operation] What the page was doing.
  * @param {string} [context.article] The key of the article being loaded.
  * @returns {Error} The error that was logged and reported.
  */
@@ -295,9 +287,9 @@ function reportError(error, context = {}) {
 	}
 	reportedErrors.add(reported);
 
-	const kind = context.kind || reported.kind || "unknown";
+	const kind = reported.kind || "unknown";
 	const operation = reported.operation || context.operation || "unknown operation";
-	const article = context.article || reported.article;
+	const article = reported.article || context.article;
 	const page = typeof document === "undefined" ? undefined : document.URL;
 	const { url, status } = reported;
 
@@ -368,22 +360,18 @@ class ArticleFiller {
 	}
 
 	/**
-	 * Show an error to the visitor, and log and report it with its context for developers.
-	 * @param {string} [msg] The message to show. Without one, the message for the failure kind is shown.
-	 * @param {object} [context] Where the failure happened.
-	 * @param {*} [context.error] The failure, with its stack. Without one, an Error is made from the message.
-	 * @param {string} [context.kind] The failure kind. Defaults to the kind of `context.error`.
+	 * Show the visitor the message for the failure's kind, and log and report the failure with its context for
+	 * developers unless it was already reported.
+	 * @param {*} error The failure. Its `kind`, when it is a `LoadError`, picks the message.
+	 * @param {object} [context] Where the failure happened. The error's own operation and article win over these.
 	 * @param {string} [context.operation] What the page was doing, for example "load article".
 	 * @param {string} [context.article] The key of the article being loaded.
 	 * @return {void} Does not return a value but updates the article content.
 	 */
-	static displayError(msg, context = {}) {
-		const kind = context.kind || context.error?.kind;
-		const shownMessage = typeof msg === "string" ? msg.trim() : "";
+	static displayError(error, context = {}) {
+		ArticleFiller.errMsg = errorDetailsFor(error?.kind).message;
 
-		ArticleFiller.errMsg = shownMessage || errorDetailsFor(kind).message;
-
-		reportError(context.error ?? new LoadError(ArticleFiller.errMsg, { kind }), context);
+		reportError(error, context);
 
 		// Display the error with Bootstrap styling
 		ArticleFiller.article = `
@@ -421,7 +409,7 @@ class ArticleFiller {
 	static retrieveArticleData() {
 		const articleDataUrl = "/src/articleArchive/articleData.json";
 
-		return fetchResource(articleDataUrl, "retrieve article data", (response) => response.json())
+		return fetchResource(articleDataUrl, "article data", (response) => response.json())
 			.then((articleData) => {
 				ArticleFiller.articleData = articleData;
 			})
@@ -469,8 +457,9 @@ class ArticleFiller {
 	/**
 	 * Grab article markdown file
 	 * @param {String} rawArticleName Name of article
-	 * @returns {Promise<void>|undefined} Resolves once the article is on the page or the error is shown. Undefined when
-	 * the article data has not loaded.
+	 * @returns {Promise<void>|undefined} Resolves once the article is on the page or its load error is shown. Undefined
+	 * when the article data has not loaded, or when it has no entry for the article, which shows the not-found error at
+	 * once.
 	 */
 	static grabArticle(rawArticleName) {
 		const normalizedName = rawArticleName
@@ -489,7 +478,7 @@ class ArticleFiller {
 				const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${normalizedName}.md`;
 
 				// Call article
-				return fetchResource(url, "retrieve article", (response) => response.text(), {
+				return fetchResource(url, "article", (response) => response.text(), {
 					article: normalizedName,
 				})
 					.then((articleMd) => {
@@ -497,21 +486,17 @@ class ArticleFiller {
 						ArticleFiller.addToPage(normalizedName);
 					})
 					.catch((error) => {
-						ArticleFiller.displayError(undefined, {
-							error,
-							operation: "load article",
-							article: normalizedName,
-						});
+						ArticleFiller.displayError(error, { operation: "load article", article: normalizedName });
 					});
 			}
 
-			ArticleFiller.displayError(undefined, {
-				error: new LoadError(`Article not found in article data: ${normalizedName}`, {
+			ArticleFiller.displayError(
+				new LoadError(`Article not found in article data: ${normalizedName}`, {
 					kind: "missing",
 					operation: "find article",
 					article: normalizedName,
 				}),
-			});
+			);
 		}
 
 		return undefined;
@@ -604,13 +589,13 @@ class ArticleFiller {
 
 		// Check if the converted article is empty when the original content is not
 		if (ArticleFiller?.article?.trim()?.length < 1 && ArticleFiller?.articleMd?.trim()?.length > 0) {
-			ArticleFiller.displayError(undefined, {
-				error: new LoadError("Article content could not be converted to HTML.", {
+			ArticleFiller.displayError(
+				new LoadError("Article content could not be converted to HTML.", {
 					kind: "parse",
 					operation: "render article",
 					article: articleName,
 				}),
-			});
+			);
 			return;
 		}
 
@@ -625,7 +610,7 @@ class ArticleFiller {
 	static retrievePageData() {
 		const pageDataUrl = "/src/legacyPages/legacyPagesDisplay.json";
 
-		return fetchResource(pageDataUrl, "retrieve page data", (response) => response.json())
+		return fetchResource(pageDataUrl, "page data", (response) => response.json())
 			.then((pageData) => {
 				ArticleFiller.pageData = pageData;
 			})
@@ -945,8 +930,7 @@ async function removeLegacyServiceWorker() {
 			}),
 		);
 	} catch (e) {
-		console.error("Legacy ServiceWorker cleanup failed:", e && e.message ? e.message : e);
-		reportToSentry(e);
+		reportError(e, { operation: "remove legacy service worker" });
 	}
 }
 
@@ -970,8 +954,7 @@ async function registerServiceWorker() {
 
 		return await navigator.serviceWorker.register("./sw.js");
 	} catch (e) {
-		console.error("ServiceWorker registration failed:", e && e.message ? e.message : e);
-		reportToSentry(e);
+		reportError(e, { operation: "register service worker" });
 
 		return null;
 	}
@@ -1057,7 +1040,7 @@ function initializeSentry() {
 		dsn: SENTRY_DSN,
 		release: `small-dev-talk@${APP_VERSION}`,
 
-		// The site reports its own errors through reportToSentry. No console integration is installed, so console
+		// The site reports its own errors through reportError. No console integration is installed, so console
 		// output from extensions or injected automation scripts is not reported.
 		integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
 
@@ -1149,7 +1132,7 @@ async function start(location) {
 	try {
 		await init();
 	} catch (error) {
-		ArticleFiller.displayError(undefined, { error, operation: "initialize page" });
+		ArticleFiller.displayError(error, { operation: "initialize page" });
 	}
 
 	watchTwitterTimeline();

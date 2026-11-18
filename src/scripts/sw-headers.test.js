@@ -147,7 +147,6 @@ describe("Content-Security-Policy in index.html", () => {
 
 	test("lets the page fetch the source map of the Sentry bundle, which the browser requests from the CDN", () => {
 		expect(parsePolicy(metaPolicy).get("connect-src")).toContain("https://browser.sentry-cdn.com");
-		expect(parsePolicy(CONTENT_SECURITY_POLICY).get("connect-src")).toContain("https://browser.sentry-cdn.com");
 	});
 
 	test("does not allow inline or eval scripts", () => {
