@@ -1157,7 +1157,7 @@ describe("watchTwitterTimeline", () => {
 		document.body.innerHTML = `
 			<div class="box">
 				<p class="twitterFallback"><a href="https://twitter.com/SmallDevTalk">Follow @SmallDevTalk on X</a></p>
-				<div id="twitterTimeline" class="twitterTimelinePending">
+				<div id="twitterTimeline" class="twitterTimelinePending" inert>
 					<div class="twitter-timeline"></div>
 				</div>
 			</div>
@@ -1175,6 +1175,7 @@ describe("watchTwitterTimeline", () => {
 
 		expect(document.querySelector(".twitterFallback").hidden).toBe(false);
 		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(true);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(true);
 	});
 
 	test("keeps the follow link when X answers 429 and leaves the iframe hidden", async () => {
@@ -1184,6 +1185,7 @@ describe("watchTwitterTimeline", () => {
 
 		expect(document.querySelector(".twitterFallback").hidden).toBe(false);
 		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(true);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(true);
 	});
 
 	test("swaps the follow link for the timeline once the iframe becomes visible and sized", async () => {
@@ -1196,6 +1198,7 @@ describe("watchTwitterTimeline", () => {
 
 		expect(document.querySelector(".twitterFallback").hidden).toBe(true);
 		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(false);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(false);
 	});
 
 	test("swaps at once when the iframe is already visible and sized", () => {
@@ -1206,6 +1209,7 @@ describe("watchTwitterTimeline", () => {
 
 		expect(document.querySelector(".twitterFallback").hidden).toBe(true);
 		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(false);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(false);
 	});
 
 	test("stops observing after the swap, so a later hidden iframe does not bring the link back", async () => {
@@ -1220,6 +1224,7 @@ describe("watchTwitterTimeline", () => {
 
 		expect(document.querySelector(".twitterFallback").hidden).toBe(true);
 		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(false);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(false);
 	});
 
 	test("does nothing when the sidebar has no timeline container", () => {

@@ -816,6 +816,7 @@ function watchTwitterTimeline() {
 			}
 
 			container.classList.remove("twitterTimelinePending");
+			container.removeAttribute("inert");
 			document.querySelectorAll(".twitterFallback").forEach((fallback) => {
 				fallback.hidden = true;
 			});

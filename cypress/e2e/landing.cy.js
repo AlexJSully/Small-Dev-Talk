@@ -42,7 +42,8 @@ describe("Landing Page", () => {
 			.and("have.css", "text-decoration-line", "none");
 
 		// The timeline stays hidden and takes no room, and the link stays after the page has settled.
-		cy.get("#twitterTimeline").should("have.class", "twitterTimelinePending").and("not.be.visible");
+		cy.get("#twitterTimeline").should("have.class", "twitterTimelinePending").and("have.attr", "inert");
+		cy.get("#twitterTimeline").should("not.be.visible");
 		cy.wait(2000);
 		cy.get(".twitterFallback").should("be.visible");
 	});
