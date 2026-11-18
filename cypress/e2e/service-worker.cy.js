@@ -27,6 +27,36 @@ describe("Service worker", () => {
 			});
 	});
 
+	it("lets a new release of the worker take over an open page, so a returning visitor gets the new policy", () => {
+		cy.visit(`${origin}/index.html`);
+		cy.window().its("navigator.serviceWorker.controller").should("not.be.null");
+
+		// A changed sw.js is how the browser learns of a new release, including a changed Content-Security-Policy.
+		cy.intercept("GET", "/sw.js", (request) => {
+			request.continue((response) => {
+				response.body = `${response.body}\n// next release`;
+			});
+		});
+
+		cy.window().then((win) => {
+			const controllerChanged = new Promise((resolve) => {
+				win.navigator.serviceWorker.addEventListener("controllerchange", resolve, { once: true });
+			});
+
+			return win.navigator.serviceWorker
+				.getRegistration()
+				.then((registration) => registration.update())
+				.then(() => controllerChanged);
+		});
+
+		cy.window()
+			.then((win) => win.navigator.serviceWorker.getRegistration())
+			.then((registration) => {
+				expect(registration.waiting).to.be.null;
+				expect(registration.active).not.to.be.null;
+			});
+	});
+
 	it("adds the Permissions-Policy header to a page it answers", () => {
 		cy.visit(`${origin}/index.html`);
 		cy.window().its("navigator.serviceWorker.controller").should("not.be.null");

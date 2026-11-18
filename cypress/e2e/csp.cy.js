@@ -20,6 +20,28 @@ describe("Content Security Policy", () => {
 		});
 	});
 
+	it("lets the page fetch the source map of the Sentry bundle", () => {
+		const violations = [];
+
+		cy.visit("http://localhost:3000", {
+			onBeforeLoad(win) {
+				win.document.addEventListener("securitypolicyviolation", (event) => {
+					violations.push(`${event.violatedDirective} blocked ${event.blockedURI}`);
+				});
+			},
+		});
+
+		// The bundle ends with a sourceMappingURL comment, and a browser with its developer tools open fetches that map.
+		cy.get('script[src^="https://browser.sentry-cdn.com/"]')
+			.invoke("attr", "src")
+			.then((src) => {
+				cy.window().then((win) => win.fetch(`${src}.map`).then(() => {}));
+			});
+		cy.then(() => {
+			expect(violations, violations.join("\n")).to.be.empty;
+		});
+	});
+
 	it("keeps the controls that used inline handlers working", () => {
 		cy.visit("http://localhost:3000");
 		cy.get("#carouselInner .carousel-item.active").should("have.length", 1);
