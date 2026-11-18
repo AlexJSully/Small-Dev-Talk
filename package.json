@@ -22,7 +22,7 @@
 		"esbuild": "^0.28.2",
 		"eslint": "^10.14.0",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-cypress": "^7.0.2",
+		"eslint-plugin-cypress": "^7.0.3",
 		"eslint-plugin-prettier": "^5.5.7",
 		"globals": "^17.14.0",
 		"http-server": "^14.1.1",
