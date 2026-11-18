@@ -325,7 +325,7 @@ describe("fetchResource", () => {
 		expect(readBody).not.toHaveBeenCalled();
 	});
 
-	test("rejects with a parse LoadError when the body cannot be read", async () => {
+	test("rejects with a parse LoadError when the body is not valid JSON", async () => {
 		const cause = new SyntaxError("Unexpected token");
 		global.fetch = jest.fn().mockResolvedValue({ ok: true, json: () => Promise.reject(cause) });
 
@@ -333,8 +333,28 @@ describe("fetchResource", () => {
 			(e) => e,
 		);
 
-		expect(error).toMatchObject({ kind: "parse", message: "Failed to read article data: Unexpected token" });
+		expect(error).toMatchObject({ kind: "parse", message: "Failed to parse article data: Unexpected token" });
 		expect(error.cause).toBe(cause);
+	});
+
+	[
+		["response.text()", (response) => response.text()],
+		["response.json()", (response) => response.json()],
+	].forEach(([name, readBody]) => {
+		test(`rejects with a network LoadError when the connection drops while ${name} downloads the body`, async () => {
+			// fetch resolves once the headers arrive. A body stream that errors rejects text() and json() with a TypeError.
+			const cause = new TypeError("network error");
+			global.fetch = jest.fn().mockResolvedValue({
+				ok: true,
+				text: () => Promise.reject(cause),
+				json: () => Promise.reject(cause),
+			});
+
+			const error = await fetchResource("/a.md", "retrieve article", readBody).catch((e) => e);
+
+			expect(error).toMatchObject({ kind: "network", message: "Failed to download article: network error" });
+			expect(error.cause).toBe(cause);
+		});
 	});
 });
 
@@ -474,6 +494,27 @@ describe("ArticleFiller: grabArticle", () => {
 		expect(html).toContain("Small Dev Talk could not load this content right now.");
 		expect(html).not.toContain("404");
 		expect(ArticleFiller.articleMd).toBeUndefined();
+	});
+
+	test("shows the network message, at warning level, when the connection drops during the article download", async () => {
+		global.fetch = jest
+			.fn()
+			.mockResolvedValue({ ok: true, text: () => Promise.reject(new TypeError("network error")) });
+		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
+
+		await ArticleFiller.grabArticle("TestArticle");
+
+		const html = document.getElementById("articleBody").textContent;
+		expect(html).toContain("We could not reach Small Dev Talk.");
+		expect(html).not.toContain("This content could not be displayed.");
+		expect(global.Sentry.captureException.mock.calls[0][1]).toMatchObject({
+			level: "warning",
+			tags: { operation: "retrieve article", kind: "network" },
+		});
+		delete global.Sentry;
 	});
 
 	test("shows the network message and logs the article when the request does not complete", async () => {

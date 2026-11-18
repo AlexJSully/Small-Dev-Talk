@@ -166,8 +166,9 @@ class LoadError extends Error {
 	/**
 	 * @param {string} message What failed, for developers.
 	 * @param {object} [details] Where and why it failed.
-	 * @param {"network"|"http"|"parse"|"missing"} [details.kind] The failure type: the request did not complete,
-	 * the server answered with an error status, the content could not be read, or the content does not exist.
+	 * @param {"network"|"http"|"parse"|"missing"} [details.kind] The failure type: the request or the download of its
+	 * body did not complete, the server answered with an error status, the content could not be parsed, or the content
+	 * does not exist.
 	 * @param {string} [details.operation] What the page was doing, for example "retrieve article data".
 	 * @param {string} [details.url] The requested URL.
 	 * @param {number} [details.status] The HTTP status code of a `http` failure.
@@ -260,8 +261,12 @@ async function fetchResource(url, operation, readBody, { article } = {}) {
 	try {
 		return await readBody(response);
 	} catch (cause) {
-		throw new LoadError(`Failed to read ${target}: ${cause?.message}`, {
-			kind: "parse",
+		// `fetch` resolves once the headers arrive, so a connection lost while the body downloads rejects here too.
+		// Only a SyntaxError from `response.json()` means the content itself is unreadable.
+		const isParseFailure = cause instanceof SyntaxError;
+
+		throw new LoadError(`Failed to ${isParseFailure ? "parse" : "download"} ${target}: ${cause?.message}`, {
+			kind: isParseFailure ? "parse" : "network",
 			operation,
 			url,
 			article,

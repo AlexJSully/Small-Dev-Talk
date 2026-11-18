@@ -170,13 +170,13 @@ flowchart TD
 
 Each failed request is wrapped in a `LoadError` by `fetchResource()` in [index.js](../../src/scripts/index.js). The error keeps the original error as its `cause` and has a `kind`:
 
-| Kind      | Meaning                                                   | Sentry level | Message shown to the visitor                                          |
-| --------- | --------------------------------------------------------- | ------------ | --------------------------------------------------------------------- |
-| `network` | The request did not complete                              | warning      | Check the internet connection, then refresh the page                  |
-| `http`    | The server answered with an error status                  | error        | The content cannot load now, try again in a few minutes               |
-| `parse`   | The response, or the converted article, could not be read | error        | The content cannot be displayed, refresh, and report it if it repeats |
-| `missing` | The article is not in the article data                    | warning      | The article was not found, check the link or go home                  |
-| (other)   | Any other failure                                         | error        | Something went wrong, refresh or try again later                      |
+| Kind      | Meaning                                                    | Sentry level | Message shown to the visitor                                          |
+| --------- | ---------------------------------------------------------- | ------------ | --------------------------------------------------------------------- |
+| `network` | The request, or the download of its body, did not complete | warning      | Check the internet connection, then refresh the page                  |
+| `http`    | The server answered with an error status                   | error        | The content cannot load now, try again in a few minutes               |
+| `parse`   | The JSON, or the converted article, could not be parsed    | error        | The content cannot be displayed, refresh, and report it if it repeats |
+| `missing` | The article is not in the article data                     | warning      | The article was not found, check the link or go home                  |
+| (other)   | Any other failure                                          | error        | Something went wrong, refresh or try again later                      |
 
 `displayError(msg, context)` shows `msg` when it has text and the message for the kind otherwise, so a visitor never sees a blank box or the technical text of the failure. `reportError()` logs one object to the console with the original error and its stack, the kind, the operation, the article, the URL, the HTTP status, the page and a timestamp, and reports the original error to Sentry with the level and tags above. It handles each error object once, so an error that passes through the data request handler and `start()` produces one console entry and one Sentry event.
 
