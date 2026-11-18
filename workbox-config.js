@@ -18,6 +18,10 @@ module.exports = {
 		"src/icon/favicon-32x32.png",
 		"src/icon/site.webmanifest",
 	],
+	// Adds security headers to page responses, which GitHub Pages cannot send. The browser checks this file for changes
+	// whenever it checks sw.js. The file is in the worker, so it needs no precache entry.
+	"importScripts": ["src/scripts/sw-headers.js"],
+
 	// The worker must sit at the site root so its scope covers index.html.
 	"swDest": "./sw.js",
 

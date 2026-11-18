@@ -5,6 +5,10 @@ const { ArticleFiller, escapeHtml, sanitizeHtml } = require("./index.js");
 const {
 	reportToSentry,
 	flushPendingSentryErrors,
+	initializeSentry,
+	loadGoogleTagManager,
+	updateCanonicalLink,
+	handleControlClick,
 	redirectToCanonicalHost,
 	removeLegacyServiceWorker,
 	registerServiceWorker,
@@ -1675,5 +1679,181 @@ describe("ArticleFiller: addToPage XSS", () => {
 		ArticleFiller.addToPage();
 		const html = document.getElementById("articleBody").innerHTML;
 		expect(html).not.toContain("onerror");
+	});
+});
+
+describe("handleControlClick", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<div class="carousel-item active" id="first"></div>
+			<div class="carousel-item" id="second"></div>
+			<a id="next" data-carousel-step="next"><span id="nextIcon"></span></a>
+			<a id="prev" data-carousel-step="prev"></a>
+			<p id="plain">text</p>
+		`;
+	});
+
+	afterEach(() => {
+		document.body.innerHTML = "";
+	});
+
+	test("moves the carousel forward when a next arrow or a child of it is clicked", () => {
+		handleControlClick({ target: document.getElementById("nextIcon") });
+
+		expect(document.getElementById("first").classList.contains("active")).toBe(false);
+		expect(document.getElementById("second").classList.contains("active")).toBe(true);
+	});
+
+	test("moves the carousel back when a previous arrow is clicked", () => {
+		handleControlClick({ target: document.getElementById("prev") });
+
+		expect(document.getElementById("first").classList.contains("active")).toBe(false);
+		expect(document.getElementById("second").classList.contains("active")).toBe(true);
+	});
+
+	test("ignores clicks outside the controls", () => {
+		handleControlClick({ target: document.getElementById("plain") });
+
+		expect(document.getElementById("first").classList.contains("active")).toBe(true);
+	});
+
+	test("renders the error buttons without inline event handler attributes", () => {
+		document.body.innerHTML = '<div id="articleBody" hidden></div>';
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		ArticleFiller.displayError("Boom");
+
+		const html = document.getElementById("articleBody").innerHTML;
+		expect(html).not.toMatch(/\sonclick=/i);
+		expect(html).toContain('data-page-action="reload"');
+		expect(html).toContain('data-page-action="home"');
+
+		console.error.mockRestore();
+	});
+});
+
+describe("initializeSentry", () => {
+	afterEach(() => {
+		delete global.Sentry;
+	});
+
+	/**
+	 * Build a stand-in for the Sentry SDK, which sends events over the network, so its calls can be read.
+	 * @returns {object} An SDK object whose functions are Jest mocks.
+	 */
+	function createSentrySdk() {
+		const scope = { setTag: jest.fn() };
+
+		return {
+			init: jest.fn(),
+			browserTracingIntegration: jest.fn(() => "tracing"),
+			replayIntegration: jest.fn(() => "replay"),
+			getCurrentScope: jest.fn(() => scope),
+			captureException: jest.fn(),
+			scope,
+		};
+	}
+
+	test("starts Sentry with the release, both integrations and the app version tag", () => {
+		global.Sentry = createSentrySdk();
+
+		initializeSentry();
+
+		expect(global.Sentry.init).toHaveBeenCalledWith(
+			expect.objectContaining({
+				release: "small-dev-talk@1.3.4",
+				integrations: ["tracing", "replay"],
+				replaysOnErrorSampleRate: 1.0,
+			}),
+		);
+		expect(global.Sentry.scope.setTag).toHaveBeenCalledWith("app-version", "1.3.4");
+	});
+
+	test("sends the errors that were reported before Sentry started", () => {
+		reportToSentry(new Error("reported before init"));
+		global.Sentry = createSentrySdk();
+
+		initializeSentry();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
+		expect(global.Sentry.captureException.mock.calls[0][0].message).toBe("reported before init");
+	});
+
+	test("logs and does not start when the SDK did not load", () => {
+		const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+		initializeSentry();
+
+		expect(consoleError).toHaveBeenCalledWith(expect.stringContaining("Sentry initialization skipped"));
+		consoleError.mockRestore();
+	});
+
+	test("does not start when a required integration is missing", () => {
+		global.Sentry = createSentrySdk();
+		delete global.Sentry.replayIntegration;
+		const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+		initializeSentry();
+
+		expect(global.Sentry.init).not.toHaveBeenCalled();
+		consoleError.mockRestore();
+	});
+});
+
+describe("loadGoogleTagManager", () => {
+	afterEach(() => {
+		document.head.innerHTML = "";
+		delete window.dataLayer;
+	});
+
+	test("adds an async script for the container with CORS enabled and starts the data layer", () => {
+		loadGoogleTagManager();
+
+		const script = document.head.querySelector("script");
+
+		expect(script.src).toBe("https://www.googletagmanager.com/gtm.js?id=GTM-5H259MB");
+		expect(script.async).toBe(true);
+		expect(script.crossOrigin).toBe("anonymous");
+		expect(window.dataLayer).toEqual([expect.objectContaining({ event: "gtm.js" })]);
+	});
+
+	test("keeps the events that are already in the data layer", () => {
+		window.dataLayer = [{ event: "earlier" }];
+
+		loadGoogleTagManager();
+
+		expect(window.dataLayer.map((entry) => entry.event)).toEqual(["earlier", "gtm.js"]);
+	});
+});
+
+describe("updateCanonicalLink", () => {
+	beforeEach(() => {
+		document.head.innerHTML = '<link rel="canonical" href="https://smalldevtalk.net/">';
+	});
+
+	afterEach(() => {
+		document.head.innerHTML = "";
+	});
+
+	test("points the canonical link at the viewed URL on the canonical host", () => {
+		updateCanonicalLink({ host: "smalldevtalk.net", href: "https://smalldevtalk.net/index.html?Oceania" });
+
+		expect(document.querySelector('link[rel="canonical"]').getAttribute("href")).toBe(
+			"https://smalldevtalk.net/index.html?Oceania",
+		);
+	});
+
+	test("leaves the canonical link alone on any other host", () => {
+		updateCanonicalLink({ host: "localhost:3000", href: "http://localhost:3000/index.html?Oceania" });
+
+		expect(document.querySelector('link[rel="canonical"]').getAttribute("href")).toBe("https://smalldevtalk.net/");
+	});
+
+	test("does nothing when the page has no canonical link", () => {
+		document.head.innerHTML = "";
+
+		expect(() =>
+			updateCanonicalLink({ host: "smalldevtalk.net", href: "https://smalldevtalk.net/" }),
+		).not.toThrow();
 	});
 });

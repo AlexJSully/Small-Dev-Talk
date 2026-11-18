@@ -76,7 +76,7 @@ describe("Landing Page", () => {
 
 		cy.get(".twitterFallback").should("be.visible");
 		cy.get(".twitterFallback a")
-			.should("have.attr", "href", "https://twitter.com/SmallDevTalk")
+			.should("have.attr", "href", "https://x.com/SmallDevTalk")
 			.and("contain", "Follow @SmallDevTalk on X")
 			.and("have.css", "color", "rgb(13, 110, 253)")
 			.and("have.css", "text-decoration-line", "none");
@@ -104,5 +104,16 @@ describe("Landing Page", () => {
 
 		cy.get("#articleBody").should("contain", "Error retrieving article");
 		cy.get("#articleBody").should("be.visible");
+	});
+
+	it("should have a document head the W3C validator accepts", () => {
+		cy.get("head meta[charset]").should("have.attr", "charset", "UTF-8");
+		cy.get("head meta[http-equiv]")
+			.should("have.length", 1)
+			.and("have.attr", "http-equiv", "Content-Security-Policy");
+		cy.get("[itemprop]").should("not.exist");
+		cy.get("[onclick], [onClick]").should("not.exist");
+		cy.get("script:not([src]):not([type])").should("not.exist");
+		cy.get('img[src*="title.svg"]').should("not.have.attr", "loading", "auto");
 	});
 });

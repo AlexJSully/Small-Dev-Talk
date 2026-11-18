@@ -1,17 +1,16 @@
 <!doctype html>
 <html lang="en">
 	<head>
+		<meta charset="UTF-8" />
 		<title id="pageTitle">Small Dev Talk - Talk with the Developers of the Future</title>
-		<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 		<meta name="title" content="Small Dev Talk" />
 		<link rel="shortcut icon" href="./src/icon/favicon.ico" type="image/x-icon" />
 		<link rel="canonical" href="https://smalldevtalk.net/" />
-		<meta http-equiv="Cache-Control" content="public, max-age=604800" />
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'self' 'unsafe-inline' data: *.cloudflareinsights.com *.cloudflare.com *.github.com *.twitter.com *.googletagmanager.com *.githubusercontent.com *.google-analytics.com *.twimg.com *.youtube.com *.sentry-cdn.com *.sentry.io; worker-src 'self' blob:; object-src 'self'; base-uri 'self'; form-action 'self';"
+			content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://browser.sentry-cdn.com https://platform.twitter.com; style-src 'self' 'unsafe-inline' https://platform.twitter.com https://*.twimg.com; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://stats.g.doubleclick.net https://syndication.twitter.com https://cdn.syndication.twimg.com; frame-src https://www.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
 		/>
-		<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
+		<meta name="referrer" content="strict-origin-when-cross-origin" />
 
 		<!-- Metadata -->
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,7 +47,7 @@
 		<meta name="apple-touch-startup-image" content="./src/icon/apple-touch-icon.png" />
 		<meta name="application-name" content="Small Dev Talk" />
 		<meta name="msapplication-TileColor" content="#ffffff" />
-		<meta name="msapplication-TileImage" content="/mstile-144x144.png" />
+		<meta name="msapplication-TileImage" content="./src/icon/mstile-144x144.png" />
 		<meta name="msapplication-config" content="./src/icon/browserconfig.xml" />
 
 		<!-- Open Graph -->
@@ -63,32 +62,19 @@
 		<meta property="og:image:url" content="https://smalldevtalk.net/src/icon/resoc.png" />
 		<meta property="og:image:secure_url" content="https://smalldevtalk.net/src/icon/resoc.png" />
 		<meta property="og:image:type" content="image/png" />
+		<meta property="og:image:width" content="1400" />
+		<meta property="og:image:height" content="957" />
 		<meta property="og:image:alt" content="Small Dev Talk - Talk with the Developers of the Future" />
-		<meta property="og:site_name" content="https://smalldevtalk.net/" />
-		<meta property="article:modified_time" name="article-modified_time" content="2022-05-02T12:00:00+00:00" />
-		<meta itemprop="name" content="Small Dev Talk - Talk with the Developers of the Future" />
-		<meta itemprop="url" content="https://smalldevtalk.net/" />
-		<meta
-			itemprop="description"
-			content="Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene"
-		/>
-		<meta itemprop="thumbnailUrl" content="https://smalldevtalk.net/src/icon/resoc.png" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:site_name" content="Small Dev Talk" />
 		<link rel="image_src" href="https://smalldevtalk.net/src/icon/resoc.png" />
-		<meta itemprop="image" content="https://smalldevtalk.net/src/icon/resoc.png" />
 
 		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content="https://smalldevtalk.net/" />
-		<meta property="twitter:title" content="Small Dev Talk - Talk with the Developers of the Future" />
-		<meta
-			property="twitter:description"
-			content="Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene"
-		/>
-		<meta property="twitter:image" content="https://smalldevtalk.net/src/icon/resoc.png" />
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@SmallDevTalk" />
 		<meta name="twitter:title" content="Small Dev Talk - Talk with the Developers of the Future" />
 		<meta name="twitter:image" content="https://smalldevtalk.net/src/icon/resoc.png" />
-		<meta name="twitter:url" content="https://twitter.com/SmallDevTalk" />
+		<meta name="twitter:url" content="https://smalldevtalk.net/" />
 		<meta name="twitter:creator" content="@AlexJSully" />
 		<meta name="twitter:domain" content="smalldevtalk.net" />
 		<meta
@@ -103,7 +89,14 @@
 				"name": "Small Dev Talk - Talk with the Developers of the Future",
 				"description": "Small Dev Talk - Talk with the Developers of the Future! Find interviews, news articles and reviews on the latest in the indie scene",
 				"image": "https://smalldevtalk.net/src/icon/resoc.png",
-				"@context": "http://schema.org",
+				"publisher": {
+					"@type": "Organization",
+					"name": "Small Dev Talk",
+					"url": "https://smalldevtalk.net/",
+					"logo": "https://smalldevtalk.net/src/icon/android-chrome-512x512.png",
+					"sameAs": ["https://x.com/SmallDevTalk", "https://github.com/AlexJSully/Small-Dev-Talk"]
+				},
+				"@context": "https://schema.org",
 				"@type": "WebSite"
 			}
 		</script>
@@ -126,75 +119,6 @@
 			integrity="sha384-RuorUNi9HSGOwjPhbAXIXH3wul31Hw6ghJkEIt4szHXuTS4SMJYRRbCYPgj4PQ2c"
 			crossorigin="anonymous"
 		></script>
-		<script>
-			// The deferred scripts above have run by DOMContentLoaded, so the Sentry SDK is available here.
-			document.addEventListener("DOMContentLoaded", function () {
-				if (
-					window.Sentry &&
-					typeof Sentry.init === "function" &&
-					typeof Sentry.browserTracingIntegration === "function" &&
-					typeof Sentry.replayIntegration === "function" &&
-					typeof Sentry.getCurrentScope === "function"
-				) {
-					Sentry.init({
-						dsn: "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.us.sentry.io/6600431",
-						// When updating the package version number in package.json, update the version number here as well.
-						release: "small-dev-talk@1.3.4",
-
-						// The site reports its own errors through reportToSentry in index.js. No console integration is
-						// installed, so console output from extensions or injected automation scripts is not reported.
-						integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
-
-						// Enable logs to be sent to Sentry
-						enableLogs: true,
-
-						tracesSampleRate: 1.0,
-
-						// Capture Replay for 10% of all sessions,
-						// plus for 100% of sessions with an error
-						replaysSessionSampleRate: 0.1,
-						replaysOnErrorSampleRate: 1.0,
-					});
-
-					// @AlexJSully when updating the package version number in package.json, update the version number here as well.
-					Sentry.getCurrentScope().setTag("app-version", "1.3.4");
-
-					// index.js can report an error before this point, and the SDK drops errors captured before init.
-					if (typeof flushPendingSentryErrors === "function") {
-						flushPendingSentryErrors();
-					}
-				} else {
-					console.error("Sentry initialization skipped: the SDK or a required integration failed to load.");
-				}
-			});
-		</script>
-		<!-- Google Tag Manager -->
-		<script>
-			(function (w, d, s, l, i) {
-				w[l] = w[l] || [];
-				w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-				let f = d.getElementsByTagName(s)[0],
-					j = d.createElement(s),
-					dl = l != "dataLayer" ? "&l=" + l : "";
-				j.async = true;
-				// Without CORS, the browser reports an error thrown by this script as "Script error." with no details.
-				j.crossOrigin = "anonymous";
-				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-				f.parentNode.insertBefore(j, f);
-			})(window, document, "script", "dataLayer", "GTM-5H259MB");
-		</script>
-		<!-- Adjust user canonical URL -->
-		<script>
-			// Check if the host is valid and adjust the canonical URL if it is.
-			// Not using optional chaining because it's not supported in all browsers.
-			if (document && document.location && document.location.host === "smalldevtalk.net") {
-				/** Adjust the canonical URL to the current URL */
-				let canonicalLink = document.querySelector('link[rel="canonical"]');
-				if (canonicalLink) {
-					canonicalLink.setAttribute("href", document.location.href);
-				}
-			}
-		</script>
 	</head>
 
 	<body>
@@ -204,7 +128,7 @@
 				src="https://www.googletagmanager.com/ns.html?id=GTM-5H259MB"
 				height="0"
 				width="0"
-				style="display: none; visibility: hidden"
+				hidden
 				title="Google Tag Manager's iFrame"
 			></iframe
 		></noscript>
@@ -249,25 +173,14 @@
 						</li>
 					</ul>
 				</nav>
-				<h1 style="display: flex; background-color: #212529; height: auto; width: 100%">
+				<h1>
 					<a href="index.html"
 						><img
 							src="src/images/title.svg"
 							width="801"
 							height="149"
-							style="
-								height: auto;
-								max-height: 70px;
-								background-color: #212529;
-								border-style: solid;
-								border-width: 2px;
-								border-color: #212529;
-								width: 100%;
-								margin-left: 1%;
-							"
 							alt="Small Dev Talk"
 							fetchpriority="high"
-							loading="auto"
 					/></a>
 				</h1>
 				<!-- END header -->
@@ -291,7 +204,7 @@
 										<!-- Control buttons -->
 										<a
 											class="carousel-control-prev"
-											onClick="changeCarouselSlide('prev')"
+											data-carousel-step="prev"
 											role="button"
 											data-slide="prev"
 											aria-label="Go back to previous featured article slide"
@@ -300,7 +213,7 @@
 										</a>
 										<a
 											class="carousel-control-next"
-											onClick="changeCarouselSlide('next')"
+											data-carousel-step="next"
 											role="button"
 											data-slide="next"
 											aria-label="Go forward to next featured article slide"
@@ -347,7 +260,7 @@
 							<h2>Twitter</h2>
 							<!-- Follow link shown until watchTwitterTimeline sees X render the timeline below -->
 							<p class="twitterFallback">
-								<a href="https://twitter.com/SmallDevTalk">Follow @SmallDevTalk on X</a>
+								<a href="https://x.com/SmallDevTalk">Follow @SmallDevTalk on X</a>
 							</p>
 							<div id="twitterTimeline" class="twitterTimelinePending" inert>
 								<a
@@ -361,7 +274,6 @@
 								<script
 									async
 									src="https://platform.twitter.com/widgets.js"
-									charset="utf-8"
 									crossorigin="anonymous"
 								></script>
 							</div>

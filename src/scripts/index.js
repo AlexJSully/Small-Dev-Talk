@@ -131,8 +131,8 @@ function reportToSentry(error) {
 }
 
 /**
- * Send the errors that `reportToSentry()` kept while Sentry was not initialized. `index.html` calls this right after
- * `Sentry.init()`.
+ * Send the errors that `reportToSentry()` kept while Sentry was not initialized. `initializeSentry()` calls this right
+ * after `Sentry.init()`.
  * @returns {void}
  */
 function flushPendingSentryErrors() {
@@ -216,11 +216,11 @@ class ArticleFiller {
 					</div>
 
 					<div style="display:flex; gap:1rem; justify-content:center;">
-						<button class="btn btn-warning" style="font-size:1rem;" onclick="window.location.reload();">
+						<button class="btn btn-warning" style="font-size:1rem;" data-page-action="reload">
 							Refresh
 						</button>
 
-						<button class="btn btn-primary" style="font-size:1rem;" onclick="window.location.href='index.html';">
+						<button class="btn btn-primary" style="font-size:1rem;" data-page-action="home">
 							Home
 						</button>
 					</div>
@@ -843,6 +843,113 @@ function watchTwitterTimeline() {
 	}
 }
 
+/** Version of the site. When updating the package version number in package.json, update this one as well. */
+const APP_VERSION = "1.3.4";
+
+/** Where Sentry sends the events of the site. */
+const SENTRY_DSN = "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.us.sentry.io/6600431";
+
+/** Container that Google Tag Manager loads. */
+const GOOGLE_TAG_MANAGER_ID = "GTM-5H259MB";
+
+/**
+ * Start Sentry. The deferred Sentry SDK script in `index.html` has run by the time the document finishes loading, so
+ * the SDK is available then. When the SDK or a required integration is missing, the function logs that and returns.
+ * @returns {void}
+ */
+function initializeSentry() {
+	if (
+		typeof Sentry === "undefined" ||
+		typeof Sentry.init !== "function" ||
+		typeof Sentry.browserTracingIntegration !== "function" ||
+		typeof Sentry.replayIntegration !== "function" ||
+		typeof Sentry.getCurrentScope !== "function"
+	) {
+		console.error("Sentry initialization skipped: the SDK or a required integration failed to load.");
+
+		return;
+	}
+
+	Sentry.init({
+		dsn: SENTRY_DSN,
+		release: `small-dev-talk@${APP_VERSION}`,
+
+		// The site reports its own errors through reportToSentry. No console integration is installed, so console
+		// output from extensions or injected automation scripts is not reported.
+		integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
+
+		enableLogs: true,
+
+		tracesSampleRate: 1.0,
+
+		// Capture Replay for 10% of all sessions, plus for 100% of sessions with an error.
+		replaysSessionSampleRate: 0.1,
+		replaysOnErrorSampleRate: 1.0,
+	});
+
+	Sentry.getCurrentScope().setTag("app-version", APP_VERSION);
+
+	// reportToSentry can run before this point, and the SDK drops errors captured before init.
+	flushPendingSentryErrors();
+}
+
+/**
+ * Load Google Tag Manager.
+ * @returns {void}
+ */
+function loadGoogleTagManager() {
+	window.dataLayer = window.dataLayer || [];
+	window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+
+	const script = document.createElement("script");
+
+	script.async = true;
+	// Without CORS, the browser reports an error thrown by this script as "Script error." with no details.
+	script.crossOrigin = "anonymous";
+	script.src = `https://www.googletagmanager.com/gtm.js?id=${GOOGLE_TAG_MANAGER_ID}`;
+	document.head.appendChild(script);
+}
+
+/**
+ * Point the canonical link at the URL being viewed when the page is served from the canonical host.
+ * @param {Location} location The page location.
+ * @returns {void}
+ */
+function updateCanonicalLink(location) {
+	if (location.host !== CANONICAL_HOST) {
+		return;
+	}
+
+	const canonicalLink = document.querySelector('link[rel="canonical"]');
+
+	if (canonicalLink) {
+		canonicalLink.setAttribute("href", location.href);
+	}
+}
+
+/**
+ * Handle clicks on the carousel arrows and the error buttons. These controls used inline `onclick` attributes, which
+ * the page's Content Security Policy blocks, so one delegated listener on the document runs them instead.
+ * @param {MouseEvent} event The click event.
+ * @returns {void}
+ */
+function handleControlClick(event) {
+	const target = event.target instanceof Element ? event.target : null;
+	const control = target ? target.closest("[data-carousel-step], [data-page-action]") : null;
+
+	if (!control) {
+		return;
+	}
+
+	if (control.dataset.carouselStep) {
+		changeCarouselSlide(control.dataset.carouselStep);
+	} else if (control.dataset.pageAction === "reload") {
+		window.location.reload();
+	} else if (control.dataset.pageAction === "home") {
+		window.location.href = "index.html";
+	}
+}
+
 /**
  * Move the page to the canonical host when needed, otherwise render the view and then register the service worker.
  * Rendering does not wait for the worker, so a first visit is not delayed by its installation.
@@ -853,6 +960,8 @@ async function start(location) {
 	if (redirectToCanonicalHost(location)) {
 		return;
 	}
+
+	document.addEventListener("click", handleControlClick);
 
 	try {
 		await init();
@@ -867,9 +976,28 @@ async function start(location) {
 	await registerServiceWorker();
 }
 
+/**
+ * Load Google Tag Manager, point the canonical link at the viewed URL, and start Sentry once its SDK has loaded.
+ * The Sentry SDK script is deferred after this script, so it has not run yet. It has by `DOMContentLoaded`, which
+ * the browser fires after every deferred script.
+ * @returns {void}
+ */
+function startThirdParties() {
+	loadGoogleTagManager();
+	updateCanonicalLink(window.location);
+
+	if (document.readyState === "complete") {
+		initializeSentry();
+	} else {
+		document.addEventListener("DOMContentLoaded", initializeSentry);
+	}
+}
+
 // Start once the HTML is parsed, so slow third-party scripts and images do not delay the data requests.
 // The module check keeps Jest, which loads this file as a module, from starting the page.
 if (typeof module === "undefined") {
+	startThirdParties();
+
 	if (document.readyState === "loading") {
 		document.addEventListener("DOMContentLoaded", () => start(window.location));
 	} else {
@@ -886,6 +1014,10 @@ if (typeof module !== "undefined" && module.exports) {
 		sanitizeHTML: sanitizeHtml,
 		reportToSentry,
 		flushPendingSentryErrors,
+		initializeSentry,
+		loadGoogleTagManager,
+		updateCanonicalLink,
+		handleControlClick,
 		redirectToCanonicalHost,
 		removeLegacyServiceWorker,
 		registerServiceWorker,
@@ -902,7 +1034,6 @@ if (typeof module !== "undefined" && module.exports) {
  * @param {string} direction The direction in which to change the active slide.
  * @returns {void}
  */
-// eslint-disable-next-line no-unused-vars
 function changeCarouselSlide(direction) {
 	/** Define the name of the class that represents the active slide */
 	const activeClass = "active";
