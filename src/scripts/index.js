@@ -101,20 +101,29 @@ const MAX_PENDING_SENTRY_ERRORS = 20;
 const pendingSentryErrors = [];
 
 /**
- * Send an error to Sentry. The page starts before the deferred Sentry SDK has run `Sentry.init()`, and the SDK
- * drops an error captured without a client, so such an error waits until `flushPendingSentryErrors()` runs.
- * Nothing is sent when the SDK never loads.
+ * Tell whether the Sentry SDK has loaded and `Sentry.init()` has created its client.
+ * @returns {boolean} True when `Sentry.captureException()` delivers an event.
+ */
+function sentryHasClient() {
+	return (
+		typeof Sentry !== "undefined" &&
+		typeof Sentry.captureException === "function" &&
+		typeof Sentry.getClient === "function" &&
+		Boolean(Sentry.getClient())
+	);
+}
+
+/**
+ * Send an error to Sentry. `index.min.js` runs before the deferred Sentry SDK has executed and run `Sentry.init()`,
+ * and the SDK drops an error captured without a client, so an error reported until then waits for
+ * `flushPendingSentryErrors()`. It stays in the buffer when the SDK never loads.
  * @param {Error|string} error The error, or a message to wrap in an Error.
  * @returns {void}
  */
 function reportToSentry(error) {
-	if (typeof Sentry === "undefined" || typeof Sentry.captureException !== "function") {
-		return;
-	}
-
 	const reported = error instanceof Error ? error : new Error(String(error));
 
-	if (typeof Sentry.getClient === "function" && Sentry.getClient()) {
+	if (sentryHasClient()) {
 		Sentry.captureException(reported);
 	} else if (pendingSentryErrors.length < MAX_PENDING_SENTRY_ERRORS) {
 		pendingSentryErrors.push(reported);

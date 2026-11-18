@@ -46,7 +46,7 @@ npm run start
 
 ### Runtime Initialization
 
-- `start()` runs on `DOMContentLoaded`, so slow third-party scripts do not delay the data requests
+- `start()` runs when the deferred `index.min.js` executes, after the HTML is parsed (or on `DOMContentLoaded` when the script runs while the document is still loading), so slow third-party scripts do not delay the data requests
 - `index.html` preloads `articleData.json` and `legacyPagesDisplay.json`, so the requests start while the HTML is parsed
 - `retrievePageData()` fetches legacy page definitions
 - `retrieveArticleData()` fetches article metadata

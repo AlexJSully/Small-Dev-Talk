@@ -20,7 +20,7 @@ Workbox generates `sw.js` and its `workbox-<hash>.js` runtime at the repository 
 
 - Precaches the app shell only: `index.html`, the minified site script and stylesheet, the jQuery, Bootstrap and Showdown files `index.html` loads, `articleData.json`, `legacyPagesDisplay.json`, the title and background images, and the favicons and web manifest
 - Matches precached URLs with every query parameter removed, so `index.html?ArticleKey` is served from the precached `index.html`
-- Claims open pages when the worker activates (`clientsClaim`), so a first visit is controlled without a reload, once the worker activates
+- Claims open pages when the worker activates (`clientsClaim`), so a first visit is controlled without a reload
 - Applies a CacheFirst strategy to PNG, JPEG, GIF, WebP, ICO and SVG image requests (`images` cache, at most 100 entries, purged on a storage quota error)
 - Applies a NetworkFirst strategy to article markdown under `/src/articleArchive/` (`articles` cache, at most 50 entries), so online readers get the current text and articles already read work offline
 

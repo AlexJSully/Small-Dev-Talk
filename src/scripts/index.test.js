@@ -13,8 +13,6 @@ const {
 	watchTwitterTimeline,
 } = require("./index.js");
 
-window.onload = null;
-
 describe("reportToSentry before Sentry initializes", () => {
 	afterEach(() => {
 		// Empty the module's buffer so one test's errors never reach another.
@@ -72,13 +70,21 @@ describe("reportToSentry before Sentry initializes", () => {
 		expect(global.Sentry.captureException).toHaveBeenCalledTimes(20);
 	});
 
-	test("does nothing when the SDK never loaded", () => {
+	test("keeps an error reported before the SDK script has run, and sends it once the SDK has a client", () => {
 		expect(global.Sentry).toBeUndefined();
+		const error = new Error("reported before the SDK loaded");
 
 		expect(() => {
-			reportToSentry(new Error("no sdk"));
+			reportToSentry(error);
 			flushPendingSentryErrors();
 		}).not.toThrow();
+
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
+		flushPendingSentryErrors();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
 	});
 });
 
