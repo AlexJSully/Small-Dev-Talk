@@ -106,6 +106,14 @@ describe("Landing Page", () => {
 		cy.get("#articleBody").should("be.visible");
 	});
 
+	it("should send the Home button of the error page to the home page", () => {
+		cy.visit("http://localhost:3000/index.html?NotAnArticleKey");
+
+		cy.get("#articleBody").should("contain", "Error retrieving article");
+		cy.get('#articleBody [data-page-action="home"]').click();
+		cy.location("search").should("equal", "");
+	});
+
 	it("should have a document head the W3C validator accepts", () => {
 		cy.get("head meta[charset]").should("have.attr", "charset", "UTF-8");
 		cy.get("head meta[http-equiv]")

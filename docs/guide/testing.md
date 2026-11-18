@@ -13,7 +13,7 @@ Small Dev Talk uses four types of automated testing:
 
 ## Unit Testing with Jest
 
-Jest tests are in [src/scripts/index.test.js](../../src/scripts/index.test.js).
+Jest tests are in [src/scripts/index.test.js](../../src/scripts/index.test.js) and [src/scripts/sw-headers.test.js](../../src/scripts/sw-headers.test.js). The second covers the service worker security headers and fails when the Content Security Policy in `index.html` differs from the one the worker sends.
 
 **Run all tests:**
 
@@ -35,7 +35,7 @@ npm run test -- src/scripts/index.test.js
 
 ## End-to-End Testing with Cypress
 
-Cypress tests are in [cypress/e2e/landing.cy.js](../../cypress/e2e/landing.cy.js), which covers page rendering and the missing-article error, [cypress/e2e/sentry.cy.js](../../cypress/e2e/sentry.cy.js), which covers Sentry initialization and error reporting, and [cypress/e2e/service-worker.cy.js](../../cypress/e2e/service-worker.cy.js), which covers the service worker scope and precache. [cypress/support/e2e.js](../../cypress/support/e2e.js) unregisters service workers before each test, because Cypress test isolation does not.
+Cypress tests are in [cypress/e2e/landing.cy.js](../../cypress/e2e/landing.cy.js), which covers page rendering and the missing-article error, [cypress/e2e/sentry.cy.js](../../cypress/e2e/sentry.cy.js), which covers Sentry initialization and error reporting, and [cypress/e2e/service-worker.cy.js](../../cypress/e2e/service-worker.cy.js), which covers the service worker scope, precache and `Permissions-Policy` header, and [cypress/e2e/csp.cy.js](../../cypress/e2e/csp.cy.js), which fails on any Content Security Policy violation while the page loads. [cypress/support/e2e.js](../../cypress/support/e2e.js) unregisters service workers before each test, because Cypress test isolation does not.
 
 **Open Cypress Test Runner:**
 

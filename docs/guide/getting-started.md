@@ -57,13 +57,13 @@ Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
 ### Third-Party Scripts
 
-- Sentry Software Development Kit (SDK) scripts are loaded and initialized in `index.html`
-- The Google Tag Manager loader is in `index.html`; the container sends the Google Analytics 4 events
+- The Sentry Software Development Kit (SDK) script is loaded in `index.html` and initialized by `initializeSentry()` in `src/scripts/index.js`
+- The Google Tag Manager loader is `loadGoogleTagManager()` in `src/scripts/index.js`; the container sends the Google Analytics 4 events
 - The Sentry, jQuery, Bootstrap, Showdown and site scripts load with `defer`, and Sentry initializes on `DOMContentLoaded`
 - The Google Tag Manager loader and the X `widgets.js` script load with `crossorigin="anonymous"`, so an error they throw reports its message and stack instead of `Script error.`
 - The sidebar shows a "Follow @SmallDevTalk on X" link by default, with the X timeline loaded hidden and inert beneath it. X rate-limits embedded timeline requests to `syndication.twitter.com` per IP address and answers with HTTP 429, and `widgets.js` still inserts its `iframe` then, but leaves it `visibility: hidden` at 0 pixels high and fires no `rendered` or `loaded` event. `watchTwitterTimeline()` watches the timeline container, and once the `iframe` is visible with a height, it hides the link, removes the inert state, and reveals the timeline. When X never serves the timeline, the link stays. It does not report the failure to Sentry.
 
-Implementation: [index.html](../../index.html)
+Implementation: [index.html](../../index.html), [src/scripts/index.js](../../src/scripts/index.js)
 
 ## Project Structure
 
@@ -75,6 +75,8 @@ Small-Dev-Talk/
 │   ├── scripts/
 │   │   ├── index.js             # Main application logic (ArticleFiller class)
 │   │   ├── index.test.js        # Unit tests for index.js
+│   │   ├── sw-headers.js        # Security headers added by the service worker
+│   │   ├── sw-headers.test.js   # Unit tests for sw-headers.js
 │   │   └── libraries/           # Third-party libraries
 │   ├── articleArchive/
 │   │   ├── articleData.json     # Article metadata registry
@@ -172,7 +174,7 @@ This command regenerates `sw.js` at the repository root with the current precach
 
 Small Dev Talk does not reference environment variables in runtime scripts. Configuration is done through:
 
-- [index.html](../../index.html) - Sentry and analytics configuration, meta tags, security policies
+- [index.html](../../index.html) - Sentry SDK script, meta tags, Content Security Policy
 - [workbox-config.js](../../workbox-config.js) - Precaching configuration
 
 ## Related Documentation

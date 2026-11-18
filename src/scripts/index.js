@@ -928,8 +928,8 @@ function updateCanonicalLink(location) {
 }
 
 /**
- * Handle clicks on the carousel arrows and the error buttons. These controls used inline `onclick` attributes, which
- * the page's Content Security Policy blocks, so one delegated listener on the document runs them instead.
+ * Handle clicks on the carousel arrows and the error buttons. The page's Content Security Policy blocks inline `onclick`
+ * attributes, so one delegated listener on the document runs these controls.
  * @param {MouseEvent} event The click event.
  * @returns {void}
  */
@@ -1017,7 +1017,9 @@ if (typeof module !== "undefined" && module.exports) {
 		initializeSentry,
 		loadGoogleTagManager,
 		updateCanonicalLink,
+		startThirdParties,
 		handleControlClick,
+		APP_VERSION,
 		redirectToCanonicalHost,
 		removeLegacyServiceWorker,
 		registerServiceWorker,

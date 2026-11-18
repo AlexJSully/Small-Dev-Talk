@@ -10,9 +10,12 @@ describe("Content Security Policy", () => {
 			},
 		});
 
-		// Let the carousel render and the third-party scripts (Google Tag Manager, X widgets, Sentry) load.
+		// Wait for the carousel to render and for each third-party script (Sentry, Google Tag Manager, X widgets) to run.
 		cy.get("#carouselInner .carousel-item").should("exist");
-		cy.wait(3000).then(() => {
+		cy.window().its("Sentry").should("exist");
+		cy.window().its("google_tag_manager").should("exist");
+		cy.get("#twitterTimeline iframe").should("exist");
+		cy.then(() => {
 			expect(violations, violations.join("\n")).to.be.empty;
 		});
 	});

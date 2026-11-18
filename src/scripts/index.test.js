@@ -8,7 +8,9 @@ const {
 	initializeSentry,
 	loadGoogleTagManager,
 	updateCanonicalLink,
+	startThirdParties,
 	handleControlClick,
+	APP_VERSION,
 	redirectToCanonicalHost,
 	removeLegacyServiceWorker,
 	registerServiceWorker,
@@ -16,6 +18,7 @@ const {
 	start,
 	watchTwitterTimeline,
 } = require("./index.js");
+const { version: packageVersion } = require("../../package.json");
 
 describe("reportToSentry before Sentry initializes", () => {
 	afterEach(() => {
@@ -1754,6 +1757,10 @@ describe("initializeSentry", () => {
 		};
 	}
 
+	test("reports the version in package.json", () => {
+		expect(APP_VERSION).toBe(packageVersion);
+	});
+
 	test("starts Sentry with the release, both integrations and the app version tag", () => {
 		global.Sentry = createSentrySdk();
 
@@ -1761,12 +1768,12 @@ describe("initializeSentry", () => {
 
 		expect(global.Sentry.init).toHaveBeenCalledWith(
 			expect.objectContaining({
-				release: "small-dev-talk@1.3.4",
+				release: `small-dev-talk@${APP_VERSION}`,
 				integrations: ["tracing", "replay"],
 				replaysOnErrorSampleRate: 1.0,
 			}),
 		);
-		expect(global.Sentry.scope.setTag).toHaveBeenCalledWith("app-version", "1.3.4");
+		expect(global.Sentry.scope.setTag).toHaveBeenCalledWith("app-version", APP_VERSION);
 	});
 
 	test("sends the errors that were reported before Sentry started", () => {
@@ -1855,5 +1862,59 @@ describe("updateCanonicalLink", () => {
 		expect(() =>
 			updateCanonicalLink({ host: "smalldevtalk.net", href: "https://smalldevtalk.net/" }),
 		).not.toThrow();
+	});
+});
+
+describe("startThirdParties", () => {
+	/**
+	 * Build a stand-in for the Sentry SDK, which sends events over the network, so whether it started can be read.
+	 * @returns {object} An SDK object whose functions are Jest mocks.
+	 */
+	function createSentrySdk() {
+		return {
+			init: jest.fn(),
+			browserTracingIntegration: jest.fn(),
+			replayIntegration: jest.fn(),
+			getCurrentScope: jest.fn(() => ({ setTag: jest.fn() })),
+			captureException: jest.fn(),
+		};
+	}
+
+	/**
+	 * Make `document.readyState` report a value, which jsdom does not let a test assign.
+	 * @param {string} state The ready state to report.
+	 * @returns {void}
+	 */
+	function setReadyState(state) {
+		jest.spyOn(document, "readyState", "get").mockReturnValue(state);
+	}
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+		document.head.innerHTML = "";
+		delete window.dataLayer;
+		delete global.Sentry;
+	});
+
+	test("loads Google Tag Manager and starts Sentry at once when the document has finished loading", () => {
+		global.Sentry = createSentrySdk();
+		setReadyState("complete");
+
+		startThirdParties();
+
+		expect(document.head.querySelector('script[src*="googletagmanager.com/gtm.js"]')).not.toBeNull();
+		expect(global.Sentry.init).toHaveBeenCalledTimes(1);
+	});
+
+	test("waits for DOMContentLoaded before starting Sentry while the document is loading", () => {
+		global.Sentry = createSentrySdk();
+		setReadyState("loading");
+		const addEventListener = jest.spyOn(document, "addEventListener");
+
+		startThirdParties();
+
+		expect(addEventListener).toHaveBeenCalledWith("DOMContentLoaded", initializeSentry);
+		expect(global.Sentry.init).not.toHaveBeenCalled();
+		expect(document.head.querySelector('script[src*="googletagmanager.com/gtm.js"]')).not.toBeNull();
 	});
 });

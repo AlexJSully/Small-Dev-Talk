@@ -67,16 +67,29 @@ async function respondToNavigation(request) {
 	return withSecurityHeaders(precached || (await fetch(request)));
 }
 
-if (typeof self !== "undefined" && typeof self.addEventListener === "function") {
-	self.addEventListener("fetch", (event) => {
-		const { request } = event;
+/**
+ * Answer a same-origin navigation with the security headers and stop the event from reaching the listeners registered
+ * after this one. Workbox registers a listener that answers the precached `index.html` too, and a second
+ * `respondWith` call on one event throws an `InvalidStateError`.
+ * @param {FetchEvent} event The fetch event.
+ * @param {string} workerOrigin The origin the worker runs on.
+ * @returns {void}
+ */
+function handleFetch(event, workerOrigin) {
+	const { request } = event;
 
-		if (request.mode === "navigate" && new URL(request.url).origin === self.location.origin) {
-			event.respondWith(respondToNavigation(request));
-		}
-	});
+	if (request.mode !== "navigate" || new URL(request.url).origin !== workerOrigin) {
+		return;
+	}
+
+	event.respondWith(respondToNavigation(request));
+	event.stopImmediatePropagation();
+}
+
+if (typeof self !== "undefined" && typeof self.addEventListener === "function") {
+	self.addEventListener("fetch", (event) => handleFetch(event, self.location.origin));
 }
 
 if (typeof module !== "undefined" && module.exports) {
-	module.exports = { CONTENT_SECURITY_POLICY, SECURITY_HEADERS, withSecurityHeaders };
+	module.exports = { CONTENT_SECURITY_POLICY, SECURITY_HEADERS, withSecurityHeaders, handleFetch };
 }

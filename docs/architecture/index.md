@@ -45,7 +45,7 @@ Small Dev Talk follows these core architectural principles:
 2. **Client-Side Rendering** — Markdown converted to HTML in the browser using Showdown.js
 3. **Metadata-Driven** — All articles indexed in a central JSON registry
 4. **Progressive Enhancement** — A service worker serves the app shell and articles already read when offline
-5. **Security-First** — Strict Content Security Policy (CSP) headers
+5. **Security-First** — A strict Content Security Policy (CSP) in a `meta` tag, plus security headers the service worker adds for returning visitors
 6. **Maintainability** — Project in maintenance mode, focusing on stability over features
 
 ## System Diagrams

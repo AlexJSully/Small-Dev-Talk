@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const { CONTENT_SECURITY_POLICY, SECURITY_HEADERS, withSecurityHeaders } = require("./sw-headers.js");
+const { CONTENT_SECURITY_POLICY, SECURITY_HEADERS, withSecurityHeaders, handleFetch } = require("./sw-headers.js");
 
 /**
  * Read a Content-Security-Policy directive list into a map of directive name to sources.
@@ -24,23 +24,23 @@ function parsePolicy(policy) {
 	);
 }
 
+/**
+ * Build a same-origin-like HTML response. `new Response` has type "default", so the type is overridden.
+ * @param {string} contentType The Content-Type header value.
+ * @returns {Response} A response whose type is "basic".
+ */
+function basicResponse(contentType) {
+	const response = new Response("<!doctype html><title>x</title>", {
+		status: 200,
+		statusText: "OK",
+		headers: { "Content-Type": contentType },
+	});
+	Object.defineProperty(response, "type", { value: "basic" });
+
+	return response;
+}
+
 describe("withSecurityHeaders", () => {
-	/**
-	 * Build a same-origin-like HTML response. `new Response` has type "default", so the type is overridden.
-	 * @param {string} contentType The Content-Type header value.
-	 * @returns {Response} A response whose type is "basic".
-	 */
-	function basicResponse(contentType) {
-		const response = new Response("<!doctype html><title>x</title>", {
-			status: 200,
-			statusText: "OK",
-			headers: { "Content-Type": contentType },
-		});
-		Object.defineProperty(response, "type", { value: "basic" });
-
-		return response;
-	}
-
 	test("adds every security header and keeps the body, status and original headers", async () => {
 		const result = withSecurityHeaders(basicResponse("text/html; charset=utf-8"));
 
@@ -70,6 +70,61 @@ describe("withSecurityHeaders", () => {
 		expect(SECURITY_HEADERS["X-Frame-Options"]).toBe("SAMEORIGIN");
 		expect(CONTENT_SECURITY_POLICY).toContain("frame-ancestors 'self'");
 		expect(CONTENT_SECURITY_POLICY).not.toContain("'unsafe-eval'");
+	});
+});
+
+describe("handleFetch", () => {
+	const workerOrigin = "https://smalldevtalk.net";
+	const originalFetch = global.fetch;
+
+	/**
+	 * Build a fetch event stand-in whose `respondWith` and `stopImmediatePropagation` are Jest mocks.
+	 * @param {string} url The requested URL.
+	 * @param {string} mode The request mode.
+	 * @returns {object} The event.
+	 */
+	function createFetchEvent(url, mode) {
+		return { request: { url, mode }, respondWith: jest.fn(), stopImmediatePropagation: jest.fn() };
+	}
+
+	beforeEach(() => {
+		// The network is the boundary: the worker's own fetch to the origin cannot run in a Jest test.
+		global.fetch = jest.fn(() => Promise.resolve(basicResponse("text/html")));
+	});
+
+	afterEach(() => {
+		global.fetch = originalFetch;
+	});
+
+	test("answers a same-origin navigation with the security headers and stops the other listeners", async () => {
+		const event = createFetchEvent(`${workerOrigin}/other.html`, "navigate");
+
+		handleFetch(event, workerOrigin);
+
+		expect(event.respondWith).toHaveBeenCalledTimes(1);
+		expect(event.stopImmediatePropagation).toHaveBeenCalledTimes(1);
+
+		const response = await event.respondWith.mock.calls[0][0];
+
+		expect(response.headers.get("X-Content-Type-Options")).toBe("nosniff");
+	});
+
+	test("leaves a request that is not a navigation to the other listeners", () => {
+		const event = createFetchEvent(`${workerOrigin}/src/style.min.css`, "no-cors");
+
+		handleFetch(event, workerOrigin);
+
+		expect(event.respondWith).not.toHaveBeenCalled();
+		expect(event.stopImmediatePropagation).not.toHaveBeenCalled();
+	});
+
+	test("leaves a navigation to another origin to the other listeners", () => {
+		const event = createFetchEvent("https://example.com/", "navigate");
+
+		handleFetch(event, workerOrigin);
+
+		expect(event.respondWith).not.toHaveBeenCalled();
+		expect(event.stopImmediatePropagation).not.toHaveBeenCalled();
 	});
 });
 
