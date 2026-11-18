@@ -102,14 +102,14 @@ describe("Landing Page", () => {
 			},
 		});
 
-		cy.get("#articleBody").should("contain", "Error retrieving article");
+		cy.get("#articleBody").should("contain", "We could not find that article.");
 		cy.get("#articleBody").should("be.visible");
 	});
 
 	it("should send the Home button of the error page to the home page", () => {
 		cy.visit("http://localhost:3000/index.html?NotAnArticleKey");
 
-		cy.get("#articleBody").should("contain", "Error retrieving article");
+		cy.get("#articleBody").should("contain", "We could not find that article.");
 		cy.get('#articleBody [data-page-action="home"]').click();
 		cy.location("search").should("equal", "");
 	});

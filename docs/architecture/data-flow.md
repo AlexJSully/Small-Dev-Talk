@@ -60,7 +60,7 @@ flowchart TD
 
     subgraph Monitor["Error Tracking"]
         I1["Sentry monitors for<br/>fetch errors"]
-        I2["Site errors reported<br/>via reportToSentry()"]
+        I2["Site errors reported<br/>via reportError()"]
         I3["Network errors reported<br/>with context"]
     end
 
@@ -116,18 +116,18 @@ When [index.html](../../index.html) loads:
     - Sentry SDK, from the version-pinned `browser.sentry-cdn.com` bundle
 
 3. [index.js](../../src/scripts/index.js) runs `startThirdParties()` when it loads, which starts:
-    - `Sentry.init()` through `initializeSentry()`, run on `DOMContentLoaded` after the deferred SDK has executed, with the tracing and replay integrations and no console integration, so console output from browser extensions or injected scripts is not reported. The site reports its own errors by calling `reportToSentry()` in [index.js](../../src/scripts/index.js) from `displayError()` and from the page data, article data, and service worker catch handlers. An error reported before `Sentry.init()` has run is kept, up to 20 of them, and `flushPendingSentryErrors()` sends them right after `Sentry.init()`
+    - `Sentry.init()` through `initializeSentry()`, run on `DOMContentLoaded` after the deferred SDK has executed, with the tracing and replay integrations and no console integration, so console output from browser extensions or injected scripts is not reported. The site reports its own errors through `reportError()` in [index.js](../../src/scripts/index.js), which `displayError()`, the page data and article data catch handlers, and the service worker catch handlers call. Each event carries a Sentry `level`, `operation` and `kind` tags, and the article, URL, HTTP status and page as extra data. An error reported before `Sentry.init()` has run is kept with its context, up to 20 of them, and `flushPendingSentryErrors()` sends them right after `Sentry.init()`
     - `Sentry.getCurrentScope()` with the `app-version` tag
     - Google Tag Manager, through `loadGoogleTagManager()`, and a canonical URL adjustment applied only on the `smalldevtalk.net` host, through `updateCanonicalLink()`
 
-Metadata loading starts from `start()` in [index.js](../../src/scripts/index.js), which also registers the one click listener that runs the carousel arrows and the error buttons. That file is loaded with `defer`, so it runs after the HTML is parsed and calls `start()` at once; when it runs while the document is still loading, it calls `start()` on `DOMContentLoaded` instead. When the page runs on `www.smalldevtalk.net`, `start()` moves it to the same path, query and hash on `smalldevtalk.net` and does nothing else, because GitHub Pages redirects every `www.` request to that host and the redirected data requests and service worker script fail. Otherwise it awaits `init()`, starts `watchTwitterTimeline()`, and then awaits `registerServiceWorker()`, so the worker's installation never delays the first render. `init()` starts `retrievePageData()` and `retrieveArticleData()` together and calls `callArticle()` once, after both requests settle; each request catches its own failure, so the view still renders when one of them fails.
+Metadata loading starts from `start()` in [index.js](../../src/scripts/index.js), which also registers the one click listener that runs the carousel arrows and the error buttons. That file is loaded with `defer`, so it runs after the HTML is parsed and calls `start()` at once; when it runs while the document is still loading, it calls `start()` on `DOMContentLoaded` instead. When the page runs on `www.smalldevtalk.net`, `start()` moves it to the same path, query and hash on `smalldevtalk.net` and does nothing else, because GitHub Pages redirects every `www.` request to that host and the redirected data requests and service worker script fail. Otherwise it awaits `init()`, starts `watchTwitterTimeline()`, and then awaits `registerServiceWorker()`, so the worker's installation never delays the first render. `init()` starts `retrievePageData()` and `retrieveArticleData()` together and calls `callArticle()` once, after both requests succeed. Each request reports its own failure and rethrows it, so when one fails, `init()` rejects and `start()` shows the error message for that failure instead of the view.
 
 ### 2. Article Data Retrieval
 
 ```mermaid
 sequenceDiagram
     accTitle: Article data retrieval sequence
-    accDescr: After the browser completes loading, init() has ArticleFiller fetch legacyPagesDisplay.json and articleData.json together, store them in the pageData and articleData static properties, then call callArticle() once both requests settle.
+    accDescr: After the browser completes loading, init() has ArticleFiller fetch legacyPagesDisplay.json and articleData.json together, store them in the pageData and articleData static properties, then call callArticle() once both requests succeed.
     participant Browser
     participant AF as ArticleFiller
     participant Server
@@ -168,17 +168,33 @@ flowchart TD
 
 ### 4. Error Handling Flow
 
+Each failed request is wrapped in a `LoadError` by `fetchResource()` in [index.js](../../src/scripts/index.js). The error has a `kind`, and a `network` or `parse` error keeps the error that the request or the body reader threw as its `cause`:
+
+| Kind      | Meaning                                                              | Sentry level | Message shown to the visitor                                          |
+| --------- | -------------------------------------------------------------------- | ------------ | --------------------------------------------------------------------- |
+| `network` | The request, or the download of its body, did not complete           | warning      | Check the internet connection, then refresh the page                  |
+| `http`    | The server answered with an error status other than 404              | error        | The content cannot load now, try again in a few minutes               |
+| `parse`   | The JSON could not be parsed, or the article converted to empty HTML | error        | The content cannot be displayed, refresh, and report it if it repeats |
+| `missing` | The article is not in the article data, or the server answered 404   | warning      | The article was not found, check the link or go home                  |
+| (other)   | Any other failure                                                    | error        | Something went wrong, refresh or try again later                      |
+
+`displayError(error, context)` shows the message for the error's kind, so a visitor never sees a blank box or the technical text of the failure. `reportError()` logs one object to the console with the original error and its stack, the kind, the operation, the article, the URL, the HTTP status, the page and a timestamp, and reports the original error to Sentry with the level and tags above. It handles each error object once, so an error that passes through the data request handler and `start()` produces one console entry and one Sentry event.
+
 ```mermaid
 flowchart TD
     accTitle: Error handling flow
-    accDescr: A failed or invalid fetch, or a parse error, calls displayError, which logs to the console and reports to Sentry, then shows an error UI with a refresh button and lets the user return to the homepage.
-    A["Fetch article"] -->|Success| B["Parse & render"]
-    A -->|Fetch fails| C["displayError<br/>Log to console"]
-    A -->|Invalid article| C
-    B -->|Parse error| C
-    C --> D["reportToSentry()<br/>sends it to Sentry"]
-    D --> E["Show error UI<br/>with refresh button"]
-    E --> F["User can return<br/>to homepage"]
+    accDescr: A failed or invalid fetch, a parse error, or a missing article or article file becomes a LoadError with a kind. displayError passes it to reportError, which logs it to the console and reports it to Sentry once, then shows the message for the kind with a refresh button and lets the user return to the homepage.
+    A["Fetch article"] -->|Request fails or bad status| B["fetchResource<br/>LoadError: network or http"]
+    A -->|Unreadable response| B2["fetchResource<br/>LoadError: parse"]
+    A -->|Not in article data, or 404| B3["LoadError: missing"]
+    A -->|Success| C["Parse & render"]
+    C -->|Conversion is empty| B2
+    B --> D["displayError<br/>message for the kind"]
+    B2 --> D
+    B3 --> D
+    D --> E["reportError()<br/>console object and Sentry event, once"]
+    E --> F["Show error UI<br/>with refresh button"]
+    F --> G["User can return<br/>to homepage"]
 ```
 
 ### 5. Metadata Update Sequence

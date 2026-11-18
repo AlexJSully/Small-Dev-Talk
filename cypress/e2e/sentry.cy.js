@@ -15,12 +15,11 @@ function captureSentryEnvelopes() {
 }
 
 /**
- * Join the text of every error and message event in the captured Sentry envelopes.
- * Breadcrumbs are ignored, because they record earlier console calls inside unrelated events.
+ * Parse the error and message events out of the captured Sentry envelopes.
  * @param {string[]} envelopeBodies Raw envelope request bodies.
- * @returns {string} Each event's message, or its exception values, one event per line.
+ * @returns {object[]} Each event that has a message or an exception.
  */
-function sentEventText(envelopeBodies) {
+function sentEvents(envelopeBodies) {
 	return envelopeBodies
 		.flatMap((body) => String(body).split("\n"))
 		.map((line) => {
@@ -30,7 +29,17 @@ function sentEventText(envelopeBodies) {
 				return null;
 			}
 		})
-		.filter((item) => item && (item.message || item.exception))
+		.filter((item) => item && (item.message || item.exception));
+}
+
+/**
+ * Join the text of every error and message event in the captured Sentry envelopes.
+ * Breadcrumbs are ignored, because they record earlier console calls inside unrelated events.
+ * @param {string[]} envelopeBodies Raw envelope request bodies.
+ * @returns {string} Each event's message, or its exception values, one event per line.
+ */
+function sentEventText(envelopeBodies) {
+	return sentEvents(envelopeBodies)
 		.map((event) =>
 			event.message ? String(event.message) : event.exception.values.map((value) => value.value).join(" "),
 		)
@@ -67,7 +76,7 @@ describe("Sentry initialization", () => {
 		const envelopeBodies = captureSentryEnvelopes();
 
 		cy.visit("http://localhost:3000/index.html?NonExistentArticle");
-		cy.get("#articleBody").should("contain", "Error retrieving article.");
+		cy.get("#articleBody").should("contain", "We could not find that article.");
 
 		cy.window().then((win) => {
 			// The console output a visitor's Playwright script logged on the production site.
@@ -96,7 +105,16 @@ describe("Sentry initialization", () => {
 
 		cy.wrap(null).should(() => {
 			const sentText = sentEventText(envelopeBodies);
-			expect(sentText).to.contain("Error retrieving article.");
+			// The event itself carries the failure kind and operation as tags, and a warning level. Its console breadcrumb
+			// holds the same values, so the raw envelope text cannot show that the tags were set.
+			const notFoundEvent = sentEvents(envelopeBodies).find((event) =>
+				event.exception?.values?.some(
+					(value) => value.value === "Article not found in article data: NonExistentArticle",
+				),
+			);
+			expect(notFoundEvent, "the not-found event").to.exist;
+			expect(notFoundEvent.level).to.equal("warning");
+			expect(notFoundEvent.tags).to.include({ operation: "find article", kind: "missing" });
 			expect(sentText).not.to.contain("cross-origin frame");
 			expect(sentText).not.to.contain("Iframe 3");
 			expect(sentText).not.to.contain("Detected and blocked");

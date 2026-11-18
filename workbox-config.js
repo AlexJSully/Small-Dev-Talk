@@ -32,6 +32,11 @@ module.exports = {
 	// soon as it activates, so the images and articles it requests after that go through the runtime caches.
 	"clientsClaim": true,
 
+	// The worker answers navigations from its precached index.html and adds the headers in sw-headers.js, so a new
+	// release, including a Content-Security-Policy change, reaches a returning visitor only once the new worker is
+	// active. Without this, the new worker waits until every tab of the site is closed, which a reload does not do.
+	"skipWaiting": true,
+
 	// Define runtime caching rules.
 	"runtimeCaching": [
 		{

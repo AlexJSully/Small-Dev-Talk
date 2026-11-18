@@ -78,7 +78,7 @@ The `ArticleFiller` class is the central orchestrator for loading, rendering, an
 - **Article Loading:** Retrieves Markdown files based on article name and author
 - **Rendering:** Converts Markdown to Hypertext Markup Language (HTML) using Showdown.js
 - **Meta Tagging:** Updates page title, Open Graph, Twitter Card, and structured data
-- **Error Handling:** Displays user-facing error output when content fails to load
+- **Error Handling:** Classifies a failed load as network, http, parse or missing, shows the visitor a message for that kind, and logs and reports the error with its operation and article
 
 **State Management:**
 
@@ -91,7 +91,7 @@ Static class properties maintain:
 - `pageURL` - Parsed query tokens
 - `callPageDisplay` - Flag for page display logic
 - `whatPageDisplay` - Current view state (for example, "index" or a page category)
-- `errMsg` - Error message display
+- `errMsg` - Message shown to the visitor by the last `displayError()` call
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
