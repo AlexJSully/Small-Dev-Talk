@@ -106,20 +106,23 @@ A JavaScript Object Notation (JSON) file containing metadata for all published a
 		"summary": "Brief description",
 		"author": "Author Name",
 		"date": "YYYY-MM-DD",
-		"thumbnail": "filename.jpg"
+		"thumbnail": "filename.jpg",
+		"thumbnailHeight": 225,
+		"thumbnailWidth": 400
 	}
 }
 ```
 
 **Metadata Fields:**
 
-| Field       | Type   | Used by                                      | Notes                                                          |
-| ----------- | ------ | -------------------------------------------- | -------------------------------------------------------------- |
-| `title`     | string | Metadata updates and list rendering          | Display title for listings and page metadata                   |
-| `summary`   | string | Carousel and featured list rendering         | Displayed when the article is included in these lists          |
-| `author`    | string | Article path construction and list rendering | Used to build `author{AuthorNameNoSpaces}`                     |
-| `date`      | string | Article path construction and list rendering | Used to build `YYYY-MM-DD_{ArticleKey}`                        |
-| `thumbnail` | string | List rendering and metadata image updates    | Used for carousel, featured list, archive, and social metadata |
+| Field                               | Type   | Used by                                      | Notes                                                                       |
+| ----------------------------------- | ------ | -------------------------------------------- | --------------------------------------------------------------------------- |
+| `title`                             | string | Metadata updates and list rendering          | Display title for listings and page metadata                                |
+| `summary`                           | string | Carousel and featured list rendering         | Displayed when the article is included in these lists                       |
+| `author`                            | string | Article path construction and list rendering | Used to build `author{AuthorNameNoSpaces}`                                  |
+| `date`                              | string | Article path construction and list rendering | Used to build `YYYY-MM-DD_{ArticleKey}`                                     |
+| `thumbnail`                         | string | List rendering and metadata image updates    | Used for carousel, featured list, archive, and social metadata              |
+| `thumbnailWidth`, `thumbnailHeight` | number | List rendering                               | Pixel size of the thumbnail, set as the `width` and `height` of its `<img>` |
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 

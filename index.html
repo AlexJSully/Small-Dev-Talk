@@ -110,62 +110,58 @@
 		<!-- END META DATA -->
 
 		<!-- Scripts -->
-		<link rel="stylesheet preload" type="text/css" href="./src/style.min.css" as="style" />
-		<script rel="preload" as="script" src="./src/scripts/libraries/jquery/jquery.min.js"></script>
-		<link rel="stylesheet preload" href="./src/scripts/libraries/bootstrap/css/bootstrap.min.css" as="style" />
-		<script rel="preload" as="script" src="./src/scripts/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<script rel="preload" as="script" src="./src/scripts/libraries/showdown/showdown.min.js"></script>
-		<script rel="preload" as="script" src="./src/scripts/index.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="./src/style.min.css" />
+		<link rel="stylesheet" href="./src/scripts/libraries/bootstrap/css/bootstrap.min.css" />
+		<!-- Start the data requests while the HTML is parsed; index.js reads the same URLs. -->
+		<link rel="preload" as="fetch" crossorigin href="/src/legacyPages/legacyPagesDisplay.json" />
+		<link rel="preload" as="fetch" crossorigin href="/src/articleArchive/articleData.json" />
+		<script defer src="./src/scripts/libraries/jquery/jquery.min.js"></script>
+		<script defer src="./src/scripts/libraries/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script defer src="./src/scripts/libraries/showdown/showdown.min.js"></script>
+		<script defer src="./src/scripts/index.min.js"></script>
 		<!-- Sentry -->
 		<script
+			defer
 			src="https://browser.sentry-cdn.com/11.12.0/bundle.tracing.replay.min.js"
 			integrity="sha384-RuorUNi9HSGOwjPhbAXIXH3wul31Hw6ghJkEIt4szHXuTS4SMJYRRbCYPgj4PQ2c"
 			crossorigin="anonymous"
 		></script>
 		<script>
-			if (
-				window.Sentry &&
-				typeof Sentry.init === "function" &&
-				typeof Sentry.browserTracingIntegration === "function" &&
-				typeof Sentry.replayIntegration === "function" &&
-				typeof Sentry.getCurrentScope === "function"
-			) {
-				Sentry.init({
-					dsn: "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.us.sentry.io/6600431",
-					// When updating the package version number in package.json, update the version number here as well.
-					release: "small-dev-talk@1.3.4",
+			// The deferred scripts above have run by DOMContentLoaded, so the Sentry SDK is available here.
+			document.addEventListener("DOMContentLoaded", function () {
+				if (
+					window.Sentry &&
+					typeof Sentry.init === "function" &&
+					typeof Sentry.browserTracingIntegration === "function" &&
+					typeof Sentry.replayIntegration === "function" &&
+					typeof Sentry.getCurrentScope === "function"
+				) {
+					Sentry.init({
+						dsn: "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.us.sentry.io/6600431",
+						// When updating the package version number in package.json, update the version number here as well.
+						release: "small-dev-talk@1.3.4",
 
-					// The site reports its own errors through reportToSentry in index.js. No console integration is
-					// installed, so console output from extensions or injected automation scripts is not reported.
-					integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
+						// The site reports its own errors through reportToSentry in index.js. No console integration is
+						// installed, so console output from extensions or injected automation scripts is not reported.
+						integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
 
-					// Enable logs to be sent to Sentry
-					enableLogs: true,
+						// Enable logs to be sent to Sentry
+						enableLogs: true,
 
-					tracesSampleRate: 1.0,
+						tracesSampleRate: 1.0,
 
-					// Capture Replay for 10% of all sessions,
-					// plus for 100% of sessions with an error
-					replaysSessionSampleRate: 0.1,
-					replaysOnErrorSampleRate: 1.0,
-				});
+						// Capture Replay for 10% of all sessions,
+						// plus for 100% of sessions with an error
+						replaysSessionSampleRate: 0.1,
+						replaysOnErrorSampleRate: 1.0,
+					});
 
-				// @AlexJSully when updating the package version number in package.json, update the version number here as well.
-				Sentry.getCurrentScope().setTag("app-version", "1.3.4");
-			} else {
-				console.error("Sentry initialization skipped: the SDK or a required integration failed to load.");
-			}
-		</script>
-		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-W05GNF3X55" crossorigin="anonymous"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag("js", new Date());
-
-			gtag("config", "G-W05GNF3X55");
+					// @AlexJSully when updating the package version number in package.json, update the version number here as well.
+					Sentry.getCurrentScope().setTag("app-version", "1.3.4");
+				} else {
+					console.error("Sentry initialization skipped: the SDK or a required integration failed to load.");
+				}
+			});
 		</script>
 		<!-- Google Tag Manager -->
 		<script>
@@ -252,6 +248,8 @@
 					<a href="index.html"
 						><img
 							src="src/images/title.svg"
+							width="801"
+							height="149"
 							style="
 								height: auto;
 								max-height: 70px;
@@ -294,7 +292,6 @@
 											aria-label="Go back to previous featured article slide"
 										>
 											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-											<span class="sr-only"></span>
 										</a>
 										<a
 											class="carousel-control-next"
@@ -304,7 +301,6 @@
 											aria-label="Go forward to next featured article slide"
 										>
 											<span class="carousel-control-next-icon" aria-hidden="true"></span>
-											<span class="sr-only"></span>
 										</a>
 									</div>
 								</div>

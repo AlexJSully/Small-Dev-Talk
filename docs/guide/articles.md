@@ -27,7 +27,9 @@ Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.
 		"summary": "Brief 1-2 sentence summary",
 		"author": "Author Name",
 		"date": "YYYY-MM-DD",
-		"thumbnail": "image1.jpg"
+		"thumbnail": "image1.jpg",
+		"thumbnailHeight": 225,
+		"thumbnailWidth": 400
 	}
 }
 ```
@@ -39,6 +41,7 @@ Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.
 - `date`: Used to build the `YYYY-MM-DD_{ArticleKey}` folder
 - `summary`: Displayed in carousel and featured lists
 - `thumbnail`: Used for carousel, featured list, archive list, and social metadata images
+- `thumbnailWidth` and `thumbnailHeight`: The thumbnail's size in pixels, as whole numbers. The page sets them as the `width` and `height` of the thumbnail `<img>`, so the browser reserves the space before the image loads. A Jest test fails when an entry with a `thumbnail` has no size or points at a file that does not exist
 
 ## Step 2: Create Article Directory
 
