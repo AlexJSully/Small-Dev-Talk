@@ -28,6 +28,26 @@ describe("Landing Page", () => {
 		cy.get("#articleBody").should("exist");
 	});
 
+	it("should show a follow link, not an empty box, when X does not serve the timeline", () => {
+		// X rate-limits embedded timelines per IP with a 429, so block the embed to reproduce that failure.
+		cy.intercept("https://platform.twitter.com/**", { statusCode: 429, body: "" });
+		cy.intercept("https://syndication.twitter.com/**", { statusCode: 429, body: "" });
+		cy.visit("http://localhost:3000");
+
+		cy.get(".twitterFallback").should("be.visible");
+		cy.get(".twitterFallback a")
+			.should("have.attr", "href", "https://twitter.com/SmallDevTalk")
+			.and("contain", "Follow @SmallDevTalk on X")
+			.and("have.css", "color", "rgb(13, 110, 253)")
+			.and("have.css", "text-decoration-line", "none");
+
+		// The timeline stays hidden and takes no room, and the link stays after the page has settled.
+		cy.get("#twitterTimeline").should("have.class", "twitterTimelinePending").and("have.attr", "inert");
+		cy.get("#twitterTimeline").should("not.be.visible");
+		cy.wait(2000);
+		cy.get(".twitterFallback").should("be.visible");
+	});
+
 	it("should show error when article is missing", () => {
 		// Simulate navigating to a missing article
 		cy.visit("http://localhost:3000/index.html?NonExistentArticle", {

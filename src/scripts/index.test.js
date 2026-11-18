@@ -8,6 +8,7 @@ const {
 	registerServiceWorker,
 	init,
 	start,
+	watchTwitterTimeline,
 } = require("./index.js");
 
 window.onload = null;
@@ -1127,6 +1128,133 @@ describe("ArticleFiller: changeCarousel", () => {
 		expect(carouselIndicator).toContain('data-slide-to="0"');
 		expect(carouselIndicator).toContain('data-slide-to="1"');
 		expect(pageTitle).toContain("Small Dev Talk: Featured");
+	});
+});
+
+describe("watchTwitterTimeline", () => {
+	/** The state `widgets.js` leaves a timeline in when X answers 429: an `iframe` that is hidden and 0 pixels high. */
+	const insertHiddenFrame = () => {
+		const frame = document.createElement("iframe");
+		frame.style.visibility = "hidden";
+		frame.style.height = "0px";
+		Object.defineProperty(frame, "offsetHeight", { configurable: true, value: 0 });
+		document.querySelector("#twitterTimeline .twitter-timeline").appendChild(frame);
+
+		return frame;
+	};
+
+	/** The state `widgets.js` leaves a timeline in when X serves it: a visible `iframe` with a height. */
+	const showFrame = (frame) => {
+		Object.defineProperty(frame, "offsetHeight", { configurable: true, value: 400 });
+		frame.style.visibility = "visible";
+		frame.style.height = "400px";
+	};
+
+	/** Let queued `MutationObserver` callbacks run. */
+	const flushMutations = () => new Promise((resolve) => setTimeout(resolve, 0));
+
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<div class="box">
+				<p class="twitterFallback"><a href="https://twitter.com/SmallDevTalk">Follow @SmallDevTalk on X</a></p>
+				<div id="twitterTimeline" class="twitterTimelinePending" inert>
+					<div class="twitter-timeline"></div>
+				</div>
+			</div>
+		`;
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+		delete global.Sentry;
+	});
+
+	test("keeps the follow link and the pending timeline before widgets.js inserts an iframe", async () => {
+		watchTwitterTimeline();
+		await flushMutations();
+
+		expect(document.querySelector(".twitterFallback").hidden).toBe(false);
+		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(true);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(true);
+	});
+
+	test("keeps the follow link when X answers 429 and leaves the iframe hidden", async () => {
+		watchTwitterTimeline();
+		insertHiddenFrame();
+		await flushMutations();
+
+		expect(document.querySelector(".twitterFallback").hidden).toBe(false);
+		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(true);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(true);
+	});
+
+	test("swaps the follow link for the timeline once the iframe becomes visible and sized", async () => {
+		watchTwitterTimeline();
+		const frame = insertHiddenFrame();
+		await flushMutations();
+
+		showFrame(frame);
+		await flushMutations();
+
+		expect(document.querySelector(".twitterFallback").hidden).toBe(true);
+		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(false);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(false);
+	});
+
+	test("swaps at once when the iframe is already visible and sized", () => {
+		const frame = insertHiddenFrame();
+		showFrame(frame);
+
+		watchTwitterTimeline();
+
+		expect(document.querySelector(".twitterFallback").hidden).toBe(true);
+		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(false);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(false);
+	});
+
+	test("stops observing after the swap, so a later hidden iframe does not bring the link back", async () => {
+		watchTwitterTimeline();
+		const frame = insertHiddenFrame();
+		showFrame(frame);
+		await flushMutations();
+
+		Object.defineProperty(frame, "offsetHeight", { configurable: true, value: 0 });
+		frame.style.visibility = "hidden";
+		await flushMutations();
+
+		expect(document.querySelector(".twitterFallback").hidden).toBe(true);
+		expect(document.getElementById("twitterTimeline").classList.contains("twitterTimelinePending")).toBe(false);
+		expect(document.getElementById("twitterTimeline").hasAttribute("inert")).toBe(false);
+	});
+
+	test("does nothing when the sidebar has no timeline container", () => {
+		document.body.innerHTML = "";
+
+		expect(() => watchTwitterTimeline()).not.toThrow();
+	});
+
+	test("leaves the follow link in place when MutationObserver is unavailable", () => {
+		const original = global.MutationObserver;
+		delete global.MutationObserver;
+
+		try {
+			expect(() => watchTwitterTimeline()).not.toThrow();
+			expect(document.querySelector(".twitterFallback").hidden).toBe(false);
+		} finally {
+			global.MutationObserver = original;
+		}
+	});
+
+	test("does not report the failed embed to Sentry or log an error", async () => {
+		global.Sentry = { captureException: jest.fn() };
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		watchTwitterTimeline();
+		insertHiddenFrame();
+		await flushMutations();
+
+		expect(global.Sentry.captureException).not.toHaveBeenCalled();
+		expect(console.error).not.toHaveBeenCalled();
 	});
 });
 

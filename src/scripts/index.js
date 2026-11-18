@@ -792,6 +792,55 @@ async function registerServiceWorker() {
 }
 
 /**
+ * Replace the sidebar's "Follow @SmallDevTalk on X" link with the X timeline once X serves the timeline.
+ * `syndication.twitter.com` rate-limits embedded timeline requests per IP with no documented limit and answers
+ * with 429. `widgets.js` still inserts its `iframe` then, but leaves it `visibility: hidden` at 0 by 0 pixels, and
+ * it fires no `rendered` or `loaded` event, so a visible, sized `iframe` is the only sign of a successful load.
+ * Until then the link stays and the timeline stays hidden. The function never throws, and it does not report
+ * a failed embed to Sentry.
+ * @returns {void}
+ */
+function watchTwitterTimeline() {
+	try {
+		const container = document.getElementById("twitterTimeline");
+
+		if (!container) {
+			return;
+		}
+
+		const showTimeline = () => {
+			const frame = container.querySelector("iframe");
+
+			if (!frame || getComputedStyle(frame).visibility === "hidden" || frame.offsetHeight === 0) {
+				return false;
+			}
+
+			container.classList.remove("twitterTimelinePending");
+			container.removeAttribute("inert");
+			document.querySelectorAll(".twitterFallback").forEach((fallback) => {
+				fallback.hidden = true;
+			});
+
+			return true;
+		};
+
+		if (showTimeline() || typeof MutationObserver === "undefined") {
+			return;
+		}
+
+		const observer = new MutationObserver(() => {
+			if (showTimeline()) {
+				observer.disconnect();
+			}
+		});
+
+		observer.observe(container, { attributes: true, childList: true, subtree: true });
+	} catch (e) {
+		console.error("Twitter timeline setup failed:", e && e.message ? e.message : e);
+	}
+}
+
+/**
  * Move the page to the canonical host when needed, otherwise register the service worker and render the view.
  * @param {Location} location The page location.
  * @returns {Promise<void>} Resolves once the view renders, or at once when the page is redirected.
@@ -809,6 +858,8 @@ async function start(location) {
 		reportToSentry(error);
 		ArticleFiller.displayError("Failed to load page. Please refresh or try again later.");
 	}
+
+	watchTwitterTimeline();
 }
 
 window.onload = () => start(window.location);
@@ -825,6 +876,7 @@ if (typeof module !== "undefined" && module.exports) {
 		registerServiceWorker,
 		init,
 		start,
+		watchTwitterTimeline,
 	};
 }
 
