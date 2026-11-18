@@ -46,18 +46,21 @@ npm run start
 
 ### Runtime Initialization
 
-- `window.onload` calls `registerServiceWorker()` and then initializes data loading
+- `start()` runs when the deferred `index.min.js` executes, after the HTML is parsed (or on `DOMContentLoaded` when the script runs while the document is still loading), so slow third-party scripts do not delay the data requests
+- `index.html` preloads `articleData.json` and `legacyPagesDisplay.json`, so the requests start while the HTML is parsed
 - `retrievePageData()` fetches legacy page definitions
 - `retrieveArticleData()` fetches article metadata
 - `init()` calls `callArticle()` to render the page once both requests settle
+- `registerServiceWorker()` runs after the page renders, so the worker's installation never delays the first render
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
 ### Third-Party Scripts
 
 - Sentry Software Development Kit (SDK) scripts are loaded and initialized in `index.html`
-- Google Analytics and Google Tag Manager scripts are loaded in `index.html`
-- The Google tag, the Google Tag Manager loader, and the X `widgets.js` script load with `crossorigin="anonymous"`, so an error they throw reports its message and stack instead of `Script error.`
+- The Google Tag Manager loader is in `index.html`; the container sends the Google Analytics 4 events
+- The Sentry, jQuery, Bootstrap, Showdown and site scripts load with `defer`, and Sentry initializes on `DOMContentLoaded`
+- The Google Tag Manager loader and the X `widgets.js` script load with `crossorigin="anonymous"`, so an error they throw reports its message and stack instead of `Script error.`
 - The sidebar shows a "Follow @SmallDevTalk on X" link by default, with the X timeline loaded hidden and inert beneath it. X rate-limits embedded timeline requests to `syndication.twitter.com` per IP address and answers with HTTP 429, and `widgets.js` still inserts its `iframe` then, but leaves it `visibility: hidden` at 0 pixels high and fires no `rendered` or `loaded` event. `watchTwitterTimeline()` watches the timeline container, and once the `iframe` is visible with a height, it hides the link, removes the inert state, and reveals the timeline. When X never serves the timeline, the link stays. It does not report the failure to Sentry.
 
 Implementation: [index.html](../../index.html)

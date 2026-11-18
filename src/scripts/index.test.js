@@ -3,6 +3,8 @@ global.showdown = require("./libraries/showdown/showdown.min.js");
 const { ArticleFiller, escapeHtml, sanitizeHtml } = require("./index.js");
 
 const {
+	reportToSentry,
+	flushPendingSentryErrors,
 	redirectToCanonicalHost,
 	removeLegacyServiceWorker,
 	registerServiceWorker,
@@ -11,7 +13,80 @@ const {
 	watchTwitterTimeline,
 } = require("./index.js");
 
-window.onload = null;
+describe("reportToSentry before Sentry initializes", () => {
+	afterEach(() => {
+		// Empty the module's buffer so one test's errors never reach another.
+		global.Sentry = { captureException: jest.fn() };
+		flushPendingSentryErrors();
+		delete global.Sentry;
+	});
+
+	test("keeps an error until the SDK has a client, then flushPendingSentryErrors sends it once", () => {
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn(), getClient: jest.fn(() => undefined) };
+		const error = new Error("failed before init");
+
+		reportToSentry(error);
+
+		expect(global.Sentry.captureException).not.toHaveBeenCalled();
+
+		global.Sentry.getClient.mockReturnValue({});
+		flushPendingSentryErrors();
+		flushPendingSentryErrors();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
+	});
+
+	test("wraps a message in an Error before keeping it", () => {
+		global.Sentry = { captureException: jest.fn(), getClient: () => undefined };
+
+		reportToSentry("plain message");
+		global.Sentry.getClient = () => ({});
+		flushPendingSentryErrors();
+
+		expect(global.Sentry.captureException.mock.calls[0][0]).toBeInstanceOf(Error);
+		expect(global.Sentry.captureException.mock.calls[0][0].message).toBe("plain message");
+	});
+
+	test("sends an error at once when the SDK already has a client", () => {
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
+		const error = new Error("after init");
+
+		reportToSentry(error);
+
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
+	});
+
+	test("keeps at most 20 errors", () => {
+		global.Sentry = { captureException: jest.fn(), getClient: () => undefined };
+
+		for (let i = 0; i < 25; i += 1) {
+			reportToSentry(new Error(`error ${i}`));
+		}
+		global.Sentry.getClient = () => ({});
+		flushPendingSentryErrors();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledTimes(20);
+	});
+
+	test("keeps an error reported before the SDK script has run, and sends it once the SDK has a client", () => {
+		expect(global.Sentry).toBeUndefined();
+		const error = new Error("reported before the SDK loaded");
+
+		expect(() => {
+			reportToSentry(error);
+			flushPendingSentryErrors();
+		}).not.toThrow();
+
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
+		flushPendingSentryErrors();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
+	});
+});
 
 describe("ArticleFiller: displayError", () => {
 	beforeEach(() => {
@@ -75,7 +150,7 @@ describe("ArticleFiller: displayError", () => {
 
 	test("reports the error message to Sentry as an Error", () => {
 		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 
 		ArticleFiller.displayError("Error retrieving article.");
 
@@ -283,7 +358,7 @@ describe("ArticleFiller: retrieveArticleData", () => {
 		global.fetch = jest.fn().mockRejectedValue(error);
 		jest.spyOn(console, "error").mockImplementation(() => {});
 		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 
 		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow("Network unavailable");
 
@@ -346,7 +421,7 @@ describe("ArticleFiller: retrievePageData", () => {
 			.mockResolvedValue({ ok: false, status: 404, statusText: "Not Found", json: jest.fn() });
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 
 		await expect(ArticleFiller.retrievePageData()).rejects.toThrow("Failed to fetch page data: 404 Not Found");
 
@@ -556,7 +631,7 @@ describe("ServiceWorker registration", () => {
 				register: jest.fn().mockRejectedValue(securityError),
 			},
 		};
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		const res = await registerServiceWorker();
@@ -617,85 +692,12 @@ describe("ServiceWorker registration", () => {
 				throw securityError;
 			},
 		});
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		await expect(removeLegacyServiceWorker()).resolves.toBeUndefined();
 		expect(console.error).toHaveBeenCalledWith("Legacy ServiceWorker cleanup failed:", securityError.message);
 		expect(global.Sentry.captureException).toHaveBeenCalledWith(securityError);
-	});
-
-	test("registerServiceWorker waits for the installing worker to take control of the page", async () => {
-		const listeners = {};
-		const registration = { ...createRegistration("http://localhost/"), installing: {} };
-		global.navigator = {
-			serviceWorker: {
-				controller: null,
-				getRegistrations: jest.fn().mockResolvedValue([]),
-				register: jest.fn().mockResolvedValue(registration),
-				addEventListener: jest.fn((name, listener) => {
-					listeners[name] = listener;
-				}),
-				removeEventListener: jest.fn(),
-			},
-		};
-		let settled = false;
-
-		const pending = registerServiceWorker().then(() => {
-			settled = true;
-		});
-		await new Promise((resolve) => setTimeout(resolve, 0));
-
-		expect(settled).toBe(false);
-
-		listeners.controllerchange();
-		await pending;
-
-		expect(settled).toBe(true);
-		expect(global.navigator.serviceWorker.removeEventListener).toHaveBeenCalledWith(
-			"controllerchange",
-			listeners.controllerchange,
-		);
-	});
-
-	test("registerServiceWorker does not wait when the page already has a controller", async () => {
-		const registration = { ...createRegistration("http://localhost/"), waiting: {} };
-		global.navigator = {
-			serviceWorker: {
-				controller: {},
-				getRegistrations: jest.fn().mockResolvedValue([]),
-				register: jest.fn().mockResolvedValue(registration),
-				addEventListener: jest.fn(),
-				removeEventListener: jest.fn(),
-			},
-		};
-
-		await expect(registerServiceWorker()).resolves.toBe(registration);
-		expect(global.navigator.serviceWorker.addEventListener).not.toHaveBeenCalled();
-	});
-
-	test("registerServiceWorker stops waiting after the timeout when the worker never takes control", async () => {
-		jest.useFakeTimers();
-		const registration = { ...createRegistration("http://localhost/"), installing: {} };
-		global.navigator = {
-			serviceWorker: {
-				controller: null,
-				getRegistrations: jest.fn().mockResolvedValue([]),
-				register: jest.fn().mockResolvedValue(registration),
-				addEventListener: jest.fn(),
-				removeEventListener: jest.fn(),
-			},
-		};
-
-		try {
-			const pending = registerServiceWorker();
-
-			await jest.advanceTimersByTimeAsync(3000);
-
-			await expect(pending).resolves.toBe(registration);
-		} finally {
-			jest.useRealTimers();
-		}
 	});
 
 	test("a failed legacy cleanup is reported to Sentry and the root worker still registers", async () => {
@@ -707,7 +709,7 @@ describe("ServiceWorker registration", () => {
 			},
 		};
 		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		await registerServiceWorker();
@@ -778,6 +780,33 @@ describe("start", () => {
 		expect(location.replace).not.toHaveBeenCalled();
 		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
 		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
+	});
+
+	test("renders the view before it registers the worker, so a slow install never delays the page", async () => {
+		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
+		let articleBodyWhenRegistering;
+		global.navigator.serviceWorker.register = jest.fn(() => {
+			articleBodyWhenRegistering = document.getElementById("articleBody").innerHTML;
+
+			return Promise.resolve(createRegistration("http://localhost/"));
+		});
+
+		await start(location);
+
+		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
+		expect(articleBodyWhenRegistering).toContain("Test Article");
+	});
+
+	test("still registers the worker after the view fails to render", async () => {
+		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		jest.spyOn(ArticleFiller, "displayError").mockImplementation(() => {});
+		global.fetch = jest.fn(() => Promise.reject(new Error("Network unavailable")));
+
+		await start(location);
+
+		expect(ArticleFiller.displayError).toHaveBeenCalled();
+		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
 	});
 
 	test("shows error message when retrievePageData fails", async () => {
@@ -1072,6 +1101,27 @@ describe("ArticleFiller: displayArchive", () => {
 		expect(html).toContain("thumb2.png");
 	});
 
+	test("gives archive thumbnails their width and height when articleData has them", () => {
+		ArticleFiller.articleData.ArticleOne.thumbnailWidth = 400;
+		ArticleFiller.articleData.ArticleOne.thumbnailHeight = 225;
+
+		ArticleFiller.displayArchive();
+
+		const images = document.querySelectorAll("#displayArticles img");
+		expect(images[0].getAttribute("width")).toBe("400");
+		expect(images[0].getAttribute("height")).toBe("225");
+		expect(images[1].hasAttribute("width")).toBe(false);
+		expect(images[1].hasAttribute("height")).toBe(false);
+	});
+
+	test("archive links take their accessible name from the visible title", () => {
+		ArticleFiller.displayArchive();
+
+		const link = document.querySelector("#displayArticles .archive-link");
+		expect(link.hasAttribute("aria-label")).toBe(false);
+		expect(link.textContent).toContain("First Article");
+	});
+
 	test("renders each archive article once when called twice", () => {
 		ArticleFiller.displayArchive();
 		ArticleFiller.displayArchive();
@@ -1128,6 +1178,149 @@ describe("ArticleFiller: changeCarousel", () => {
 		expect(carouselIndicator).toContain('data-slide-to="0"');
 		expect(carouselIndicator).toContain('data-slide-to="1"');
 		expect(pageTitle).toContain("Small Dev Talk: Featured");
+	});
+
+	test("loads the first slide's image at once and at high priority, and the others lazily", () => {
+		ArticleFiller.changeCarousel();
+
+		const [first, second] = document.querySelectorAll("#carouselInner img");
+		expect(first.getAttribute("loading")).toBe("eager");
+		expect(first.getAttribute("fetchpriority")).toBe("high");
+		expect(second.getAttribute("loading")).toBe("lazy");
+		expect(second.hasAttribute("fetchpriority")).toBe(false);
+	});
+
+	test("gives each slide image its width and height when articleData has them", () => {
+		ArticleFiller.articleData.ArticleOne.thumbnailWidth = 400;
+		ArticleFiller.articleData.ArticleOne.thumbnailHeight = 225;
+
+		ArticleFiller.changeCarousel();
+
+		const [first, second] = document.querySelectorAll("#carouselInner img");
+		expect(first.getAttribute("width")).toBe("400");
+		expect(first.getAttribute("height")).toBe("225");
+		expect(second.hasAttribute("width")).toBe(false);
+		expect(second.hasAttribute("height")).toBe(false);
+	});
+
+	test("ignores a size that is not a positive whole number", () => {
+		ArticleFiller.articleData.ArticleOne.thumbnailWidth = 0;
+		ArticleFiller.articleData.ArticleOne.thumbnailHeight = 225;
+		ArticleFiller.articleData.ArticleTwo.thumbnailWidth = "wide";
+		ArticleFiller.articleData.ArticleTwo.thumbnailHeight = 10.5;
+
+		ArticleFiller.changeCarousel();
+
+		document.querySelectorAll("#carouselInner img").forEach((image) => {
+			expect(image.hasAttribute("width")).toBe(false);
+			expect(image.hasAttribute("height")).toBe(false);
+		});
+	});
+
+	test("names each slide through its caption, with a level-three heading and no label that differs from it", () => {
+		ArticleFiller.changeCarousel();
+
+		const link = document.getElementById("carouselLink0");
+		const heading = document.getElementById("carouselHeader0");
+		expect(link.hasAttribute("aria-label")).toBe(false);
+		expect(link.querySelector("img").getAttribute("alt")).toBe("");
+		expect(heading.tagName).toBe("H3");
+		expect(heading.textContent).toBe("First Article");
+	});
+});
+
+describe("ArticleFiller: featured article links", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+            <div id="articleBody"></div>
+            <div id="displayArticles"></div>
+            <div id="featuredArticles"></div>
+            <div id="carouselInner"></div>
+            <div id="carouselIndicator"></div>
+            <div id="pageTitle"></div>
+        `;
+		ArticleFiller.whatPageDisplay = "featured";
+		ArticleFiller.pageData = { featured: { displayArticles: ["ArticleOne", "ArticleTwo"] } };
+		ArticleFiller.articleData = {
+			ArticleOne: {
+				title: "First Article",
+				summary: "Summary 1",
+				thumbnail: "thumb1.png",
+				thumbnailWidth: 400,
+				thumbnailHeight: 225,
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+			ArticleTwo: {
+				title: "Second Article",
+				summary: "Summary 2",
+				thumbnail: "thumb2.png",
+				author: "John Smith",
+				date: "2024-06-02",
+			},
+		};
+		ArticleFiller.ArticleFiller();
+	});
+
+	test("gives each thumbnail its width and height when articleData has them", () => {
+		const [first, second] = document.querySelectorAll("#displayArticles img");
+
+		expect(first.getAttribute("width")).toBe("400");
+		expect(first.getAttribute("height")).toBe("225");
+		expect(second.hasAttribute("width")).toBe(false);
+	});
+
+	test("links with visible text take their accessible name from that text", () => {
+		const links = Array.from(document.querySelectorAll("#featuredArticle0 a")).filter((link) =>
+			link.textContent.trim(),
+		);
+
+		expect(links).toHaveLength(3);
+		links.forEach((link) => expect(link.hasAttribute("aria-label")).toBe(false));
+	});
+
+	test("the Read More link names its article for screen readers", () => {
+		const readMore = document.querySelector("#featuredArticle0 p:not(.details) a");
+
+		expect(readMore.textContent.replace(/\s+/g, " ").trim()).toBe("Read More about First Article");
+		expect(readMore.querySelector(".visually-hidden").textContent).toBe(" about First Article");
+	});
+
+	test("the date link names its article for screen readers", () => {
+		const dateLink = document.querySelector("#featuredArticle0 .details a");
+
+		expect(dateLink.textContent.replace(/\s+/g, " ").trim()).toBe("2024-06-01 First Article");
+	});
+
+	test("the image-only thumbnail link keeps its label", () => {
+		const thumbnailLink = document.querySelector("#featuredArticle0 .col-md-4 a");
+
+		expect(thumbnailLink.getAttribute("aria-label")).toBe("Redirect to First Article");
+	});
+});
+
+describe("articleData.json", () => {
+	const fs = require("fs");
+	const path = require("path");
+	const archiveDir = path.join(__dirname, "..", "articleArchive");
+	const entries = Object.entries(JSON.parse(fs.readFileSync(path.join(archiveDir, "articleData.json"), "utf8")));
+	const withThumbnail = entries.filter(([, article]) => article.thumbnail);
+
+	test.each(withThumbnail)("%s has a thumbnail file in its article folder", (key, article) => {
+		const folder = `${article.date}_${key}`;
+		const thumbnail = path.join(
+			archiveDir,
+			`author${article.author.replace(/\s/g, "")}`,
+			folder,
+			article.thumbnail,
+		);
+
+		expect(fs.existsSync(thumbnail)).toBe(true);
+	});
+
+	test.each(withThumbnail)("%s has a thumbnail width and height", (key, article) => {
+		expect(Number.isInteger(article.thumbnailWidth) && article.thumbnailWidth > 0).toBe(true);
+		expect(Number.isInteger(article.thumbnailHeight) && article.thumbnailHeight > 0).toBe(true);
 	});
 });
 
@@ -1246,7 +1439,7 @@ describe("watchTwitterTimeline", () => {
 	});
 
 	test("does not report the failed embed to Sentry or log an error", async () => {
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		watchTwitterTimeline();

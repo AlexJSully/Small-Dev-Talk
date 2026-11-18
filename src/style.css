@@ -163,6 +163,30 @@ img {
 }
 /** END body **/
 
+/** BEGIN carousel **/
+/* Reserves the carousel's space before the slides are added, so the page below does not shift when they load. */
+#carouselInner {
+	aspect-ratio: 16 / 9;
+	max-height: 400px;
+}
+
+#carouselInner .carousel-item {
+	height: 100%;
+}
+
+#carouselInner .carousel-item a {
+	display: block;
+	height: 100%;
+}
+
+#carouselInner .carousel-item img {
+	height: 100%;
+	max-height: 400px;
+	object-fit: cover;
+	width: 100%;
+}
+/** END carousel **/
+
 /** BEGIN content **/
 #content {
 	border: 1px solid rgb(175, 175, 175) (128, 128, 128, 0.568);
@@ -440,6 +464,7 @@ img {
 }
 
 .archive-display img {
+	height: auto;
 	margin: auto;
 	width: 100%;
 }

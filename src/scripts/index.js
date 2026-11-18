@@ -94,17 +94,69 @@ function sanitizeHtml(unsafe) {
 	return template.innerHTML;
 }
 
+/** Most errors kept while waiting for Sentry to initialize. */
+const MAX_PENDING_SENTRY_ERRORS = 20;
+
+/** Errors reported before `Sentry.init()` ran, kept for `flushPendingSentryErrors()`. */
+const pendingSentryErrors = [];
+
 /**
- * Send an error to Sentry when the Sentry SDK has loaded, and do nothing otherwise.
+ * Tell whether the Sentry SDK has loaded and `Sentry.init()` has created its client.
+ * @returns {boolean} True when `Sentry.captureException()` delivers an event.
+ */
+function sentryHasClient() {
+	return (
+		typeof Sentry !== "undefined" &&
+		typeof Sentry.captureException === "function" &&
+		typeof Sentry.getClient === "function" &&
+		Boolean(Sentry.getClient())
+	);
+}
+
+/**
+ * Send an error to Sentry. `index.min.js` runs before the deferred Sentry SDK has executed and run `Sentry.init()`,
+ * and the SDK drops an error captured without a client, so an error reported until then waits for
+ * `flushPendingSentryErrors()`. It stays in the buffer when the SDK never loads.
  * @param {Error|string} error The error, or a message to wrap in an Error.
  * @returns {void}
  */
 function reportToSentry(error) {
+	const reported = error instanceof Error ? error : new Error(String(error));
+
+	if (sentryHasClient()) {
+		Sentry.captureException(reported);
+	} else if (pendingSentryErrors.length < MAX_PENDING_SENTRY_ERRORS) {
+		pendingSentryErrors.push(reported);
+	}
+}
+
+/**
+ * Send the errors that `reportToSentry()` kept while Sentry was not initialized. `index.html` calls this right after
+ * `Sentry.init()`.
+ * @returns {void}
+ */
+function flushPendingSentryErrors() {
 	if (typeof Sentry === "undefined" || typeof Sentry.captureException !== "function") {
 		return;
 	}
 
-	Sentry.captureException(error instanceof Error ? error : new Error(String(error)));
+	pendingSentryErrors.splice(0).forEach((error) => Sentry.captureException(error));
+}
+
+/**
+ * Build the `width` and `height` attributes of an article thumbnail, so the browser reserves its space before it loads.
+ * @param {{thumbnailWidth?: number, thumbnailHeight?: number}} [article] The article's data from articleData.json.
+ * @returns {string} The attributes with a leading space, or an empty string when either size is missing.
+ */
+function imageSizeAttributes(article) {
+	const width = Number(article?.thumbnailWidth);
+	const height = Number(article?.thumbnailHeight);
+
+	if (!Number.isInteger(width) || !Number.isInteger(height) || width < 1 || height < 1) {
+		return "";
+	}
+
+	return ` width="${width}" height="${height}"`;
 }
 
 /** Create and fill the page with the desired article */
@@ -468,10 +520,9 @@ class ArticleFiller {
 						<a
 							class="archive-link"
 							href="${document.location.origin}/index.html?${escapeHtml(key)}"
-							aria-label="Redirect to ${escapeHtml(value.title)}"
 						>
 							<p class="archive-title">${escapeHtml(value.title)}</p>
-							<img src="${escapeHtml(imgURL)}" alt="${escapeHtml(value.title)}'s thumbnail" loading="lazy">
+							<img src="${escapeHtml(imgURL)}"${imageSizeAttributes(value)} alt="${escapeHtml(value.title)}'s thumbnail" loading="lazy">
 						</a>
 					</div>
 				`;
@@ -535,27 +586,25 @@ class ArticleFiller {
 					document.getElementById("carouselIndicator").innerHTML += appendStr;
 				}
 
-				// Change content
+				// Change content. The first slide is the page's largest image, so it loads at once and at high priority.
 				appendStr = `
 					<div class="carousel-item ${c === 0 ? "active" : ""}">
 						<a
 							id="carouselLink${c}"
 							href="index.html?${escapeHtml(carouselList[c])}"
-							aria-label="Redirect to ${escapeHtml(articleTitle)}"
 						>
 							<img
 								id="carouselImage${c}"
-								src="${escapeHtml(url)}"
+								src="${escapeHtml(url)}"${imageSizeAttributes(ArticleFiller.articleData[carouselList[c]])}
 								class="d-block w-100"
-								style="width:100%; max-height: 400px !important;"
-								loading="lazy"
-								alt="Carousel image for ${escapeHtml(articleTitle)}"
+								${c === 0 ? `loading="eager" fetchpriority="high"` : `loading="lazy"`}
+								alt=""
 							>
 							<div
 								class="carousel-caption d-md-block"
 								style="text-shadow: 0 0 3px #000000;"
 							>
-								<h5 id="carouselHeader${c}">${escapeHtml(articleTitle)}</h5>
+								<h3 class="h5" id="carouselHeader${c}">${escapeHtml(articleTitle)}</h3>
 								<p id="carouselParagraph${c}">${escapeHtml(articleSummary)}</p>
 							</div>
 						</a>
@@ -609,7 +658,7 @@ class ArticleFiller {
 										aria-label="Redirect to ${escapeHtml(articleTitle)}"
 									>
 										<img
-											src="${escapeHtml(url)}"
+											src="${escapeHtml(url)}"${imageSizeAttributes(ArticleFiller.articleData[displayList[d]])}
 											class="img-fluid"
 											loading="lazy"
 											alt="Thumbnail for ${escapeHtml(articleTitle)}"
@@ -618,10 +667,7 @@ class ArticleFiller {
 								</div>
 								<div class="col-md-8" style="margin-top: 0.5rem;">
 									<h2>
-										<a
-											href="index.html?${escapeHtml(displayList[d])}"
-											aria-label="Redirect to ${escapeHtml(articleTitle)}"
-										>
+										<a href="index.html?${escapeHtml(displayList[d])}">
 											${escapeHtml(articleTitle)}
 										</a>
 									</h2>
@@ -629,21 +675,15 @@ class ArticleFiller {
 								<div class="col-12" style="margin-top: 0.5rem;">
 									<p>
 										${escapeHtml(articleSummary)}
-										<a
-											href="index.html?${escapeHtml(displayList[d])}"
-											aria-label="Read more of ${escapeHtml(articleTitle)}"
-										>
-											Read More
+										<a href="index.html?${escapeHtml(displayList[d])}">
+											Read More<span class="visually-hidden"> about ${escapeHtml(articleTitle)}</span>
 										</a>
 									</p>
 								</div>
 								<div class="col-12">
 									<p class="details">
-										<a
-											href="index.html?${escapeHtml(displayList[d])}"
-											aria-label="Redirect to ${escapeHtml(articleTitle)}"
-										>
-											${escapeHtml(articleDate)}
+										<a href="index.html?${escapeHtml(displayList[d])}">
+											${escapeHtml(articleDate)}<span class="visually-hidden"> ${escapeHtml(articleTitle)}</span>
 										</a>
 									</p>
 								</div>
@@ -727,44 +767,10 @@ async function removeLegacyServiceWorker() {
 	}
 }
 
-/** Longest wait, in milliseconds, for a newly installed service worker to take control of the page. */
-const SERVICE_WORKER_CONTROL_TIMEOUT_MS = 3000;
-
 /**
- * On a first visit the page has no controller until the new worker installs, activates and claims it.
- * Wait for that, so the article and images fetched next go through the worker's runtime caches.
- * Resolves at once when the page is already controlled or no worker is installing, and after the timeout when
- * the worker never takes control, so a failed activation never blocks rendering.
- * @param {ServiceWorkerRegistration} registration The registration returned by `register()`.
- * @returns {Promise<void>} Resolves once the page is controlled, or after the timeout.
- */
-function waitForServiceWorkerControl(registration) {
-	const container = typeof navigator !== "undefined" ? navigator.serviceWorker : null;
-
-	if (
-		!container ||
-		container.controller ||
-		!registration ||
-		!(registration.installing || registration.waiting) ||
-		typeof container.addEventListener !== "function"
-	) {
-		return Promise.resolve();
-	}
-
-	return new Promise((resolve) => {
-		const finish = () => {
-			clearTimeout(timer);
-			container.removeEventListener("controllerchange", finish);
-			resolve();
-		};
-		const timer = setTimeout(finish, SERVICE_WORKER_CONTROL_TIMEOUT_MS);
-
-		container.addEventListener("controllerchange", finish);
-	});
-}
-
-/**
- * Register the service worker if the browser supports it, then wait for it to control the page.
+ * Register the service worker if the browser supports it.
+ * The page does not wait for the worker to take control: `clientsClaim` lets it control the page once it activates,
+ * and the images and articles requested after that go through its runtime caches.
  * @returns {Promise<ServiceWorkerRegistration|null>} Registration or null on failure/unsupported.
  */
 async function registerServiceWorker() {
@@ -779,10 +785,7 @@ async function registerServiceWorker() {
 
 		await removeLegacyServiceWorker();
 
-		const reg = await navigator.serviceWorker.register("./sw.js");
-		await waitForServiceWorkerControl(reg);
-
-		return reg;
+		return await navigator.serviceWorker.register("./sw.js");
 	} catch (e) {
 		console.error("ServiceWorker registration failed:", e && e.message ? e.message : e);
 		reportToSentry(e);
@@ -841,7 +844,8 @@ function watchTwitterTimeline() {
 }
 
 /**
- * Move the page to the canonical host when needed, otherwise register the service worker and render the view.
+ * Move the page to the canonical host when needed, otherwise render the view and then register the service worker.
+ * Rendering does not wait for the worker, so a first visit is not delayed by its installation.
  * @param {Location} location The page location.
  * @returns {Promise<void>} Resolves once the view renders, or at once when the page is redirected.
  */
@@ -851,7 +855,6 @@ async function start(location) {
 	}
 
 	try {
-		await registerServiceWorker();
 		await init();
 	} catch (error) {
 		console.error("Page initialization failed:", error);
@@ -860,9 +863,19 @@ async function start(location) {
 	}
 
 	watchTwitterTimeline();
+
+	await registerServiceWorker();
 }
 
-window.onload = () => start(window.location);
+// Start once the HTML is parsed, so slow third-party scripts and images do not delay the data requests.
+// The module check keeps Jest, which loads this file as a module, from starting the page.
+if (typeof module === "undefined") {
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", () => start(window.location));
+	} else {
+		start(window.location);
+	}
+}
 
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = {
@@ -871,6 +884,8 @@ if (typeof module !== "undefined" && module.exports) {
 		sanitizeHtml,
 		sanitize: sanitizeHtml,
 		sanitizeHTML: sanitizeHtml,
+		reportToSentry,
+		flushPendingSentryErrors,
 		redirectToCanonicalHost,
 		removeLegacyServiceWorker,
 		registerServiceWorker,

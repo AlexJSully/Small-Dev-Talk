@@ -8,7 +8,7 @@ This document describes service worker registration and caching rules.
 
 Before registering, `removeLegacyServiceWorker()` unregisters the worker that earlier releases registered from `/src/serviceWorker/sw.js` and deletes its `workbox-precache-v2-<scope>` cache. That worker's scope was `/src/serviceWorker/`, which covers no page, so it never served its cache and never updates on its own. When `navigator.serviceWorker` or `getRegistrations` is unavailable, or when browser security policy blocks access, cleanup exits without throwing.
 
-After registering, `registerServiceWorker()` waits up to 3 seconds for the `controllerchange` event when a worker is installing or waiting and the page has no controller. On a first visit the generated worker claims the page as soon as it activates, so the article and images fetched next go through the runtime caches. The wait ends at once when the page is already controlled, and registration still succeeds after the timeout if the worker never takes control.
+`start()` calls `registerServiceWorker()` after the view renders, and nothing waits for the worker to install. On a first visit the generated worker claims the page as soon as it activates, so the images and articles requested after that go through the runtime caches. Images the page requested before the worker took control are not in the `images` cache, so they are available offline from the second page view on.
 
 `start()` skips registration when the page runs on `www.smalldevtalk.net`, because it first moves the page to `smalldevtalk.net`. On the `www.` host GitHub Pages redirects every request, and browsers reject a service worker script behind a redirect.
 

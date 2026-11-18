@@ -111,7 +111,6 @@ describe("Sentry initialization", () => {
 		// Browsers hide the message and stack of an error thrown by a cross-origin script loaded without CORS.
 		// The gtm.js script is created at runtime by the Google Tag Manager loader, so its property must reach the attribute.
 		[
-			'script[src^="https://www.googletagmanager.com/gtag/js"]',
 			'script[src^="https://www.googletagmanager.com/gtm.js"]',
 			'script[src="https://platform.twitter.com/widgets.js"]',
 		].forEach((selector) => {

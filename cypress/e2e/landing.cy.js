@@ -28,6 +28,46 @@ describe("Landing Page", () => {
 		cy.get("#articleBody").should("exist");
 	});
 
+	it("should switch carousel slides with the next and previous controls", () => {
+		cy.get("#carouselInner .carousel-item").should("have.length.greaterThan", 1);
+		cy.get("#carouselInner .carousel-item.active")
+			.should("have.length", 1)
+			.and("have.descendants", "#carouselImage0");
+
+		cy.get(".carousel-control-next").click();
+		cy.get("#carouselInner .carousel-item.active")
+			.should("have.length", 1)
+			.and("have.descendants", "#carouselImage1");
+
+		cy.get(".carousel-control-prev").click();
+		cy.get("#carouselInner .carousel-item.active")
+			.should("have.length", 1)
+			.and("have.descendants", "#carouselImage0");
+	});
+
+	it("should load the first carousel image at once and at high priority", () => {
+		cy.get("#carouselImage0")
+			.should("have.attr", "loading", "eager")
+			.and("have.attr", "fetchpriority", "high")
+			.and("have.attr", "width")
+			.and("match", /^\d+$/);
+	});
+
+	it("should keep the proportions of archive thumbnails", () => {
+		cy.visit("http://localhost:3000/index.html?pages&archive");
+
+		cy.get("#displayArticles .archive-display img").should("have.length.greaterThan", 10);
+		cy.get("#displayArticles .archive-display img[width][height]").each(($img) => {
+			// A thumbnail narrower than its own size must scale its height with its width.
+			const attributeRatio = Number($img.attr("width")) / Number($img.attr("height"));
+
+			expect($img[0].getBoundingClientRect().width / $img[0].getBoundingClientRect().height).to.be.closeTo(
+				attributeRatio,
+				0.05,
+			);
+		});
+	});
+
 	it("should show a follow link, not an empty box, when X does not serve the timeline", () => {
 		// X rate-limits embedded timelines per IP with a 429, so block the embed to reproduce that failure.
 		cy.intercept("https://platform.twitter.com/**", { statusCode: 429, body: "" });
