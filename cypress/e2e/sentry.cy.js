@@ -67,7 +67,7 @@ describe("Sentry initialization", () => {
 		const envelopeBodies = captureSentryEnvelopes();
 
 		cy.visit("http://localhost:3000/index.html?NonExistentArticle");
-		cy.get("#articleBody").should("contain", "Error retrieving article.");
+		cy.get("#articleBody").should("contain", "We could not find that article.");
 
 		cy.window().then((win) => {
 			// The console output a visitor's Playwright script logged on the production site.
@@ -96,7 +96,12 @@ describe("Sentry initialization", () => {
 
 		cy.wrap(null).should(() => {
 			const sentText = sentEventText(envelopeBodies);
-			expect(sentText).to.contain("Error retrieving article.");
+			expect(sentText).to.contain("Article not found in article data: NonExistentArticle");
+			// The event carries the failure kind and operation as tags, and a warning level, not a bare message.
+			const envelopes = envelopeBodies.join("\n");
+			expect(envelopes).to.contain('"operation":"find article"');
+			expect(envelopes).to.contain('"kind":"missing"');
+			expect(envelopes).to.contain('"level":"warning"');
 			expect(sentText).not.to.contain("cross-origin frame");
 			expect(sentText).not.to.contain("Iframe 3");
 			expect(sentText).not.to.contain("Detected and blocked");

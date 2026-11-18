@@ -116,7 +116,7 @@ When [index.html](../../index.html) loads:
     - Sentry SDK, from the version-pinned `browser.sentry-cdn.com` bundle
 
 3. [index.js](../../src/scripts/index.js) runs `startThirdParties()` when it loads, which starts:
-    - `Sentry.init()` through `initializeSentry()`, run on `DOMContentLoaded` after the deferred SDK has executed, with the tracing and replay integrations and no console integration, so console output from browser extensions or injected scripts is not reported. The site reports its own errors by calling `reportToSentry()` in [index.js](../../src/scripts/index.js) from `displayError()` and from the page data, article data, and service worker catch handlers. An error reported before `Sentry.init()` has run is kept, up to 20 of them, and `flushPendingSentryErrors()` sends them right after `Sentry.init()`
+    - `Sentry.init()` through `initializeSentry()`, run on `DOMContentLoaded` after the deferred SDK has executed, with the tracing and replay integrations and no console integration, so console output from browser extensions or injected scripts is not reported. The site reports its own errors through `reportError()` in [index.js](../../src/scripts/index.js), which `displayError()` and the page data and article data catch handlers call, and by calling `reportToSentry()` from the service worker catch handlers. Each event carries a Sentry `level`, `operation` and `kind` tags, and the article, URL, HTTP status and page as extra data. An error reported before `Sentry.init()` has run is kept with its context, up to 20 of them, and `flushPendingSentryErrors()` sends them right after `Sentry.init()`
     - `Sentry.getCurrentScope()` with the `app-version` tag
     - Google Tag Manager, through `loadGoogleTagManager()`, and a canonical URL adjustment applied only on the `smalldevtalk.net` host, through `updateCanonicalLink()`
 
@@ -168,17 +168,33 @@ flowchart TD
 
 ### 4. Error Handling Flow
 
+Each failed request is wrapped in a `LoadError` by `fetchResource()` in [index.js](../../src/scripts/index.js). The error keeps the original error as its `cause` and has a `kind`:
+
+| Kind      | Meaning                                                   | Sentry level | Message shown to the visitor                                          |
+| --------- | --------------------------------------------------------- | ------------ | --------------------------------------------------------------------- |
+| `network` | The request did not complete                              | warning      | Check the internet connection, then refresh the page                  |
+| `http`    | The server answered with an error status                  | error        | The content cannot load now, try again in a few minutes               |
+| `parse`   | The response, or the converted article, could not be read | error        | The content cannot be displayed, refresh, and report it if it repeats |
+| `missing` | The article is not in the article data                    | warning      | The article was not found, check the link or go home                  |
+| (other)   | Any other failure                                         | error        | Something went wrong, refresh or try again later                      |
+
+`displayError(msg, context)` shows `msg` when it has text and the message for the kind otherwise, so a visitor never sees a blank box or the technical text of the failure. `reportError()` logs one object to the console with the original error and its stack, the kind, the operation, the article, the URL, the HTTP status, the page and a timestamp, and reports the original error to Sentry with the level and tags above. It handles each error object once, so an error that passes through the data request handler and `start()` produces one console entry and one Sentry event.
+
 ```mermaid
 flowchart TD
     accTitle: Error handling flow
-    accDescr: A failed or invalid fetch, or a parse error, calls displayError, which logs to the console and reports to Sentry, then shows an error UI with a refresh button and lets the user return to the homepage.
-    A["Fetch article"] -->|Success| B["Parse & render"]
-    A -->|Fetch fails| C["displayError<br/>Log to console"]
-    A -->|Invalid article| C
-    B -->|Parse error| C
-    C --> D["reportToSentry()<br/>sends it to Sentry"]
-    D --> E["Show error UI<br/>with refresh button"]
-    E --> F["User can return<br/>to homepage"]
+    accDescr: A failed or invalid fetch, a parse error, or a missing article becomes a LoadError with a kind. displayError passes it to reportError, which logs it to the console and reports it to Sentry once, then shows the message for the kind with a refresh button and lets the user return to the homepage.
+    A["Fetch article"] -->|Request fails or bad status| B["fetchResource<br/>LoadError: network or http"]
+    A -->|Unreadable response| B2["fetchResource<br/>LoadError: parse"]
+    A -->|Not in article data| B3["LoadError: missing"]
+    A -->|Success| C["Parse & render"]
+    C -->|Conversion is empty| B2
+    B --> D["displayError<br/>message for the kind"]
+    B2 --> D
+    B3 --> D
+    D --> E["reportError()<br/>console object and Sentry event, once"]
+    E --> F["Show error UI<br/>with refresh button"]
+    F --> G["User can return<br/>to homepage"]
 ```
 
 ### 5. Metadata Update Sequence
