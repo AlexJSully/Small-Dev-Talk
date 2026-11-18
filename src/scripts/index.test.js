@@ -5,6 +5,12 @@ const { ArticleFiller, escapeHtml, sanitizeHtml } = require("./index.js");
 const {
 	reportToSentry,
 	flushPendingSentryErrors,
+	initializeSentry,
+	loadGoogleTagManager,
+	updateCanonicalLink,
+	startThirdParties,
+	handleControlClick,
+	APP_VERSION,
 	redirectToCanonicalHost,
 	removeLegacyServiceWorker,
 	registerServiceWorker,
@@ -12,6 +18,7 @@ const {
 	start,
 	watchTwitterTimeline,
 } = require("./index.js");
+const { version: packageVersion } = require("../../package.json");
 
 describe("reportToSentry before Sentry initializes", () => {
 	afterEach(() => {
@@ -456,11 +463,11 @@ describe("init", () => {
 			<div id="articleBody"></div>
 			<meta name="description" content="">
 			<meta property="og:title" content="">
-			<meta property="twitter:title" content="">
+			<meta name="twitter:title" content="">
 			<meta property="og:description" content="">
-			<meta property="twitter:description" content="">
+			<meta name="twitter:description" content="">
 			<meta property="og:image" content="">
-			<meta property="twitter:image" content="">
+			<meta name="twitter:image" content="">
 			<script type="application/ld+json">{}</script>
 		`;
 		Object.defineProperty(document, "URL", {
@@ -963,11 +970,11 @@ describe("ArticleFiller: updateMetaData", () => {
             <title></title>
             <meta name="description" content="">
             <meta property="og:title" content="">
-            <meta property="twitter:title" content="">
+            <meta name="twitter:title" content="">
             <meta property="og:description" content="">
-            <meta property="twitter:description" content="">
+            <meta name="twitter:description" content="">
             <meta property="og:image" content="">
-            <meta property="twitter:image" content="">
+            <meta name="twitter:image" content="">
             <script type="application/ld+json">{}</script>
         `;
 	});
@@ -987,13 +994,13 @@ describe("ArticleFiller: updateMetaData", () => {
 		expect(document.title).toBe("Meta Title | Small Dev Talk");
 		expect(document.querySelector("meta[name='description']").content).toBe("Meta Summary | Small Dev Talk");
 		expect(document.querySelector("meta[property='og:title']").content).toBe("Meta Title | Small Dev Talk");
-		expect(document.querySelector("meta[property='twitter:title']").content).toBe("Meta Title | Small Dev Talk");
+		expect(document.querySelector("meta[name='twitter:title']").content).toBe("Meta Title | Small Dev Talk");
 		expect(document.querySelector("meta[property='og:description']").content).toBe("Meta Summary | Small Dev Talk");
-		expect(document.querySelector("meta[property='twitter:description']").content).toBe(
+		expect(document.querySelector("meta[name='twitter:description']").content).toBe(
 			"Meta Summary | Small Dev Talk",
 		);
 		expect(document.querySelector("meta[property='og:image']").content).toContain("meta.png");
-		expect(document.querySelector("meta[property='twitter:image']").content).toContain("meta.png");
+		expect(document.querySelector("meta[name='twitter:image']").content).toContain("meta.png");
 	});
 });
 
@@ -1675,5 +1682,239 @@ describe("ArticleFiller: addToPage XSS", () => {
 		ArticleFiller.addToPage();
 		const html = document.getElementById("articleBody").innerHTML;
 		expect(html).not.toContain("onerror");
+	});
+});
+
+describe("handleControlClick", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<div class="carousel-item active" id="first"></div>
+			<div class="carousel-item" id="second"></div>
+			<a id="next" data-carousel-step="next"><span id="nextIcon"></span></a>
+			<a id="prev" data-carousel-step="prev"></a>
+			<p id="plain">text</p>
+		`;
+	});
+
+	afterEach(() => {
+		document.body.innerHTML = "";
+	});
+
+	test("moves the carousel forward when a next arrow or a child of it is clicked", () => {
+		handleControlClick({ target: document.getElementById("nextIcon") });
+
+		expect(document.getElementById("first").classList.contains("active")).toBe(false);
+		expect(document.getElementById("second").classList.contains("active")).toBe(true);
+	});
+
+	test("moves the carousel back when a previous arrow is clicked", () => {
+		handleControlClick({ target: document.getElementById("prev") });
+
+		expect(document.getElementById("first").classList.contains("active")).toBe(false);
+		expect(document.getElementById("second").classList.contains("active")).toBe(true);
+	});
+
+	test("ignores clicks outside the controls", () => {
+		handleControlClick({ target: document.getElementById("plain") });
+
+		expect(document.getElementById("first").classList.contains("active")).toBe(true);
+	});
+
+	test("renders the error buttons without inline event handler attributes", () => {
+		document.body.innerHTML = '<div id="articleBody" hidden></div>';
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		ArticleFiller.displayError("Boom");
+
+		const html = document.getElementById("articleBody").innerHTML;
+		expect(html).not.toMatch(/\sonclick=/i);
+		expect(html).toContain('data-page-action="reload"');
+		expect(html).toContain('data-page-action="home"');
+
+		console.error.mockRestore();
+	});
+});
+
+describe("initializeSentry", () => {
+	afterEach(() => {
+		delete global.Sentry;
+	});
+
+	/**
+	 * Build a stand-in for the Sentry SDK, which sends events over the network, so its calls can be read.
+	 * @returns {object} An SDK object whose functions are Jest mocks.
+	 */
+	function createSentrySdk() {
+		const scope = { setTag: jest.fn() };
+
+		return {
+			init: jest.fn(),
+			browserTracingIntegration: jest.fn(() => "tracing"),
+			replayIntegration: jest.fn(() => "replay"),
+			getCurrentScope: jest.fn(() => scope),
+			captureException: jest.fn(),
+			scope,
+		};
+	}
+
+	test("reports the version in package.json", () => {
+		expect(APP_VERSION).toBe(packageVersion);
+	});
+
+	test("starts Sentry with the release, both integrations and the app version tag", () => {
+		global.Sentry = createSentrySdk();
+
+		initializeSentry();
+
+		expect(global.Sentry.init).toHaveBeenCalledWith(
+			expect.objectContaining({
+				release: `small-dev-talk@${APP_VERSION}`,
+				integrations: ["tracing", "replay"],
+				replaysOnErrorSampleRate: 1.0,
+			}),
+		);
+		expect(global.Sentry.scope.setTag).toHaveBeenCalledWith("app-version", APP_VERSION);
+	});
+
+	test("sends the errors that were reported before Sentry started", () => {
+		reportToSentry(new Error("reported before init"));
+		global.Sentry = createSentrySdk();
+
+		initializeSentry();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
+		expect(global.Sentry.captureException.mock.calls[0][0].message).toBe("reported before init");
+	});
+
+	test("logs and does not start when the SDK did not load", () => {
+		const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+		initializeSentry();
+
+		expect(consoleError).toHaveBeenCalledWith(expect.stringContaining("Sentry initialization skipped"));
+		consoleError.mockRestore();
+	});
+
+	test("does not start when a required integration is missing", () => {
+		global.Sentry = createSentrySdk();
+		delete global.Sentry.replayIntegration;
+		const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+
+		initializeSentry();
+
+		expect(global.Sentry.init).not.toHaveBeenCalled();
+		consoleError.mockRestore();
+	});
+});
+
+describe("loadGoogleTagManager", () => {
+	afterEach(() => {
+		document.head.innerHTML = "";
+		delete window.dataLayer;
+	});
+
+	test("adds an async script for the container with CORS enabled and starts the data layer", () => {
+		loadGoogleTagManager();
+
+		const script = document.head.querySelector("script");
+
+		expect(script.src).toBe("https://www.googletagmanager.com/gtm.js?id=GTM-5H259MB");
+		expect(script.async).toBe(true);
+		expect(script.crossOrigin).toBe("anonymous");
+		expect(window.dataLayer).toEqual([expect.objectContaining({ event: "gtm.js" })]);
+	});
+
+	test("keeps the events that are already in the data layer", () => {
+		window.dataLayer = [{ event: "earlier" }];
+
+		loadGoogleTagManager();
+
+		expect(window.dataLayer.map((entry) => entry.event)).toEqual(["earlier", "gtm.js"]);
+	});
+});
+
+describe("updateCanonicalLink", () => {
+	beforeEach(() => {
+		document.head.innerHTML = '<link rel="canonical" href="https://smalldevtalk.net/">';
+	});
+
+	afterEach(() => {
+		document.head.innerHTML = "";
+	});
+
+	test("points the canonical link at the viewed URL on the canonical host", () => {
+		updateCanonicalLink({ host: "smalldevtalk.net", href: "https://smalldevtalk.net/index.html?Oceania" });
+
+		expect(document.querySelector('link[rel="canonical"]').getAttribute("href")).toBe(
+			"https://smalldevtalk.net/index.html?Oceania",
+		);
+	});
+
+	test("leaves the canonical link alone on any other host", () => {
+		updateCanonicalLink({ host: "localhost:3000", href: "http://localhost:3000/index.html?Oceania" });
+
+		expect(document.querySelector('link[rel="canonical"]').getAttribute("href")).toBe("https://smalldevtalk.net/");
+	});
+
+	test("does nothing when the page has no canonical link", () => {
+		document.head.innerHTML = "";
+
+		expect(() =>
+			updateCanonicalLink({ host: "smalldevtalk.net", href: "https://smalldevtalk.net/" }),
+		).not.toThrow();
+	});
+});
+
+describe("startThirdParties", () => {
+	/**
+	 * Build a stand-in for the Sentry SDK, which sends events over the network, so whether it started can be read.
+	 * @returns {object} An SDK object whose functions are Jest mocks.
+	 */
+	function createSentrySdk() {
+		return {
+			init: jest.fn(),
+			browserTracingIntegration: jest.fn(),
+			replayIntegration: jest.fn(),
+			getCurrentScope: jest.fn(() => ({ setTag: jest.fn() })),
+			captureException: jest.fn(),
+		};
+	}
+
+	/**
+	 * Make `document.readyState` report a value, which jsdom does not let a test assign.
+	 * @param {string} state The ready state to report.
+	 * @returns {void}
+	 */
+	function setReadyState(state) {
+		jest.spyOn(document, "readyState", "get").mockReturnValue(state);
+	}
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+		document.head.innerHTML = "";
+		delete window.dataLayer;
+		delete global.Sentry;
+	});
+
+	test("loads Google Tag Manager and starts Sentry at once when the document has finished loading", () => {
+		global.Sentry = createSentrySdk();
+		setReadyState("complete");
+
+		startThirdParties();
+
+		expect(document.head.querySelector('script[src*="googletagmanager.com/gtm.js"]')).not.toBeNull();
+		expect(global.Sentry.init).toHaveBeenCalledTimes(1);
+	});
+
+	test("waits for DOMContentLoaded before starting Sentry while the document is loading", () => {
+		global.Sentry = createSentrySdk();
+		setReadyState("loading");
+		const addEventListener = jest.spyOn(document, "addEventListener");
+
+		startThirdParties();
+
+		expect(addEventListener).toHaveBeenCalledWith("DOMContentLoaded", initializeSentry);
+		expect(global.Sentry.init).not.toHaveBeenCalled();
+		expect(document.head.querySelector('script[src*="googletagmanager.com/gtm.js"]')).not.toBeNull();
 	});
 });

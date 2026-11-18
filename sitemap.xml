@@ -1,413 +1,408 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-	<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>https://smalldevtalk.net/</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>1.00</priority>
 	</url>
 	<url>
-		<loc>https://smalldevtalk.net/index.html</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
 		<loc>https://smalldevtalk.net/index.html?pages&amp;games</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?pages&amp;gameinterviews</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?pages&amp;reviews</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?pages&amp;smallPlays</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?pages&amp;movies</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?pages&amp;comics</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?pages&amp;electronics</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?pages&amp;fashion</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?pages&amp;archive</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
+		<lastmod>2026-11-18</lastmod>
 		<priority>0.80</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?HearthstoneDownWithTheSickness</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2016-04-15</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?EarlyAccessPhantasmal</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?MotteIsland</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?TacticalInterventionReview</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?TacticalIntervention</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?LumberIsland</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2016-04-13</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?COLORINO</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2014-02-07</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?CENTS</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Caravaneer2</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Playsets</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?StarWarsBattlecry</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Oceania</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?SonOfNor</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?DClic</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?LinkedPathways</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?ChampionOfDema</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?ShutteredCity</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Bound</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?RickFuture</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?AfterReset</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?StoneRage</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?SaltBurn</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?FluoroVu</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?SociallyAwkward</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?AdventureTidesOnline</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?QuickSlickDeadly</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?SNOW</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?DeadPlasma</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?ProjectTemporality</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Ghostship</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?CubeMetalHeart2</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?OneLifeLeft</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?1916</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Aurora</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?ThisIsNormal</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Vessel</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?JackieRose</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?BeyondInfinity</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?YukiVsPanda</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Wave</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2014-02-02</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?WeCare</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2014-01-26</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?DClic</loc>
+		<lastmod>2014-01-25</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?LinkedPathways</loc>
+		<lastmod>2013-11-13</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?ChampionOfDema</loc>
+		<lastmod>2013-11-08</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?ShutteredCity</loc>
+		<lastmod>2013-11-05</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?PlaysetsTrailer</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-11-05</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Playsets</loc>
+		<lastmod>2013-11-03</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Bound</loc>
+		<lastmod>2013-08-25</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?RickFuture</loc>
+		<lastmod>2013-08-23</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?AfterReset</loc>
+		<lastmod>2013-08-22</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?StoneRage</loc>
+		<lastmod>2013-08-19</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?SaltBurn</loc>
+		<lastmod>2013-08-18</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?FluoroVu</loc>
+		<lastmod>2013-08-18</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?SociallyAwkward</loc>
+		<lastmod>2013-08-13</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?AdventureTidesOnline</loc>
+		<lastmod>2013-07-29</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?QuickSlickDeadly</loc>
+		<lastmod>2013-07-27</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?SNOW</loc>
+		<lastmod>2013-07-27</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?DeadPlasma</loc>
+		<lastmod>2013-07-21</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?ProjectTemporality</loc>
+		<lastmod>2013-07-19</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?LucunaPassage</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-07-17</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?MotteIsland</loc>
+		<lastmod>2013-07-16</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?JackieRose</loc>
+		<lastmod>2013-07-15</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?QuickSlickDeadlyTrailer</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Doorways</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?LittleSimPeeps</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Prisonhood</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
-	</url>
-	<url>
-		<loc>https://smalldevtalk.net/index.html?Shadowlurker</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-07-13</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?ShroudsBurden</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-06-18</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
-		<loc>https://smalldevtalk.net/index.html?Hello</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<loc>https://smalldevtalk.net/index.html?Doorways</loc>
+		<lastmod>2013-06-03</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
-		<loc>https://smalldevtalk.net/index.html?HappyStPatricksDay</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<loc>https://smalldevtalk.net/index.html?LittleSimPeeps</loc>
+		<lastmod>2013-05-29</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?TheRealm</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-05-28</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?JaggedAllianceFlashback</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-05-23</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?MemoryOfSoul</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-05-21</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?1916</loc>
+		<lastmod>2013-05-20</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?Warlords</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-05-19</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?CubeMetalHeart2</loc>
+		<lastmod>2013-05-13</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?Outpost</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-05-12</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?BeyondInfinity</loc>
+		<lastmod>2013-05-11</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Wave</loc>
+		<lastmod>2013-05-07</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?RunningDude</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-05-06</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?LumberIsland</loc>
+		<lastmod>2013-05-04</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Aurora</loc>
+		<lastmod>2013-05-03</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?TacticalInterventionReview</loc>
+		<lastmod>2013-05-01</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?GloriaVictis</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-30</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?KingsportCases</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-25</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?BlackSoul</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-24</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Oceania</loc>
+		<lastmod>2013-04-23</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?SonOfNor</loc>
+		<lastmod>2013-04-21</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?TacticalIntervention</loc>
+		<lastmod>2013-04-20</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?DreadOut</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-19</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?OneLifeLeft</loc>
+		<lastmod>2013-04-17</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?LeviathanCrossfire</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-17</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?Runes</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-16</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?Titanic</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-15</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?OneMonth</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-15</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?SangFroid</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-13</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?PlanetExplorers</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-11</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?TowerOfGuns</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-05</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?LifeEssence</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-03</lastmod>
+		<priority>0.64</priority>
 	</url>
 	<url>
 		<loc>https://smalldevtalk.net/index.html?ArmyMen3</loc>
-		<lastmod>2022-06-06T22:56:31+00:00</lastmod>
-		<priority>0.80</priority>
+		<lastmod>2013-04-01</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Caravaneer2</loc>
+		<lastmod>2013-03-26</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?ThisIsNormal</loc>
+		<lastmod>2013-03-24</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?YukiVsPanda</loc>
+		<lastmod>2013-03-22</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Prisonhood</loc>
+		<lastmod>2013-03-21</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Shadowlurker</loc>
+		<lastmod>2013-03-20</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Vessel</loc>
+		<lastmod>2013-03-19</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Hello</loc>
+		<lastmod>2013-03-17</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?HappyStPatricksDay</loc>
+		<lastmod>2013-03-17</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?StarWarsBattlecry</loc>
+		<lastmod>2013-03-12</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Outworld</loc>
+		<lastmod>2013-03-09</lastmod>
+		<priority>0.64</priority>
+	</url>
+	<url>
+		<loc>https://smalldevtalk.net/index.html?Ghostship</loc>
+		<lastmod>2013-03-07</lastmod>
+		<priority>0.64</priority>
 	</url>
 </urlset>

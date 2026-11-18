@@ -26,4 +26,25 @@ describe("Service worker", () => {
 				expect(paths.filter((path) => /\/src\/articleArchive\/author/.test(path))).to.be.empty;
 			});
 	});
+
+	it("adds the Permissions-Policy header to a page it answers", () => {
+		cy.visit(`${origin}/index.html`);
+		cy.window().its("navigator.serviceWorker.controller").should("not.be.null");
+
+		// The first visit came from the network, which sends no Permissions-Policy header, so the camera is allowed.
+		cy.document().then((doc) => {
+			expect((doc.permissionsPolicy || doc.featurePolicy).allowsFeature("camera")).to.equal(true);
+		});
+
+		// The worker answers this navigation. The browser reports the header it received through
+		// document.permissionsPolicy, and `camera=()` and `microphone=()` turn those features off.
+		cy.visit(`${origin}/index.html?pages&games`);
+		cy.window().its("navigator.serviceWorker.controller").should("not.be.null");
+		cy.document().then((doc) => {
+			const policy = doc.permissionsPolicy || doc.featurePolicy;
+
+			expect(policy.allowsFeature("camera")).to.equal(false);
+			expect(policy.allowsFeature("microphone")).to.equal(false);
+		});
+	});
 });

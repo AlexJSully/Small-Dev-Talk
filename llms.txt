@@ -1,0 +1,24 @@
+# Small Dev Talk
+
+> Small Dev Talk (https://smalldevtalk.net/) is a static website of interviews, news articles and reviews about the indie game scene and related creative work. The archive holds 71 articles by Neil Rampone, Jeff Cen and Alexander Sullivan, dated 2013 to 2016.
+
+## When to use this site
+
+- Find an interview with an indie game developer or studio, such as the Game Interviews section.
+- Find a review of an indie game, or a Small Plays gameplay write-up.
+- Find a past news article about an indie game, Kickstarter campaign or game launch from 2013 to 2016.
+- Cite or link to a specific article. Every article has a stable address of the form `https://smalldevtalk.net/index.html?ArticleKey`.
+
+Do not use this site for current news, live prices, store availability or release dates. The articles are a record of what was written at the time and may link to pages that no longer exist.
+
+## How to read it
+
+- The site is a single page that loads each article's Markdown in the browser, so a client that does not run JavaScript sees only the page shell. The article text is also available as Markdown in the repository: https://github.com/AlexJSully/Small-Dev-Talk/tree/master/src/articleArchive
+- The list of every article with its title, author, date and summary is the JSON file https://smalldevtalk.net/src/articleArchive/articleData.json
+- The category pages are `https://smalldevtalk.net/index.html?pages&games`, `...&gameinterviews`, `...&reviews`, `...&smallPlays`, `...&movies`, `...&comics`, `...&electronics`, `...&fashion` and `...&archive`.
+
+## Machine-readable files
+
+- [Sitemap](https://smalldevtalk.net/sitemap.xml): every article and category page.
+- [Article index (JSON)](https://smalldevtalk.net/src/articleArchive/articleData.json): title, author, date, summary and thumbnail of each article.
+- [Source code and articles](https://github.com/AlexJSully/Small-Dev-Talk): the website and the article Markdown, licensed under GPL-3.0.

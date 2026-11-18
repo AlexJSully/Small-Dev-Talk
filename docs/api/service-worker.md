@@ -14,6 +14,16 @@ Before registering, `removeLegacyServiceWorker()` unregisters the worker that ea
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
+## Security Headers
+
+GitHub Pages cannot send custom response headers, so [src/scripts/sw-headers.js](../../src/scripts/sw-headers.js) adds them. `workbox-config.js` loads it into `sw.js` with `importScripts`, and the browser checks it for changes whenever it checks `sw.js`.
+
+For a same-origin navigation, `handleFetch()` answers `/` and `/index.html` from the precache and every other page from the network, then adds these headers to the HTML response: `Content-Security-Policy` (the policy in `index.html` plus `frame-ancestors 'self'`), `Permissions-Policy`, `Referrer-Policy`, `X-Content-Type-Options` and `X-Frame-Options`. It then calls `stopImmediatePropagation()`, so the Workbox listener registered after it does not call `respondWith` a second time on the same event. Responses that are not same-origin HTML pass through unchanged.
+
+The headers reach returning visitors only, because the first visit is served by the network before the worker exists. The worker sets no `Strict-Transport-Security` header, which browsers honour only on a response from the network.
+
+Implementation: [src/scripts/sw-headers.js](../../src/scripts/sw-headers.js), [workbox-config.js](../../workbox-config.js)
+
 ## Precaching and Runtime Caching
 
 Workbox generates `sw.js` and its `workbox-<hash>.js` runtime at the repository root from `workbox-config.js`:
