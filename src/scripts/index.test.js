@@ -3,6 +3,8 @@ global.showdown = require("./libraries/showdown/showdown.min.js");
 const { ArticleFiller, escapeHtml, sanitizeHtml } = require("./index.js");
 
 const {
+	reportToSentry,
+	flushPendingSentryErrors,
 	redirectToCanonicalHost,
 	removeLegacyServiceWorker,
 	registerServiceWorker,
@@ -12,6 +14,73 @@ const {
 } = require("./index.js");
 
 window.onload = null;
+
+describe("reportToSentry before Sentry initializes", () => {
+	afterEach(() => {
+		// Empty the module's buffer so one test's errors never reach another.
+		global.Sentry = { captureException: jest.fn() };
+		flushPendingSentryErrors();
+		delete global.Sentry;
+	});
+
+	test("keeps an error until the SDK has a client, then flushPendingSentryErrors sends it once", () => {
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn(), getClient: jest.fn(() => undefined) };
+		const error = new Error("failed before init");
+
+		reportToSentry(error);
+
+		expect(global.Sentry.captureException).not.toHaveBeenCalled();
+
+		global.Sentry.getClient.mockReturnValue({});
+		flushPendingSentryErrors();
+		flushPendingSentryErrors();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
+	});
+
+	test("wraps a message in an Error before keeping it", () => {
+		global.Sentry = { captureException: jest.fn(), getClient: () => undefined };
+
+		reportToSentry("plain message");
+		global.Sentry.getClient = () => ({});
+		flushPendingSentryErrors();
+
+		expect(global.Sentry.captureException.mock.calls[0][0]).toBeInstanceOf(Error);
+		expect(global.Sentry.captureException.mock.calls[0][0].message).toBe("plain message");
+	});
+
+	test("sends an error at once when the SDK already has a client", () => {
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
+		const error = new Error("after init");
+
+		reportToSentry(error);
+
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(error);
+	});
+
+	test("keeps at most 20 errors", () => {
+		global.Sentry = { captureException: jest.fn(), getClient: () => undefined };
+
+		for (let i = 0; i < 25; i += 1) {
+			reportToSentry(new Error(`error ${i}`));
+		}
+		global.Sentry.getClient = () => ({});
+		flushPendingSentryErrors();
+
+		expect(global.Sentry.captureException).toHaveBeenCalledTimes(20);
+	});
+
+	test("does nothing when the SDK never loaded", () => {
+		expect(global.Sentry).toBeUndefined();
+
+		expect(() => {
+			reportToSentry(new Error("no sdk"));
+			flushPendingSentryErrors();
+		}).not.toThrow();
+	});
+});
 
 describe("ArticleFiller: displayError", () => {
 	beforeEach(() => {
@@ -75,7 +144,7 @@ describe("ArticleFiller: displayError", () => {
 
 	test("reports the error message to Sentry as an Error", () => {
 		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 
 		ArticleFiller.displayError("Error retrieving article.");
 
@@ -283,7 +352,7 @@ describe("ArticleFiller: retrieveArticleData", () => {
 		global.fetch = jest.fn().mockRejectedValue(error);
 		jest.spyOn(console, "error").mockImplementation(() => {});
 		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 
 		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow("Network unavailable");
 
@@ -346,7 +415,7 @@ describe("ArticleFiller: retrievePageData", () => {
 			.mockResolvedValue({ ok: false, status: 404, statusText: "Not Found", json: jest.fn() });
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 
 		await expect(ArticleFiller.retrievePageData()).rejects.toThrow("Failed to fetch page data: 404 Not Found");
 
@@ -556,7 +625,7 @@ describe("ServiceWorker registration", () => {
 				register: jest.fn().mockRejectedValue(securityError),
 			},
 		};
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		const res = await registerServiceWorker();
@@ -617,7 +686,7 @@ describe("ServiceWorker registration", () => {
 				throw securityError;
 			},
 		});
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		await expect(removeLegacyServiceWorker()).resolves.toBeUndefined();
@@ -634,7 +703,7 @@ describe("ServiceWorker registration", () => {
 			},
 		};
 		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		await registerServiceWorker();
@@ -1364,7 +1433,7 @@ describe("watchTwitterTimeline", () => {
 	});
 
 	test("does not report the failed embed to Sentry or log an error", async () => {
-		global.Sentry = { captureException: jest.fn() };
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 		jest.spyOn(console, "error").mockImplementation(() => {});
 
 		watchTwitterTimeline();

@@ -94,8 +94,16 @@ function sanitizeHtml(unsafe) {
 	return template.innerHTML;
 }
 
+/** Most errors kept while waiting for Sentry to initialize. */
+const MAX_PENDING_SENTRY_ERRORS = 20;
+
+/** Errors reported before `Sentry.init()` ran, kept for `flushPendingSentryErrors()`. */
+const pendingSentryErrors = [];
+
 /**
- * Send an error to Sentry when the Sentry SDK has loaded, and do nothing otherwise.
+ * Send an error to Sentry. The page starts before the deferred Sentry SDK has run `Sentry.init()`, and the SDK
+ * drops an error captured without a client, so such an error waits until `flushPendingSentryErrors()` runs.
+ * Nothing is sent when the SDK never loads.
  * @param {Error|string} error The error, or a message to wrap in an Error.
  * @returns {void}
  */
@@ -104,7 +112,26 @@ function reportToSentry(error) {
 		return;
 	}
 
-	Sentry.captureException(error instanceof Error ? error : new Error(String(error)));
+	const reported = error instanceof Error ? error : new Error(String(error));
+
+	if (typeof Sentry.getClient === "function" && Sentry.getClient()) {
+		Sentry.captureException(reported);
+	} else if (pendingSentryErrors.length < MAX_PENDING_SENTRY_ERRORS) {
+		pendingSentryErrors.push(reported);
+	}
+}
+
+/**
+ * Send the errors that `reportToSentry()` kept while Sentry was not initialized. `index.html` calls this right after
+ * `Sentry.init()`.
+ * @returns {void}
+ */
+function flushPendingSentryErrors() {
+	if (typeof Sentry === "undefined" || typeof Sentry.captureException !== "function") {
+		return;
+	}
+
+	pendingSentryErrors.splice(0).forEach((error) => Sentry.captureException(error));
 }
 
 /**
@@ -848,6 +875,8 @@ if (typeof module !== "undefined" && module.exports) {
 		sanitizeHtml,
 		sanitize: sanitizeHtml,
 		sanitizeHTML: sanitizeHtml,
+		reportToSentry,
+		flushPendingSentryErrors,
 		redirectToCanonicalHost,
 		removeLegacyServiceWorker,
 		registerServiceWorker,

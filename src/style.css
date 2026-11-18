@@ -464,6 +464,7 @@ img {
 }
 
 .archive-display img {
+	height: auto;
 	margin: auto;
 	width: 100%;
 }

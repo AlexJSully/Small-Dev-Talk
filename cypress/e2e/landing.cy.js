@@ -53,6 +53,21 @@ describe("Landing Page", () => {
 			.and("match", /^\d+$/);
 	});
 
+	it("should keep the proportions of archive thumbnails", () => {
+		cy.visit("http://localhost:3000/index.html?pages&archive");
+
+		cy.get("#displayArticles .archive-display img").should("have.length.greaterThan", 10);
+		cy.get("#displayArticles .archive-display img[width][height]").each(($img) => {
+			// A thumbnail narrower than its own size must scale its height with its width.
+			const attributeRatio = Number($img.attr("width")) / Number($img.attr("height"));
+
+			expect($img[0].getBoundingClientRect().width / $img[0].getBoundingClientRect().height).to.be.closeTo(
+				attributeRatio,
+				0.05,
+			);
+		});
+	});
+
 	it("should show a follow link, not an empty box, when X does not serve the timeline", () => {
 		// X rate-limits embedded timelines per IP with a 429, so block the embed to reproduce that failure.
 		cy.intercept("https://platform.twitter.com/**", { statusCode: 429, body: "" });
