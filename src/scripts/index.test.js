@@ -460,11 +460,11 @@ describe("init", () => {
 			<div id="articleBody"></div>
 			<meta name="description" content="">
 			<meta property="og:title" content="">
-			<meta property="twitter:title" content="">
+			<meta name="twitter:title" content="">
 			<meta property="og:description" content="">
-			<meta property="twitter:description" content="">
+			<meta name="twitter:description" content="">
 			<meta property="og:image" content="">
-			<meta property="twitter:image" content="">
+			<meta name="twitter:image" content="">
 			<script type="application/ld+json">{}</script>
 		`;
 		Object.defineProperty(document, "URL", {
@@ -967,11 +967,11 @@ describe("ArticleFiller: updateMetaData", () => {
             <title></title>
             <meta name="description" content="">
             <meta property="og:title" content="">
-            <meta property="twitter:title" content="">
+            <meta name="twitter:title" content="">
             <meta property="og:description" content="">
-            <meta property="twitter:description" content="">
+            <meta name="twitter:description" content="">
             <meta property="og:image" content="">
-            <meta property="twitter:image" content="">
+            <meta name="twitter:image" content="">
             <script type="application/ld+json">{}</script>
         `;
 	});
@@ -991,13 +991,13 @@ describe("ArticleFiller: updateMetaData", () => {
 		expect(document.title).toBe("Meta Title | Small Dev Talk");
 		expect(document.querySelector("meta[name='description']").content).toBe("Meta Summary | Small Dev Talk");
 		expect(document.querySelector("meta[property='og:title']").content).toBe("Meta Title | Small Dev Talk");
-		expect(document.querySelector("meta[property='twitter:title']").content).toBe("Meta Title | Small Dev Talk");
+		expect(document.querySelector("meta[name='twitter:title']").content).toBe("Meta Title | Small Dev Talk");
 		expect(document.querySelector("meta[property='og:description']").content).toBe("Meta Summary | Small Dev Talk");
-		expect(document.querySelector("meta[property='twitter:description']").content).toBe(
+		expect(document.querySelector("meta[name='twitter:description']").content).toBe(
 			"Meta Summary | Small Dev Talk",
 		);
 		expect(document.querySelector("meta[property='og:image']").content).toContain("meta.png");
-		expect(document.querySelector("meta[property='twitter:image']").content).toContain("meta.png");
+		expect(document.querySelector("meta[name='twitter:image']").content).toContain("meta.png");
 	});
 });
 

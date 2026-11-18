@@ -116,4 +116,25 @@ describe("Landing Page", () => {
 		cy.get("script:not([src]):not([type])").should("not.exist");
 		cy.get('img[src*="title.svg"]').should("not.have.attr", "loading", "auto");
 	});
+
+	it("should keep the navigation links white on the black navigation bar", () => {
+		cy.get("#header .pages > li > a").first().should("have.css", "color", "rgb(255, 255, 255)");
+		cy.get("#header nav").should("have.css", "background-color", "rgb(0, 0, 0)");
+		// A light background on the list would put the white links on a background with a contrast ratio below 2:1.
+		cy.get("#header nav ul.pages")
+			.should("have.css", "background-image", "none")
+			.and("have.css", "background-color", "rgba(0, 0, 0, 0)");
+	});
+
+	it("should update the article metadata, including the Twitter card tags, when an article opens", () => {
+		cy.visit("http://localhost:3000/index.html?Oceania");
+
+		cy.get("#articleBody").should("not.have.attr", "hidden");
+		cy.get("#articleBody").should("not.be.empty");
+		cy.title().should("contain", "| Small Dev Talk");
+		["title", "description", "image"].forEach((name) => {
+			cy.get(`meta[name="twitter:${name}"]`).should("have.attr", "content").and("not.be.empty");
+		});
+		cy.get('meta[name="twitter:title"]').should("have.attr", "content").and("contain", "| Small Dev Talk");
+	});
 });

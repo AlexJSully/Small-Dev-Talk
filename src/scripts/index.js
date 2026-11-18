@@ -364,7 +364,7 @@ class ArticleFiller {
 
 				// og & twitter
 				document.querySelector("meta[property='og:title']").setAttribute("content", title);
-				document.querySelector("meta[property='twitter:title']").setAttribute("content", title);
+				document.querySelector("meta[name='twitter:title']").setAttribute("content", title);
 
 				// Update structured data
 				if (structuredData?.name) {
@@ -381,7 +381,7 @@ class ArticleFiller {
 
 				// og & twitter
 				document.querySelector("meta[property='og:description']").setAttribute("content", description);
-				document.querySelector("meta[property='twitter:description']").setAttribute("content", description);
+				document.querySelector("meta[name='twitter:description']").setAttribute("content", description);
 
 				// Update structured data
 				if (structuredData?.description) {
@@ -397,7 +397,7 @@ class ArticleFiller {
 
 				// og & twitter
 				document.querySelector("meta[property='og:image']").setAttribute("content", imgURL);
-				document.querySelector("meta[property='twitter:image']").setAttribute("content", imgURL);
+				document.querySelector("meta[name='twitter:image']").setAttribute("content", imgURL);
 
 				// Update structured data
 				if (structuredData?.image) {
