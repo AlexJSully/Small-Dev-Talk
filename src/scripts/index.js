@@ -360,6 +360,15 @@ function lazyLoadImagesAfterFirst(html) {
 	});
 }
 
+/**
+ * Read the page's query string, which names the article (`?Key`) or the section (`?pages&games`) to show. The fragment
+ * is left out: the skip link adds `#content`, which a reload or a shared link keeps.
+ * @returns {string} The query string without its leading `?`, or an empty string when the URL has none.
+ */
+function pageQuery() {
+	return new URL(document.URL).search.slice(1);
+}
+
 /** Create and fill the page with the desired article */
 class ArticleFiller {
 	constructor() {
@@ -452,8 +461,7 @@ class ArticleFiller {
 
 	/** Call desired article as denoted by index.html?ArticleTitle */
 	static callArticle() {
-		const docURL = document.URL;
-		const [, query] = docURL.split("?"); // Using destructuring to get the query string
+		const query = pageQuery();
 
 		if (!query) {
 			ArticleFiller.callDisplay();
@@ -650,18 +658,10 @@ class ArticleFiller {
 	 * Call the appropriate page
 	 */
 	static callDisplay() {
-		let useURL = [];
-		const docURL = document.URL;
-		const sep = docURL.split("?");
-		if (sep.length > 1) {
-			useURL = sep[1].split("&");
+		const query = pageQuery();
 
-			ArticleFiller.whatPageDisplay = useURL[1];
-		} else {
-			useURL = [];
-			ArticleFiller.whatPageDisplay = "index";
-		}
-		ArticleFiller.pageURL = useURL;
+		ArticleFiller.pageURL = query ? query.split("&") : [];
+		ArticleFiller.whatPageDisplay = query ? ArticleFiller.pageURL[1] : "index";
 
 		if (ArticleFiller.pageURL.length === 1) {
 			ArticleFiller.callPageDisplay = false;
@@ -1137,19 +1137,27 @@ function handleControlClick(event) {
  * Let Escape close the navigation's open submenus. The stylesheet opens a submenu while its item is hovered or holds
  * keyboard focus, and that menu covers the title below, so WCAG 2.2 success criterion 1.4.13 requires a way to close it
  * without moving the pointer or focus. Escape marks each open item `submenuDismissed`, which the stylesheet keeps
- * closed until the pointer leaves the item or focus moves out of it.
+ * closed until neither the pointer nor focus is on the item, so the menu does not reappear under the pointer.
  * @param {Element} nav The navigation element.
  * @returns {void}
  */
 function enableSubmenuDismissal(nav) {
 	const items = Array.from(nav.querySelectorAll("li")).filter((item) => item.querySelector(":scope > ul"));
+	const hovered = new Set();
 
 	items.forEach((item) => {
 		const reopen = () => item.classList.remove("submenuDismissed");
 
-		item.addEventListener("pointerleave", reopen);
+		item.addEventListener("pointerenter", () => hovered.add(item));
+		item.addEventListener("pointerleave", () => {
+			hovered.delete(item);
+
+			if (!item.contains(document.activeElement)) {
+				reopen();
+			}
+		});
 		item.addEventListener("focusout", (event) => {
-			if (!item.contains(event.relatedTarget)) {
+			if (!item.contains(event.relatedTarget) && !hovered.has(item)) {
 				reopen();
 			}
 		});
@@ -1161,8 +1169,15 @@ function enableSubmenuDismissal(nav) {
 		}
 
 		items
-			.filter((item) => item.matches(":hover, :focus-within"))
-			.forEach((item) => item.classList.add("submenuDismissed"));
+			.filter((item) => hovered.has(item) || item.contains(document.activeElement))
+			.forEach((item) => {
+				// Closing the submenu hides a link inside it, so focus moves to the item's own link (WCAG 2.4.7).
+				if (item.querySelector(":scope > ul").contains(document.activeElement)) {
+					item.querySelector(":scope > a").focus();
+				}
+
+				item.classList.add("submenuDismissed");
+			});
 	});
 }
 

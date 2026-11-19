@@ -1480,6 +1480,7 @@ describe("ArticleFiller: callArticle", () => {
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		delete document.URL;
 	});
 
 	const testCases = [
@@ -1495,13 +1496,31 @@ describe("ArticleFiller: callArticle", () => {
 			expectGrabArticle: false,
 			expectCallDisplay: true,
 		},
+		{
+			name: "grabs the article named by a single param",
+			url: "http://localhost/index.html?TestArticle",
+			expectGrabArticle: true,
+			expectCallDisplay: false,
+		},
+		{
+			// The skip link adds #content to the URL, which a reload or a shared link keeps.
+			name: "grabs the article named by a single param when the URL has a fragment",
+			url: "http://localhost/index.html?TestArticle#content",
+			expectGrabArticle: true,
+			expectCallDisplay: false,
+		},
+		{
+			name: "calls callDisplay for no query in a URL with a fragment",
+			url: "http://localhost/index.html#content",
+			expectGrabArticle: false,
+			expectCallDisplay: true,
+		},
 	];
 
 	testCases.forEach(({ name, url, expectGrabArticle, expectCallDisplay }) => {
 		test(name, () => {
-			Object.defineProperty(window, "URL", {
+			Object.defineProperty(document, "URL", {
 				value: url,
-				writable: true,
 				configurable: true,
 			});
 			const grabSpy = jest.spyOn(ArticleFiller, "grabArticle").mockImplementation(() => {});
@@ -1521,6 +1540,61 @@ describe("ArticleFiller: callArticle", () => {
 			}
 		});
 	});
+});
+
+describe("ArticleFiller: callDisplay", () => {
+	afterEach(() => {
+		jest.restoreAllMocks();
+		delete document.URL;
+		ArticleFiller.whatPageDisplay = "index";
+		ArticleFiller.pageURL = undefined;
+	});
+
+	/**
+	 * Run callDisplay at a URL, with the two page renderers replaced so only the routing decision is observed.
+	 * @param {string} url The page URL.
+	 * @returns {{carousel: jest.SpyInstance, archive: jest.SpyInstance}} The renderer spies.
+	 */
+	function callDisplayAt(url) {
+		Object.defineProperty(document, "URL", { value: url, configurable: true });
+		const carousel = jest.spyOn(ArticleFiller, "changeCarousel").mockImplementation(() => {});
+		const archive = jest.spyOn(ArticleFiller, "displayArchive").mockImplementation(() => {});
+
+		ArticleFiller.callDisplay();
+
+		return { carousel, archive };
+	}
+
+	test.each([
+		["http://localhost/index.html?pages&games", "games"],
+		["http://localhost/index.html?pages&games#content", "games"],
+	])("shows the section named in %s", (url, section) => {
+		const { carousel, archive } = callDisplayAt(url);
+
+		expect(ArticleFiller.whatPageDisplay).toBe(section);
+		expect(carousel).toHaveBeenCalledTimes(1);
+		expect(archive).not.toHaveBeenCalled();
+	});
+
+	test.each(["http://localhost/index.html?pages&archive", "http://localhost/index.html?pages&archive#content"])(
+		"shows the archive for %s",
+		(url) => {
+			const { carousel, archive } = callDisplayAt(url);
+
+			expect(archive).toHaveBeenCalledTimes(1);
+			expect(carousel).not.toHaveBeenCalled();
+		},
+	);
+
+	test.each(["http://localhost/index.html", "http://localhost/index.html#content"])(
+		"shows the home page for %s",
+		(url) => {
+			const { carousel } = callDisplayAt(url);
+
+			expect(ArticleFiller.whatPageDisplay).toBe("index");
+			expect(carousel).toHaveBeenCalledTimes(1);
+		},
+	);
 });
 
 describe("ArticleFiller: displayArchive", () => {
@@ -2527,6 +2601,58 @@ describe("enableSubmenuDismissal", () => {
 		expect(games().classList.contains("submenuDismissed")).toBe(true);
 	});
 
+	test("Escape moves focus from a submenu link to its item's link, which stays visible", () => {
+		document.getElementById("interviewsLink").focus();
+
+		pressKey("Escape");
+
+		expect(document.activeElement.id).toBe("gamesLink");
+	});
+
+	test("Escape leaves focus on the item's own link", () => {
+		document.getElementById("gamesLink").focus();
+
+		pressKey("Escape");
+
+		expect(document.activeElement.id).toBe("gamesLink");
+	});
+
+	test("Escape closes the submenu under the pointer", () => {
+		games().dispatchEvent(new Event("pointerenter"));
+
+		pressKey("Escape");
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+	});
+
+	test("the submenu stays closed when focus leaves while the pointer is still over its item", () => {
+		games().dispatchEvent(new Event("pointerenter"));
+		document.getElementById("gamesLink").focus();
+		pressKey("Escape");
+
+		document.getElementById("outside").focus();
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+
+		games().dispatchEvent(new Event("pointerleave"));
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
+	test("the submenu stays closed when the pointer leaves while focus is still in its item", () => {
+		games().dispatchEvent(new Event("pointerenter"));
+		document.getElementById("gamesLink").focus();
+		pressKey("Escape");
+
+		games().dispatchEvent(new Event("pointerleave"));
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+
+		document.getElementById("outside").focus();
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
 	test("the submenu opens again once focus leaves its item", () => {
 		document.getElementById("gamesLink").focus();
 		pressKey("Escape");
@@ -2546,7 +2672,7 @@ describe("enableSubmenuDismissal", () => {
 	});
 
 	test("the submenu opens again once the pointer leaves its item", () => {
-		document.getElementById("gamesLink").focus();
+		games().dispatchEvent(new Event("pointerenter"));
 		pressKey("Escape");
 
 		games().dispatchEvent(new Event("pointerleave"));

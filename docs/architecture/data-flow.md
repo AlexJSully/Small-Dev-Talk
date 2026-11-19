@@ -147,7 +147,7 @@ sequenceDiagram
 
 ### 3. Article Loading Logic
 
-The `callArticle()` method determines what to display:
+The `callArticle()` method determines what to display. It and `callDisplay()` read only the query string (`pageQuery()`), so a fragment such as the skip link's `#content` does not change which article or section shows:
 
 ```mermaid
 flowchart TD

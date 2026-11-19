@@ -93,11 +93,30 @@ describe("Accessibility", () => {
 
 		cy.focused().trigger("keydown", { key: "Escape" });
 		cy.contains("#header nav a", "Interviews").should("not.be.visible");
+		// Focus leaves the hidden link for Games, so the keyboard user can still see where they are.
+		cy.focused().should("contain", "Games").and("be.visible");
 
 		// Moving focus out of the item and back opens the submenu again.
 		cy.contains("#header nav a", "Movies").focus();
 		cy.contains("#header nav a", "Games").focus();
 		cy.contains("#header nav a", "Small Plays").should("be.visible");
+	});
+
+	it("opens the Games submenu directly beneath Games when the navigation bar wraps on a phone", () => {
+		cy.viewport(412, 823);
+		cy.visit("http://localhost:3000/");
+
+		cy.contains("#header nav a", "Games").focus();
+		cy.contains("#header nav a", "Interviews").should(($link) => {
+			const games = $link[0].closest("ul").parentElement.getBoundingClientRect();
+			const submenu = $link[0].closest("ul").getBoundingClientRect();
+			const pages = $link[0].ownerDocument.querySelector("#header .pages");
+
+			// The bar wraps at this width, so beneath the whole list is a row or more below Games.
+			expect(pages.getBoundingClientRect().height).to.be.greaterThan(games.height * 1.5);
+			expect(submenu.top).to.be.closeTo(games.bottom, 1);
+			expect(submenu.left).to.be.closeTo(games.left, 1);
+		});
 	});
 
 	it("draws the focus ring of a carousel slide link inside the slide, where the carousel does not clip it", () => {

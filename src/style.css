@@ -89,8 +89,10 @@ img {
 	position: relative;
 }
 
+/* Each item positions its own submenu, which then opens beneath the item even when the bar wraps onto more rows. */
 #header nav ul li {
 	float: left;
+	position: relative;
 }
 
 #header nav ul li:hover {
