@@ -1833,70 +1833,103 @@ describe("articleData.json", () => {
 });
 
 /**
- * Read the displayed width and height of a PNG, GIF, JPEG or WebP file from its header. A JPEG whose EXIF orientation
- * turns it a quarter turn (5 to 8) reports its sides swapped, because browsers apply that orientation.
+ * Read the size from the first chunk of a WebP file, in its lossy (VP8), lossless (VP8L) or extended (VP8X) format.
+ * @param {Buffer} data The file contents.
+ * @returns {{width: number, height: number}} The size in pixels.
+ */
+function webpSize(data) {
+	const readers = {
+		"VP8 ": () => ({ width: data.readUInt16LE(26) & 0x3fff, height: data.readUInt16LE(28) & 0x3fff }),
+		VP8L: () => {
+			const bits = data.readUInt32LE(21);
+
+			return { width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 };
+		},
+		VP8X: () => ({ width: data.readUIntLE(24, 3) + 1, height: data.readUIntLE(27, 3) + 1 }),
+	};
+
+	return readers[data.toString("ascii", 12, 16)]();
+}
+
+/**
+ * Read the orientation tag of the EXIF segment that starts at `offset` in a JPEG file.
+ * @param {Buffer} data The file contents.
+ * @param {number} offset Where the APP1 segment holding the EXIF data starts.
+ * @returns {number} The EXIF orientation, 1 to 8, or 1 when the segment has none.
+ */
+function exifOrientation(data, offset) {
+	const tiff = offset + 10;
+	const little = data.toString("ascii", tiff, tiff + 2) === "II";
+	const read16 = (at) => (little ? data.readUInt16LE(at) : data.readUInt16BE(at));
+	const read32 = (at) => (little ? data.readUInt32LE(at) : data.readUInt32BE(at));
+	const directory = tiff + read32(tiff + 4);
+	const entries = Array.from({ length: read16(directory) }, (_, entry) => directory + 2 + entry * 12);
+	const orientationEntry = entries.find((at) => read16(at) === 0x0112);
+
+	return orientationEntry === undefined ? 1 : read16(orientationEntry + 8);
+}
+
+/**
+ * Read the size from the frame header of a JPEG file. A JPEG whose EXIF orientation turns it a quarter turn (5 to 8)
+ * reports its sides swapped, because browsers apply that orientation.
+ * @param {Buffer} data The file contents.
+ * @returns {{width: number, height: number}} The displayed size in pixels.
+ */
+function jpegSize(data) {
+	let offset = 2;
+	let orientation = 1;
+
+	while (offset < data.length) {
+		const marker = data[offset + 1];
+
+		if (marker === 0xe1 && data.toString("ascii", offset + 4, offset + 8) === "Exif") {
+			orientation = exifOrientation(data, offset);
+		}
+
+		// SOF0 to SOF15 carry the frame size, except DHT (C4), JPG (C8) and DAC (CC).
+		if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+			const height = data.readUInt16BE(offset + 5);
+			const width = data.readUInt16BE(offset + 7);
+
+			return orientation >= 5 ? { width: height, height: width } : { width, height };
+		}
+
+		offset += 2 + data.readUInt16BE(offset + 2);
+	}
+
+	throw new Error("JPEG has no frame header");
+}
+
+/** Each supported image format: how to recognize its file, and how to read its size. */
+const IMAGE_FORMATS = [
+	{
+		matches: (data) => data.toString("ascii", 1, 4) === "PNG",
+		size: (data) => ({ width: data.readUInt32BE(16), height: data.readUInt32BE(20) }),
+	},
+	{
+		matches: (data) => data.toString("ascii", 0, 3) === "GIF",
+		size: (data) => ({ width: data.readUInt16LE(6), height: data.readUInt16LE(8) }),
+	},
+	{
+		matches: (data) => data.toString("ascii", 0, 4) === "RIFF" && data.toString("ascii", 8, 12) === "WEBP",
+		size: webpSize,
+	},
+	{ matches: (data) => data[0] === 0xff && data[1] === 0xd8, size: jpegSize },
+];
+
+/**
+ * Read the displayed width and height of a PNG, GIF, JPEG or WebP file from its header.
  * @param {Buffer} data The file contents.
  * @returns {{width: number, height: number}} The size in pixels.
  */
 function imageSize(data) {
-	if (data.toString("ascii", 1, 4) === "PNG") {
-		return { width: data.readUInt32BE(16), height: data.readUInt32BE(20) };
+	const format = IMAGE_FORMATS.find(({ matches }) => matches(data));
+
+	if (!format) {
+		throw new Error("Unsupported image format");
 	}
 
-	if (data.toString("ascii", 0, 3) === "GIF") {
-		return { width: data.readUInt16LE(6), height: data.readUInt16LE(8) };
-	}
-
-	if (data.toString("ascii", 0, 4) === "RIFF" && data.toString("ascii", 8, 12) === "WEBP") {
-		const chunk = data.toString("ascii", 12, 16);
-
-		if (chunk === "VP8 ") {
-			return { width: data.readUInt16LE(26) & 0x3fff, height: data.readUInt16LE(28) & 0x3fff };
-		}
-		if (chunk === "VP8L") {
-			const bits = data.readUInt32LE(21);
-
-			return { width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 };
-		}
-		if (chunk === "VP8X") {
-			return { width: data.readUIntLE(24, 3) + 1, height: data.readUIntLE(27, 3) + 1 };
-		}
-	}
-
-	if (data[0] === 0xff && data[1] === 0xd8) {
-		let offset = 2;
-		let orientation = 1;
-
-		while (offset < data.length) {
-			const marker = data[offset + 1];
-
-			if (marker === 0xe1 && data.toString("ascii", offset + 4, offset + 8) === "Exif") {
-				const tiff = offset + 10;
-				const little = data.toString("ascii", tiff, tiff + 2) === "II";
-				const read16 = (at) => (little ? data.readUInt16LE(at) : data.readUInt16BE(at));
-				const read32 = (at) => (little ? data.readUInt32LE(at) : data.readUInt32BE(at));
-				const directory = tiff + read32(tiff + 4);
-
-				for (let entry = 0; entry < read16(directory); entry += 1) {
-					if (read16(directory + 2 + entry * 12) === 0x0112) {
-						orientation = read16(directory + 2 + entry * 12 + 8);
-					}
-				}
-			}
-
-			// SOF0 to SOF15 carry the frame size, except DHT (C4), JPG (C8) and DAC (CC).
-			if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
-				const height = data.readUInt16BE(offset + 5);
-				const width = data.readUInt16BE(offset + 7);
-
-				return orientation >= 5 ? { width: height, height: width } : { width, height };
-			}
-
-			offset += 2 + data.readUInt16BE(offset + 2);
-		}
-	}
-
-	throw new Error("Unsupported or corrupt image");
+	return format.size(data);
 }
 
 describe("article markdown", () => {
