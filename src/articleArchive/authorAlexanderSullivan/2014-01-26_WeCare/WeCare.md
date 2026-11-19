@@ -1,4 +1,4 @@
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-26_WeCare\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-26_WeCare\image1.jpg =500x203)
 
 [jamiebeats](https://jamiebeats.tumblr.com/post/74659439870/joo-hyun-you-can-send-me-an-message-at):
 

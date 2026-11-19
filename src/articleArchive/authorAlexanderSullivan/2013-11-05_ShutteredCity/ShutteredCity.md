@@ -1,6 +1,6 @@
 ## Shuttered City Interview
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image1.jpg =200x150)
 
 Join Leland on his adventure in Shuttered City. Recently I got the chance to talk with Justin Sadur who is working on his new graphic novel, Shuttered City. You can find out more on his [Kickstarter](https://www.kickstarter.com/projects/301866914/the-shuttered-city-graphic-novel) or read a preview to it on his [DeviantArt page](https://www.deviantart.com/benjamin-the-fox/gallery/39351916/The-Shuttered-City-Lettered).
 
@@ -18,7 +18,7 @@ Join Leland on his adventure in Shuttered City. Recently I got the chance to tal
 
 On the other side are the citizens and…denizens of Sylvanshire: The sinister leader of the local cult, with his plastered on smile and hidden agenda, and Councilman Waldgrave, the political boss of the town, who seeks to lead the city into the future, while keeping its secrets well-hidden. Both of them are willing to kill, and worse, for Sylvanshire, but for sheer terror they can’t hold a candle to The Great Hag of the Woods, and her minions. They are the true masters of Sylvanshire, and the reason it was founded; they have ruled it in secret, and unopposed for hundreds of years.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image2.jpg =500x183)
 
 **Small Dev Talk: What is Leland like and what is his back story? What inspired you to create this character?**
 
@@ -26,19 +26,19 @@ On the other side are the citizens and…denizens of Sylvanshire: The sinister l
 
 I originally conceived the prototype of Leland a few years ago as a reaction against the violent tough-guy characters I had created in my youth. I wanted to create a character who didn’t have violence as an option to solve his problems. Of course, he still has to fight his way out of a few scraps, but he’s certainly no action hero. Beyond that, I’ve always had an interest in anthro-art, and it seemed a fitting choice from a story point-of-view to make him a rabbit.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image3.jpg =500x481)
 
 **Small Dev Talk: There is a very interesting character design in Shuttered City like how The Great Hag looks or like how the individual in your Kickstarter brief sample looks. Why do individuals in the book look like that and why did you choose to make the characters look like that?**
 
 **Justin:** Well for the "human” characters, since the story was inspired by source material from the 1920s, I gave them a very dated look: lots of dark coats and hats. As for the more monstrous creatures, the idea behind them is that they’re sort of taking on aspects of their environment, from the plants and animals of the forest, so the older they get, the less humanoid their appearance becomes, until they end up as shambling masses of vegetation and muscle.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image4.jpg =500x639)
 
 **Small Dev Talk: Why did you choose to make your graphic novel black and white compared to colour?**
 
 **Justin:** Well, since it is an independent comic and on a limited budget, I decided to stick with black and white, since getting printed copies out was always part of the plan, and color printing is quite costly. Beyond that, doing pages in ink-wash is quite time consuming, and adding color would have doubled the time it took to paint the pages. Doing a full-color painted book would be a dream, but I’d have to have some kind of help, or a lot of time and money, to do such a thing.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image5.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image5.jpg =500x695)
 
 **Small Dev Talk: What inspired you to write Shuttered City?**
 
@@ -52,7 +52,7 @@ I originally conceived the prototype of Leland a few years ago as a reaction aga
 
 **Justin:** Well there’s no team; it’s just me, but as for difficulties, early on I had a lot of trouble getting comfortable with the medium of ink-wash, and keeping it under control. Now I have much better working methods, but they took me a long time to figure out. The other problem, of course, is sheer workload. Trying to keep to a schedule is exceedingly difficult with such detailed art. Getting a good workflow helps a lot, but even that can be tricky to stick with, if you get hung up on a specific page.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image6.jpg =500x695)
 
 **Small Dev Talk: Do you ever plan on making Shuttered City into a movie, TV series or a game?**
 
@@ -76,7 +76,7 @@ My advice is: Plan it out ahead of time, have an entire story arc ready to go be
 
 **Justin:** Thank you for your time! Check out The Shuttered City. Drop me a note if you have any questions; I’m always interested in what people have to say about my work. And if you know anyone who might be interested in the project, please point them in the right direction. Thanks again!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-11-05_ShutteredCity\image7.jpg =500x435)
 
 ---
 

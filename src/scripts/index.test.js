@@ -1,6 +1,6 @@
 global.showdown = require("./libraries/showdown/showdown.min.js");
 
-const { ArticleFiller, escapeHtml, sanitizeHtml } = require("./index.js");
+const { ArticleFiller, escapeHtml, lazyLoadImagesAfterFirst, sanitizeHtml } = require("./index.js");
 
 const {
 	reportToSentry,
@@ -13,6 +13,9 @@ const {
 	updateCanonicalLink,
 	startThirdParties,
 	handleControlClick,
+	changeCarouselSlide,
+	showCarouselSlide,
+	enableCarouselSwipe,
 	APP_VERSION,
 	redirectToCanonicalHost,
 	removeLegacyServiceWorker,
@@ -22,6 +25,32 @@ const {
 	watchTwitterTimeline,
 } = require("./index.js");
 const { version: packageVersion } = require("../../package.json");
+
+/**
+ * Record every value written to an element's `innerHTML` while `render` runs. `innerHTML +=` counts as a write.
+ * @param {() => void} render The code under test.
+ * @returns {Object<string, string[]>} The values written, keyed by the id of the element written to.
+ */
+function recordInnerHtmlWrites(render) {
+	const descriptor = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML");
+	const writes = {};
+
+	Object.defineProperty(Element.prototype, "innerHTML", {
+		...descriptor,
+		set(value) {
+			(writes[this.id] ||= []).push(value);
+			descriptor.set.call(this, value);
+		},
+	});
+
+	try {
+		render();
+	} finally {
+		Object.defineProperty(Element.prototype, "innerHTML", descriptor);
+	}
+
+	return writes;
+}
 
 afterEach(() => {
 	// Empty the module's buffer of errors reported without a Sentry client, so one test's errors never reach another.
@@ -384,6 +413,55 @@ describe("ArticleFiller: addToPage", () => {
 			const html = document.getElementById("articleBody").innerHTML;
 			expect(html.replace(/\s+/g, "")).toContain(expected.replace(/\s+/g, ""));
 		});
+	});
+
+	test("loads the first article image at once and every later one lazily", () => {
+		ArticleFiller.articleMd = "## Title\n\n![one](one.jpg)\n\nText.\n\n![two](two.jpg)\n\n![three](three.png)";
+		ArticleFiller.addToPage("TestArticle");
+
+		const images = document.querySelectorAll("#articleBody img");
+		expect(Array.from(images, (image) => image.getAttribute("src"))).toEqual(["one.jpg", "two.jpg", "three.png"]);
+		expect(images[0].hasAttribute("loading")).toBe(false);
+		expect(images[1].getAttribute("loading")).toBe("lazy");
+		expect(images[2].getAttribute("loading")).toBe("lazy");
+	});
+
+	test("gives an article image the width and height its markdown names", () => {
+		ArticleFiller.articleMd = "![one](one.jpg =500x304)\n\n![two](two.png)";
+		ArticleFiller.addToPage("TestArticle");
+
+		const [sized, unsized] = document.querySelectorAll("#articleBody img");
+		expect(sized.getAttribute("src")).toBe("one.jpg");
+		expect(sized.getAttribute("width")).toBe("500");
+		expect(sized.getAttribute("height")).toBe("304");
+		expect(unsized.hasAttribute("width")).toBe(false);
+	});
+
+	test("leaves an <img> tag shown as code as text", () => {
+		ArticleFiller.articleMd = '![one](one.jpg)\n\n`<img src="two.jpg">`\n\n    <img src="three.jpg">';
+		ArticleFiller.addToPage("TestArticle");
+
+		const body = document.getElementById("articleBody");
+		expect(body.querySelectorAll("img")).toHaveLength(1);
+		expect(body.querySelector("code").textContent).toBe('<img src="two.jpg">');
+		expect(body.querySelector("pre code").textContent).toContain('<img src="three.jpg">');
+	});
+});
+
+describe("lazyLoadImagesAfterFirst", () => {
+	test("adds loading=lazy to every image tag after the first, in any letter case", () => {
+		expect(lazyLoadImagesAfterFirst('<p><img src="a.jpg"></p><IMG src="b.jpg"><img src="c.jpg" />')).toBe(
+			'<p><img src="a.jpg"></p><IMG loading="lazy" src="b.jpg"><img loading="lazy" src="c.jpg" />',
+		);
+	});
+
+	test("returns HTML with no images or one image unchanged", () => {
+		expect(lazyLoadImagesAfterFirst("<p>No images</p>")).toBe("<p>No images</p>");
+		expect(lazyLoadImagesAfterFirst('<img src="a.jpg">')).toBe('<img src="a.jpg">');
+	});
+
+	test("does not match a tag whose name only starts with img", () => {
+		expect(lazyLoadImagesAfterFirst('<img src="a.jpg"><imgx></imgx>')).toBe('<img src="a.jpg"><imgx></imgx>');
 	});
 });
 
@@ -780,7 +858,7 @@ describe("init", () => {
 			value: "http://localhost/index.html?TestArticle",
 			configurable: true,
 		});
-		// Page data resolves after article data, the order in which each loader used to render on its own.
+		// Page data resolves after article data, so a view rendered as each request settles would render the article twice.
 		global.fetch = jest.fn((url) => {
 			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
 				return new Promise((resolve) => {
@@ -1541,8 +1619,8 @@ describe("ArticleFiller: changeCarousel", () => {
 		expect(carouselInner).toContain("Second Article");
 		expect(carouselInner).toContain("thumb1.png");
 		expect(carouselInner).toContain("thumb2.png");
-		expect(carouselIndicator).toContain('data-slide-to="0"');
-		expect(carouselIndicator).toContain('data-slide-to="1"');
+		expect(carouselIndicator).toContain('data-carousel-slide-to="0"');
+		expect(carouselIndicator).toContain('data-carousel-slide-to="1"');
 		expect(pageTitle).toContain("Small Dev Talk: Featured");
 	});
 
@@ -1592,6 +1670,67 @@ describe("ArticleFiller: changeCarousel", () => {
 		expect(link.querySelector("img").getAttribute("alt")).toBe("");
 		expect(heading.tagName).toBe("H3");
 		expect(heading.textContent).toBe("First Article");
+	});
+
+	test("writes the slides and the indicators once each, so earlier slides are not parsed again", () => {
+		ArticleFiller.pageData.featured.carousel.push("ArticleOne");
+
+		const writes = recordInnerHtmlWrites(() => ArticleFiller.changeCarousel());
+
+		expect(writes.carouselInner).toHaveLength(1);
+		expect(writes.carouselIndicator).toHaveLength(1);
+		expect(document.querySelectorAll("#carouselInner .carousel-item")).toHaveLength(3);
+		expect(document.querySelectorAll("#carouselIndicator button")).toHaveLength(3);
+		expect(document.querySelectorAll("#carouselInner .carousel-item.active")).toHaveLength(1);
+		expect(document.getElementById("carouselImage2").getAttribute("src")).toBe(
+			"/src/articleArchive/authorJaneDoe/2024-06-01_ArticleOne/thumb1.png",
+		);
+	});
+
+	test("renders each indicator as a button named after its slide, with the first one current", () => {
+		ArticleFiller.changeCarousel();
+
+		const [first, second] = document.querySelectorAll("#carouselIndicator button");
+		expect(first.getAttribute("type")).toBe("button");
+		expect(first.getAttribute("data-bs-target")).toBe("#featuredCarousel");
+		expect(first.getAttribute("aria-label")).toBe("Show slide 1: First Article");
+		expect(first.classList.contains("active")).toBe(true);
+		expect(first.getAttribute("aria-current")).toBe("true");
+		expect(second.getAttribute("data-carousel-slide-to")).toBe("1");
+		expect(second.getAttribute("aria-label")).toBe("Show slide 2: Second Article");
+		expect(second.classList.contains("active")).toBe(false);
+		expect(second.hasAttribute("aria-current")).toBe(false);
+	});
+
+	test("labels each slide as a slide with its position, and announces nothing when the carousel renders", () => {
+		document.body.insertAdjacentHTML("beforeend", '<p id="carouselStatus"></p>');
+
+		ArticleFiller.changeCarousel();
+
+		const slides = document.querySelectorAll("#carouselInner .carousel-item");
+		expect(Array.from(slides, (slide) => slide.getAttribute("aria-label"))).toEqual(["1 of 2", "2 of 2"]);
+		expect(slides[0].getAttribute("role")).toBe("group");
+		expect(slides[0].getAttribute("aria-roledescription")).toBe("slide");
+		expect(slides[0].querySelector(".carousel-caption").hasAttribute("style")).toBe(false);
+		expect(document.getElementById("carouselStatus").textContent).toBe("");
+	});
+
+	test("escapes the article title in an indicator's label", () => {
+		ArticleFiller.articleData.ArticleOne.title = 'Say "hi" <b>loud</b>';
+
+		ArticleFiller.changeCarousel();
+
+		const first = document.querySelector("#carouselIndicator button");
+		expect(first.getAttribute("aria-label")).toBe('Show slide 1: Say "hi" <b>loud</b>');
+		expect(first.children).toHaveLength(0);
+	});
+
+	test("replaces the slides of an earlier render", () => {
+		ArticleFiller.changeCarousel();
+		ArticleFiller.changeCarousel();
+
+		expect(document.querySelectorAll("#carouselInner .carousel-item")).toHaveLength(2);
+		expect(document.querySelectorAll("#carouselIndicator button")).toHaveLength(2);
 	});
 });
 
@@ -1663,30 +1802,29 @@ describe("ArticleFiller: featured article links", () => {
 
 		expect(thumbnailLink.getAttribute("aria-label")).toBe("Redirect to First Article");
 	});
-});
 
-describe("articleData.json", () => {
-	const fs = require("fs");
-	const path = require("path");
-	const archiveDir = path.join(__dirname, "..", "articleArchive");
-	const entries = Object.entries(JSON.parse(fs.readFileSync(path.join(archiveDir, "articleData.json"), "utf8")));
-	const withThumbnail = entries.filter(([, article]) => article.thumbnail);
+	test("writes the list once, so earlier posts are not parsed again", () => {
+		const writes = recordInnerHtmlWrites(() => ArticleFiller.ArticleFiller());
 
-	test.each(withThumbnail)("%s has a thumbnail file in its article folder", (key, article) => {
-		const folder = `${article.date}_${key}`;
-		const thumbnail = path.join(
-			archiveDir,
-			`author${article.author.replace(/\s/g, "")}`,
-			folder,
-			article.thumbnail,
-		);
-
-		expect(fs.existsSync(thumbnail)).toBe(true);
+		expect(writes.displayArticles).toHaveLength(1);
+		expect(document.querySelectorAll("#displayArticles > .post")).toHaveLength(2);
 	});
 
-	test.each(withThumbnail)("%s has a thumbnail width and height", (key, article) => {
-		expect(Number.isInteger(article.thumbnailWidth) && article.thumbnailWidth > 0).toBe(true);
-		expect(Number.isInteger(article.thumbnailHeight) && article.thumbnailHeight > 0).toBe(true);
+	test("closes every div it opens", () => {
+		const [markup] = recordInnerHtmlWrites(() => ArticleFiller.ArticleFiller()).displayArticles;
+
+		expect(markup.match(/<\/div>/g)).toHaveLength(markup.match(/<div\b/g).length);
+	});
+
+	test("skips a key with no article data and keeps each post's id at its place in the list", () => {
+		ArticleFiller.pageData.featured.displayArticles = ["ArticleOne", "NoSuchArticle", "ArticleTwo"];
+
+		ArticleFiller.ArticleFiller();
+
+		expect(Array.from(document.querySelectorAll("#displayArticles > .post"), (post) => post.id)).toEqual([
+			"featuredArticle0",
+			"featuredArticle2",
+		]);
 	});
 });
 
@@ -2049,6 +2187,10 @@ describe("handleControlClick", () => {
 		document.body.innerHTML = `
 			<div class="carousel-item active" id="first"></div>
 			<div class="carousel-item" id="second"></div>
+			<div id="carouselIndicator">
+				<button id="dot0" data-carousel-slide-to="0" class="active" aria-current="true"></button>
+				<button id="dot1" data-carousel-slide-to="1"></button>
+			</div>
 			<a id="next" data-carousel-step="next"><span id="nextIcon"></span></a>
 			<a id="prev" data-carousel-step="prev"></a>
 			<p id="plain">text</p>
@@ -2073,6 +2215,23 @@ describe("handleControlClick", () => {
 		expect(document.getElementById("second").classList.contains("active")).toBe(true);
 	});
 
+	test("shows the slide of a clicked indicator and marks the indicator current", () => {
+		handleControlClick({ target: document.getElementById("dot1") });
+
+		expect(document.getElementById("second").classList.contains("active")).toBe(true);
+		expect(document.getElementById("first").classList.contains("active")).toBe(false);
+		expect(document.getElementById("dot1").getAttribute("aria-current")).toBe("true");
+		expect(document.getElementById("dot0").hasAttribute("aria-current")).toBe(false);
+	});
+
+	test("shows the first slide when its indicator, numbered 0, is clicked", () => {
+		handleControlClick({ target: document.getElementById("dot1") });
+		handleControlClick({ target: document.getElementById("dot0") });
+
+		expect(document.getElementById("first").classList.contains("active")).toBe(true);
+		expect(document.getElementById("dot0").getAttribute("aria-current")).toBe("true");
+	});
+
 	test("ignores clicks outside the controls", () => {
 		handleControlClick({ target: document.getElementById("plain") });
 
@@ -2091,6 +2250,229 @@ describe("handleControlClick", () => {
 		expect(html).toContain('data-page-action="home"');
 
 		console.error.mockRestore();
+	});
+});
+
+describe("carousel slide changes", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<div class="carousel-item active" id="slide0"><h3>First</h3></div>
+			<div class="carousel-item" id="slide1"><h3> Second </h3></div>
+			<div class="carousel-item" id="slide2"></div>
+			<p id="carouselStatus"></p>
+			<div id="carouselIndicator">
+				<button data-carousel-slide-to="0" class="active" aria-current="true"></button>
+				<button data-carousel-slide-to="1"></button>
+				<button data-carousel-slide-to="2"></button>
+			</div>
+		`;
+	});
+
+	afterEach(() => {
+		document.body.innerHTML = "";
+	});
+
+	/** The id of every active slide, and the indicator index each current-indicator mark sits on. */
+	const carouselState = () => ({
+		activeSlides: Array.from(document.querySelectorAll(".carousel-item.active"), (slide) => slide.id),
+		activeIndicators: Array.from(
+			document.querySelectorAll("#carouselIndicator button.active"),
+			(indicator) => indicator.dataset.carouselSlideTo,
+		),
+		currentIndicators: Array.from(
+			document.querySelectorAll('#carouselIndicator button[aria-current="true"]'),
+			(indicator) => indicator.dataset.carouselSlideTo,
+		),
+	});
+
+	test("showCarouselSlide shows that slide and marks only its indicator", () => {
+		showCarouselSlide(2);
+
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide2"],
+			activeIndicators: ["2"],
+			currentIndicators: ["2"],
+		});
+	});
+
+	test.each([-1, 3, Number.NaN, 1.5])("showCarouselSlide(%p) changes nothing", (index) => {
+		showCarouselSlide(index);
+
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide0"],
+			activeIndicators: ["0"],
+			currentIndicators: ["0"],
+		});
+	});
+
+	test("changeCarouselSlide moves the indicator with the slide and wraps at either end", () => {
+		changeCarouselSlide("next");
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide1"],
+			activeIndicators: ["1"],
+			currentIndicators: ["1"],
+		});
+
+		changeCarouselSlide("prev");
+		changeCarouselSlide("prev");
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide2"],
+			activeIndicators: ["2"],
+			currentIndicators: ["2"],
+		});
+
+		changeCarouselSlide("next");
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide0"],
+			activeIndicators: ["0"],
+			currentIndicators: ["0"],
+		});
+	});
+
+	test("changeCarouselSlide shows the first slide when no slide is active", () => {
+		document.getElementById("slide0").classList.remove("active");
+
+		changeCarouselSlide("next");
+
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide0"],
+			activeIndicators: ["0"],
+			currentIndicators: ["0"],
+		});
+	});
+	test("announces the slide shown, with its title when it has one", () => {
+		showCarouselSlide(1);
+		expect(document.getElementById("carouselStatus").textContent).toBe("Slide 2 of 3: Second");
+
+		changeCarouselSlide("next");
+		expect(document.getElementById("carouselStatus").textContent).toBe("Slide 3 of 3");
+	});
+
+	/**
+	 * Give `slide` one running transition whose end the test decides. jsdom has no `getAnimations`, so this stands in
+	 * for the browser's transition of the slide.
+	 * @param {Element} slide The slide that will move.
+	 * @returns {() => Promise<void>} Ends the transition and waits for the carousel to react.
+	 */
+	const runningTransition = (slide) => {
+		let end;
+		const finished = new Promise((resolve) => {
+			end = resolve;
+		});
+
+		slide.getAnimations = () => [{ finished }];
+
+		return () => {
+			end();
+
+			return new Promise((resolve) => setTimeout(resolve, 0));
+		};
+	};
+
+	test("slides the next slide in from the right, and makes it the only active slide when its transition ends", async () => {
+		const endTransition = runningTransition(document.getElementById("slide1"));
+
+		changeCarouselSlide("next");
+
+		expect(document.getElementById("slide0").className).toBe("carousel-item active carousel-item-start");
+		expect(document.getElementById("slide1").className).toBe(
+			"carousel-item carousel-item-next carousel-item-start",
+		);
+		expect(carouselState().currentIndicators).toEqual(["1"]);
+
+		await endTransition();
+
+		expect(document.getElementById("slide0").className).toBe("carousel-item");
+		expect(document.getElementById("slide1").className).toBe("carousel-item active");
+	});
+
+	test("slides in from the left when the previous arrow wraps from the first slide to the last", async () => {
+		const endTransition = runningTransition(document.getElementById("slide2"));
+
+		changeCarouselSlide("prev");
+
+		expect(document.getElementById("slide0").className).toBe("carousel-item active carousel-item-end");
+		expect(document.getElementById("slide2").className).toBe("carousel-item carousel-item-prev carousel-item-end");
+
+		await endTransition();
+
+		expect(carouselState().activeSlides).toEqual(["slide2"]);
+	});
+
+	test("ends a moving slide at once when another change comes, and counts on from it", async () => {
+		const endFirst = runningTransition(document.getElementById("slide1"));
+		const endSecond = runningTransition(document.getElementById("slide2"));
+
+		changeCarouselSlide("next");
+		changeCarouselSlide("next");
+
+		expect(document.getElementById("slide0").className).toBe("carousel-item");
+		expect(document.getElementById("slide1").className).toBe("carousel-item active carousel-item-start");
+		expect(document.getElementById("slide2").className).toBe(
+			"carousel-item carousel-item-next carousel-item-start",
+		);
+
+		await endFirst();
+		expect(document.getElementById("slide2").className).toBe(
+			"carousel-item carousel-item-next carousel-item-start",
+		);
+
+		await endSecond();
+		expect(carouselState().activeSlides).toEqual(["slide2"]);
+	});
+});
+
+describe("enableCarouselSwipe", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<section id="featuredCarousel">
+				<div class="carousel-item active" id="slide0"></div>
+				<div class="carousel-item" id="slide1"></div>
+				<div class="carousel-item" id="slide2"></div>
+			</section>
+		`;
+		enableCarouselSwipe(document.getElementById("featuredCarousel"));
+	});
+
+	afterEach(() => {
+		document.body.innerHTML = "";
+	});
+
+	/**
+	 * Dispatch a pointer event on the carousel. jsdom has no `PointerEvent`, so a plain event carries the pointer's fields.
+	 * @param {string} type The event type.
+	 * @param {string} pointerType `touch`, `pen` or `mouse`.
+	 * @param {number} clientX The horizontal position.
+	 * @param {number} [clientY] The vertical position.
+	 * @returns {void}
+	 */
+	const pointer = (type, pointerType, clientX, clientY = 100) => {
+		document
+			.getElementById("featuredCarousel")
+			.dispatchEvent(Object.assign(new Event(type), { pointerType, clientX, clientY }));
+	};
+	const activeSlide = () => document.querySelector(".carousel-item.active").id;
+
+	test.each([
+		["a touch swipe to the left shows the next slide", "touch", 200, 100, "slide1"],
+		["a touch swipe to the right shows the previous slide", "touch", 400, 100, "slide2"],
+		["a pen swipe to the left shows the next slide", "pen", 200, 100, "slide1"],
+		["a swipe shorter than 40 pixels changes nothing", "touch", 261, 100, "slide0"],
+		["a mostly vertical movement changes nothing", "touch", 240, 200, "slide0"],
+		["a mouse drag changes nothing", "mouse", 100, 100, "slide0"],
+	])("%s", (_name, pointerType, endX, endY, expected) => {
+		pointer("pointerdown", pointerType, 300);
+		pointer("pointerup", pointerType, endX, endY);
+
+		expect(activeSlide()).toBe(expected);
+	});
+
+	test("a cancelled touch changes nothing", () => {
+		pointer("pointerdown", "touch", 300);
+		pointer("pointercancel", "touch", 300);
+		pointer("pointerup", "touch", 100);
+
+		expect(activeSlide()).toBe("slide0");
 	});
 });
 

@@ -1,6 +1,6 @@
 ## Tower of Guns
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image1.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image1.png =500x281)
 
 I recently got the chance to talk with the Joe Mirabello ([@blankslatejoe](https://twitter.com/blankslatejoe)) from Terrible Posture Games on their new, innovative and uniquely looking game, Tower of Guns. A fast pace first person shooter which can you find at [http://www.towerofguns.com/](http://www.towerofguns.com/) and support for Steam Greenlight at [http://steamcommunity.com/sharedfiles/filedetails/?id=132007077](https://steamcommunity.com/sharedfiles/filedetails/?id=132007077)
 
@@ -8,19 +8,19 @@ I recently got the chance to talk with the Joe Mirabello ([@blankslatejoe](https
 
 **Joe Mirabello:** Tower of Guns is a roguelike-like first-person shooter (yes, that’s two “likes” it’s a term borrowed from the game FTL). It’s a kind of like what FTL or Binding of Isaac might be if it were mixed with Quake or Doom 2. There’s a lot of fast action and crazy twitch based gameplay, but a lot of randomization and other elements that keep it replayable.
 
-[![YouTube Video](https://img.youtube.com/vi/fjsCcJr1WuI/0.jpg)](https://www.youtube.com/watch?v=fjsCcJr1WuI)
+[![YouTube Video](https://img.youtube.com/vi/fjsCcJr1WuI/0.jpg =480x360)](https://www.youtube.com/watch?v=fjsCcJr1WuI)
 
 **Small Dev Talk: What is the story in Tower of Guns?**
 
 **Joe Mirabello:** Get to the top of the Tower! Actually, the plot itself isn’t something I’m talking about so much yet, as I’m experimenting with some pretty goofy ideas and I’m not sure if they’ll prove to be much fun, so I don’t want to over-promise :)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image2.jpg =500x281)
 
 **Small Dev Talk: What is gameplay like in Tower of Guns?**
 
 **Joe Mirabello:** The gameplay has a lot in common with the earlier generations of FPS games like Quake, Doom2, Dark Forces, Serious Sam. There’s a lot of fast, twitch action in large spaces with very few mechanics to slow you down: no crouching, going prone, sticky cover or iron sights-—instead Tower of Guns is all about dodging, circle strafing, and running at super-fast speeds. The actual game should only take an hour or so to beat–if you win—-but it’s the kind of game that’s going to take many, many, many tries TO beat.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image3.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image3.png =500x281)
 
 **Small Dev Talk: Is this a linear game or will it be open-world?**
 
@@ -34,7 +34,7 @@ I recently got the chance to talk with the Joe Mirabello ([@blankslatejoe](https
 
 **Joe Mirabello:** Sadly, I’m just one developer, so I have to cut a lot of corners, which is a shame. Right now the randomization for arenas is based off of a “pool” of allowable sublevels, and each stage of the game is a six or seven chamber string of arenas ‘composites’ from that pool on load. So it’s not procedural. It’s a poor-man’s randomization, but it also focuses on my strengths, which are constructing the environments themselves. I’ve gotten pretty fast at that. Also, this doesn’t mean that the chambers are that easy to memorize either, as each chamber also has a number of different enemy layouts, which themselves have a lot of randomization in the spawning variety and location. There’s plenty of other random elements as well too: the placement and kinds of pickups, the way shops are handled, what kinds of loot gets dropped from killed enemies, and which boss awaits you at the end of each stage. And, aside from the randomization, there are plenty of weapons and perks to unlock as you go too.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image4.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image4.png =500x281)
 
 **Small Dev Talk: What are the class options in Tower of Guns? Can you describe to role of each class for us?**
 
@@ -48,7 +48,7 @@ Additionally you can couple a gun choice with a 'perk’ at the beginning of eac
 
 **Joe Mirabello:** I’ve built about ten weapons and rigged/animated them but I’ve only properly balanced two so far, so this is something I’m not talking about too much as I’m not certain which ones will be 'fun’ enough to make the final cut. :)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image5.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image5.png =500x281)
 
 **Small Dev Talk: What type of gun modifications will you include in Tower of Guns?**
 
@@ -57,7 +57,7 @@ Additionally you can couple a gun choice with a 'perk’ at the beginning of eac
 Most of those 'qualities’ are ALSO available as pickups in the game, and each gun has a 'slot’ which can hold second quality. So if you have a rocket launcher and you pick up a shotgun modification then you have a
 rocket-launcher that shoots out ten rockets in a spread fashion. The qualities I’m pretty sure are making the cut are 'shotgun’, 'rapid-fire’, and 'explosive’, but there’s about six others I’m still toying with. It’ll really depend on how much fun I can make them.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image6.jpg =500x279)
 
 **Small Dev Talk: What type of enemies will the player come across in Tower of guns?**
 
@@ -65,25 +65,25 @@ rocket-launcher that shoots out ten rockets in a spread fashion. The qualities I
 
 Additionally there are the more difficult enemies like the Grinder and the Angler-bot, but I’m not talking about them much yet.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image7.jpg =500x271)
 
 **Small Dev Talk: What type of environments will the users be playing in?**
 
 **Joe Mirabello:** The players will be inside the Tower the entire time. That said, I try and do a lot with the lighting and layout to make each stage feel a little different. I’ve been toying with whether or not to have windows or let the player move outside the tower, and while that’s pretty easy art wise, it’s difficult to do without compromising my desire to make it so the player can travel anywhere they can see, so it might have to be reserved for a sequel.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image8.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image8.jpg =500x294)
 
 **Small Dev Talk: Why did you choose a cartoonish-art like feel for the graphics in Tower of Guns?**
 
 **Joe Mirabello:** Believe it or not, it’s entirely a time-issue. The art style is made that way because I can make it fast. I can reuse a lot of the textures from one piece to another and I can build levels super speedily. The art is almost 'abstracted’ from the level layout in a sense, which is a very old-school FPS approach too. But as a single developer, I have to think very critically of how I was going to spend my time. Perhaps in my next project I’ll have the luxury of spending more time on the art and I’ll feel less like it was an “aesthetic compromise”. :)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image9.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image9.jpg =149x750)
 
 **Small Dev Talk: Will there be a multiplayer in Tower of Guns? If so, what type of game modes will there be?**
 
 **Joe Mirabello:** I’d LOVE to add multiplayer. A Co-OP roguelike-like FPS would be hilarious fun. However, that’s not a particularly easy thing to just “add in”…and I’m not sure my technical skills are up to it yet. Perhaps once I finish ToG I’ll have learned enough to give it a try in whatever follow-up project I work on, assuming ToG does well enough to keep me working on my own and I don’t have to return to working for a bigger studio.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image10.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image10.jpg =480x542)
 
 **Small Dev Talk: What inspired you to create Tower of Guns?**
 
@@ -113,7 +113,7 @@ Additionally there are the more difficult enemies like the Grinder and the Angle
 
 **Joe Mirabello:** Sure! Follow me on Twitter under the handle: [@blankslatejoe](https://twitter.com/blankslatejoe). You can also sign up for my mailing list for announcements at [www.towerofguns.com.](http://www.towerofguns.com/) There’s a link to a development blog on there that I update fairly regularly. Also, please visit the Steam Greenlight page and give Tower of Guns a vote. It’s the only way indies like me get on Steam these days: [steamcommunity.com/sharedfiles/filedetails/?id=132007077](https://steamcommunity.com/sharedfiles/filedetails/?id=132007077)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image11.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-05_TowerOfGuns\image11.jpg =500x323)
 
 ---
 

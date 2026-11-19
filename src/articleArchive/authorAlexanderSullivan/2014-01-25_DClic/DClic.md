@@ -1,6 +1,6 @@
 ## D'clic
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image1.jpg =500x750)
 
 Fashion is always changing and coming up with new innovative methods to express meaning in a sense of clothing of accessories. A unique way to look at how this is done is by looking at D’clic. A new industrial urban accessories designed by Martial Yapo. You can find more on his [Kickstarter](https://www.kickstarter.com/projects/1695278181/dclic-industrial-urban-accessories) or on his [website](http://www.dclicbyyapo.com/).
 
@@ -14,31 +14,31 @@ The classic airplane belt buckle’s primary function is for security, but I saw
 
 **D’clic:** Yes it is a seat belt buckle, so it has the same mechanism but a different function
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image2.jpg =500x281)
 
 **Small Dev Talk: What type of outfits can you match the D’clic with?**
 
 **D’clic:** There is not a specific type of outfit, the good thing with the D'clic products is that you were it no matter is your style. It is adding a dash of funk to your style
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image3.jpg =500x329)
 
 **Small Dev Talk: What colours and sizes will the D’clic come in?**
 
 **D’clic:** For now it is coming in black/silver/copper
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image4.jpg =500x674)
 
 **Small Dev Talk: What material is the D’clic belt made of and are there alternative material options?**
 
 **D’clic:** The belt are made out of aluminum and nylon, and there is another collection in leather.
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image5.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image5.jpg =500x352)
 
 **Small Dev Talk: The D’clic purse has a very unique design, why did you choose to design your purse like that?**
 
 **D’clic:** I designed this purse because I wanted, first of all propose a product that is directly addressed to women but also to make a particularity and a difference with what we can find on boutique… creating reaction and surprise is the key of my creative system, you love or you don’t you still fascinating by the design of this purse.
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image6.jpg =500x334)
 
 **Small Dev Talk: I noticed on your D’clic bag, there is a roll area at the top of the bag, is that for purely cosmetic purposes or can your bag actually be expanded and store more things in it?**
 
@@ -46,7 +46,7 @@ The classic airplane belt buckle’s primary function is for security, but I saw
 
 It can be roll or fold or leave with the extension up.
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image7.jpg =500x750)
 
 **Small Dev Talk: Also, what material is your D’clic bag and purse made out of?**
 
@@ -56,13 +56,13 @@ It can be roll or fold or leave with the extension up.
 
 **D’clic:** Me and a group of friend were wearing the actual buckle from the airplane, this is when I was in college 10 years ago but I was always looking for some different color but of course I never could because those weren’t made for an aesthetic aspect facing the compliments, and my own demand I decided to create my own.
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image8.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image8.jpg =500x334)
 
 **Small Dev Talk: What is your favourite aspect of the D’clic?**
 
 **D’clic:** It is mixing the art, fashion, architecture and the artistic performance without limit.
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image9.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image9.jpg =500x750)
 
 **Small Dev Talk: What challenges did you and your team come across in the designing of D’clic?**
 
@@ -78,13 +78,13 @@ B : I don’t work the same way and I have a lot of respect for what they do
 
 I truly conceptualize my product as an architect who love fashion…I will say I’m a creator
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image10.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image10.jpg =500x497)
 
 **Small Dev Talk: What other products have you created in your history as a designer?**
 
 **D’clic:** That is my first creation that is alive but I create few projects as an architect. That still in phase of project.
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image11.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image11.jpg =500x334)
 
 **Small Dev Talk: Do you have any advice for upcoming designers?**
 
@@ -100,7 +100,7 @@ You will be able to find the product on my website [www.dclicbyyapo.com](http://
 
 **D’clic:** Check my video [http://kck.st/1ku6YKu](https://www.kickstarter.com/projects/1695278181/dclic-industrial-urban-accessories) and help me raising more money, and if you can pledge now, do it because it is a good a deal to have a product on [Kickstarter](https://www.kickstarter.com/projects/1695278181/dclic-industrial-urban-accessories).
 
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image12.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2014-01-25_DClic\image12.jpg =500x334)
 
 ---
 

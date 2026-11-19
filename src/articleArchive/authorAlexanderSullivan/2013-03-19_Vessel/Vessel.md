@@ -1,6 +1,6 @@
 ## Motte Island
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-19_Vessel\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-19_Vessel\image1.jpg =500x258)
 
 Recently I got the chance to talk with the director, writer and producer of the film Vessel, Adam Ciancio. A uniquely new upcoming sci-fi drama about a man’s gift to communicate with ET’s. To see the movie for yourself, check it out here at [http://www.vessel-movie.com/](http://www.vessel-movie.com/)
 
@@ -8,7 +8,7 @@ Recently I got the chance to talk with the director, writer and producer of the 
 
 **Adam:** Vessel is a mirco budget feature film, which is currently in the last stage of postproduction. Actually we’re going into the studio tomorrow to do the final pass on the sound and then it’s off to Final Post in Newcastle where it’s being put together ready for the festival season. In terms of its origins I wrote the film at the end of 2011 and was directing it by mid 2012. Along the way I met Leanne Hanley, Gabrielle Christopher and Jonah Klein who have come onboard as producers.
 
-[![YouTube Video](https://img.youtube.com/vi/9YTqzBicgw0/0.jpg)](https://www.youtube.com/watch?v=9YTqzBicgw0)
+[![YouTube Video](https://img.youtube.com/vi/9YTqzBicgw0/0.jpg =480x360)](https://www.youtube.com/watch?v=9YTqzBicgw0)
 
 Small Dev Talk: What genre is this movie and will it have any action, suspense or horror to it?
 
@@ -22,7 +22,7 @@ Small Dev Talk: What genre is this movie and will it have any action, suspense o
 
 **Adam:** The characters in Vessel are everyday people we would see every day that would populate a city and occupy someone’s life. Most of them are people that were or have now become part of Ash’s life because of his circumstance. It’s a human story so the interactions Ash has with these people are experienced so he can evoke as much emotion out of himself as possible to keep that fire inside him burning before the gift takes hold of him completely.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-19_Vessel\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-19_Vessel\image2.jpg =500x333)
 
 **Small Dev Talk: Through the description on the website, it states that the main character has till “the end of the day”. Is this movie entirely based in one day or one duration of him being awake?**
 
@@ -46,7 +46,7 @@ I guess on top of all that you’re taking care of a lot of the elements yoursel
 
 In terms of the crew the fact they were working for free instead of earning coin on a job that could be paying their rent, mortgage or food bill well that’s tough. It’s testing enough on some sets when you’re getting paid but when you are donating your time it can get a little heated. Luckily for me my crew was awesome. I had gone to film school with some of them and had worked on other projects with others. There was only five or six of us during the second week roaming around the city like a pack of gypsies but it worked. It’s not always smooth sailing but you lessen your chances of Murphy’s Law rearing its head if you have your shit sorted and a few contingencies up the sleeve. You owe that to your crew so I make sure I have every based covered in pre-production.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-19_Vessel\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-19_Vessel\image3.jpg =500x333)
 
 **Small Dev Talk: What is your favourite aspect of this movie?**
 
@@ -64,7 +64,7 @@ If I was to be really glib about it my favourite aspect of this film is that we 
 
 Having said that check out Vessel, we just got accepted into the London Sci Fi which will be on next month so if you’re in London and see a huge snaking line of guys dressed as storm troopers and wookies you’re probably in the right spot.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-19_Vessel\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-19_Vessel\image4.jpg =500x707)
 
 ---
 

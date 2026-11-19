@@ -1,6 +1,6 @@
 ## playsets Kickstarter Trailer
 
-[![YouTube Video](https://img.youtube.com/vi/-hqSy0RBDB4/0.jpg)](https://www.youtube.com/watch?v=-hqSy0RBDB4)
+[![YouTube Video](https://img.youtube.com/vi/-hqSy0RBDB4/0.jpg =480x360)](https://www.youtube.com/watch?v=-hqSy0RBDB4)
 
 Title: playsets
 Developer: playsets

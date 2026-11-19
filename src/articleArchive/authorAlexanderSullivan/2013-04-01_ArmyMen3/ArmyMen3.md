@@ -1,6 +1,6 @@
 ## Army Men III [NOT AN APRIL FOOLS JOKE!]
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image1.jpg =500x688)
 
 Army Men III, another addition to the Army Men video game series is coming soon and I got the chance to talk with the developer, Franklin Iheanacho from Neotl Empire, about this exciting sequel to Army Men II. You can check out the game here, [http://armymen3.com/](http://armymen3.com/) to see yourself
 
@@ -8,7 +8,7 @@ Army Men III, another addition to the Army Men video game series is coming soon 
 
 **Franklin Iheanacho:** Army Men III is the conclusion to the original Army Men trilogy and the direct successor of the defunct 3DO Company’s best seller Army Men II.
 
-[![YouTube Video](https://img.youtube.com/vi/oAOcwyi_3A4/0.jpg)](https://www.youtube.com/watch?v=oAOcwyi_3A4)
+[![YouTube Video](https://img.youtube.com/vi/oAOcwyi_3A4/0.jpg =480x360)](https://www.youtube.com/watch?v=oAOcwyi_3A4)
 
 **Small Dev Talk: Does Army Men III have a story and if so, what is it about?**
 
@@ -26,13 +26,13 @@ He makes an appearance towards the final mission. He has created a series of war
 
 **Franklin Iheanacho:** No, The Tan Brutes are basic close-quarters soldiers of the Tan Army, they tend to carry shotguns and sometimes Rocket-Launchers.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image2.jpg =500x375)
 
 The Machines of War on the other hand, are an army of menacing and merciless machines created by the Insane Grey Doctor to obliterate all plastic life.
 
 Here is an image of the Elite Shock Trooper (a.k.a. War Trooper)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image3.jpg =500x334)
 
 They are the basic units of the MoW and returning characters from Army Men Sarge’s Heroes 2, however with a totally new origin. In SH2, they were machines found in the Real World by General Plastro, in this game; they were created from alloys of plastic and metal minerals harvested from the Real World.
 
@@ -42,13 +42,13 @@ They are the basic units of the MoW and returning characters from Army Men Sarge
 
 However, Army Men III is online campaign-inspired so aside from the plastic currency scoring system that we also plan to implement, there will not be any competitive multiplayer - Luckily, that is where our standalone expansion, Army Men Multiplayer will come in.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image4.jpg =500x281)
 
 **Small Dev Talk: What is the Skirmish mode like?**
 
 **Franklin Iheanacho:** As mentioned previously, the Skirmish mode is practically the arcade mode for Army Men III. So far in the upcoming Beta release (which at the moment only supports single player), it practically plays like a typical Action/Adventure arcade mode with no scoring system. However in the next Beta release, it will include a currency score system, in the form of Plastic (as seen in Army Men RTS). Plastic(P) is required for mostly anything - Reviving allied players and NPCs, buying weapons, ammo, and power-ups via the Purchase Menu or an Item Dispenser (depending on the mission), and of course mission-specific features and certain objectives that may require teamwork (if playing online) in order to complete such mission(s). Did I also forget to mention that there will be large-scale battles and planes in the game?
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image5.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image5.jpg =500x252)
 
 **Small Dev Talk: What is the plastic currency scoring system?**
 
@@ -58,7 +58,7 @@ However, Army Men III is online campaign-inspired so aside from the plastic curr
 
 **Franklin Iheanacho:** There wasn’t much consistency with the Army Men series weapons. It was more of a combination of Vietnam, WW2, and even Sci-Fi weaponry. Because we have so many weapons, I would try to summarize this as short as possible. Besides the typical M16 Assault Rifle, there is the Machine Pistol 40 (MP40) Submachine gun which was a standard-issue weapon of the Tan Elite Guard. If you have seen the Act I cut scene from Army Men II, towards the end, you will notice that the Tan Elite soldiers towards the left of Major Mylar are carrying such weapons. There are also some weapons that are capable of dismembering some of your enemies, such as the MG42 Heavy Machine Gun (HMG), which is useful for slaughtering waves of enemies and the Shotgun, which can be devastating in close-quarters combat. We do have Sci-Fi based weaponry mainly for the purpose of the Machines of War. For example, the Laser Rifle - standard-issue weapon for the MoW commando units (plastic-metal alloyed action figures which resembles Cathode from UT3), and the Tesla Cannon which is rarely found in the game (more especially in Campaign mode).
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image6.jpg =500x353)
 
 **Small Dev Talk: How will the User-Mod content work? Will users be submitting their content to a source?**
 
@@ -102,7 +102,7 @@ On the bright side, the solo-developer work is really paying off.
 
 However in regards to what the game will have overall, that would be Online Cooperative Multiplayer.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image7.jpg =500x281)
 
 **Small Dev Talk: What challenges did you and your team come across in the development of Army Men III?**
 
@@ -131,7 +131,7 @@ Also, be sure to sign up on the community forums and join any of our social netw
 
 The larger the community and fan base as well the more skilled developers we have on the team, the sooner, faster, and better the outcome of the game.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image8.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-01_ArmyMen3\image8.jpg =500x688)
 
 ---
 

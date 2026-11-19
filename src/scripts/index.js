@@ -4,8 +4,11 @@
 //
 //= ============================================================================
 
-/** Convert markdown files into HTML */
-const converter = new showdown.Converter();
+/**
+ * Convert markdown files into HTML. Article images give their size as `![alt](url =WIDTHxHEIGHT)`, which Showdown turns
+ * into `width` and `height` attributes, so the browser reserves each image's space before it loads.
+ */
+const converter = new showdown.Converter({ parseImgDimensions: true });
 
 /**
  * Escape HTML special characters to prevent XSS injection.
@@ -314,9 +317,20 @@ function reportError(error, context = {}) {
 }
 
 /**
+ * Return the folder of an article in the archive, relative to the site root, which holds its markdown and images.
+ * @param {string} key The key of the article in articleData.json.
+ * @param {{author: string, date: string}} article The article's data from articleData.json.
+ * @returns {string} The folder path, such as `src/articleArchive/authorJaneDoe/2024-06-01_ArticleOne`.
+ */
+function articleFolderPath(key, article) {
+	return `src/articleArchive/author${article.author.replace(/\s/g, "")}/${article.date}_${key}`;
+}
+
+/**
  * Build the `width` and `height` attributes of an article thumbnail, so the browser reserves its space before it loads.
  * @param {{thumbnailWidth?: number, thumbnailHeight?: number}} [article] The article's data from articleData.json.
- * @returns {string} The attributes with a leading space, or an empty string when either size is missing.
+ * @returns {string} The attributes with a leading space, or an empty string when either size is missing or not a
+ * positive whole number.
  */
 function imageSizeAttributes(article) {
 	const width = Number(article?.thumbnailWidth);
@@ -327,6 +341,23 @@ function imageSizeAttributes(article) {
 	}
 
 	return ` width="${width}" height="${height}"`;
+}
+
+/**
+ * Mark every image of an article after the first with `loading="lazy"`, so images below the fold download only as the
+ * visitor scrolls toward them. The first image is usually the article's header and in view, so it loads at once.
+ * @param {string} html The HTML that Showdown made from the article. Showdown escapes `<` inside code, so only real
+ * `<img>` tags match.
+ * @returns {string} The HTML with the attribute added.
+ */
+function lazyLoadImagesAfterFirst(html) {
+	let imageCount = 0;
+
+	return html.replace(/<img\b/gi, (tag) => {
+		imageCount += 1;
+
+		return imageCount === 1 ? tag : `${tag} loading="lazy"`;
+	});
 }
 
 /** Create and fill the page with the desired article */
@@ -472,10 +503,7 @@ class ArticleFiller {
 			if (articleData) {
 				this.updateMetaData(articleData, normalizedName);
 
-				// Create URL
-				const authorFolder = `author${articleData.author.replace(/\s/g, "")}`;
-				const articleFolder = `${articleData.date}_${normalizedName}`;
-				const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${normalizedName}.md`;
+				const url = `/${articleFolderPath(normalizedName, articleData)}/${normalizedName}.md`;
 
 				// Call article
 				return fetchResource(url, "article", (response) => response.text(), {
@@ -558,9 +586,7 @@ class ArticleFiller {
 
 			// Update image
 			if (articleData?.thumbnail && articleData?.author && articleData?.date && articleKey) {
-				const imgURL = `https://smalldevtalk.net/src/articleArchive/author${articleData.author
-					.split(" ")
-					.join("")}/${articleData.date}_${articleKey}/${articleData.thumbnail}`;
+				const imgURL = `https://smalldevtalk.net/${articleFolderPath(articleKey, articleData)}/${articleData.thumbnail}`;
 
 				// og & twitter
 				document.querySelector("meta[property='og:image']").setAttribute("content", imgURL);
@@ -585,7 +611,7 @@ class ArticleFiller {
 	 * @param {string} [articleName] The key of the article, named in the error when the conversion fails.
 	 */
 	static addToPage(articleName) {
-		ArticleFiller.article = sanitizeHtml(converter.makeHtml(ArticleFiller.articleMd));
+		ArticleFiller.article = sanitizeHtml(lazyLoadImagesAfterFirst(converter.makeHtml(ArticleFiller.articleMd)));
 
 		// Check if the converted article is empty when the original content is not
 		if (ArticleFiller?.article?.trim()?.length < 1 && ArticleFiller?.articleMd?.trim()?.length > 0) {
@@ -679,9 +705,7 @@ class ArticleFiller {
 					}
 
 					/** Article's thumbnail URL */
-					const imgURL = `src/articleArchive/author${value.author.split(" ").join("")}/${value.date}_${key}/${
-						value.thumbnail
-					}`;
+					const imgURL = `${articleFolderPath(key, value)}/${value.thumbnail}`;
 
 					archiveDisplay += `
 					<div class="col-sm archive-display">
@@ -725,62 +749,59 @@ class ArticleFiller {
 			document.getElementById("carouselInner")
 		) {
 			const carouselList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].carousel;
+			const indicators = [];
+			const slides = [];
 
-			// Reset carousel
-			if (document.getElementById("carouselIndicator")) {
-				document.getElementById("carouselIndicator").innerHTML = "";
-			}
-			document.getElementById("carouselInner").innerHTML = "";
+			// Build every slide first and write each container once: `innerHTML +=` re-parses all earlier slides.
+			carouselList.forEach((key, c) => {
+				const article = ArticleFiller.articleData[key];
+				const url = `/${articleFolderPath(key, article)}/${article.thumbnail}`;
 
-			// Fill carousel
-			for (let c = 0; c < carouselList.length; c += 1) {
-				// Create URL
-				const authorFolder = `author${ArticleFiller.articleData[carouselList[c]].author.split(" ").join("")}`;
-				const articleFolder = `${ArticleFiller.articleData[carouselList[c]].date}_${carouselList[c]}`;
-				const articleThumbnail = ArticleFiller.articleData[carouselList[c]].thumbnail;
-				const articleTitle = ArticleFiller.articleData[carouselList[c]].title;
-				const articleSummary = ArticleFiller.articleData[carouselList[c]].summary;
-				const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
+				// Bootstrap's stylesheet draws `.carousel-indicators [data-bs-target]` as a dash; handleControlClick runs it.
+				indicators.push(`
+					<button
+						type="button"
+						data-bs-target="#featuredCarousel"
+						data-carousel-slide-to="${c}"
+						aria-label="Show slide ${c + 1}: ${escapeHtml(article.title)}"
+						${c === 0 ? `class="active" aria-current="true"` : ""}
+					></button>
+				`);
 
-				// Change indicators
-				let appendStr = `
-					<li
-						data-target="#carouselExampleIndicators"
-						data-slide-to="${c}"
-						${c === 0 ? `class="active"` : ""}
-					></li>
-				`;
-				if (document.getElementById("carouselIndicator")) {
-					document.getElementById("carouselIndicator").innerHTML += appendStr;
-				}
-
-				// Change content. The first slide is the page's largest image, so it loads at once and at high priority.
-				appendStr = `
-					<div class="carousel-item ${c === 0 ? "active" : ""}">
+				// The first slide is the page's largest image, so it loads at once and at high priority.
+				slides.push(`
+					<div
+						class="carousel-item ${c === 0 ? "active" : ""}"
+						role="group"
+						aria-roledescription="slide"
+						aria-label="${c + 1} of ${carouselList.length}"
+					>
 						<a
 							id="carouselLink${c}"
-							href="index.html?${escapeHtml(carouselList[c])}"
+							href="index.html?${escapeHtml(key)}"
 						>
 							<img
 								id="carouselImage${c}"
-								src="${escapeHtml(url)}"${imageSizeAttributes(ArticleFiller.articleData[carouselList[c]])}
+								src="${escapeHtml(url)}"${imageSizeAttributes(article)}
 								class="d-block w-100"
 								${c === 0 ? `loading="eager" fetchpriority="high"` : `loading="lazy"`}
 								alt=""
 							>
-							<div
-								class="carousel-caption d-md-block"
-								style="text-shadow: 0 0 3px #000000;"
-							>
-								<h3 class="h5" id="carouselHeader${c}">${escapeHtml(articleTitle)}</h3>
-								<p id="carouselParagraph${c}">${escapeHtml(articleSummary)}</p>
+							<div class="carousel-caption">
+								<h3 class="h5" id="carouselHeader${c}">${escapeHtml(article.title)}</h3>
+								<p id="carouselParagraph${c}">${escapeHtml(article.summary)}</p>
 							</div>
 						</a>
 					</div>
-				`;
+				`);
+			});
 
-				document.getElementById("carouselInner").innerHTML += appendStr;
+			const carouselIndicator = document.getElementById("carouselIndicator");
+
+			if (carouselIndicator) {
+				carouselIndicator.innerHTML = indicators.join("");
 			}
+			document.getElementById("carouselInner").innerHTML = slides.join("");
 		}
 
 		ArticleFiller.ArticleFiller();
@@ -798,78 +819,70 @@ class ArticleFiller {
 			ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles
 		) {
 			const displayList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles;
+			const posts = [];
 
-			// Reset featured articles
-			document.getElementById("displayArticles").innerHTML = "";
+			// Build every post first and write the list once: `innerHTML +=` re-parses all earlier posts.
+			displayList.forEach((key, d) => {
+				const article = ArticleFiller.articleData[key];
 
-			// Fill featured articles
-			if (displayList && displayList.length > 0) {
-				for (const d in displayList) {
-					if (ArticleFiller.articleData[displayList[d]]) {
-						// Create URL
-						const authorFolder = `author${ArticleFiller.articleData[displayList[d]].author
-							.split(" ")
-							.join("")}`;
-						const articleFolder = `${ArticleFiller.articleData[displayList[d]].date}_${displayList[d]}`;
-						const articleThumbnail = ArticleFiller.articleData[displayList[d]].thumbnail;
-						const articleTitle = ArticleFiller.articleData[displayList[d]].title;
-						const articleSummary = ArticleFiller.articleData[displayList[d]].summary;
-						const articleDate = ArticleFiller.articleData[displayList[d]].date;
-						const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
-
-						// Change indicators
-						const appendStr = `
-							<div class="post row" id="featuredArticle${d}">
-								<div class="col-md-4" style="margin-top: 0.5rem;">
-									<a
-										href="index.html?${escapeHtml(displayList[d])}"
-										aria-label="Redirect to ${escapeHtml(articleTitle)}"
-									>
-										<img
-											src="${escapeHtml(url)}"${imageSizeAttributes(ArticleFiller.articleData[displayList[d]])}
-											class="img-fluid"
-											loading="lazy"
-											alt="Thumbnail for ${escapeHtml(articleTitle)}"
-										>
-									</a>
-								</div>
-								<div class="col-md-8" style="margin-top: 0.5rem;">
-									<h2>
-										<a href="index.html?${escapeHtml(displayList[d])}">
-											${escapeHtml(articleTitle)}
-										</a>
-									</h2>
-								</div>
-								<div class="col-12" style="margin-top: 0.5rem;">
-									<p>
-										${escapeHtml(articleSummary)}
-										<a href="index.html?${escapeHtml(displayList[d])}">
-											Read More<span class="visually-hidden"> about ${escapeHtml(articleTitle)}</span>
-										</a>
-									</p>
-								</div>
-								<div class="col-12">
-									<p class="details">
-										<a href="index.html?${escapeHtml(displayList[d])}">
-											${escapeHtml(articleDate)}<span class="visually-hidden"> ${escapeHtml(articleTitle)}</span>
-										</a>
-									</p>
-								</div>
-								</div>
-							</div>
-						`;
-
-						document.getElementById("displayArticles").innerHTML += appendStr;
-					}
+				if (!article) {
+					return;
 				}
-			}
+
+				const url = `/${articleFolderPath(key, article)}/${article.thumbnail}`;
+				const articleKey = escapeHtml(key);
+				const articleTitle = escapeHtml(article.title);
+
+				posts.push(`
+					<div class="post row" id="featuredArticle${d}">
+						<div class="col-md-4" style="margin-top: 0.5rem;">
+							<a
+								href="index.html?${articleKey}"
+								aria-label="Redirect to ${articleTitle}"
+							>
+								<img
+									src="${escapeHtml(url)}"${imageSizeAttributes(article)}
+									class="img-fluid"
+									loading="lazy"
+									alt="Thumbnail for ${articleTitle}"
+								>
+							</a>
+						</div>
+						<div class="col-md-8" style="margin-top: 0.5rem;">
+							<h2>
+								<a href="index.html?${articleKey}">
+									${articleTitle}
+								</a>
+							</h2>
+						</div>
+						<div class="col-12" style="margin-top: 0.5rem;">
+							<p>
+								${escapeHtml(article.summary)}
+								<a href="index.html?${articleKey}">
+									Read More<span class="visually-hidden"> about ${articleTitle}</span>
+								</a>
+							</p>
+						</div>
+						<div class="col-12">
+							<p class="details">
+								<a href="index.html?${articleKey}">
+									${escapeHtml(article.date)}<span class="visually-hidden"> ${articleTitle}</span>
+								</a>
+							</p>
+						</div>
+					</div>
+				`);
+			});
+
+			document.getElementById("displayArticles").innerHTML = posts.join("");
 		}
 	}
 }
 
 /**
  * Fetch page and article metadata, then render the requested view once both requests settle.
- * @returns {Promise<void>} Resolves after the view renders; both fetches catch their own errors.
+ * @returns {Promise<void>} Resolves after the view renders. Rejects with the error of a failed request, which that
+ * request has already logged and reported.
  */
 function init() {
 	return Promise.all([ArticleFiller.retrievePageData(), ArticleFiller.retrieveArticleData()]).then(() =>
@@ -1094,14 +1107,16 @@ function updateCanonicalLink(location) {
 }
 
 /**
- * Handle clicks on the carousel arrows and the error buttons. The page's Content Security Policy blocks inline `onclick`
- * attributes, so one delegated listener on the document runs these controls.
+ * Handle clicks on the carousel arrows, the carousel indicators and the error buttons. The page's Content Security
+ * Policy blocks inline `onclick` attributes, so one delegated listener on the document runs these controls.
  * @param {MouseEvent} event The click event.
  * @returns {void}
  */
 function handleControlClick(event) {
 	const target = event.target instanceof Element ? event.target : null;
-	const control = target ? target.closest("[data-carousel-step], [data-page-action]") : null;
+	const control = target
+		? target.closest("[data-carousel-step], [data-carousel-slide-to], [data-page-action]")
+		: null;
 
 	if (!control) {
 		return;
@@ -1109,6 +1124,8 @@ function handleControlClick(event) {
 
 	if (control.dataset.carouselStep) {
 		changeCarouselSlide(control.dataset.carouselStep);
+	} else if (control.dataset.carouselSlideTo !== undefined) {
+		showCarouselSlide(Number(control.dataset.carouselSlideTo));
 	} else if (control.dataset.pageAction === "reload") {
 		window.location.reload();
 	} else if (control.dataset.pageAction === "home") {
@@ -1120,7 +1137,8 @@ function handleControlClick(event) {
  * Move the page to the canonical host when needed, otherwise render the view and then register the service worker.
  * Rendering does not wait for the worker, so a first visit is not delayed by its installation.
  * @param {Location} location The page location.
- * @returns {Promise<void>} Resolves once the view renders, or at once when the page is redirected.
+ * @returns {Promise<void>} Resolves once the service worker registration settles after the view renders, or at once
+ * when the page is redirected.
  */
 async function start(location) {
 	if (redirectToCanonicalHost(location)) {
@@ -1128,6 +1146,12 @@ async function start(location) {
 	}
 
 	document.addEventListener("click", handleControlClick);
+
+	const carousel = document.getElementById("featuredCarousel");
+
+	if (carousel) {
+		enableCarouselSwipe(carousel);
+	}
 
 	try {
 		await init();
@@ -1173,6 +1197,7 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = {
 		ArticleFiller,
 		escapeHtml,
+		lazyLoadImagesAfterFirst,
 		sanitizeHtml,
 		sanitize: sanitizeHtml,
 		sanitizeHTML: sanitizeHtml,
@@ -1186,6 +1211,9 @@ if (typeof module !== "undefined" && module.exports) {
 		updateCanonicalLink,
 		startThirdParties,
 		handleControlClick,
+		changeCarouselSlide,
+		showCarouselSlide,
+		enableCarouselSwipe,
 		APP_VERSION,
 		redirectToCanonicalHost,
 		removeLegacyServiceWorker,
@@ -1198,38 +1226,191 @@ if (typeof module !== "undefined" && module.exports) {
 
 // ----- Functions related to changing carousel -----
 
+/** The slide change in progress: a function that ends it at once, or null when no slide is moving. */
+let finishCarouselTransition = null;
+
+/** The horizontal distance, in pixels, that a touch must travel across the carousel to count as a swipe. */
+const CAROUSEL_SWIPE_DISTANCE = 40;
+
 /**
- * Changes the active slide in a carousel based on the given direction.
+ * Mark the indicator of the slide at `index` as the current one, and every other indicator as not current.
+ * @param {number} index The position of the slide, counted from 0.
+ * @returns {void}
+ */
+function markCarouselIndicator(index) {
+	document.querySelectorAll("#carouselIndicator [data-carousel-slide-to]").forEach((indicator) => {
+		const isCurrent = Number(indicator.dataset.carouselSlideTo) === index;
+
+		indicator.classList.toggle("active", isCurrent);
+
+		if (isCurrent) {
+			indicator.setAttribute("aria-current", "true");
+		} else {
+			indicator.removeAttribute("aria-current");
+		}
+	});
+}
+
+/**
+ * Tell screen reader users which slide is now shown, through the carousel's polite status region.
+ * @param {Element} slide The slide being shown.
+ * @param {number} index The position of the slide, counted from 0.
+ * @param {number} count The number of slides.
+ * @returns {void}
+ */
+function announceCarouselSlide(slide, index, count) {
+	const status = document.getElementById("carouselStatus");
+
+	if (!status) {
+		return;
+	}
+
+	const title = slide.querySelector("h3")?.textContent.trim();
+
+	status.textContent = `Slide ${index + 1} of ${count}${title ? `: ${title}` : ""}`;
+}
+
+/**
+ * Slide `incoming` in and `outgoing` out with the slide classes of Bootstrap's carousel stylesheet. The stylesheet moves
+ * them with a `transform` transition, and src/style.css shortens it and swaps it for a cross-fade under reduced motion.
+ * The change ends when the transition does, or at once when nothing animates.
+ * @param {Element} outgoing The slide shown now.
+ * @param {Element} incoming The slide to show.
+ * @param {"next" | "prev"} direction `next` slides the new slide in from the right, `prev` from the left.
+ * @returns {void}
+ */
+function slideCarousel(outgoing, incoming, direction) {
+	const order = direction === "next" ? "carousel-item-next" : "carousel-item-prev";
+	const side = direction === "next" ? "carousel-item-start" : "carousel-item-end";
+
+	incoming.classList.add(order);
+	// Reading the layout places the incoming slide at its side before it starts to move.
+	void incoming.offsetWidth;
+	outgoing.classList.add(side);
+	incoming.classList.add(side);
+
+	const finish = () => {
+		if (finishCarouselTransition !== finish) {
+			return;
+		}
+
+		finishCarouselTransition = null;
+		incoming.classList.remove(order, side);
+		incoming.classList.add("active");
+		outgoing.classList.remove("active", side);
+	};
+
+	finishCarouselTransition = finish;
+
+	const animations = typeof incoming.getAnimations === "function" ? incoming.getAnimations() : [];
+
+	if (animations.length === 0) {
+		finish();
+
+		return;
+	}
+
+	Promise.allSettled(animations.map((animation) => animation.finished)).then(finish);
+}
+
+/**
+ * Show the carousel slide at `index`, mark its indicator as the current one, and announce it. A slide still moving
+ * from an earlier change ends first, so a quick run of clicks builds on the slide last chosen. An index with no slide,
+ * or the slide already shown, changes nothing.
+ * @param {number} index The position of the slide, counted from 0.
+ * @param {"next" | "prev"} [direction] The side the slide enters from. Defaults to `next` for a slide later in the list
+ * and `prev` for an earlier one.
+ * @returns {void}
+ */
+function showCarouselSlide(index, direction) {
+	finishCarouselTransition?.();
+
+	const slides = Array.from(document.getElementsByClassName("carousel-item"));
+	const current = slides.find((slide) => slide.classList.contains("active"));
+	const target = Number.isInteger(index) ? slides[index] : undefined;
+
+	if (!target || target === current) {
+		return;
+	}
+
+	markCarouselIndicator(index);
+	announceCarouselSlide(target, index, slides.length);
+
+	if (!current) {
+		target.classList.add("active");
+
+		return;
+	}
+
+	slideCarousel(current, target, direction ?? (index > slides.indexOf(current) ? "next" : "prev"));
+}
+
+/**
+ * Changes the active slide in a carousel based on the given direction, wrapping from the last slide to the first and
+ * back.
  * @param {string} direction The direction in which to change the active slide.
  * @returns {void}
  */
 function changeCarouselSlide(direction) {
-	/** Define the name of the class that represents the active slide */
-	const activeClass = "active";
+	// A slide still moving ends first, so the next one is counted from the slide last chosen
+	finishCarouselTransition?.();
+
 	/** Elements with the class "carousel-item" */
-	const carouselItems = document.getElementsByClassName("carousel-item");
+	const carouselItems = Array.from(document.getElementsByClassName("carousel-item"));
 
 	// If there are no carousel items, return without doing anything
-	if (!carouselItems || !carouselItems.length) {
+	if (!carouselItems.length) {
 		return;
 	}
 
-	/** Currently active slide by searching through the carousel items for the one with the active class */
-	const activeItem = Array.from(carouselItems).find((item) => item.classList.contains(activeClass));
+	/** Index of the slide with the active class, or -1 when no slide is active */
+	const activeIndex = carouselItems.findIndex((item) => item.classList.contains("active"));
 
-	// If there is no active slide, add the active class to the first carousel item and return
-	if (!activeItem) {
-		carouselItems[0].classList.add(activeClass);
+	// If there is no active slide, show the first carousel item and return
+	if (activeIndex < 0) {
+		showCarouselSlide(0);
+
 		return;
 	}
 
 	/** The index of the next slide based on the direction and the current active slide */
 	const nextIndex =
 		direction === "next"
-			? (Array.from(carouselItems).indexOf(activeItem) + 1) % carouselItems.length
-			: (Array.from(carouselItems).indexOf(activeItem) - 1 + carouselItems.length) % carouselItems.length;
+			? (activeIndex + 1) % carouselItems.length
+			: (activeIndex - 1 + carouselItems.length) % carouselItems.length;
 
-	// Remove the active class from the current active slide and add it to the next slide
-	activeItem.classList.remove(activeClass);
-	carouselItems[nextIndex].classList.add(activeClass);
+	// Slide in from the side the arrow points to, also when wrapping round the ends
+	showCarouselSlide(nextIndex, direction === "next" ? "next" : "prev");
+}
+
+/**
+ * Change the carousel slide when a touch or a pen swipes across it: a swipe to the left shows the next slide and a
+ * swipe to the right the previous one. A mostly vertical movement is left to scroll the page, and a mouse is left to
+ * the arrows, so a drag to select text does not change the slide.
+ * @param {Element} carousel The carousel element.
+ * @returns {void}
+ */
+function enableCarouselSwipe(carousel) {
+	let start = null;
+
+	carousel.addEventListener("pointerdown", (event) => {
+		start = event.pointerType === "mouse" ? null : { x: event.clientX, y: event.clientY };
+	});
+	carousel.addEventListener("pointercancel", () => {
+		start = null;
+	});
+	carousel.addEventListener("pointerup", (event) => {
+		if (!start) {
+			return;
+		}
+
+		const distanceX = event.clientX - start.x;
+		const distanceY = event.clientY - start.y;
+
+		start = null;
+
+		if (Math.abs(distanceX) >= CAROUSEL_SWIPE_DISTANCE && Math.abs(distanceX) > Math.abs(distanceY)) {
+			changeCarouselSlide(distanceX < 0 ? "next" : "prev");
+		}
+	});
 }

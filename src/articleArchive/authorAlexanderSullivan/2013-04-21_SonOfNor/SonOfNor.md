@@ -1,6 +1,6 @@
 ## Son of Nor
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image1.jpg =500x202)
 
 Son of Nor is a new exciting action adventure game where you, the player, can take control of the environment around you to fight off enemies and solve puzzles. Not long ago, I got the chance to talk with a developer from Stillalive Studios on their new game, Son of Nor, Julian Mautner. You can check out their game at [http://stillalive-studios.com/portfolio-item/son-of-nor/](https://stillalive-studios.com/portfolio-item/son-of-nor/).
 
@@ -8,7 +8,7 @@ Son of Nor is a new exciting action adventure game where you, the player, can ta
 
 **Julian:** Son of Nor is a third-person action adventure game for Windows, Mac and Linux that can be played in single and multiplayer co-operative mode. Its set in a dynamic fantasy desert world filled with intriguing and challenging creatures and puzzles, where the environment can be shaped by the player’s magic.
 
-[![YouTube Video](https://img.youtube.com/vi/GtR3YfZjI04/0.jpg)](https://www.youtube.com/watch?v=S9c4K2OhZPw)
+[![YouTube Video](https://img.youtube.com/vi/GtR3YfZjI04/0.jpg =480x360)](https://www.youtube.com/watch?v=S9c4K2OhZPw)
 
 **Small Dev Talk: What is the story in Son of Nor?**
 
@@ -22,7 +22,7 @@ Unfortunately, there is more than one power working against you in Son of Nor. Y
 
 Exploring the temples and robbing the magic held within enables you to control the elements of ‘Fire’, ‘Wind’ and ‘Essence’. A very valuable gift in the wake of the impending attack of the Sarahul. But remember, magic always comes with a price…
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image2.jpg =500x313)
 
 **Small Dev Talk: What is the story behind Nor?**
 
@@ -30,7 +30,7 @@ Exploring the temples and robbing the magic held within enables you to control t
 
 Humans believe that Nor is the reason behind their magic, Telekinesis and Terraforming. She was first concepted or heard of by the humans when Simeon, the first magical human fled from the persecuting Sarahul into the Nanshiri desert. There while he was near death, she appeared before him leading him into an Oasis where he gained back his health. On his return to civilization, he established the Path of Nor as the human religion, became the first Son of Nor and built the first Radir (Nor’s Church) to revere Nor and school prodigies (Humans that discover their powers but still haven’t been trained and gained the titles of Son of Nor).
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image3.jpg =500x388)
 
 **Small Dev Talk: What is the main character like and what inspired you to create that character?**
 
@@ -46,7 +46,7 @@ We have decided to do this so the player can choose whatever looks and feels lik
 
 **Julian:** The premise of our game is that the environment is your weapon, so every little thing that we put into a map we try to make it interactive. You can pick up carrots from a farm, rocks from the desert, baskets from the market, bones from a graveyard, you can even tear out rocks from a canyon wall! But as in any other game there are some limitations that have more to do with the quantity of processes that a computer can make, so not absolutely everything is pickable.
 
-[![YouTube Video](https://img.youtube.com/vi/XVXHWsI6FZg/0.jpg)](https://www.youtube.com/watch?v=XVXHWsI6FZg)
+[![YouTube Video](https://img.youtube.com/vi/XVXHWsI6FZg/0.jpg =480x360)](https://www.youtube.com/watch?v=XVXHWsI6FZg)
 
 **Small Dev Talk: Can you describe to use what the spell fusion feature of Son of Nor is and what the player can do with it?**
 
@@ -54,13 +54,13 @@ We have decided to do this so the player can choose whatever looks and feels lik
 
 For example: Player 1 casts windpush on a sarahul warrior group which will push them back. As they run in again to attack player 1, player 2 casts a fireburst on them that will burn them. Since fireburst was casted on the windpush “active magic area” a fire tornado will commence making the enemies swirl around helplessly while being burned at the same time.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image4.jpg =222x300)
 
 **Small Dev Talk: How is the multiplayer going to work in Son of Nor? Will there be a verses or PvP mode?**
 
 **Julian:** Currently the game is planned to be co-op multiplayer, it can either be played single player or with up to 4 players. In multiplayer you can combine elements faster, discover hidden places that are only possible to reach in this mode and of course have fun with friends. PvP is a mode that has been thought of and we’ll see if we add it in the future.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image5.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image5.jpg =500x313)
 
 **Small Dev Talk: What is the environment like in Son of Nor and what people and enemies will you come across in the game?**
 
@@ -72,13 +72,13 @@ At the north frontier there’s a mountain chain, where The Edge is located, and
 
 During the game you will explore mostly the desert parts of Noshrac and you will come across fearsome wild creatures and different enemy ranks from the Sarahul Empire.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image6.jpg =500x277)
 
 **Small Dev Talk: Is Son of Nor a linear game or Open World?**
 
 **Julian:** You visit different places in Noshrac in an order that makes sense with the story, although we have made these places big and full of secrets to encourage exploration.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image7.jpg =500x214)
 
 **Small Dev Talk: What inspired you to create Son of Nor?**
 
@@ -112,7 +112,7 @@ During the game you will explore mostly the desert parts of Noshrac and you will
 
 **Julian:** Thanks to everyone for your support, your attention and your time. We are really excited about this game and we hope you are too! Please support us in our Kickstarter campaign that is launching around the 24th of April and please spread the word about it on your social networks. Thank you!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image8.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-21_SonOfNor\image8.png =500x281)
 
 ---
 

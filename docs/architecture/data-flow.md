@@ -14,7 +14,7 @@ flowchart TD
     end
 
     subgraph Init["Initialization"]
-        B1["Scripts load:<br/>jQuery, Showdown,<br/>Bootstrap, Sentry"]
+        B1["Scripts load:<br/>Showdown, Sentry"]
         B2["Sentry error tracking<br/>is configured"]
         B4["Page on www.smalldevtalk.net<br/>moves to smalldevtalk.net"]
         B3["Service worker registers<br/>if the browser<br/>supports it"]
@@ -111,7 +111,7 @@ When [index.html](../../index.html) loads:
 1. HTML is parsed
 2. Scripts and stylesheets are downloaded. Everything except Sentry is served from this repository rather than a content delivery network (CDN):
     - `style.min.css` and the Bootstrap stylesheet, both under the site root
-    - jQuery, the Bootstrap JavaScript bundle, and Showdown.js, all under `src/scripts/libraries/`
+    - Showdown.js, under `src/scripts/libraries/`. The Bootstrap JavaScript copy there is not loaded, because the site does not call it
     - `src/scripts/index.min.js`, the minified build of [index.js](../../src/scripts/index.js)
     - Sentry SDK, from the version-pinned `browser.sentry-cdn.com` bundle
 
@@ -120,7 +120,7 @@ When [index.html](../../index.html) loads:
     - `Sentry.getCurrentScope()` with the `app-version` tag
     - Google Tag Manager, through `loadGoogleTagManager()`, and a canonical URL adjustment applied only on the `smalldevtalk.net` host, through `updateCanonicalLink()`
 
-Metadata loading starts from `start()` in [index.js](../../src/scripts/index.js), which also registers the one click listener that runs the carousel arrows and the error buttons. That file is loaded with `defer`, so it runs after the HTML is parsed and calls `start()` at once; when it runs while the document is still loading, it calls `start()` on `DOMContentLoaded` instead. When the page runs on `www.smalldevtalk.net`, `start()` moves it to the same path, query and hash on `smalldevtalk.net` and does nothing else, because GitHub Pages redirects every `www.` request to that host and the redirected data requests and service worker script fail. Otherwise it awaits `init()`, starts `watchTwitterTimeline()`, and then awaits `registerServiceWorker()`, so the worker's installation never delays the first render. `init()` starts `retrievePageData()` and `retrieveArticleData()` together and calls `callArticle()` once, after both requests succeed. Each request reports its own failure and rethrows it, so when one fails, `init()` rejects and `start()` shows the error message for that failure instead of the view.
+Metadata loading starts from `start()` in [index.js](../../src/scripts/index.js), which also registers the one click listener that runs the carousel arrows, the carousel indicators and the error buttons, and lets a touch or pen swipe across the carousel change the slide. That file is loaded with `defer`, so it runs after the HTML is parsed and calls `start()` at once; when it runs while the document is still loading, it calls `start()` on `DOMContentLoaded` instead. When the page runs on `www.smalldevtalk.net`, `start()` moves it to the same path, query and hash on `smalldevtalk.net` and does nothing else, because GitHub Pages redirects every `www.` request to that host and the redirected data requests and service worker script fail. Otherwise it awaits `init()`, starts `watchTwitterTimeline()`, and then awaits `registerServiceWorker()`, so the worker's installation never delays the first render. `init()` starts `retrievePageData()` and `retrieveArticleData()` together and calls `callArticle()` once, after both requests succeed. Each request reports its own failure and rethrows it, so when one fails, `init()` rejects and `start()` shows the error message for that failure instead of the view.
 
 ### 2. Article Data Retrieval
 

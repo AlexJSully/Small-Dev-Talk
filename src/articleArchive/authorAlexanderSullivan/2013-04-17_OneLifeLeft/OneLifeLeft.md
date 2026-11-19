@@ -1,6 +1,6 @@
 ## Motte Island
 
-[![YouTube Video](https://img.youtube.com/vi/GnFwwLM-ldo/0.jpg)](https://www.youtube.com/watch?v=GnFwwLM-ldo)
+[![YouTube Video](https://img.youtube.com/vi/GnFwwLM-ldo/0.jpg =480x360)](https://www.youtube.com/watch?v=GnFwwLM-ldo)
 
 Check out Small Dev Talk’s first video review of One Life Left submitted to us by sambufalo on our [Steam group](https://steamcommunity.com/groups/SmallDevTalk).
 

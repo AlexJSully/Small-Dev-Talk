@@ -1,4 +1,4 @@
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-17_Hello\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-17_Hello\image1.jpg =500x724)
 
 Hello everyone. Welcome to Small Dev Talk where we talk with the developers of tomorrow about their upcoming projects. From indie game developers to starting up bands to indie movies, we will have everything. This is Small Dev Talk and we hope you enjoy a look into the future of the developers of tomorrow! Enjoy ^,^
 

@@ -1,6 +1,6 @@
 ## Lacuna Passage
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image1.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image1.png =268x268)
 
 Can you survive on Mars, the orange planet? Well, try it out on Lacuna Passage, an survival exploration game based on Mars to recover and discover what happened to the first ever manned mission to mars. Recently, I got the chance to talk with Tyler Owen from Random Seed Games about their upcoming and innovative game, Lacuna Passage. You can check out their game on their [website](https://www.lacunapassage.com/) or support them on [Steam Greenlight](https://steamcommunity.com/sharedfiles/filedetails/?id=156439230) and [Kickstarter](https://www.kickstarter.com/projects/tylerowen/lacuna-passage?ref=card).
 
@@ -12,7 +12,7 @@ Small Dev Talk: What is the story in Lacuna Passage?
 
 Tyler Owen: You play as Jessica Rainer, the only survivor of the crashed Heracles mission, investigating the disappearance of the first ever manned mission to Mars. You will need to uncover mission logs, recorded audio files, and other physical clues left behind at critical mission locations in order to uncover the story.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image2.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image2.png =500x397)
 
 Small Dev Talk: What time period is Lacuna Passage based during?
 
@@ -22,13 +22,13 @@ Small Dev Talk: What is the main character, Jessica Rainer, like and what inspir
 
 Tyler Owen: Jessica is a reluctant survivor. She’s strong willed, but she never expected to find herself in the position of being stranded on Mars. A sense of wonder and a desire to explore brought her to where she is and now she has to face a harsh reality. Throughout the game you will discover details about her past that reveal what inspires her and pushes her to keep on living.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image3.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image3.png =333x750)
 
 Small Dev Talk: Will the environmental events, such as dust storms and dust devils, be random or triggered?
 
 Tyler Owen: A little of both. There will definitely be randomly triggered events to make multiple playthroughs more variable, but a few events will be story-specific.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image4.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image4.png =500x281)
 
 Small Dev Talk: How is the player supposed to be able to gain or find new oxygen, food or water in Lacuna Passage?
 
@@ -38,25 +38,25 @@ Small Dev Talk: How will the nutritional values and overall health affect the ga
 
 Tyler Owen: We hope to have the nutrition affect you exactly as you would expect. Being malnourished will definitely cause you noticeable physical changes. You won’t be able to run as far or as fast. Your breathing will be more labored. Ultimately you will become so famished that you will pass out and die. It’s about demonstrating the real risks of space exploration.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image5.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image5.png =500x281)
 
 Small Dev Talk: In your [Kickstarter](https://www.kickstarter.com/projects/tylerowen/lacuna-passage?ref=card) trailer, you mention that you will be using images and data from the Curiosity in your game. How preciously are you basing your game off of these data?
 
 Tyler Owen: The data we are using comes from the Mars High Resolution Imaging Science Experiment (HiRISE). It allows us to recreate the terrain of Mars to an incredible degree of accuracy. In essence, you will be walking around on a version of Mars that is as close as you will get to doing the real thing.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image6.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image6.png =500x489)
 
 Small Dev Talk: Is Lacuna Passage open world or will it be linear?
 
 Tyler Owen: It will be completely open-world, not only in exploration, but also in narrative. You will be able to fill in different parts of the story depending on the clues you discover. It’s like finding as many pieces of a puzzle as you can to help you understand the picture it forms when completed.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image7.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image7.png =500x281)
 
 Small Dev Talk: What will the player be able to do in the open world exploration of Mars?
 
 Tyler Owen: The exploration is based around this concept of contextual storytelling. Everything you find is important to the location it was found in and will likely lead you to your next clue at another location. It’s like a trail of breadcrumbs. You can stray from the trail if you like, but you are much less likely to find anything of interest. Blind exploration should be a measure of last resort, though you never know what you might stumble upon.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image8.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image8.png =500x281)
 
 Small Dev Talk: I noticed on your Random Seed Games’ blog that Lacuna Passage is planning on being Oculus Rift compatible. How is that going for you and your team? What is it like to develop a game for Oculus Rift? How will Lacuna Passage run on Oculus Rift?
 
@@ -82,7 +82,7 @@ Small Dev Talk: Do you have any advice for upcoming developers?
 
 Tyler Owen: The best advice I have ever gotten is to just keep making games. There is literally nothing stopping you. There are so many free tools out there that almost anyone can get started on their own and get real experience. Your portfolio will be infinitely more valuable than your resume.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image9.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image9.png =500x286)
 
 Small Dev Talk: I noticed that Lacuna Passage is on Steam [Greenlight](https://steamcommunity.com/sharedfiles/filedetails/?id=156439230). If your game becomes Greenlit, will you take advantage of Steam’s great features such as Steam Workshop, Big Picture, Inventory or Trading Cards?
 
@@ -96,7 +96,7 @@ Small Dev Talk: Do you have anything to say towards our readers?
 
 Tyler Owen: If you want to see a game like this then we need your help. Support us on Kickstarter! [http://www.kickstarter.com/projects/tylerowen/lacuna-passage](https://www.kickstarter.com/projects/tylerowen/lacuna-passage)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image10.png)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-17_LucunaPassage\image10.png =500x281)
 
 ---
 

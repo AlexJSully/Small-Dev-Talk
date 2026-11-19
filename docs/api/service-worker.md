@@ -28,7 +28,7 @@ Implementation: [src/scripts/sw-headers.js](../../src/scripts/sw-headers.js), [w
 
 Workbox generates `sw.js` and its `workbox-<hash>.js` runtime at the repository root from `workbox-config.js`:
 
-- Precaches the app shell only: `index.html`, the minified site script and stylesheet, the jQuery, Bootstrap and Showdown files `index.html` loads, `articleData.json`, `legacyPagesDisplay.json`, the title and background images, and the favicons and web manifest
+- Precaches the app shell only: `index.html`, the minified site script and stylesheet, the Bootstrap stylesheet and Showdown script `index.html` loads, `articleData.json`, `legacyPagesDisplay.json`, the title and background images, and the favicons and web manifest
 - Matches precached URLs with every query parameter removed, so `index.html?ArticleKey` is served from the precached `index.html`
 - Claims open pages when the worker activates (`clientsClaim`), so a first visit is controlled without a reload
 - Activates a new release as soon as it installs (`skipWaiting`), instead of waiting until every tab of the site is closed, which a reload does not do
