@@ -1543,56 +1543,87 @@ describe("ArticleFiller: callArticle", () => {
 });
 
 describe("ArticleFiller: callDisplay", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<div id="pageTitle"></div>
+			<div id="carouselInner"></div>
+			<div id="carouselIndicator"></div>
+			<div id="featuredArticles"></div>
+			<div id="displayArticles"></div>
+			<div id="articleBody" hidden></div>
+		`;
+		ArticleFiller.articleData = {
+			ArticleOne: {
+				title: "First Article",
+				summary: "Summary 1",
+				thumbnail: "thumb1.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+			ArticleTwo: {
+				title: "Second Article",
+				summary: "Summary 2",
+				thumbnail: "thumb2.png",
+				author: "John Smith",
+				date: "2024-06-02",
+			},
+		};
+		ArticleFiller.pageData = {
+			games: { carousel: ["ArticleOne"] },
+			index: { carousel: ["ArticleTwo"] },
+		};
+	});
+
 	afterEach(() => {
-		jest.restoreAllMocks();
 		delete document.URL;
+		document.body.innerHTML = "";
 		ArticleFiller.whatPageDisplay = "index";
 		ArticleFiller.pageURL = undefined;
+		ArticleFiller.articleData = undefined;
+		ArticleFiller.pageData = undefined;
 	});
 
 	/**
-	 * Run callDisplay at a URL, with the two page renderers replaced so only the routing decision is observed.
+	 * Run callDisplay at a URL.
 	 * @param {string} url The page URL.
-	 * @returns {{carousel: jest.SpyInstance, archive: jest.SpyInstance}} The renderer spies.
+	 * @returns {void}
 	 */
 	function callDisplayAt(url) {
 		Object.defineProperty(document, "URL", { value: url, configurable: true });
-		const carousel = jest.spyOn(ArticleFiller, "changeCarousel").mockImplementation(() => {});
-		const archive = jest.spyOn(ArticleFiller, "displayArchive").mockImplementation(() => {});
 
 		ArticleFiller.callDisplay();
-
-		return { carousel, archive };
 	}
 
-	test.each([
-		["http://localhost/index.html?pages&games", "games"],
-		["http://localhost/index.html?pages&games#content", "games"],
-	])("shows the section named in %s", (url, section) => {
-		const { carousel, archive } = callDisplayAt(url);
+	test.each(["http://localhost/index.html?pages&games", "http://localhost/index.html?pages&games#content"])(
+		"shows the Games section's carousel for %s",
+		(url) => {
+			callDisplayAt(url);
 
-		expect(ArticleFiller.whatPageDisplay).toBe(section);
-		expect(carousel).toHaveBeenCalledTimes(1);
-		expect(archive).not.toHaveBeenCalled();
-	});
+			expect(document.getElementById("pageTitle").innerText).toBe("Small Dev Talk: Games");
+			expect(document.getElementById("carouselInner").textContent).toContain("First Article");
+			expect(document.getElementById("carouselInner").textContent).not.toContain("Second Article");
+		},
+	);
 
 	test.each(["http://localhost/index.html?pages&archive", "http://localhost/index.html?pages&archive#content"])(
 		"shows the archive for %s",
 		(url) => {
-			const { carousel, archive } = callDisplayAt(url);
+			callDisplayAt(url);
 
-			expect(archive).toHaveBeenCalledTimes(1);
-			expect(carousel).not.toHaveBeenCalled();
+			expect(document.querySelectorAll("#displayArticles .archive-display")).toHaveLength(2);
+			expect(document.getElementById("featuredArticles").hasAttribute("hidden")).toBe(true);
+			expect(document.getElementById("carouselInner").innerHTML).toBe("");
 		},
 	);
 
 	test.each(["http://localhost/index.html", "http://localhost/index.html#content"])(
-		"shows the home page for %s",
+		"shows the home page's carousel for %s",
 		(url) => {
-			const { carousel } = callDisplayAt(url);
+			callDisplayAt(url);
 
-			expect(ArticleFiller.whatPageDisplay).toBe("index");
-			expect(carousel).toHaveBeenCalledTimes(1);
+			expect(document.getElementById("pageTitle").innerText).toBe("Small Dev Talk: Index");
+			expect(document.getElementById("carouselInner").textContent).toContain("Second Article");
+			expect(document.getElementById("carouselInner").textContent).not.toContain("First Article");
 		},
 	);
 });
@@ -2609,12 +2640,14 @@ describe("enableSubmenuDismissal", () => {
 		expect(document.activeElement.id).toBe("gamesLink");
 	});
 
-	test("Escape leaves focus on the item's own link", () => {
-		document.getElementById("gamesLink").focus();
+	test("Escape on a hovered submenu leaves focus where it was", () => {
+		document.getElementById("outside").focus();
+		games().dispatchEvent(new Event("pointerenter"));
 
 		pressKey("Escape");
 
-		expect(document.activeElement.id).toBe("gamesLink");
+		expect(document.activeElement.id).toBe("outside");
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
 	});
 
 	test("Escape closes the submenu under the pointer", () => {
@@ -2814,6 +2847,14 @@ describe("updateCanonicalLink", () => {
 
 	test("points the canonical link at the viewed URL on the canonical host", () => {
 		updateCanonicalLink({ host: "smalldevtalk.net", href: "https://smalldevtalk.net/index.html?Oceania" });
+
+		expect(document.querySelector('link[rel="canonical"]').getAttribute("href")).toBe(
+			"https://smalldevtalk.net/index.html?Oceania",
+		);
+	});
+
+	test("leaves the fragment out of the canonical link", () => {
+		updateCanonicalLink({ host: "smalldevtalk.net", href: "https://smalldevtalk.net/index.html?Oceania#content" });
 
 		expect(document.querySelector('link[rel="canonical"]').getAttribute("href")).toBe(
 			"https://smalldevtalk.net/index.html?Oceania",

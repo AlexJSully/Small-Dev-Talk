@@ -144,43 +144,53 @@ describe("article markdown", () => {
 			return [key, fs.existsSync(file) ? fs.readFileSync(file, "utf8") : null];
 		}),
 	);
-	const images = Array.from(markdown, ([key, text]) =>
-		Array.from((text ?? "").matchAll(/!\[[^\]]*\]\(([^)]+)\)/g), ([, target]) => [key, target]),
-	).flat();
-
 	/** Every image's alt text, with the article it is in and its target. */
 	const imageAlts = Array.from(markdown, ([key, text]) =>
 		Array.from((text ?? "").matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g), ([, alt, target]) => [key, target, alt]),
 	).flat();
-	/** The accessible name of every link whose only content is an image, keyed by article. */
-	const imageLinkNames = Array.from(markdown, ([key, text]) => [
+	const images = imageAlts.map(([key, target]) => [key, target]);
+	/** The accessible name and target of every link whose only content is an image, keyed by article. */
+	const imageLinks = Array.from(markdown, ([key, text]) => [
 		key,
-		Array.from((text ?? "").matchAll(/\[!\[([^\]]*)\]\([^)]+\)\]\([^)]+\)/g), ([, alt]) => alt),
+		Array.from((text ?? "").matchAll(/\[!\[([^\]]*)\]\([^)]+\)\]\(([^)]+)\)/g), ([, name, target]) => ({
+			name,
+			target,
+		})),
 	]);
 
-	test.each(imageAlts)("%s describes image %s in its alt text", (key, target, alt) => {
+	test.each(imageAlts)("%s gives image %s alt text that is not a placeholder", (key, target, alt) => {
 		// Placeholder alt text tells a screen reader user nothing (WCAG 2.2 success criterion 1.1.1).
 		expect(alt.trim()).not.toMatch(/^(image\d*|youtube video|image alt text here)?$/i);
+		expect(alt.trim()).not.toMatch(/\.(png|jpe?g|gif|webp)$/i);
 	});
 
-	test.each(imageLinkNames.filter(([, names]) => names.length > 1))(
-		"%s names each of its image links differently",
-		(key, names) => {
+	test.each(imageLinks.filter(([, links]) => links.length > 1))(
+		"%s gives image links that go to different places different names",
+		(key, links) => {
+			// A screen reader announces names without case or surrounding space, so links are grouped the same way.
+			const linksByName = Object.groupBy(links, ({ name }) => name.trim().toLowerCase());
+			const namesWithSeveralTargets = Object.entries(linksByName).filter(
+				([, named]) => new Set(named.map(({ target }) => target)).size > 1,
+			);
+
 			// Image links with one name that lead to different places fail WCAG 2.2 success criterion 2.4.4.
-			expect(new Set(names).size).toBe(names.length);
+			expect(namesWithSeveralTargets).toEqual([]);
 		},
 	);
 
-	/** The text of each article's first heading, keyed by article. */
-	const firstHeadings = Array.from(markdown, ([key, text]) => [key, (text ?? "").match(/^## (.+?)\r?$/m)?.[1]]);
+	/** The text of the level-two heading each article opens with, or undefined when it opens with anything else. */
+	const firstHeadings = new Map(
+		Array.from(markdown, ([key, text]) => [key, (text ?? "").match(/^## ([^\r\n]+)/)?.[1]]),
+	);
 
-	test.each(articles.map(([key]) => key))("%s opens with a heading that names the article", (key) => {
-		// The heading is the article's title on the page (WCAG 2.2 success criterion 2.4.6).
-		expect(markdown.get(key)).toMatch(/^## \S/);
+	test.each(articles.map(([key]) => key))("%s opens with a level-two heading", (key) => {
+		// The heading is the article's title on the page, below the site title's h1 (WCAG 2.2 success criterion 2.4.6).
+		expect(firstHeadings.get(key)).toEqual(expect.stringMatching(/^\S/));
 	});
 
 	test("no two articles open with the same heading", () => {
-		const keysByHeading = Object.groupBy(firstHeadings, ([, heading]) => heading);
+		const opened = Array.from(firstHeadings).filter(([, heading]) => heading !== undefined);
+		const keysByHeading = Object.groupBy(opened, ([, heading]) => heading);
 		const repeated = Object.entries(keysByHeading).filter(([, entries]) => entries.length > 1);
 
 		expect(repeated).toEqual([]);

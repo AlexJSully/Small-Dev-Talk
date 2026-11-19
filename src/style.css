@@ -44,7 +44,6 @@ img {
 #header .pages {
 	display: flex;
 	flex-wrap: wrap;
-	float: left;
 	margin-bottom: 0;
 	width: 100%;
 }
@@ -66,20 +65,27 @@ img {
 	text-decoration: underline;
 }
 
-/*
- * The bar wraps on narrow screens rather than scrolling sideways: a scroll container would clip the Games submenu.
- * `flow-root` keeps the bar around its floated list.
- */
+/* The bar wraps on narrow screens rather than scrolling sideways: a scroll container would clip the Games submenu. */
 #header nav {
 	width: 100%;
 	background-color: #000;
-	display: flow-root;
 	white-space: nowrap;
 }
 
-/* Hover or keyboard focus opens a submenu; Escape closes it until the pointer or focus leaves (enableSubmenuDismissal). */
+/*
+ * Hover or keyboard focus opens a submenu; Escape closes it until neither the pointer nor focus is on the item
+ * (enableSubmenuDismissal).
+ */
 #header nav ul li:is(:hover, :focus-within):not(.submenuDismissed) > ul {
 	display: block;
+}
+
+/*
+ * A mouse press focuses a link in Chromium without matching `:focus-visible`, so that focus does not hold a submenu
+ * open once the pointer leaves, as after a Ctrl+click that opens the link in a new tab.
+ */
+#header nav ul li:has(:focus:not(:focus-visible)):not(:hover) > ul {
+	display: none;
 }
 
 #header nav ul {
@@ -220,10 +226,9 @@ img {
 	position: relative;
 }
 
-/* A dark gradient behind the caption keeps its white text readable over light photos. */
 /*
  * The slide link fills .carousel-inner, which clips overflow, so its focus ring is drawn inside the link: a white
- * outline inset from the edge, over a black band from ::after, visible on light and dark photos alike.
+ * outline inset from the edge, inside a black band from ::after, visible on light and dark photos alike.
  */
 #carouselInner .carousel-item a:focus-visible {
 	outline: 3px solid #ffffff;
@@ -238,6 +243,7 @@ img {
 	position: absolute;
 }
 
+/* A dark gradient behind the caption keeps its white text readable over light photos. */
 #carouselInner .carousel-item a::before {
 	background: linear-gradient(to top, rgb(0 0 0 / 0.75), rgb(0 0 0 / 0));
 	content: "";

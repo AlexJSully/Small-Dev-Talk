@@ -1090,7 +1090,8 @@ function loadGoogleTagManager() {
 }
 
 /**
- * Point the canonical link at the URL being viewed when the page is served from the canonical host.
+ * Point the canonical link at the URL being viewed when the page is served from the canonical host. The fragment is left
+ * out, since it does not change the page shown: the skip link adds `#content`, which a reload or a shared link keeps.
  * @param {Location} location The page location.
  * @returns {void}
  */
@@ -1102,7 +1103,10 @@ function updateCanonicalLink(location) {
 	const canonicalLink = document.querySelector('link[rel="canonical"]');
 
 	if (canonicalLink) {
-		canonicalLink.setAttribute("href", location.href);
+		const canonicalURL = new URL(location.href);
+
+		canonicalURL.hash = "";
+		canonicalLink.setAttribute("href", canonicalURL.href);
 	}
 }
 
@@ -1137,15 +1141,20 @@ function handleControlClick(event) {
  * Let Escape close the navigation's open submenus. The stylesheet opens a submenu while its item is hovered or holds
  * keyboard focus, and that menu covers the title below, so WCAG 2.2 success criterion 1.4.13 requires a way to close it
  * without moving the pointer or focus. Escape marks each open item `submenuDismissed`, which the stylesheet keeps
- * closed until neither the pointer nor focus is on the item, so the menu does not reappear under the pointer.
+ * closed. The item's pointerleave and focusout listeners remove the mark once neither the pointer nor focus is on it, so
+ * the menu does not reappear under the pointer.
  * @param {Element} nav The navigation element.
  * @returns {void}
  */
 function enableSubmenuDismissal(nav) {
-	const items = Array.from(nav.querySelectorAll("li")).filter((item) => item.querySelector(":scope > ul"));
+	const menus = Array.from(nav.querySelectorAll("li"), (item) => ({
+		item,
+		link: item.querySelector(":scope > a"),
+		submenu: item.querySelector(":scope > ul"),
+	})).filter(({ submenu }) => submenu);
 	const hovered = new Set();
 
-	items.forEach((item) => {
+	menus.forEach(({ item }) => {
 		const reopen = () => item.classList.remove("submenuDismissed");
 
 		item.addEventListener("pointerenter", () => hovered.add(item));
@@ -1168,12 +1177,12 @@ function enableSubmenuDismissal(nav) {
 			return;
 		}
 
-		items
-			.filter((item) => hovered.has(item) || item.contains(document.activeElement))
-			.forEach((item) => {
+		menus
+			.filter(({ item }) => hovered.has(item) || item.contains(document.activeElement))
+			.forEach(({ item, link, submenu }) => {
 				// Closing the submenu hides a link inside it, so focus moves to the item's own link (WCAG 2.4.7).
-				if (item.querySelector(":scope > ul").contains(document.activeElement)) {
-					item.querySelector(":scope > a").focus();
+				if (submenu.contains(document.activeElement)) {
+					link.focus();
 				}
 
 				item.classList.add("submenuDismissed");

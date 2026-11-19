@@ -1,29 +1,35 @@
 /**
- * Block the X embed, whose timeline X serves or rate-limits from run to run, so every run checks the same page.
- * @returns {void}
- */
-const blockXEmbed = () => {
-	cy.intercept("https://platform.twitter.com/**", { statusCode: 429, body: "" });
-	cy.intercept("https://syndication.twitter.com/**", { statusCode: 429, body: "" });
-};
-
-/**
- * Emulate a CSS media feature through the browser's DevTools protocol.
- * @param {string} name The media feature, such as `forced-colors`.
- * @param {string} value The value to emulate, or an empty string to clear the emulation.
+ * Send a mouse event to a point in the page under test through the browser's DevTools protocol. The browser treats it as
+ * a real mouse, so a press focuses a link the way a visitor's click does, which a synthetic event cannot.
+ * @param {string} type `mousePressed`, `mouseMoved` or `mouseReleased`.
+ * @param {number} x The point's distance from the left of the page's viewport, in CSS pixels.
+ * @param {number} y The point's distance from the top of the page's viewport, in CSS pixels.
+ * @param {number} buttons The buttons held down once the event is handled: 1 for the left button, 0 for none.
  * @returns {Cypress.Chainable} The command chain.
  */
-const emulateMediaFeature = (name, value) =>
-	cy.then(() =>
-		Cypress.automation("remote:debugger:protocol", {
-			command: "Emulation.setEmulatedMedia",
-			params: { features: [{ name, value }] },
-		}),
-	);
+const dispatchMouseEvent = (type, x, y, buttons) =>
+	cy.then(() => {
+		// The protocol takes points in the Cypress window, which shows the page in a scaled frame.
+		const frame = window.top.document.querySelector("iframe.aut-iframe");
+		const frameBox = frame.getBoundingClientRect();
+		const scale = frameBox.width / frame.offsetWidth;
+
+		return Cypress.automation("remote:debugger:protocol", {
+			command: "Input.dispatchMouseEvent",
+			params: {
+				type,
+				x: frameBox.left + x * scale,
+				y: frameBox.top + y * scale,
+				button: "left",
+				buttons,
+				clickCount: 1,
+			},
+		});
+	});
 
 describe("Accessibility", () => {
 	beforeEach(() => {
-		blockXEmbed();
+		cy.blockXEmbed();
 	});
 
 	[
@@ -85,7 +91,7 @@ describe("Accessibility", () => {
 
 		cy.press(Cypress.Keyboard.Keys.TAB);
 		cy.contains("#header nav a", "Games").focus();
-		// Visibility accounts for clipping by a scrolling ancestor, which hid the submenu inside the nav bar.
+		// Visibility accounts for clipping by a scrolling ancestor, so a nav bar that clips the submenu fails here.
 		cy.contains("#header nav a", "Interviews").should("be.visible");
 
 		cy.press(Cypress.Keyboard.Keys.TAB);
@@ -102,10 +108,32 @@ describe("Accessibility", () => {
 		cy.contains("#header nav a", "Small Plays").should("be.visible");
 	});
 
+	it("leaves the Games submenu closed when a mouse press, not the keyboard, focuses Games", () => {
+		cy.visit("http://localhost:3000/");
+		cy.get("#carouselInner .carousel-item").should("exist");
+
+		// Chromium focuses a link on a mouse press. Releasing in the page's corner, away from every link, focuses Games
+		// without opening it, which is where focus stays after a Ctrl+click opens the link in a new tab.
+		cy.contains("#header nav a", "Games").then(($games) => {
+			const games = $games[0].getBoundingClientRect();
+			const [gamesX, gamesY] = [games.left + games.width / 2, games.top + games.height / 2];
+			const [cornerX, cornerY] = [5, $games[0].ownerDocument.defaultView.innerHeight - 5];
+
+			dispatchMouseEvent("mouseMoved", gamesX, gamesY, 0);
+			dispatchMouseEvent("mousePressed", gamesX, gamesY, 1);
+			dispatchMouseEvent("mouseMoved", cornerX, cornerY, 1);
+			dispatchMouseEvent("mouseReleased", cornerX, cornerY, 0);
+		});
+
+		cy.focused().should("contain", "Games");
+		cy.contains("#header nav a", "Interviews").should("not.be.visible");
+	});
+
 	it("opens the Games submenu directly beneath Games when the navigation bar wraps on a phone", () => {
 		cy.viewport(412, 823);
 		cy.visit("http://localhost:3000/");
 
+		cy.press(Cypress.Keyboard.Keys.TAB);
 		cy.contains("#header nav a", "Games").focus();
 		cy.contains("#header nav a", "Interviews").should(($link) => {
 			const games = $link[0].closest("ul").parentElement.getBoundingClientRect();
@@ -136,19 +164,20 @@ describe("Accessibility", () => {
 
 				expect(ring.boxShadow).to.contain("inset");
 				expect(ring.position).to.equal("absolute");
+				expect(parseFloat(ring.width)).to.be.closeTo($link[0].getBoundingClientRect().width, 1);
 			});
 	});
 
 	describe("in forced colors mode", () => {
 		afterEach(() => {
-			emulateMediaFeature("forced-colors", "");
+			cy.emulateMedia("forced-colors", "");
 		});
 
 		it("keeps the carousel arrows' colors and draws the indicators in system colors", () => {
 			cy.visit("http://localhost:3000/");
 			cy.get("#carouselIndicator button").should("have.length.greaterThan", 1);
 
-			emulateMediaFeature("forced-colors", "active");
+			cy.emulateMedia("forced-colors", "active");
 
 			cy.get(".carousel-control-prev-icon, .carousel-control-next-icon").each(($icon) => {
 				expect(getComputedStyle($icon[0]).forcedColorAdjust).to.equal("none");

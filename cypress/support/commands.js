@@ -51,6 +51,30 @@ Cypress.Commands.add("checkAccessibility", () => {
 });
 
 /**
+ * Blocks the X timeline embed with the 429 that X answers when it rate-limits embedded timelines per IP, since X serves
+ * or rate-limits the timeline from run to run.
+ */
+Cypress.Commands.add("blockXEmbed", () => {
+	cy.intercept("https://platform.twitter.com/**", { statusCode: 429, body: "" });
+	cy.intercept("https://syndication.twitter.com/**", { statusCode: 429, body: "" });
+});
+
+/**
+ * Emulates a CSS media feature, such as `forced-colors` or `prefers-reduced-motion`, through the browser's DevTools
+ * protocol.
+ * @param {string} name The media feature.
+ * @param {string} value The value to emulate, or an empty string to clear the emulation.
+ */
+Cypress.Commands.add("emulateMedia", (name, value) =>
+	cy.then(() =>
+		Cypress.automation("remote:debugger:protocol", {
+			command: "Emulation.setEmulatedMedia",
+			params: { features: [{ name, value }] },
+		}),
+	),
+);
+
+/**
  * Removes the site's service workers and Cache Storage. The spec frame runs on the Cypress origin, not the app
  * origin, so this goes through the browser's DevTools protocol.
  */
