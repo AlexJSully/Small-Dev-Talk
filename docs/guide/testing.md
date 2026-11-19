@@ -13,7 +13,12 @@ Small Dev Talk uses four types of automated testing:
 
 ## Unit Testing with Jest
 
-Jest tests are in [src/scripts/index.test.js](../../src/scripts/index.test.js) and [src/scripts/sw-headers.test.js](../../src/scripts/sw-headers.test.js). The second covers the service worker security headers and fails when the Content Security Policy in `index.html` differs from the one the worker sends.
+Jest tests are in four files:
+
+- [src/scripts/index.test.js](../../src/scripts/index.test.js) covers the site script, [index.js](../../src/scripts/index.js).
+- [src/scripts/sw-headers.test.js](../../src/scripts/sw-headers.test.js) covers the service worker security headers, and fails when the Content Security Policy in `index.html` differs from the one the worker sends.
+- [src/articleArchive/articleData.test.js](../../src/articleArchive/articleData.test.js) checks the article archive: each entry in `articleData.json` has its markdown and thumbnail, and every image an article shows exists at the size its markdown gives.
+- [workbox-config.test.js](../../workbox-config.test.js) fails when `index.html` loads a site script the service worker does not precache, or loads jQuery or the Bootstrap JavaScript.
 
 **Run all tests:**
 

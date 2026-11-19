@@ -80,6 +80,7 @@ Small-Dev-Talk/
 │   │   └── libraries/           # Third-party libraries
 │   ├── articleArchive/
 │   │   ├── articleData.json     # Article metadata registry
+│   │   ├── articleData.test.js  # Checks of the archive's markdown, images and sizes
 │   │   ├── authorAlexanderSullivan/
 │   │   ├── authorJeffCen/
 │   │   └── authorNeilRampone/
@@ -94,7 +95,8 @@ Small-Dev-Talk/
 ├── .prettierrc                  # Prettier configuration
 ├── .markdownlint.json           # Markdown linter rule settings
 ├── .markdownlint-cli2.jsonc     # Markdown linter file selection
-└── workbox-config.js            # Service worker precaching configuration
+├── workbox-config.js            # Service worker precaching configuration
+└── workbox-config.test.js       # Checks that the precache covers the page's scripts
 ```
 
 See [System Architecture](../architecture/system.md) for detailed information about each component.

@@ -39,15 +39,15 @@ Application Programming Interface (API) documentation for external usage and pub
 
 | Technology                                                                   | Purpose                     | Version    |
 | ---------------------------------------------------------------------------- | --------------------------- | ---------- |
-| [Bootstrap](https://getbootstrap.com/)                                       | Stylesheet (local copy)     | Local copy |
+| [Bootstrap](https://getbootstrap.com/)                                       | Stylesheet                  | Local copy |
 | [Showdown.js](http://showdownjs.com/)                                        | Markdown to HTML conversion | Local copy |
 | [Sentry](https://sentry.io/)                                                 | Error tracking              | v11.12.0   |
 | [Service Workers / Workbox](https://developers.google.com/web/tools/workbox) | Precaching and caching      | ^7.4.1     |
-| [Jest](https://jestjs.io/)                                                   | Unit testing                | ^30.4.2    |
-| [Cypress](https://cypress.io/)                                               | End-to-end (E2E) testing    | ^15.20.1   |
-| [ESLint](https://eslint.org/)                                                | Code linting                | ^10.8.1    |
-| [Prettier](https://prettier.io/)                                             | Code formatting             | ^3.9.6     |
-| [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2)         | Markdown linting            | ^0.23.2    |
+| [Jest](https://jestjs.io/)                                                   | Unit testing                | ^30.5.2    |
+| [Cypress](https://cypress.io/)                                               | End-to-end (E2E) testing    | ^16.2.1    |
+| [ESLint](https://eslint.org/)                                                | Code linting                | ^10.14.0   |
+| [Prettier](https://prettier.io/)                                             | Code formatting             | ^3.9.10    |
+| [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2)         | Markdown linting            | ^0.23.3    |
 
 Implementation: [index.html](../index.html), [package.json](../package.json)
 

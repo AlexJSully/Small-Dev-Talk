@@ -1,3 +1,11 @@
+/**
+ * Add up the named pixel lengths of a computed style.
+ * @param {CSSStyleDeclaration} style The computed style of an element.
+ * @param {string[]} properties The style properties to add up, such as `paddingLeft`.
+ * @returns {number} The sum in pixels.
+ */
+const sumOfPixels = (style, properties) => properties.reduce((sum, property) => sum + parseFloat(style[property]), 0);
+
 describe("Landing Page", () => {
 	beforeEach(() => {
 		// Visit the landing page (adjust port if needed)
@@ -53,6 +61,28 @@ describe("Landing Page", () => {
 			.and("match", /^\d+$/);
 	});
 
+	it("should show a slide when its indicator is clicked, and move the indicator with the arrows", () => {
+		cy.get("#carouselIndicator button").should("have.length.greaterThan", 2);
+		cy.get("#carouselIndicator button")
+			.first()
+			.should("have.class", "active")
+			.and("have.attr", "aria-current", "true")
+			// Bootstrap's stylesheet draws each indicator as a 30 pixel dash.
+			.and(($button) => expect($button[0].getBoundingClientRect().width).to.be.closeTo(30, 1));
+
+		cy.get("#carouselIndicator button").eq(1).click();
+		cy.get("#carouselInner .carousel-item").eq(1).should("have.class", "active");
+		cy.get("#carouselIndicator button").eq(1).should("have.attr", "aria-current", "true");
+		cy.get("#carouselIndicator button").first().should("not.have.attr", "aria-current");
+
+		cy.get(".carousel-control-next").click();
+		cy.get("#carouselInner .carousel-item").eq(2).should("have.class", "active");
+		cy.get("#carouselIndicator button")
+			.eq(2)
+			.should("have.class", "active")
+			.and("have.attr", "aria-current", "true");
+	});
+
 	it("should load no jQuery or Bootstrap JavaScript, which the site does not call", () => {
 		cy.get("#carouselInner .carousel-item").should("have.length.greaterThan", 1);
 		cy.get('script[src*="jquery"], script[src*="bootstrap"]').should("not.exist");
@@ -70,28 +100,42 @@ describe("Landing Page", () => {
 	});
 
 	it("should reserve each article image's space before it loads, at the image's proportions", () => {
-		cy.visit("http://localhost:3000/index.html?YukiVsPanda");
+		// Hold back every image after the first, so each is measured before it loads. The first image is not held,
+		// because it loads before the page's load event, which cy.visit waits for.
+		cy.intercept(/\/2013-03-22_YukiVsPanda\/image[2-7]\.jpg$/, (request) => {
+			request.on("response", (response) => {
+				response.setDelay(10000);
+			});
+		});
+		// The service worker the landing page installed fetches images itself, where cy.intercept cannot hold them, so
+		// remove it and keep this visit from installing it again.
+		cy.clearServiceWorkers();
+		cy.visit("http://localhost:3000/index.html?YukiVsPanda", {
+			onBeforeLoad(win) {
+				cy.stub(win.navigator.serviceWorker, "register").resolves(undefined);
+			},
+		});
 
 		cy.get("#articleBody img").should("have.length.greaterThan", 2);
-		cy.get("#articleBody img").each(($img) => {
+		cy.get("#articleBody img").each(($img, index) => {
 			const image = $img[0];
 			const style = getComputedStyle(image);
 			// The box includes the padding and border around the image.
-			const frame =
-				parseFloat(style.paddingLeft) +
-				parseFloat(style.paddingRight) +
-				parseFloat(style.borderLeftWidth) +
-				parseFloat(style.borderRightWidth);
-			const frameHeight =
-				parseFloat(style.paddingTop) +
-				parseFloat(style.paddingBottom) +
-				parseFloat(style.borderTopWidth) +
-				parseFloat(style.borderBottomWidth);
+			const frame = sumOfPixels(style, ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"]);
+			const frameHeight = sumOfPixels(style, [
+				"paddingTop",
+				"paddingBottom",
+				"borderTopWidth",
+				"borderBottomWidth",
+			]);
 			const box = image.getBoundingClientRect();
 
+			if (index > 0) {
+				expect(image.complete, image.getAttribute("src")).to.equal(false);
+			}
 			expect($img.attr("width")).to.match(/^\d+$/);
 			expect($img.attr("height")).to.match(/^\d+$/);
-			// Lazy images below the fold have not loaded, so their height comes from the attributes alone.
+			// An image that has not loaded takes its height from the attributes alone.
 			expect((box.width - frame) / (box.height - frameHeight)).to.be.closeTo(
 				Number($img.attr("width")) / Number($img.attr("height")),
 				0.02,
@@ -104,11 +148,26 @@ describe("Landing Page", () => {
 		["an article", "http://localhost:3000/index.html?YukiVsPanda", "#articleBody img"],
 	].forEach(([page, url, rendered]) => {
 		it(`should not shift the layout while ${page} loads on a phone`, () => {
+			// Block the X embed, whose timeline X serves or rate-limits from run to run.
+			cy.intercept("https://platform.twitter.com/**", { statusCode: 429, body: "" });
+			cy.intercept("https://syndication.twitter.com/**", { statusCode: 429, body: "" });
 			cy.viewport(412, 823);
 			cy.visit(url);
 
 			cy.get(rendered).should("exist");
-			cy.wait(1000);
+			// An image or font arriving without its size reserved is what shifts the page, so wait for those in view.
+			cy.get("img").should(($images) => {
+				$images.toArray().forEach((image) => {
+					const box = image.getBoundingClientRect();
+					const inView =
+						box.width > 0 && box.bottom > 0 && box.top < image.ownerDocument.defaultView.innerHeight;
+
+					if (inView) {
+						expect(image.complete, image.src).to.equal(true);
+					}
+				});
+			});
+			cy.document().its("fonts.status").should("equal", "loaded");
 			// A buffered observer receives every layout shift since the page started loading.
 			cy.window()
 				.then(
@@ -125,7 +184,7 @@ describe("Landing Page", () => {
 						}),
 				)
 				// 0.1 is the most layout shift a page can have and still be rated good.
-				.should("be.lessThan", 0.1);
+				.should("be.at.most", 0.1);
 		});
 	});
 
@@ -136,7 +195,6 @@ describe("Landing Page", () => {
 				response.setDelay(10000);
 			});
 		});
-		cy.visit("http://localhost:3000/");
 
 		cy.get('#header h1 img[src*="title.svg"]').then(($img) => {
 			const link = $img[0].parentElement;

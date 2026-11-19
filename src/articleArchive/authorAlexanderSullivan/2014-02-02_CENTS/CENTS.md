@@ -10,7 +10,7 @@ Sammy uses her gift for mathematics and enlist her “frenemies” to revamp the
 
 You can also check out their trailer below.
 
-[![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg =400x225))](https://www.youtube.com/watch?v=S9c4K2OhZPw)
+[![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg =400x225)](https://www.youtube.com/watch?v=S9c4K2OhZPw)
 
 [CENTS](https://vimeo.com/73419769?cjevent=0bdf1d4f832311e980b700270a24060f) Teaser from [Christopher Boone](https://vimeo.com/christopherboone?cjevent=12e8b3fc832311e983f500290a24060e) on [Vimeo](https://vimeo.com/?cjevent=1cb5bfdb832311e9826b00270a24060c).
 

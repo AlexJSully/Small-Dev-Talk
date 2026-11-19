@@ -13,6 +13,8 @@ const {
 	updateCanonicalLink,
 	startThirdParties,
 	handleControlClick,
+	changeCarouselSlide,
+	showCarouselSlide,
 	APP_VERSION,
 	redirectToCanonicalHost,
 	removeLegacyServiceWorker,
@@ -855,7 +857,7 @@ describe("init", () => {
 			value: "http://localhost/index.html?TestArticle",
 			configurable: true,
 		});
-		// Page data resolves after article data, the order in which each loader used to render on its own.
+		// Page data resolves after article data, so a view rendered as each request settles would render the article twice.
 		global.fetch = jest.fn((url) => {
 			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
 				return new Promise((resolve) => {
@@ -1616,8 +1618,8 @@ describe("ArticleFiller: changeCarousel", () => {
 		expect(carouselInner).toContain("Second Article");
 		expect(carouselInner).toContain("thumb1.png");
 		expect(carouselInner).toContain("thumb2.png");
-		expect(carouselIndicator).toContain('data-slide-to="0"');
-		expect(carouselIndicator).toContain('data-slide-to="1"');
+		expect(carouselIndicator).toContain('data-carousel-slide-to="0"');
+		expect(carouselIndicator).toContain('data-carousel-slide-to="1"');
 		expect(pageTitle).toContain("Small Dev Talk: Featured");
 	});
 
@@ -1677,11 +1679,36 @@ describe("ArticleFiller: changeCarousel", () => {
 		expect(writes.carouselInner).toHaveLength(1);
 		expect(writes.carouselIndicator).toHaveLength(1);
 		expect(document.querySelectorAll("#carouselInner .carousel-item")).toHaveLength(3);
-		expect(document.querySelectorAll("#carouselIndicator li")).toHaveLength(3);
+		expect(document.querySelectorAll("#carouselIndicator button")).toHaveLength(3);
 		expect(document.querySelectorAll("#carouselInner .carousel-item.active")).toHaveLength(1);
 		expect(document.getElementById("carouselImage2").getAttribute("src")).toBe(
 			"/src/articleArchive/authorJaneDoe/2024-06-01_ArticleOne/thumb1.png",
 		);
+	});
+
+	test("renders each indicator as a button named after its slide, with the first one current", () => {
+		ArticleFiller.changeCarousel();
+
+		const [first, second] = document.querySelectorAll("#carouselIndicator button");
+		expect(first.getAttribute("type")).toBe("button");
+		expect(first.getAttribute("data-bs-target")).toBe("#carouselExampleIndicators");
+		expect(first.getAttribute("aria-label")).toBe("Show slide 1: First Article");
+		expect(first.classList.contains("active")).toBe(true);
+		expect(first.getAttribute("aria-current")).toBe("true");
+		expect(second.getAttribute("data-carousel-slide-to")).toBe("1");
+		expect(second.getAttribute("aria-label")).toBe("Show slide 2: Second Article");
+		expect(second.classList.contains("active")).toBe(false);
+		expect(second.hasAttribute("aria-current")).toBe(false);
+	});
+
+	test("escapes the article title in an indicator's label", () => {
+		ArticleFiller.articleData.ArticleOne.title = 'Say "hi" <b>loud</b>';
+
+		ArticleFiller.changeCarousel();
+
+		const first = document.querySelector("#carouselIndicator button");
+		expect(first.getAttribute("aria-label")).toBe('Show slide 1: Say "hi" <b>loud</b>');
+		expect(first.children).toHaveLength(0);
 	});
 
 	test("replaces the slides of an earlier render", () => {
@@ -1689,7 +1716,7 @@ describe("ArticleFiller: changeCarousel", () => {
 		ArticleFiller.changeCarousel();
 
 		expect(document.querySelectorAll("#carouselInner .carousel-item")).toHaveLength(2);
-		expect(document.querySelectorAll("#carouselIndicator li")).toHaveLength(2);
+		expect(document.querySelectorAll("#carouselIndicator button")).toHaveLength(2);
 	});
 });
 
@@ -1785,194 +1812,6 @@ describe("ArticleFiller: featured article links", () => {
 			"featuredArticle2",
 		]);
 	});
-});
-
-describe("index.html scripts and the service worker precache", () => {
-	const fs = require("fs");
-	const path = require("path");
-	const root = path.join(__dirname, "..", "..");
-	const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
-	const scripts = Array.from(html.matchAll(/<script\b[^>]*\bsrc="\.\/(src\/[^"]+)"/g), ([, src]) => src);
-	const { globPatterns } = require(path.join(root, "workbox-config.js"));
-
-	test("precaches every site script the page loads", () => {
-		expect(scripts).toContain("src/scripts/index.min.js");
-		scripts.forEach((script) => expect(globPatterns).toContain(script));
-	});
-
-	test("loads and precaches no jQuery or Bootstrap JavaScript, which the site does not call", () => {
-		[...scripts, ...globPatterns].forEach((file) => {
-			expect(file).not.toMatch(/jquery|bootstrap[^/]*\.js$/);
-		});
-	});
-});
-
-describe("articleData.json", () => {
-	const fs = require("fs");
-	const path = require("path");
-	const archiveDir = path.join(__dirname, "..", "articleArchive");
-	const entries = Object.entries(JSON.parse(fs.readFileSync(path.join(archiveDir, "articleData.json"), "utf8")));
-	const withThumbnail = entries.filter(([, article]) => article.thumbnail);
-
-	test.each(withThumbnail)("%s has a thumbnail file in its article folder", (key, article) => {
-		const folder = `${article.date}_${key}`;
-		const thumbnail = path.join(
-			archiveDir,
-			`author${article.author.replace(/\s/g, "")}`,
-			folder,
-			article.thumbnail,
-		);
-
-		expect(fs.existsSync(thumbnail)).toBe(true);
-	});
-
-	test.each(withThumbnail)("%s has a thumbnail width and height", (key, article) => {
-		expect(Number.isInteger(article.thumbnailWidth) && article.thumbnailWidth > 0).toBe(true);
-		expect(Number.isInteger(article.thumbnailHeight) && article.thumbnailHeight > 0).toBe(true);
-	});
-});
-
-/**
- * Read the size from the first chunk of a WebP file, in its lossy (VP8), lossless (VP8L) or extended (VP8X) format.
- * @param {Buffer} data The file contents.
- * @returns {{width: number, height: number}} The size in pixels.
- */
-function webpSize(data) {
-	const readers = {
-		"VP8 ": () => ({ width: data.readUInt16LE(26) & 0x3fff, height: data.readUInt16LE(28) & 0x3fff }),
-		VP8L: () => {
-			const bits = data.readUInt32LE(21);
-
-			return { width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 };
-		},
-		VP8X: () => ({ width: data.readUIntLE(24, 3) + 1, height: data.readUIntLE(27, 3) + 1 }),
-	};
-
-	return readers[data.toString("ascii", 12, 16)]();
-}
-
-/**
- * Read the orientation tag of the EXIF segment that starts at `offset` in a JPEG file.
- * @param {Buffer} data The file contents.
- * @param {number} offset Where the APP1 segment holding the EXIF data starts.
- * @returns {number} The EXIF orientation, 1 to 8, or 1 when the segment has none.
- */
-function exifOrientation(data, offset) {
-	const tiff = offset + 10;
-	const little = data.toString("ascii", tiff, tiff + 2) === "II";
-	const read16 = (at) => (little ? data.readUInt16LE(at) : data.readUInt16BE(at));
-	const read32 = (at) => (little ? data.readUInt32LE(at) : data.readUInt32BE(at));
-	const directory = tiff + read32(tiff + 4);
-	const entries = Array.from({ length: read16(directory) }, (_, entry) => directory + 2 + entry * 12);
-	const orientationEntry = entries.find((at) => read16(at) === 0x0112);
-
-	return orientationEntry === undefined ? 1 : read16(orientationEntry + 8);
-}
-
-/**
- * Read the size from the frame header of a JPEG file. A JPEG whose EXIF orientation turns it a quarter turn (5 to 8)
- * reports its sides swapped, because browsers apply that orientation.
- * @param {Buffer} data The file contents.
- * @returns {{width: number, height: number}} The displayed size in pixels.
- */
-function jpegSize(data) {
-	let offset = 2;
-	let orientation = 1;
-
-	while (offset < data.length) {
-		const marker = data[offset + 1];
-
-		if (marker === 0xe1 && data.toString("ascii", offset + 4, offset + 8) === "Exif") {
-			orientation = exifOrientation(data, offset);
-		}
-
-		// SOF0 to SOF15 carry the frame size, except DHT (C4), JPG (C8) and DAC (CC).
-		if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
-			const height = data.readUInt16BE(offset + 5);
-			const width = data.readUInt16BE(offset + 7);
-
-			return orientation >= 5 ? { width: height, height: width } : { width, height };
-		}
-
-		offset += 2 + data.readUInt16BE(offset + 2);
-	}
-
-	throw new Error("JPEG has no frame header");
-}
-
-/** Each supported image format: how to recognize its file, and how to read its size. */
-const IMAGE_FORMATS = [
-	{
-		matches: (data) => data.toString("ascii", 1, 4) === "PNG",
-		size: (data) => ({ width: data.readUInt32BE(16), height: data.readUInt32BE(20) }),
-	},
-	{
-		matches: (data) => data.toString("ascii", 0, 3) === "GIF",
-		size: (data) => ({ width: data.readUInt16LE(6), height: data.readUInt16LE(8) }),
-	},
-	{
-		matches: (data) => data.toString("ascii", 0, 4) === "RIFF" && data.toString("ascii", 8, 12) === "WEBP",
-		size: webpSize,
-	},
-	{ matches: (data) => data[0] === 0xff && data[1] === 0xd8, size: jpegSize },
-];
-
-/**
- * Read the displayed width and height of a PNG, GIF, JPEG or WebP file from its header.
- * @param {Buffer} data The file contents.
- * @returns {{width: number, height: number}} The size in pixels.
- */
-function imageSize(data) {
-	const format = IMAGE_FORMATS.find(({ matches }) => matches(data));
-
-	if (!format) {
-		throw new Error("Unsupported image format");
-	}
-
-	return format.size(data);
-}
-
-describe("article markdown", () => {
-	const fs = require("fs");
-	const path = require("path");
-	const root = path.join(__dirname, "..", "..");
-	const archiveDir = path.join(root, "src", "articleArchive");
-	const articleData = JSON.parse(fs.readFileSync(path.join(archiveDir, "articleData.json"), "utf8"));
-	const markdownPath = (key, article) =>
-		path.join(archiveDir, `author${article.author.replace(/\s/g, "")}`, `${article.date}_${key}`, `${key}.md`);
-	const articles = Object.entries(articleData);
-	const images = articles.flatMap(([key, article]) =>
-		Array.from(
-			fs.readFileSync(markdownPath(key, article), "utf8").matchAll(/!\[[^\]]*\]\(([^)]+)\)/g),
-			([, target]) => [key, target],
-		),
-	);
-
-	test.each(articles)("%s has article content", (key, article) => {
-		expect(fs.readFileSync(markdownPath(key, article), "utf8").trim().length).toBeGreaterThan(0);
-	});
-
-	test.each(images)("%s gives the size of %s", (key, target) => {
-		expect(target).toMatch(/^\S+ =[1-9]\d*x[1-9]\d*$/);
-	});
-
-	test.each(images.filter(([, target]) => target.startsWith("src")))(
-		"%s image %s exists and is the size the markdown gives",
-		(key, target) => {
-			const [, url, width, height] = target.match(/^(\S+) =(\d+)x(\d+)$/);
-			const file = path.join(root, ...url.split("\\"));
-
-			expect(fs.existsSync(file)).toBe(true);
-			expect(imageSize(fs.readFileSync(file))).toEqual({ width: Number(width), height: Number(height) });
-		},
-	);
-
-	test.each(images.filter(([, target]) => !target.startsWith("src")))(
-		"%s links only YouTube thumbnails from other sites, which are 480 by 360: %s",
-		(key, target) => {
-			expect(target).toMatch(/^https:\/\/img\.youtube\.com\/vi\/[\w-]+\/0\.jpg =480x360$/);
-		},
-	);
 });
 
 describe("watchTwitterTimeline", () => {
@@ -2334,6 +2173,10 @@ describe("handleControlClick", () => {
 		document.body.innerHTML = `
 			<div class="carousel-item active" id="first"></div>
 			<div class="carousel-item" id="second"></div>
+			<div id="carouselIndicator">
+				<button id="dot0" data-carousel-slide-to="0" class="active" aria-current="true"></button>
+				<button id="dot1" data-carousel-slide-to="1"></button>
+			</div>
 			<a id="next" data-carousel-step="next"><span id="nextIcon"></span></a>
 			<a id="prev" data-carousel-step="prev"></a>
 			<p id="plain">text</p>
@@ -2358,6 +2201,23 @@ describe("handleControlClick", () => {
 		expect(document.getElementById("second").classList.contains("active")).toBe(true);
 	});
 
+	test("shows the slide of a clicked indicator and marks the indicator current", () => {
+		handleControlClick({ target: document.getElementById("dot1") });
+
+		expect(document.getElementById("second").classList.contains("active")).toBe(true);
+		expect(document.getElementById("first").classList.contains("active")).toBe(false);
+		expect(document.getElementById("dot1").getAttribute("aria-current")).toBe("true");
+		expect(document.getElementById("dot0").hasAttribute("aria-current")).toBe(false);
+	});
+
+	test("shows the first slide when its indicator, numbered 0, is clicked", () => {
+		handleControlClick({ target: document.getElementById("dot1") });
+		handleControlClick({ target: document.getElementById("dot0") });
+
+		expect(document.getElementById("first").classList.contains("active")).toBe(true);
+		expect(document.getElementById("dot0").getAttribute("aria-current")).toBe("true");
+	});
+
 	test("ignores clicks outside the controls", () => {
 		handleControlClick({ target: document.getElementById("plain") });
 
@@ -2376,6 +2236,94 @@ describe("handleControlClick", () => {
 		expect(html).toContain('data-page-action="home"');
 
 		console.error.mockRestore();
+	});
+});
+
+describe("carousel slide changes", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<div class="carousel-item active" id="slide0"></div>
+			<div class="carousel-item" id="slide1"></div>
+			<div class="carousel-item" id="slide2"></div>
+			<div id="carouselIndicator">
+				<button data-carousel-slide-to="0" class="active" aria-current="true"></button>
+				<button data-carousel-slide-to="1"></button>
+				<button data-carousel-slide-to="2"></button>
+			</div>
+		`;
+	});
+
+	afterEach(() => {
+		document.body.innerHTML = "";
+	});
+
+	/** The id of every active slide, and the indicator index each current-indicator mark sits on. */
+	const carouselState = () => ({
+		activeSlides: Array.from(document.querySelectorAll(".carousel-item.active"), (slide) => slide.id),
+		activeIndicators: Array.from(
+			document.querySelectorAll("#carouselIndicator button.active"),
+			(indicator) => indicator.dataset.carouselSlideTo,
+		),
+		currentIndicators: Array.from(
+			document.querySelectorAll('#carouselIndicator button[aria-current="true"]'),
+			(indicator) => indicator.dataset.carouselSlideTo,
+		),
+	});
+
+	test("showCarouselSlide shows that slide and marks only its indicator", () => {
+		showCarouselSlide(2);
+
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide2"],
+			activeIndicators: ["2"],
+			currentIndicators: ["2"],
+		});
+	});
+
+	test.each([-1, 3, Number.NaN, 1.5])("showCarouselSlide(%p) changes nothing", (index) => {
+		showCarouselSlide(index);
+
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide0"],
+			activeIndicators: ["0"],
+			currentIndicators: ["0"],
+		});
+	});
+
+	test("changeCarouselSlide moves the indicator with the slide and wraps at either end", () => {
+		changeCarouselSlide("next");
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide1"],
+			activeIndicators: ["1"],
+			currentIndicators: ["1"],
+		});
+
+		changeCarouselSlide("prev");
+		changeCarouselSlide("prev");
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide2"],
+			activeIndicators: ["2"],
+			currentIndicators: ["2"],
+		});
+
+		changeCarouselSlide("next");
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide0"],
+			activeIndicators: ["0"],
+			currentIndicators: ["0"],
+		});
+	});
+
+	test("changeCarouselSlide shows the first slide when no slide is active", () => {
+		document.getElementById("slide0").classList.remove("active");
+
+		changeCarouselSlide("next");
+
+		expect(carouselState()).toEqual({
+			activeSlides: ["slide0"],
+			activeIndicators: ["0"],
+			currentIndicators: ["0"],
+		});
 	});
 });
 

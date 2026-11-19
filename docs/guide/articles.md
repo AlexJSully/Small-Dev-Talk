@@ -41,7 +41,7 @@ Edit [src/articleArchive/articleData.json](../../src/articleArchive/articleData.
 - `date`: Used to build the `YYYY-MM-DD_{ArticleKey}` folder
 - `summary`: Displayed in carousel and featured lists
 - `thumbnail`: Used for carousel, featured list, archive list, and social metadata images
-- `thumbnailWidth` and `thumbnailHeight`: The thumbnail's size in pixels, as whole numbers. The page sets them as the `width` and `height` of the thumbnail `<img>`, so the browser reserves the space before the image loads. A Jest test fails when an entry with a `thumbnail` has no size or points at a file that does not exist
+- `thumbnailWidth` and `thumbnailHeight`: The thumbnail's size in pixels, as whole numbers. The page sets them as the `width` and `height` of the thumbnail `<img>`, so the browser reserves the space before the image loads. A Jest test in [articleData.test.js](../../src/articleArchive/articleData.test.js) fails when an entry with a `thumbnail` points at a file that does not exist, or has no size or a size that differs from that file
 
 ## Step 2: Create Article Directory
 
@@ -98,7 +98,7 @@ src/articleArchive/authorAlexanderSullivan/2013-03-26_Caravaneer2/
 
 **Image paths and sizes:**
 
-Write each image path from the site root, and end it with the image's width and height in pixels: `![alt](src\articleArchive\…\image1.jpg =WIDTHxHEIGHT)`. Showdown turns the size into the `width` and `height` of the `<img>`, so the browser reserves the image's space before it loads and the text below does not jump. On macOS, `sips -g pixelWidth -g pixelHeight image1.jpg` prints the size. A YouTube thumbnail (`https://img.youtube.com/vi/VIDEO_ID/0.jpg`) is `=480x360`. A Jest test fails when an image in an article listed in `articleData.json` has no size, a size that differs from the file, or a path to a file that does not exist.
+Write each image path from the site root, and end it with the image's width and height in pixels: `![alt](src\articleArchive\…\image1.jpg =WIDTHxHEIGHT)`. Showdown turns the size into the `width` and `height` of the `<img>`, so the browser reserves the image's space before it loads and the text below does not jump. On macOS, `sips -g pixelWidth -g pixelHeight image1.jpg` prints the size. A YouTube thumbnail (`https://img.youtube.com/vi/VIDEO_ID/0.jpg`) is `=480x360`. The same test fails when an image in an article listed in `articleData.json` has no size, a size that differs from the file, or a path to a file that does not exist, and when an image from another site is not a YouTube thumbnail sized `=480x360`.
 
 **Caching:**
 

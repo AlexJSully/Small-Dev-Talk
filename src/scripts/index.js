@@ -317,9 +317,20 @@ function reportError(error, context = {}) {
 }
 
 /**
+ * Return the folder of an article in the archive, relative to the site root, which holds its markdown and images.
+ * @param {string} key The key of the article in articleData.json.
+ * @param {{author: string, date: string}} article The article's data from articleData.json.
+ * @returns {string} The folder path, such as `src/articleArchive/authorJaneDoe/2024-06-01_ArticleOne`.
+ */
+function articleFolderPath(key, article) {
+	return `src/articleArchive/author${article.author.replace(/\s/g, "")}/${article.date}_${key}`;
+}
+
+/**
  * Build the `width` and `height` attributes of an article thumbnail, so the browser reserves its space before it loads.
  * @param {{thumbnailWidth?: number, thumbnailHeight?: number}} [article] The article's data from articleData.json.
- * @returns {string} The attributes with a leading space, or an empty string when either size is missing.
+ * @returns {string} The attributes with a leading space, or an empty string when either size is missing or not a
+ * positive whole number.
  */
 function imageSizeAttributes(article) {
 	const width = Number(article?.thumbnailWidth);
@@ -492,10 +503,7 @@ class ArticleFiller {
 			if (articleData) {
 				this.updateMetaData(articleData, normalizedName);
 
-				// Create URL
-				const authorFolder = `author${articleData.author.replace(/\s/g, "")}`;
-				const articleFolder = `${articleData.date}_${normalizedName}`;
-				const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${normalizedName}.md`;
+				const url = `/${articleFolderPath(normalizedName, articleData)}/${normalizedName}.md`;
 
 				// Call article
 				return fetchResource(url, "article", (response) => response.text(), {
@@ -578,9 +586,7 @@ class ArticleFiller {
 
 			// Update image
 			if (articleData?.thumbnail && articleData?.author && articleData?.date && articleKey) {
-				const imgURL = `https://smalldevtalk.net/src/articleArchive/author${articleData.author
-					.split(" ")
-					.join("")}/${articleData.date}_${articleKey}/${articleData.thumbnail}`;
+				const imgURL = `https://smalldevtalk.net/${articleFolderPath(articleKey, articleData)}/${articleData.thumbnail}`;
 
 				// og & twitter
 				document.querySelector("meta[property='og:image']").setAttribute("content", imgURL);
@@ -699,9 +705,7 @@ class ArticleFiller {
 					}
 
 					/** Article's thumbnail URL */
-					const imgURL = `src/articleArchive/author${value.author.split(" ").join("")}/${value.date}_${key}/${
-						value.thumbnail
-					}`;
+					const imgURL = `${articleFolderPath(key, value)}/${value.thumbnail}`;
 
 					archiveDisplay += `
 					<div class="col-sm archive-display">
@@ -751,15 +755,17 @@ class ArticleFiller {
 			// Build every slide first and write each container once: `innerHTML +=` re-parses all earlier slides.
 			carouselList.forEach((key, c) => {
 				const article = ArticleFiller.articleData[key];
-				const authorFolder = `author${article.author.split(" ").join("")}`;
-				const url = `/src/articleArchive/${authorFolder}/${article.date}_${key}/${article.thumbnail}`;
+				const url = `/${articleFolderPath(key, article)}/${article.thumbnail}`;
 
+				// Bootstrap's stylesheet draws `.carousel-indicators [data-bs-target]` as a dash; handleControlClick runs it.
 				indicators.push(`
-					<li
-						data-target="#carouselExampleIndicators"
-						data-slide-to="${c}"
-						${c === 0 ? `class="active"` : ""}
-					></li>
+					<button
+						type="button"
+						data-bs-target="#carouselExampleIndicators"
+						data-carousel-slide-to="${c}"
+						aria-label="Show slide ${c + 1}: ${escapeHtml(article.title)}"
+						${c === 0 ? `class="active" aria-current="true"` : ""}
+					></button>
 				`);
 
 				// The first slide is the page's largest image, so it loads at once and at high priority.
@@ -821,8 +827,7 @@ class ArticleFiller {
 					return;
 				}
 
-				const authorFolder = `author${article.author.split(" ").join("")}`;
-				const url = `/src/articleArchive/${authorFolder}/${article.date}_${key}/${article.thumbnail}`;
+				const url = `/${articleFolderPath(key, article)}/${article.thumbnail}`;
 				const articleKey = escapeHtml(key);
 				const articleTitle = escapeHtml(article.title);
 
@@ -874,7 +879,8 @@ class ArticleFiller {
 
 /**
  * Fetch page and article metadata, then render the requested view once both requests settle.
- * @returns {Promise<void>} Resolves after the view renders; both fetches catch their own errors.
+ * @returns {Promise<void>} Resolves after the view renders. Rejects with the error of a failed request, which that
+ * request has already logged and reported.
  */
 function init() {
 	return Promise.all([ArticleFiller.retrievePageData(), ArticleFiller.retrieveArticleData()]).then(() =>
@@ -1099,14 +1105,16 @@ function updateCanonicalLink(location) {
 }
 
 /**
- * Handle clicks on the carousel arrows and the error buttons. The page's Content Security Policy blocks inline `onclick`
- * attributes, so one delegated listener on the document runs these controls.
+ * Handle clicks on the carousel arrows, the carousel indicators and the error buttons. The page's Content Security
+ * Policy blocks inline `onclick` attributes, so one delegated listener on the document runs these controls.
  * @param {MouseEvent} event The click event.
  * @returns {void}
  */
 function handleControlClick(event) {
 	const target = event.target instanceof Element ? event.target : null;
-	const control = target ? target.closest("[data-carousel-step], [data-page-action]") : null;
+	const control = target
+		? target.closest("[data-carousel-step], [data-carousel-slide-to], [data-page-action]")
+		: null;
 
 	if (!control) {
 		return;
@@ -1114,6 +1122,8 @@ function handleControlClick(event) {
 
 	if (control.dataset.carouselStep) {
 		changeCarouselSlide(control.dataset.carouselStep);
+	} else if (control.dataset.carouselSlideTo !== undefined) {
+		showCarouselSlide(Number(control.dataset.carouselSlideTo));
 	} else if (control.dataset.pageAction === "reload") {
 		window.location.reload();
 	} else if (control.dataset.pageAction === "home") {
@@ -1125,7 +1135,8 @@ function handleControlClick(event) {
  * Move the page to the canonical host when needed, otherwise render the view and then register the service worker.
  * Rendering does not wait for the worker, so a first visit is not delayed by its installation.
  * @param {Location} location The page location.
- * @returns {Promise<void>} Resolves once the view renders, or at once when the page is redirected.
+ * @returns {Promise<void>} Resolves once the service worker registration settles after the view renders, or at once
+ * when the page is redirected.
  */
 async function start(location) {
 	if (redirectToCanonicalHost(location)) {
@@ -1192,6 +1203,8 @@ if (typeof module !== "undefined" && module.exports) {
 		updateCanonicalLink,
 		startThirdParties,
 		handleControlClick,
+		changeCarouselSlide,
+		showCarouselSlide,
 		APP_VERSION,
 		redirectToCanonicalHost,
 		removeLegacyServiceWorker,
@@ -1203,6 +1216,35 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 // ----- Functions related to changing carousel -----
+
+/**
+ * Show the carousel slide at `index`, and mark its indicator as the current one. An index with no slide changes nothing.
+ * @param {number} index The position of the slide, counted from 0.
+ * @returns {void}
+ */
+function showCarouselSlide(index) {
+	const slides = document.getElementsByClassName("carousel-item");
+
+	if (!Number.isInteger(index) || !slides[index]) {
+		return;
+	}
+
+	Array.from(slides).forEach((slide, position) => {
+		slide.classList.toggle("active", position === index);
+	});
+
+	document.querySelectorAll("#carouselIndicator [data-carousel-slide-to]").forEach((indicator) => {
+		const isCurrent = Number(indicator.dataset.carouselSlideTo) === index;
+
+		indicator.classList.toggle("active", isCurrent);
+
+		if (isCurrent) {
+			indicator.setAttribute("aria-current", "true");
+		} else {
+			indicator.removeAttribute("aria-current");
+		}
+	});
+}
 
 /**
  * Changes the active slide in a carousel based on the given direction.
@@ -1223,9 +1265,9 @@ function changeCarouselSlide(direction) {
 	/** Currently active slide by searching through the carousel items for the one with the active class */
 	const activeItem = Array.from(carouselItems).find((item) => item.classList.contains(activeClass));
 
-	// If there is no active slide, add the active class to the first carousel item and return
+	// If there is no active slide, show the first carousel item and return
 	if (!activeItem) {
-		carouselItems[0].classList.add(activeClass);
+		showCarouselSlide(0);
 		return;
 	}
 
@@ -1235,7 +1277,6 @@ function changeCarouselSlide(direction) {
 			? (Array.from(carouselItems).indexOf(activeItem) + 1) % carouselItems.length
 			: (Array.from(carouselItems).indexOf(activeItem) - 1 + carouselItems.length) % carouselItems.length;
 
-	// Remove the active class from the current active slide and add it to the next slide
-	activeItem.classList.remove(activeClass);
-	carouselItems[nextIndex].classList.add(activeClass);
+	// Move the active class from the current slide and its indicator to the next ones
+	showCarouselSlide(nextIndex);
 }
