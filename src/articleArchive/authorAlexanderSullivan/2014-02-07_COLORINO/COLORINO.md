@@ -1,6 +1,6 @@
 ## COLORINO Interview
 
-![image1](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image1.jpg)
+![image1](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image1.jpg =400x160)
 
 Challenge yourself with COLORNIO! A new puzzle game by Pete SkyKing and Alex Probst for your iOS and Andriod. You can find out more about COLORNIO on their website or support them on their kickstarter.
 
@@ -8,25 +8,25 @@ Challenge yourself with COLORNIO! A new puzzle game by Pete SkyKing and Alex Pro
 
 **Alex Probst:** It’s a puzzle game based in double-colored blocks
 
-[![YouTube Video](https://img.youtube.com/vi/UYGie0_VgJ4/0.jpg)](https://www.youtube.com/watch?v=UYGie0_VgJ4)
+[![YouTube Video](https://img.youtube.com/vi/UYGie0_VgJ4/0.jpg =480x360)](https://www.youtube.com/watch?v=UYGie0_VgJ4)
 
 **Small Dev Talk: How do you play COLORNIO? What is the objective of COLORNIO?**
 
 **Alex Probst:** You can rotate and merge same color sides or whole blocks to make points, the game will feature objective based levels, for example, reach a certain score in x number of moves, or against time, etc.
 
-![image2](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image2.jpg)
+![image2](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image2.jpg =388x750)
 
 **Small Dev Talk: What power-ups will there be in COLORNIO and how does it impact the gameplay?**
 
 **Alex Probst:** We have 3 power ups so far, probably will have more in the future. Some will be able to be stored to use strategically when needed, others will remain on the game screen.
 
-![image3](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image3.jpg)
+![image3](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image3.jpg =400x649)
 
 **Small Dev Talk: What type of enemies will there be in COLORNIO and what do they do?**
 
 **Alex Probst:** All enemies will be disruptive and destructive. Some will multiply and “eat up” spaces, narrowing you chances of success. Other will render blocks unmovable and others will change the colors on the squares.
 
-![image4](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image4.jpg)
+![image4](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image4.jpg =300x300)
 
 **Small Dev Talk: How often will we see enemies in COLORNIO?**
 
@@ -36,7 +36,7 @@ Challenge yourself with COLORNIO! A new puzzle game by Pete SkyKing and Alex Pro
 
 **Alex Probst:** From very easy to hard but never break-your-phone kind of hard. We will try to maintain a level of natural progression in the difficulty settings
 
-![image5](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image5.jpg)
+![image5](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image5.jpg =400x750)
 
 **Small Dev Talk: On your Kickstarter, you say there are 250 initial levels, how many levels do you plan on having when COLORNIO is released?**
 
@@ -50,7 +50,7 @@ Challenge yourself with COLORNIO! A new puzzle game by Pete SkyKing and Alex Pro
 
 **Alex Probst:** We’ll release it initially for iOS and Android, for phones and tablets, but will work on the desktop and probably browser versions ASAP.
 
-![image6](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image6.jpg)
+![image6](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image6.jpg =400x750)
 
 **Small Dev Talk: What inspired you to create COLORNIO?**
 
@@ -72,7 +72,7 @@ Challenge yourself with COLORNIO! A new puzzle game by Pete SkyKing and Alex Pro
 
 **Alex Probst:** Support our [kickstarter](https://www.kickstarter.com/projects/colorino/colorino-the-colorful-puzzle-game), support our game, we will do the same for you and hope you enjoy it when you play.
 
-![image7](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image7.jpg)
+![image7](src\articleArchive\authorAlexanderSullivan\2014-02-07_COLORINO\image7.jpg =500x360)
 
 ---
 

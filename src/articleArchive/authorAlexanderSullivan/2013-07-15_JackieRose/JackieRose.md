@@ -1,6 +1,6 @@
 ## Jackie Rose: The Treasure of Captain Read Volume 1
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image1.jpg =494x750)
 
 Join along for the adventure of the century in Jackie Rose: The Treasure of Captain Read Volume 1! Not long ago I got the chance to talk with the artist and author of the very enjoyable graphic novel, Jackie Rose: The Treasure of Captain Read Volume 1, Josh Ulrich. We got the chance to talk about some in depth details about his graphic novel and his inspirations. You can find his graphic novel, Jackie Rose: The Treasure of Captain Read at [http://jackierosecomic.com/](http://jackierosecomic.com/) or support him on his [KickStarter](https://www.kickstarter.com/projects/865787103/jackie-rose?ref=card).
 
@@ -12,7 +12,7 @@ Join along for the adventure of the century in Jackie Rose: The Treasure of Capt
 
 **Josh:** Action, Adventure, Comedy, Drama.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image2.jpg =494x750)
 
 **Small Dev Talk: What type of characters will the readers come across in “Jackie Rose: The Treasure of Captain Read Volume 1”?**
 
@@ -22,13 +22,13 @@ Join along for the adventure of the century in Jackie Rose: The Treasure of Capt
 
 **Josh:** The idea of Jackie and Eddie, is having to characters that bring out the best in each other. Jackie is impulsive and easily motivated, she pushes Eddie to do things he would never do on his own. Eddie on the other hand is generally quicker to think and slower to act, he reminds Jackie that there are consequences for her actions (even though she usually doesn’t listen).
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image3.jpg =494x750)
 
 **Small Dev Talk: What is Elizabeth Read, the air pirate and possible antagonist, like?**
 
 **Josh:** Elizabeth is a hardened thief, expert pilot, and a great leader. She has found ways to get what she wants, without turning into a ruthless killer. At her core, Elizabeth is a woman who is unhappy.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image4.jpg =500x374)
 
 **Small Dev Talk: On your website, you have the beginning of the comic already available. Will you be posting more of the comic as time goes and will the whole comic be available some day on your website?**
 
@@ -38,7 +38,7 @@ Join along for the adventure of the century in Jackie Rose: The Treasure of Capt
 
 **Josh:** Jackie Rose takes place in an alternate 1940s.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image5.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image5.jpg =494x750)
 
 **Small Dev Talk: What inspired you to write and create “Jackie Rose: The Treasure of Captain Read Volume 1”?**
 
@@ -56,7 +56,7 @@ Join along for the adventure of the century in Jackie Rose: The Treasure of Capt
 
 **Josh:** Probably Jackie’s internal struggle vs her external struggle. Her willingness to do whatever it takes to get what she wants, even when those decisions get her in a lot of trouble. Also there is a pretty sweet air chase scene.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image6.jpg =494x750)
 
 **Small Dev Talk: Do you have any advice for any upcoming comic artists and graphic novelists?**
 
@@ -70,7 +70,7 @@ Join along for the adventure of the century in Jackie Rose: The Treasure of Capt
 
 **Josh:** I hope you check out my book, and whether you back the Kickstarter, buy the book, or just follow the comic online, I appreciate you taking the time to read my work! I hope you enjoy it!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-07-15_JackieRose\image7.jpg =500x420)
 
 ---
 

@@ -111,7 +111,7 @@ When [index.html](../../index.html) loads:
 1. HTML is parsed
 2. Scripts and stylesheets are downloaded. Everything except Sentry is served from this repository rather than a content delivery network (CDN):
     - `style.min.css` and the Bootstrap stylesheet, both under the site root
-    - Showdown.js, under `src/scripts/libraries/`. The jQuery and Bootstrap JavaScript copies there are not loaded, because the site calls neither
+    - Showdown.js, under `src/scripts/libraries/`. The Bootstrap JavaScript copy there is not loaded, because the site does not call it
     - `src/scripts/index.min.js`, the minified build of [index.js](../../src/scripts/index.js)
     - Sentry SDK, from the version-pinned `browser.sentry-cdn.com` bundle
 

@@ -1,6 +1,6 @@
 ## Motte Island
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image1.jpg =500x703)
 
 Yesterday I got the chance to have an interview with a member of the Yuki vs Panda team, Graham Misiurak on their hilarious and amazing graphic novel, Yuki vs Panda. A story about a high school teenage girl and her nemesis, the Panda! You check it out here at [http://www.yukivspanda.com/](https://www.yukivspanda.com/) or support it at [http://www.indiegogo.com/projects/yuki-vs-panda?c=home](https://www.indiegogo.com/projects/yuki-vs-panda?c=home)
 
@@ -12,13 +12,13 @@ Yesterday I got the chance to have an interview with a member of the Yuki vs Pan
 
 **Graham Misiurak:** Without giving away too much, Yuki and Panda meet when they are young and it really doesn’t go too well. So bad that Panda is shamed into leaving the zoo he was living in and forced to travel alone seeking self-redemption. Yuki on the other hand has suppressed the entire event and has no clue.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image2.jpg =500x703)
 
 **Small Dev Talk: What is the story behind the master?**
 
 **Graham Misiurak:** Master Lee is Yuki’s adoptive Grandfather. He is a major part in the story but that won’t come out until volume 3. For right now he’s basically just a hard-ass on her. Ya see, Yuki has tremendous powers and he has been training her to use them wisely and control her impulsive behaviour.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image3.jpg =500x703)
 
 **Small Dev Talk: Adoptive grandfather? What happened or where are Yuki’s parents?**
 
@@ -28,7 +28,7 @@ Yesterday I got the chance to have an interview with a member of the Yuki vs Pan
 
 **Graham Misiurak:** I guess they are embodiments of many archetypes found in pop culture and high school life in general. That’s sort of their role. Bernard and Madesin represent contrasting personalities that Yuki can feed off of. Beranrd is crass and a pretty pig-headed chauvinist. While Madesin is a meek and quiet brown mouse who longs to have the confidence of Yuki. They are definitely inspired from anime characters and manga’s. There always seems to be a little rag-tag group of misfits.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image4.jpg =500x703)
 
 **Small Dev Talk: Yuki vs Panda seems to be a comedic comic, what other genres will be included in Yuki vs Panda, such as romance?**
 
@@ -38,7 +38,7 @@ Yesterday I got the chance to have an interview with a member of the Yuki vs Pan
 
 **Graham Misiurak:** We wanted to give both Yuki and Panda a relatable emotion or situation that people could identify with through all the craziness and fun. So Panda is really being set up in volume 1 as a tragic figure. We feel sorry for him, so that when he starts acting crazy and exacting his revenge, we at least can understand him and don’t lose sense of him as someone who can be our hero, or anti-hero.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image5.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image5.jpg =500x703)
 
 **Small Dev Talk: What types of things are we expected to see the Panda do in his revenge against Yuki?**
 
@@ -60,7 +60,7 @@ Yesterday I got the chance to have an interview with a member of the Yuki vs Pan
 
 **Graham Misiurak:** A.L. Jones is our artist. She’s an amazing, amazing artist. We giggle like school kids every time we see the latest batch of roughs.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image6.jpg =491x648)
 
 **Small Dev Talk: Do you plan on making Yuki vs Panda into an anime or movie in the future?**
 
@@ -78,7 +78,7 @@ Yesterday I got the chance to have an interview with a member of the Yuki vs Pan
 
 **Graham Misiurak:** I just really hope they laugh and enjoy it. And truly this is just the starting stride to a really wild story!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-03-22_YukiVsPanda\image7.jpg =500x321)
 
 ---
 

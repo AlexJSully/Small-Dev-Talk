@@ -1,6 +1,6 @@
 ## Warlords
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image1.jpg =500x185)
 
 It is time for you to become a warlord! Not long ago I got the chance to talk with Alen Magdic from Simos Games on their upcoming game Warlords, a new tablet and mobile strategy game. You can find more about the game at [http://simosgames.com/](http://simosgames.com/)
 
@@ -18,7 +18,7 @@ By using a unique unit control and camp upgrades, you will be able to boost your
 
 Throne is an expression for influence, sometimes referring to the sole strength of single men, sometimes referring to the declared dominion of House or Guild, or in other occasions, referred to cities or kingdoms, and where power is held, sovereignty upon ways of life is established – the war, trading and culture fall under its throne, and such throne represents controlled land, and such throne is well recognized. Ilsenthar is the strongest throne known in the Aldfarne, but any prospering conqueror would attempt to enslave the sovereignty of elven Houses, or break into the throne of dwarven Styrgard, capital of their culture. In Aldfarne, the power of throne begins with one’s personage and the firm integrity of their actions, whether it be a single person or Guild.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image2.jpg =500x375)
 
 **Small Dev Talk: What is the gameplay like in Warlords?**
 
@@ -30,7 +30,7 @@ We’re most proud that in our testing kids 6-10, teenagers and 20-45 years old,
 
 Through testing, players had a lot of fun with randomly generated items to power up your Warlord. Higher the level you play item dropped in treasure chest get stronger!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image3.jpg =500x294)
 
 **Small Dev Talk: What are Warlords?**
 
@@ -41,19 +41,19 @@ Through testing, players had a lot of fun with randomly generated items to power
 **Alen Magdic:** There are 4 different Warlords to start. Ranger, Dwarf, Elf and Wizard. As you can imagine, primarily they are different by races, classes and weapons they use. Also they have very different special abilities, which lead us to totally different gameplay and tactics depending which Warlord you choose!
 Through testing, players had a lot of fun with randomly generated items to power up your Warlord. Higher the level you play item dropped in treasure chest get stronger!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image4.jpg =258x254)
 
 **Small Dev Talk: What type of units will the player get to control?**
 
 **Alen Magdic:** There are 7 different units to play with. Human Swordsman, Elf Archer, Dwarf Crusher, Fire Wizard, Elf Healer, Dwarven Catapult and Halfling. As they have very different abilities, you can make different combinations depending on your enemies.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image5.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image5.jpg =500x313)
 
 **Small Dev Talk: What type of enemies will the player get to play against?**
 
 **Alen Magdic:** Goblins, Orcs, Shamans, Cave Trolls, Elementals and many other fantasy creatures! I won’t reveal you everything now :)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image6.jpg =304x312)
 
 **Small Dev Talk: What type of spells will the player get to use in Warlords?**
 
@@ -75,13 +75,13 @@ Each level is its own challenge. Your goal can be quite different, defeating cer
 
 **Alen Magdic:** What I really like about the game is that I've replayed each level more than 100 times, and still i have fun playing the game! Reason for that is that you can take different lines in upgrading your units, using items differently which allows you to try different tactics and strategies to defeat levels.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image7.jpg =500x294)
 
 **Small Dev Talk: What challenges did you and your team face in the development of Warlords?**
 
 **Alen Magdic:** When we started this project, our primary objective was to create a GREAT gameplay. For this reason we started prototyping very early on. As initial gameplay concept wasn’t accepted too well by testers, we had to start from scratch few times. But it was well worth it!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image8.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image8.jpg =500x313)
 
 **Small Dev Talk: What engine does Warlords run on?**
 
@@ -95,7 +95,7 @@ Each level is its own challenge. Your goal can be quite different, defeating cer
 
 **Alen Magdic:** Please try the game throughout public BETA, and provide us your valuable feedback. Game is already available to download on Google Play Store. Also join our forum to get access to PC version with level editor. We’ll listen to all your ideas and be sure you’ll see the best ideas & levels implemented in the final release of Warlords RTS: Clash of Thrones!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image9.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-05-19_Warlords\image9.jpg =500x295)
 
 ---
 

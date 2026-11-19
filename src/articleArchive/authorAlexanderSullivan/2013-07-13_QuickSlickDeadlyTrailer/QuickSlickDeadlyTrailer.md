@@ -1,6 +1,6 @@
 ## Quick Slick Deadly - Trailer
 
-[![YouTube Video](https://img.youtube.com/vi/yNdEny7E9ps/0.jpg)](https://www.youtube.com/watch?v=yNdEny7E9ps)
+[![YouTube Video](https://img.youtube.com/vi/yNdEny7E9ps/0.jpg =480x360)](https://www.youtube.com/watch?v=yNdEny7E9ps)
 
 Check out the first submitted trailer to Small Dev Talk now! Quick Slick Deadly an action packed scrolling space shooter.
 

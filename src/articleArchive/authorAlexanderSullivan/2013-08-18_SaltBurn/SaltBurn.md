@@ -1,6 +1,6 @@
 ## Salt & Burn
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image1.jpg =500x376)
 
 Gear yourself up to hunt some monsters in Salt & Burn. A new tabletop monster-hunter RPG board game by Unicorn Empire Prints. I recently got the chance to talk with Amber Whitney about her new exciting new boar d game, Salt & Burn. You can support them on their [Kickstarter](https://www.kickstarter.com/projects/805679018/salt-and-burn-the-board-game) or find out more on their [website](https://www.etsy.com/shop/unicornempireprints).
 
@@ -12,7 +12,7 @@ Gear yourself up to hunt some monsters in Salt & Burn. A new tabletop monster-hu
 
 **Amber Whitney:** You are a Hunter of the Supernatural, trying to save innocent lives and kill the things that go bump in the night! Each Hunter character in Salt & Burn has a different backstory, with different reasons why they became Hunters, included in the extended game-book.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image2.jpg =500x443)
 
 **Small Dev Talk: How do you play Salt & Burn? What are the rules in the game?**
 
@@ -22,41 +22,41 @@ Gear yourself up to hunt some monsters in Salt & Burn. A new tabletop monster-hu
 
 **Amber Whitney:** The game board enhances game play, but personally I wanted to make sure that the game was really affordable. The mat is a simple rollable print that can be put on any flat surface and used as a game board. It’s just an affordable option compared to getting the actual game board, which is being professionally printed and will be made like a classic Monopoly board. We’ve also worked on developing a cards-only version, so that people who could only afford the cards would be able to play as well. People who buy the cards-only version of Salt & Burn will receive a few extra cards to replace the functions that they lose from the game board to keep it well rounded.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image3.jpg =500x375)
 
 **Small Dev Talk: Can you describe to us the different types of cards in Salt & Burn and their purposes?**
 
 **Amber Whitney:** Character cards - Your Hunter can be a human, angel or a demon, and each race has different advantages. Each Hunter comes with a base attack and base health; both of these can be modified throughout the game with the use of items.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image4.jpg =500x375)
 
 Item Cards - Items can protect you and add to your base health or make you more dangerous as a hunter and add to your base attack; some of the best items will do both. Other items might actually hurt you- a Demon who touches a Blessed Knife will actually lose health points and have to discard the item.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image5.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image5.jpg =500x206)
 
 Trunk Cards - These are like magic spells, you need to keep them secret from other Hunters and use them at your discretion. These spells can do any number of things; curse other Hunters, heal you, or make you immune from a group event or curses enacted on you by other Hunters. There are cards in the event deck that allow other Hunters to steal from each other though, so it’s important to not give any tips when you’ve got something good, otherwise you might find yourself getting carjacked by a greedy Hunter.
 
 Vehicle Cards - Your vehicle can have a pretty big impact on your Hunter in the game. Each vehicle has a different amount of trunk space, and some have speed modifiers that make you go faster or slower around the board by subtracting or adding to your roll. A bigger trunk means you can keep more Trunk Cards; but it often means you’ll go slower. If you have a -1 speed bonus and roll a 1, you’ll be sitting that turn out!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image6.jpg =500x313)
 
 **Small Dev Talk What type of supernatural creatures and event cards will we see in Salt & Burn?**
 
 **Amber Whitney:** Event Cards can be good or bad, they are entirely up to chance and you will draw one for a majority of your turns because each grey space on the board means it’s time to draw an Event card. You might draw a monster to fight or you might get a nice slice of pie and earn back 2 health points! We have a very wide variety of possible things that can happen to your Hunter.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image7.jpg =500x251)
 
 **Small Dev Talk: What type of player cards will we see in Salt & Burn? What is the difference between them?**
 
 **Amber Whitney:** The biggest difference at the moment is the ability to carry items; Humans can use the most items, though they also have the lowest base health and damage to start. Each Hunter also has a unique backstory and different stats, so some are definitely better than others from the get go. In the Bitten Booster pack we’re introducing Werewolf Hunters and Vampire Hunters, and each will have special abilities which we’re looking into expanding across all species groups. For instance, if you’re playing a Vampire Hunter and you land on or within a space of another hunter, you can roll a D6 and steal that many health points from that hunter. Fun little things that will really accentuate the difference in the character species!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image8.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image8.jpg =498x750)
 
 **Small Dev Talk: The card Plaid Shirt of Awesomeness immediately reminded me of CW Supernatural’s Sam and Dean and their clothing. Did that show ever have an impact or inspiration for Salt & Burn?**
 
 **Amber Whitney:** Very definitely! I’m a big fan of the show, and there are a few Supernatural jokes in the game itself like the Plaid Shirt or the Tuesday event card (I won’t tell you what it does, but I’m sure you can guess!). But I also designed the game specifically wanting to make something that stood alone and could be fun for people who have never even heard of the show, and I’m pretty confident that we’ve succeeded in that regard.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image9.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image9.jpg =500x379)
 
 **Small Dev Talk: What inspired you to create Salt & Burn?**
 
@@ -90,7 +90,7 @@ Vehicle Cards - Your vehicle can have a pretty big impact on your Hunter in the 
 
 **Amber Whitney:** Thanks for taking the time to read about Salt & Burn! We really hope to provide a quality game that is fun for all kinds of gamers that has enough diversity to give you plenty of replay value. We made sure to keep the numbers low so the math elements of the game can be done quickly and keep everything moving at a quick pace. Health point counters are also included in the game to keep track of your character’s current health easily from turn to turn. We’ve done our best to create something that everyone can be happy to have on their game shelf!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image10.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_SaltBurn\image10.jpg =500x375)
 
 ---
 

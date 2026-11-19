@@ -4,8 +4,11 @@
 //
 //= ============================================================================
 
-/** Convert markdown files into HTML */
-const converter = new showdown.Converter();
+/**
+ * Convert markdown files into HTML. Article images give their size as `![alt](url =WIDTHxHEIGHT)`, which Showdown turns
+ * into `width` and `height` attributes, so the browser reserves each image's space before it loads.
+ */
+const converter = new showdown.Converter({ parseImgDimensions: true });
 
 /**
  * Escape HTML special characters to prevent XSS injection.

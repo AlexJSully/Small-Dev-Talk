@@ -142,7 +142,12 @@ img {
 	height: auto;
 	margin-left: 1%;
 	max-height: 70px;
-	width: 100%;
+	/*
+	 * The width at which the 801 by 149 title is 70px tall with its 2px border, so the title has its size before the
+	 * SVG loads. A percentage width resolves against the link around the image, which has no width until then.
+	 */
+	max-width: 100%;
+	width: calc((70px - 4px) * 801 / 149 + 4px);
 }
 
 #header .ad {
@@ -170,6 +175,8 @@ img {
 	padding: 5px;
 	vertical-align: middle;
 	width: 100%;
+	/* Scale the height with the width; the width and height attributes only set the aspect ratio. */
+	height: auto;
 }
 /** END body **/
 
@@ -498,6 +505,11 @@ img {
 
 	#content {
 		max-width: 100%;
+		/*
+		 * The sidebar stacks below the content here. Articles and lists are added after the first paint, so without a
+		 * screen of reserved height the sidebar first paints in view and then jumps down.
+		 */
+		min-height: 100vh;
 	}
 }
 

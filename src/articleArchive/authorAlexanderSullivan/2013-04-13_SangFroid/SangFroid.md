@@ -1,6 +1,6 @@
 ## Sang-Froid - Tales of Werewolves
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image1.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image1.jpg =500x286)
 
 With the recent release of Sang-Froid – Tales of Werewvoles, I got the chance to talk to with the developers from Artifice Studio of this amazing Steam Greenlight game and ask them questions about Sang-Froid – Tales of Werwolves. The game’s official website is [http://www.sangfroidgame.com/](http://www.sangfroidgame.com/) but you can purchase the game today on Steam for $14.99 [here](https://store.steampowered.com/app/227220/SangFroid__Tales_of_Werewolves/).
 
@@ -12,7 +12,7 @@ With the recent release of Sang-Froid – Tales of Werewvoles, I got the chance 
 
 **Artifice Studio:** You play the role of one of the 2 O'Carroll brothers, sons of an Irish immigrant and an Amerindian priestess, trying to defend your sister Joséphine, who has been cursed by the devil himself, and sends hordes of Werewolves to attack your house each night. As if this was not enough, Joséphine inherited some magical powers from her mother and, while in some sort of coma, she prophesizes that an “Invisible Beast” will soon come and destroy the whole region.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image2.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image2.jpg =500x683)
 
 **Small Dev Talk: What is the story behind Jacky, Josy and Josephine? What inspired the creation of these characters?**
 
@@ -24,7 +24,7 @@ The 2 brothers have to set aside their differences when Jos comes to Jack’s ca
 
 Our characters were inspired by many Canadian folktales. Jos in particular was inspired by the great Jos Montferrand, a historical French-Canadian hero.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image3.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image3.jpg =500x750)
 
 **Small Dev Talk: What type of environments will be included in Sang-Froid – Tales of Werewolves? Are the surroundings around the cabin and church the only map or will there be more?**
 
@@ -32,7 +32,7 @@ Our characters were inspired by many Canadian folktales. Jos in particular was i
 
 In addition to that, players can visit the town of Wolvesvale and the Indian village of Mashteuiatch to buy many useful items/services.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image4.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image4.jpg =500x281)
 
 **Small Dev Talk: Why did you choose to create a story based off of supernatural creatures? Especially the Windigo which has not many appearances in TV shows movies or video games.**
 
@@ -40,7 +40,7 @@ In addition to that, players can visit the town of Wolvesvale and the Indian vil
 
 There is also a difference between folklore and fantasy. All our creatures were inspired from legends that were actually told to kids and adults a hundred years ago or so, rather than being totally invented or inspired by Tolkien, D&D or videogames. We think that adds to the uniqueness and richness of our game.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image5.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image5.jpg =500x281)
 
 **Small Dev Talk: What is the gameplay like in Sang-Froid - Tales of Werewolves?**
 
@@ -50,7 +50,7 @@ Then, night comes and you must execute the plan you thought out during the day. 
 
 One of your best aids in combat is intimidation. Werewolves and other creature can be frightened with fire, by shouting, or by attacking them. Intimidating your opponents prevents them from attacking you all at once and a lot of fights are won on the psychological level. However, when in packs, creatures tend to be more courageous and THEY start to intimidate you!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image6.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image6.jpg =500x281)
 
 **Small Dev Talk: Can you describe to us how the traps work in Sang-Froid - Tales of Werewolves? Is there a maximum to many traps you can place? If a trap is not used, will it remain there for the next night?**
 
@@ -58,7 +58,7 @@ One of your best aids in combat is intimidation. Werewolves and other creature c
 
 It was important for us to give a feeling of “persistence” to the world and so, all the traps that cost you money stay permanently (if unused) once you place them.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image7.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image7.jpg =500x281)
 
 **Small Dev Talk: What type of weapons will be included Sang-Froid – Tales of Werewolves have?**
 
@@ -68,7 +68,7 @@ Ammunition also come in 3 types: lead, holy and silver. Each type is more effici
 
 On the close-combat side, we have 2 main categories: industrial-made lumberjack axes that can be blessed at the local convent and Amerindian weapons such as tomahawks. Again, all the weapons were inspired by historical types and each of them has specific uses against particular creatures.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image8.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image8.jpg =500x281)
 
 **Small Dev Talk: Do the weapons have to be blessed after every night?**
 
@@ -82,7 +82,7 @@ On the close-combat side, we have 2 main categories: industrial-made lumberjack 
 
 **Artifice Studio:** After each night, whether you fail or succeed, you get some experience points based on your achievements. The XP in turn allows you to gain levels which give you skill points with which you can buy skills. There are 2 types of skills, trap-oriented and combat-oriented. Examples of trap-oriented skills are: Baiting, which allows you to poison your bait and Faith that increase the effect of your wayside crosses when you pray. Examples of combat-oriented skills are Rage, that gives you special combat moves, and Intimidation that increases your chances to frighten your enemies.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image9.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image9.jpg =500x281)
 
 **Small Dev Talk: What type of game modes will be included in Sang-Froid – Tales of Werewolves? Will there be a multiplayer or co-op mode?**
 
@@ -92,19 +92,19 @@ On the close-combat side, we have 2 main categories: industrial-made lumberjack 
 
 **Artifice Studio:** We wanted to create a game based on werewolves. It just happens that here, in Québec, we have a long tradition of werewolves in our folktales. They are, however quite different from werewolves we see in modern movies, games or novels. We thought this would be great as it would set our game apart from all the others. Starting from there, we contacted best-selling author and werewolf-specialist Bryan Perro to help us shape our universe in a way that would be faithful to 19th century Canadian folktales. As the game production progressed, our universe became richer and we incorporated many creatures of myth and legends like the Will-o’-the-Wisp and the Windigo.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image10.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image10.jpg =500x690)
 
 **Small Dev Talk: What is your favourite aspect of the game?**
 
 **Artifice Studio:** It’s open-endedness. Nothing makes me happier than when I see someone succeeding a night in a way I never thought of!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image11.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image11.jpg =500x333)
 
 **Small Dev talk: What challenges did you and your team come across in the development of Sang-Froid – Tales of Werewolves?**
 
 **Artifice Studio:** Many. We had no official offices, so I had to convert a part of my house into a studio. We had no external funding so we had to borrow the money on our own. At the beginning of the project, we thought we would be ok with 2 years and it finally took close to 4 years. When we started the project, 4 years ago, we were not aware of Kickstarter and Greenlight was not invented on Steam. So, last August, we had quite a surprise when we learned that we would need to win a kind of “popularity” contest to get on Steam. Finally, this turned out well for us though… ;)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image12.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image12.jpg =500x571)
 
 **Small Dev Talk: Do you have any advice to upcoming developers?**
 
@@ -130,7 +130,7 @@ On the close-combat side, we have 2 main categories: industrial-made lumberjack 
 
 **Artifice Studio:** Thanks so much for supporting us! We think Sang-Froid is different and our community proves that there is a demand for different games in different settings. I hope this will inspire other developers to create more authentic and unique experiences.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image13.jpg)
+![image](src\articleArchive\authorAlexanderSullivan\2013-04-13_SangFroid\image13.jpg =500x281)
 
 ---
 

@@ -1,6 +1,6 @@
 ## Cube MetalHeart 2 - Combat Squared Review
 
-[![YouTube Video](https://img.youtube.com/vi/Zz7hOz7ewaE/0.jpg)](https://www.youtube.com/watch?v=Zz7hOz7ewaE)
+[![YouTube Video](https://img.youtube.com/vi/Zz7hOz7ewaE/0.jpg =480x360)](https://www.youtube.com/watch?v=Zz7hOz7ewaE)
 
 Check out Small Dev Talk’s latest game review on Cube MetalHeart 2 - Combat Squared by Freak Mind Games.
 

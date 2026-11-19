@@ -69,6 +69,103 @@ describe("Landing Page", () => {
 		});
 	});
 
+	it("should reserve each article image's space before it loads, at the image's proportions", () => {
+		cy.visit("http://localhost:3000/index.html?YukiVsPanda");
+
+		cy.get("#articleBody img").should("have.length.greaterThan", 2);
+		cy.get("#articleBody img").each(($img) => {
+			const image = $img[0];
+			const style = getComputedStyle(image);
+			// The box includes the padding and border around the image.
+			const frame =
+				parseFloat(style.paddingLeft) +
+				parseFloat(style.paddingRight) +
+				parseFloat(style.borderLeftWidth) +
+				parseFloat(style.borderRightWidth);
+			const frameHeight =
+				parseFloat(style.paddingTop) +
+				parseFloat(style.paddingBottom) +
+				parseFloat(style.borderTopWidth) +
+				parseFloat(style.borderBottomWidth);
+			const box = image.getBoundingClientRect();
+
+			expect($img.attr("width")).to.match(/^\d+$/);
+			expect($img.attr("height")).to.match(/^\d+$/);
+			// Lazy images below the fold have not loaded, so their height comes from the attributes alone.
+			expect((box.width - frame) / (box.height - frameHeight)).to.be.closeTo(
+				Number($img.attr("width")) / Number($img.attr("height")),
+				0.02,
+			);
+		});
+	});
+
+	[
+		["the home page", "http://localhost:3000/", "#displayArticles .post"],
+		["an article", "http://localhost:3000/index.html?YukiVsPanda", "#articleBody img"],
+	].forEach(([page, url, rendered]) => {
+		it(`should not shift the layout while ${page} loads on a phone`, () => {
+			cy.viewport(412, 823);
+			cy.visit(url);
+
+			cy.get(rendered).should("exist");
+			cy.wait(1000);
+			// A buffered observer receives every layout shift since the page started loading.
+			cy.window()
+				.then(
+					(win) =>
+						new Cypress.Promise((resolve) => {
+							let total = 0;
+
+							new win.PerformanceObserver((list) => {
+								list.getEntries().forEach((entry) => {
+									total += entry.value;
+								});
+							}).observe({ type: "layout-shift", buffered: true });
+							setTimeout(() => resolve(total), 500);
+						}),
+				)
+				// 0.1 is the most layout shift a page can have and still be rated good.
+				.should("be.lessThan", 0.1);
+		});
+	});
+
+	it("should give the title its size before the title image loads", () => {
+		// A copy of the title whose image never arrives during the test measures the space reserved before it loads.
+		cy.intercept("/pending-title.svg", (request) => {
+			request.on("response", (response) => {
+				response.setDelay(10000);
+			});
+		});
+		cy.visit("http://localhost:3000/");
+
+		cy.get('#header h1 img[src*="title.svg"]').then(($img) => {
+			const link = $img[0].parentElement;
+			const copy = link.cloneNode(true);
+
+			copy.querySelector("img").src = "/pending-title.svg";
+			// Take the real title out of the row, so the copy gets the room the title has.
+			link.hidden = true;
+			link.after(copy);
+		});
+
+		cy.get('#header h1 img[src$="/pending-title.svg"]').should(($img) => {
+			expect($img[0].complete).to.equal(false);
+			expect($img[0].getBoundingClientRect().height).to.be.closeTo(70, 1);
+			expect($img[0].getBoundingClientRect().width).to.be.closeTo(359, 1);
+		});
+	});
+
+	it("should show the Ghostship article with its images", () => {
+		cy.visit("http://localhost:3000/index.html?Ghostship");
+
+		cy.get("#articleBody h2").first().should("have.text", "Ghostship");
+		cy.get("#articleBody img").should("have.length", 13);
+		cy.get("#articleBody img")
+			.first()
+			.should("be.visible")
+			.and(($img) => expect($img[0].naturalWidth).to.equal(500));
+	});
+
 	it("should keep the proportions of archive thumbnails", () => {
 		cy.visit("http://localhost:3000/index.html?pages&archive");
 

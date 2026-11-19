@@ -1,6 +1,6 @@
 ## CENTS Interview
 
-![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg)
+![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg =400x225)
 
 Sammy uses her gift for mathematics and enlist her “frenemies” to revamp the school penny drive into a major moneymaking operations in CENTS, new upcoming movie by Christopher Boone. You can support them on [[Kickstarter](https://www.kickstarter.com/projects/958208495/cents-feature-film)](<https://www.[Kickstarter](https://www.kickstarter.com/projects/958208495/cents-feature-film).com/projects/958208495/cents-feature-film>) and find out more on their [website](http://centsthemovie.com/).
 
@@ -10,7 +10,7 @@ Sammy uses her gift for mathematics and enlist her “frenemies” to revamp the
 
 You can also check out their trailer below.
 
-[![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg))](https://www.youtube.com/watch?v=S9c4K2OhZPw)
+[![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg =400x225))](https://www.youtube.com/watch?v=S9c4K2OhZPw)
 
 [CENTS](https://vimeo.com/73419769?cjevent=0bdf1d4f832311e980b700270a24060f) Teaser from [Christopher Boone](https://vimeo.com/christopherboone?cjevent=12e8b3fc832311e983f500290a24060e) on [Vimeo](https://vimeo.com/?cjevent=1cb5bfdb832311e9826b00270a24060c).
 
@@ -18,13 +18,13 @@ You can also check out their trailer below.
 
 **Christopher Boone:** Sammy is crazy smart. She does calculus in the seventh grade. But she is also a loner and a troublemaker. She keeps her math skills secret for fear of kids making fun of her. At the same time, she is always angling to make money so she can buy a smartphone she really can’t afford.
 
-![image2](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image2.jpg)
+![image2](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image2.jpg =300x169)
 
 **Small Dev Talk: How will the other girls in CENT’s penny drive affect Sammy Beca and the stoy?**
 
 **Christopher Boone:** Each of the girls in CENTS makes bad choices because they can’t see two inches in front of their faces and don’t really understand the consequences of their actions until they come back around to affect them.
 
-![image3](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image3.jpg)
+![image3](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image3.jpg =500x282)
 
 **Small Dev Talk: How scientifically, actually, mathematically, correct will this movie be?**
 
@@ -48,7 +48,7 @@ At the same time, I’ve always liked math and wanted to include it in a story i
 
 **Christopher Boone:** We haven’t made CENTS yet, so a whole world of challenges awaits us! Right now, we’re working hard to have a successful [Kickstarter](https://www.kickstarter.com/projects/958208495/cents-feature-film) so we can make CENTS.
 
-![image4](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image4.jpg)
+![image4](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image4.jpg =500x281)
 
 **Small Dev Talk: Do you have any advice for upcoming film makers?**
 
@@ -62,7 +62,7 @@ At the same time, I’ve always liked math and wanted to include it in a story i
 
 **Christopher Boone:** Thanks for taking time to read this interview. I hope you’ll check out our [Kickstarter](https://www.kickstarter.com/projects/958208495/cents-feature-film) by Sat. Feb. 8 and help us make CENTS. Every dollar counts.
 
-![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg)
+![image1](src\articleArchive\authorAlexanderSullivan\2014-02-02_CENTS\image1.jpg =400x225)
 
 ---
 
