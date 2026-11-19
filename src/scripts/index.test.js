@@ -13,6 +13,7 @@ const {
 	updateCanonicalLink,
 	startThirdParties,
 	handleControlClick,
+	enableSubmenuDismissal,
 	changeCarouselSlide,
 	showCarouselSlide,
 	enableCarouselSwipe,
@@ -1191,6 +1192,21 @@ describe("start", () => {
 		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
 	});
 
+	test("lets Escape close the navigation's open submenu", async () => {
+		document.body.innerHTML = `
+			<div id="header"><nav><ul class="pages">
+				<li id="games"><a id="gamesLink" href="index.html?pages&games">Games</a><ul><li></li></ul></li>
+			</ul></nav></div>
+			<div id="articleBody"></div>
+		`;
+
+		await start(createLocation("https://smalldevtalk.net/index.html?TestArticle"));
+		document.getElementById("gamesLink").focus();
+		document.activeElement.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+
+		expect(document.getElementById("games").classList.contains("submenuDismissed")).toBe(true);
+	});
+
 	test("renders the view before it registers the worker, so a slow install never delays the page", async () => {
 		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
 		let articleBodyWhenRegistering;
@@ -1464,6 +1480,7 @@ describe("ArticleFiller: callArticle", () => {
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		delete document.URL;
 	});
 
 	const testCases = [
@@ -1479,13 +1496,31 @@ describe("ArticleFiller: callArticle", () => {
 			expectGrabArticle: false,
 			expectCallDisplay: true,
 		},
+		{
+			name: "grabs the article named by a single param",
+			url: "http://localhost/index.html?TestArticle",
+			expectGrabArticle: true,
+			expectCallDisplay: false,
+		},
+		{
+			// The skip link adds #content to the URL, which a reload or a shared link keeps.
+			name: "grabs the article named by a single param when the URL has a fragment",
+			url: "http://localhost/index.html?TestArticle#content",
+			expectGrabArticle: true,
+			expectCallDisplay: false,
+		},
+		{
+			name: "calls callDisplay for no query in a URL with a fragment",
+			url: "http://localhost/index.html#content",
+			expectGrabArticle: false,
+			expectCallDisplay: true,
+		},
 	];
 
 	testCases.forEach(({ name, url, expectGrabArticle, expectCallDisplay }) => {
 		test(name, () => {
-			Object.defineProperty(window, "URL", {
+			Object.defineProperty(document, "URL", {
 				value: url,
-				writable: true,
 				configurable: true,
 			});
 			const grabSpy = jest.spyOn(ArticleFiller, "grabArticle").mockImplementation(() => {});
@@ -1505,6 +1540,92 @@ describe("ArticleFiller: callArticle", () => {
 			}
 		});
 	});
+});
+
+describe("ArticleFiller: callDisplay", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<div id="pageTitle"></div>
+			<div id="carouselInner"></div>
+			<div id="carouselIndicator"></div>
+			<div id="featuredArticles"></div>
+			<div id="displayArticles"></div>
+			<div id="articleBody" hidden></div>
+		`;
+		ArticleFiller.articleData = {
+			ArticleOne: {
+				title: "First Article",
+				summary: "Summary 1",
+				thumbnail: "thumb1.png",
+				author: "Jane Doe",
+				date: "2024-06-01",
+			},
+			ArticleTwo: {
+				title: "Second Article",
+				summary: "Summary 2",
+				thumbnail: "thumb2.png",
+				author: "John Smith",
+				date: "2024-06-02",
+			},
+		};
+		ArticleFiller.pageData = {
+			games: { carousel: ["ArticleOne"] },
+			index: { carousel: ["ArticleTwo"] },
+		};
+	});
+
+	afterEach(() => {
+		delete document.URL;
+		document.body.innerHTML = "";
+		ArticleFiller.whatPageDisplay = "index";
+		ArticleFiller.pageURL = undefined;
+		ArticleFiller.articleData = undefined;
+		ArticleFiller.pageData = undefined;
+	});
+
+	/**
+	 * Run callDisplay at a URL.
+	 * @param {string} url The page URL.
+	 * @returns {void}
+	 */
+	function callDisplayAt(url) {
+		Object.defineProperty(document, "URL", { value: url, configurable: true });
+
+		ArticleFiller.callDisplay();
+	}
+
+	test.each(["http://localhost/index.html?pages&games", "http://localhost/index.html?pages&games#content"])(
+		"shows the Games section's carousel for %s",
+		(url) => {
+			callDisplayAt(url);
+
+			expect(document.getElementById("pageTitle").innerText).toBe("Small Dev Talk: Games");
+			expect(document.getElementById("carouselInner").textContent).toContain("First Article");
+			expect(document.getElementById("carouselInner").textContent).not.toContain("Second Article");
+		},
+	);
+
+	test.each(["http://localhost/index.html?pages&archive", "http://localhost/index.html?pages&archive#content"])(
+		"shows the archive for %s",
+		(url) => {
+			callDisplayAt(url);
+
+			expect(document.querySelectorAll("#displayArticles .archive-display")).toHaveLength(2);
+			expect(document.getElementById("featuredArticles").hasAttribute("hidden")).toBe(true);
+			expect(document.getElementById("carouselInner").innerHTML).toBe("");
+		},
+	);
+
+	test.each(["http://localhost/index.html", "http://localhost/index.html#content"])(
+		"shows the home page's carousel for %s",
+		(url) => {
+			callDisplayAt(url);
+
+			expect(document.getElementById("pageTitle").innerText).toBe("Small Dev Talk: Index");
+			expect(document.getElementById("carouselInner").textContent).toContain("Second Article");
+			expect(document.getElementById("carouselInner").textContent).not.toContain("First Article");
+		},
+	);
 });
 
 describe("ArticleFiller: displayArchive", () => {
@@ -2476,6 +2597,147 @@ describe("enableCarouselSwipe", () => {
 	});
 });
 
+describe("enableSubmenuDismissal", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<nav>
+				<ul>
+					<li id="home"><a id="homeLink" href="index.html">Home</a></li>
+					<li id="games">
+						<a id="gamesLink" href="index.html?pages&games">Games</a>
+						<ul>
+							<li><a id="interviewsLink" href="index.html?pages&gameinterviews">Interviews</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+			<a id="outside" href="#content">Elsewhere</a>
+		`;
+		enableSubmenuDismissal(document.querySelector("nav"));
+	});
+
+	afterEach(() => {
+		document.body.innerHTML = "";
+	});
+
+	const games = () => document.getElementById("games");
+	const pressKey = (key) =>
+		document.activeElement.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
+
+	test("Escape closes the submenu that holds keyboard focus", () => {
+		document.getElementById("interviewsLink").focus();
+
+		pressKey("Escape");
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+	});
+
+	test("Escape moves focus from a submenu link to its item's link, which stays visible", () => {
+		document.getElementById("interviewsLink").focus();
+
+		pressKey("Escape");
+
+		expect(document.activeElement.id).toBe("gamesLink");
+	});
+
+	test("Escape on a hovered submenu leaves focus where it was", () => {
+		document.getElementById("outside").focus();
+		games().dispatchEvent(new Event("pointerenter"));
+
+		pressKey("Escape");
+
+		expect(document.activeElement.id).toBe("outside");
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+	});
+
+	test("Escape closes the submenu under the pointer", () => {
+		games().dispatchEvent(new Event("pointerenter"));
+
+		pressKey("Escape");
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+	});
+
+	test("the submenu stays closed when focus leaves while the pointer is still over its item", () => {
+		games().dispatchEvent(new Event("pointerenter"));
+		document.getElementById("gamesLink").focus();
+		pressKey("Escape");
+
+		document.getElementById("outside").focus();
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+
+		games().dispatchEvent(new Event("pointerleave"));
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
+	test("the submenu stays closed when the pointer leaves while focus is still in its item", () => {
+		games().dispatchEvent(new Event("pointerenter"));
+		document.getElementById("gamesLink").focus();
+		pressKey("Escape");
+
+		games().dispatchEvent(new Event("pointerleave"));
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+
+		document.getElementById("outside").focus();
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
+	test("the submenu opens again once focus leaves its item", () => {
+		document.getElementById("gamesLink").focus();
+		pressKey("Escape");
+
+		document.getElementById("outside").focus();
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
+	test("the submenu stays closed while focus moves within its item", () => {
+		document.getElementById("gamesLink").focus();
+		pressKey("Escape");
+
+		document.getElementById("interviewsLink").focus();
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+	});
+
+	test("the submenu opens again once the pointer leaves its item", () => {
+		games().dispatchEvent(new Event("pointerenter"));
+		pressKey("Escape");
+
+		games().dispatchEvent(new Event("pointerleave"));
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
+	test("Escape changes nothing when no submenu is open", () => {
+		document.getElementById("outside").focus();
+
+		pressKey("Escape");
+
+		expect(document.querySelectorAll(".submenuDismissed")).toHaveLength(0);
+	});
+
+	test("a key other than Escape leaves the submenu open", () => {
+		document.getElementById("gamesLink").focus();
+
+		pressKey("Enter");
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
+	test("an item without a submenu is never marked", () => {
+		document.getElementById("homeLink").focus();
+
+		pressKey("Escape");
+
+		expect(document.getElementById("home").classList.contains("submenuDismissed")).toBe(false);
+	});
+});
+
 describe("initializeSentry", () => {
 	afterEach(() => {
 		delete global.Sentry;
@@ -2585,6 +2847,14 @@ describe("updateCanonicalLink", () => {
 
 	test("points the canonical link at the viewed URL on the canonical host", () => {
 		updateCanonicalLink({ host: "smalldevtalk.net", href: "https://smalldevtalk.net/index.html?Oceania" });
+
+		expect(document.querySelector('link[rel="canonical"]').getAttribute("href")).toBe(
+			"https://smalldevtalk.net/index.html?Oceania",
+		);
+	});
+
+	test("leaves the fragment out of the canonical link", () => {
+		updateCanonicalLink({ host: "smalldevtalk.net", href: "https://smalldevtalk.net/index.html?Oceania#content" });
 
 		expect(document.querySelector('link[rel="canonical"]').getAttribute("href")).toBe(
 			"https://smalldevtalk.net/index.html?Oceania",

@@ -1,12 +1,12 @@
 ## Motte Island
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-16_MotteIsland\image1.jpg =500x500)
+![Motte Island cover art by One Aperture: a young man with his hands on the shoulders of a pale girl before a giant moth](src\articleArchive\authorAlexanderSullivan\2013-07-16_MotteIsland\image1.jpg =500x500)
 
 Can you survive Motte Island? Check out the most creative interview you will ever have seen exclusively on Small Dev Talk where we got the chance to talk with One Aperture on their latest game, Motte Island. A new innovative survival horror game based on a mysterious island. Check out their game on their [website](http://www.game.oneaperture.com/) or [IndieDB](https://www.indiedb.com/games/motte-island) or support them get [GreenLit](https://steamcommunity.com/sharedfiles/filedetails/?id=153382040).
 
 You can also check out their trailer below.
 
-[![YouTube Video](https://img.youtube.com/vi/S9c4K2OhZPw/0.jpg =480x360)](https://www.youtube.com/watch?v=S9c4K2OhZPw)
+[![Motte Island Alpha Demo Gameplay - Last Trailer! on YouTube](https://img.youtube.com/vi/S9c4K2OhZPw/0.jpg =480x360)](https://www.youtube.com/watch?v=S9c4K2OhZPw)
 
 ---
 

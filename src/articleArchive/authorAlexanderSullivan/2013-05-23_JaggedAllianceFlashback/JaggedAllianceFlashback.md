@@ -1,6 +1,6 @@
 ## Jagged Alliance Flashback
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image1.jpg =500x281)
+![Jagged Alliance Flashback logo with a hammer and sickle over a snowy forest where soldiers fight](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image1.jpg =500x281)
 
 Jagged Alliance is back for another adventure in Jagged Alliance Flashback! I recently got the chance to talk with Andreas & Thomas from Full Control on their upcoming game Jagged Alliance Flashback. You can check out their game at [http://www.jaggedallianceflashback.com/](http://www.jaggedallianceflashback.com/) or support them on their kickstarter at [http://www.kickstarter.com/projects/2079547763/jagged-alliance-flashback](https://www.kickstarter.com/projects/2079547763/jagged-alliance-flashback)
 
@@ -8,19 +8,19 @@ Jagged Alliance is back for another adventure in Jagged Alliance Flashback! I re
 
 **Jagged Alliance Flashback Team:** Flashback is a return the good old Jagged Alliance franchise where we take the mechanics from Jagged Alliance 2 and wrap it in a new story and update the graphics. We stay true to the core turn-based combat system and have modding support as well!
 
-[![YouTube Video](https://img.youtube.com/vi/Z9Zs135zvbE/0.jpg =480x360)](https://www.youtube.com/watch?v=Z9Zs135zvbE)
+[![Jagged Alliance: Flashback Kickstarter Video on YouTube](https://img.youtube.com/vi/Z9Zs135zvbE/0.jpg =480x360)](https://www.youtube.com/watch?v=Z9Zs135zvbE)
 
 **Small Dev Talk: What is the story in Jagged Alliance Flashback?**
 
 **Jagged Alliance Flashback Team:** The story is a prequel to the original stories. The setting is late 80'ies in the final days of the cold war. You initially get send as a CIA agent to stop a rogue Russian general who tries to pull a “cuban missile crisis” style stunt on the US. But as events unfold, you get left alone and have to survive on the island of San Christobal with or against the US, USSR, drug lords and the local population. You start recruiting and slowly build your mercenary army - leading up to the foundation of the A.I.M. organisation.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image2.jpg =500x246)
+![Map of the island group of San Christobal, with a red pin on its western coast](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image2.jpg =500x246)
 
 **Small Dev Talk: What are some new features that you will be adding to Jagged Alliance Flashback that the other Jagged Alliance’s did not have?**
 
 **Jagged Alliance Flashback Team:** We are adding subtle new features besides the new story. Examples are base management to upgrade liberated towns or military installments, faction system where loyalty towards one part will impact how other factions act towards you. And on the technical side we are getting the game into the Unity 3D engine, which will give a lot of modern features like particle systems, lighting and so on.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image3.jpg =482x750)
+![Jagged Alliance Flashback features: turn-based tactics with cover, roleplaying with NPCs, custom mercenaries, base management](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image3.jpg =482x750)
 
 **Small Dev Talk: What features will you be keeping form the old Jagged Alliance in this Jagged Alliance?**
 
@@ -38,7 +38,7 @@ Jagged Alliance is back for another adventure in Jagged Alliance Flashback! I re
 
 **Jagged Alliance Flashback Team:** We are going with the same system as in JA2. It works and is well known to all fans.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image4.jpg =500x367)
+![Weapon customization screen: a Colt M16A1 at upgrade level 3 with a silencer and grenade launcher attached](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image4.jpg =500x367)
 
 **Small Dev Talk: What is base management and how will it work in Jagged Alliance Flashback?**
 
@@ -50,13 +50,13 @@ So it’s important to defend your central base while spending some resources on
 
 This adds much more value to the strategic part of the game and more depth in gameplay.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image5.jpg =500x456)
+![Base management mock-up on a retro computer screen: a cutaway view of a base with several rooms](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image5.jpg =500x456)
 
 **Small Dev Talk: What weapons will the player be able to use in Jagged Alliance Flashback?**
 
 **Jagged Alliance Flashback Team:** Time typical weapons from the 70/80'ies that were in service at that point in time. We don’t want to do sci-fi.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image6.jpg =500x148)
+![M16A1 upgrade ranks 1 to 3: a wooden-stock rifle, an upgraded black rifle, then silenced and scoped with a grenade launcher](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image6.jpg =500x148)
 
 **Small Dev Talk: Can you tell us how the turn-based combat will work in Jagged Alliance Flashback?**
 
@@ -70,7 +70,7 @@ Where we want to make things a little different is in the UI, where we want to g
 
 **Jagged Alliance Flashback Team:** You can stay behind different objects in the world to gain a cover bonus. This reduces the chances of being hit from the other side. But beware, as certain covers can also be destroyed by the enemy
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image7.jpg =500x456)
+![Turn-based combat mock-up on a retro computer screen: mercenaries at night with a green movement cursor by a crate](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image7.jpg =500x456)
 
 **Small Dev Talk: Will you be adding multiplayer to this Jagged Alliance? If so, how will the multiplayer work in Jagged Alliance Flashback?**
 
@@ -84,7 +84,7 @@ Where we want to make things a little different is in the UI, where we want to g
 
 **Jagged Alliance Flashback Team:** The favorite aspect for me is not Flashback specific, but definitely the part we love the most - mercenary personality. It matter who you play with and who they play with. This part is rather unique to almost any game, and definitely a favorite.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image8.jpg =500x400)
+![Jagged Alliance Flashback poster of a hamster in a red beret holding a knife: We want you to join the killer hamster brigade](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image8.jpg =500x400)
 
 **Small Dev Talk: What challenges did you and your team come across in the development of Jagged Alliance Flashback and how did you overcome them?**
 
@@ -120,7 +120,7 @@ All this experience is something we bring into JA:F and can add the story and co
 
 **Jagged Alliance Flashback Team:** Using a game engine like Unity handles all this complexity for us. That is very fantastic and saves us a lot of time and difficulty. There is still some testing work to do, but the basic game runs on all 3 platforms from day 1 in development!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image9.jpg =500x118)
+![Windows, Mac and Linux logos](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image9.jpg =500x118)
 
 **Small Dev Talk: What is the expected launch date for Jagged Alliance Flashback and will it have a cost or will it be Free-To-Play?**
 
@@ -128,13 +128,13 @@ All this experience is something we bring into JA:F and can add the story and co
 
 Costs and launch dates are to be decided in detail as we go into real production later in the year. But we estimate a release date of late 2014 being the best guess right now.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image10.jpg =500x270)
+![Jagged Alliance Flashback collector’s edition: box, game disc, soundtrack, field manual, paper map, mousepad and more](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image10.jpg =500x270)
 
 **Small Dev Talk: Do you have anything to say towards the readers?**
 
 **Jagged Alliance Flashback Team:** We hope that everyone will help us make this game a reality and support our [Kickstarter](https://www.kickstarter.com/projects/2079547763/jagged-alliance-flashback). It means everything to us!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image11.jpg =500x237)
+![Green tank wearing a party hat, with Thank you painted on its side and a Bang flag hanging from its gun](src\articleArchive\authorAlexanderSullivan\2013-05-23_JaggedAllianceFlashback\image11.jpg =500x237)
 
 ---
 

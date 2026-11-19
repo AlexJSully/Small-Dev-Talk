@@ -43,7 +43,7 @@ img {
 
 #header .pages {
 	display: flex;
-	float: left;
+	flex-wrap: wrap;
 	margin-bottom: 0;
 	width: 100%;
 }
@@ -65,15 +65,27 @@ img {
 	text-decoration: underline;
 }
 
+/* The bar wraps on narrow screens rather than scrolling sideways: a scroll container would clip the Games submenu. */
 #header nav {
 	width: 100%;
 	background-color: #000;
-	overflow-x: auto;
 	white-space: nowrap;
 }
 
-#header nav ul li:hover > ul {
+/*
+ * Hover or keyboard focus opens a submenu; Escape closes it until neither the pointer nor focus is on the item
+ * (enableSubmenuDismissal).
+ */
+#header nav ul li:is(:hover, :focus-within):not(.submenuDismissed) > ul {
 	display: block;
+}
+
+/*
+ * A mouse press focuses a link in Chromium without matching `:focus-visible`, so that focus does not hold a submenu
+ * open once the pointer leaves, as after a Ctrl+click that opens the link in a new tab.
+ */
+#header nav ul li:has(:focus:not(:focus-visible)):not(:hover) > ul {
+	display: none;
 }
 
 #header nav ul {
@@ -83,8 +95,10 @@ img {
 	position: relative;
 }
 
+/* Each item positions its own submenu, which then opens beneath the item even when the bar wraps onto more rows. */
 #header nav ul li {
 	float: left;
+	position: relative;
 }
 
 #header nav ul li:hover {
@@ -106,6 +120,7 @@ img {
 	padding: 0;
 	position: absolute;
 	top: 100%;
+	z-index: 3;
 }
 
 #header nav ul ul li {
@@ -154,6 +169,17 @@ img {
 	float: right;
 	padding-top: 30px;
 }
+
+/* Shown at the top left while it has keyboard focus; Bootstrap's visually-hidden-focusable hides it otherwise. */
+.skipLink:focus {
+	background-color: #000000;
+	color: #ffffff;
+	left: 0;
+	padding: 8px 12px;
+	position: fixed;
+	top: 0;
+	z-index: 10;
+}
 /** END header **/
 
 /** BEGIN body **/
@@ -200,6 +226,23 @@ img {
 	position: relative;
 }
 
+/*
+ * The slide link fills .carousel-inner, which clips overflow, so its focus ring is drawn inside the link: a white
+ * outline inset from the edge, inside a black band from ::after, visible on light and dark photos alike.
+ */
+#carouselInner .carousel-item a:focus-visible {
+	outline: 3px solid #ffffff;
+	outline-offset: -6px;
+}
+
+#carouselInner .carousel-item a:focus-visible::after {
+	box-shadow: inset 0 0 0 3px #000000;
+	content: "";
+	inset: 0;
+	pointer-events: none;
+	position: absolute;
+}
+
 /* A dark gradient behind the caption keeps its white text readable over light photos. */
 #carouselInner .carousel-item a::before {
 	background: linear-gradient(to top, rgb(0 0 0 / 0.75), rgb(0 0 0 / 0));
@@ -218,6 +261,18 @@ img {
 
 #carouselInner .carousel-caption {
 	text-shadow: 0 1px 3px rgb(0 0 0 / 0.8);
+}
+
+/*
+ * A long summary lifts the caption above the gradient's dark part, over the photo's light areas. A 60% black backdrop
+ * behind the text keeps white text at 5.7:1 or more over any photo, even pure white (WCAG 2.2 success criterion 1.4.3).
+ */
+#carouselInner .carousel-caption :is(h3, p) {
+	background-color: rgb(0 0 0 / 0.6);
+	border-radius: 4px;
+	margin-inline: auto;
+	padding: 0.125em 0.375em;
+	width: fit-content;
 }
 
 /* A phone's slide is too short for the title and the summary, so it shows the title alone. */
@@ -296,6 +351,26 @@ img {
 #featuredCarousel .carousel-indicators .active {
 	opacity: 1;
 	width: 48px;
+}
+
+/*
+ * Forced colors replaces background colors with system ones: the arrows' white glyph would sit on a light disc, and the
+ * indicators, drawn with a background color only, would vanish. The glyph is the arrow's only visible sign, so the
+ * arrows keep their colors; the indicators take system colors, with the current one highlighted.
+ */
+@media (forced-colors: active) {
+	#featuredCarousel .carousel-control-prev-icon,
+	#featuredCarousel .carousel-control-next-icon {
+		forced-color-adjust: none;
+	}
+
+	#featuredCarousel .carousel-indicators [data-bs-target] {
+		background-color: CanvasText;
+	}
+
+	#featuredCarousel .carousel-indicators .active {
+		background-color: Highlight;
+	}
 }
 
 /* Reduced motion cross-fades the slides instead of sliding them. */

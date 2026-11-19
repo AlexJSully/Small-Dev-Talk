@@ -1,6 +1,6 @@
 ## Rick Future
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image1.png =500x250)
+![Rick Future logo](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image1.png =500x250)
 
 The future of point and click gameplay starts with Rick Future. Recently I got the chance to talk with Sascha from Metal Pop Games on their upcoming sci-fi adventure game, Rick Future. You can find more about their game on their [website](http://www.rick-future.com/) or support them on [Steam Greenlight](https://steamcommunity.com/sharedfiles/filedetails/?id=93230269).
 
@@ -8,7 +8,7 @@ The future of point and click gameplay starts with Rick Future. Recently I got t
 
 **Sascha:** Rick Future is sci-fi adventure game. Classic point and click gameplay, but built with a modern 3D engine. You can expect many puzzles and an original and deep story. The game is based on a popular German sci-fi audio play series also called Rick Future. As the player you will take control of all three main characters, Rick, Hubert and Evi, the crew of the space ship ERIC and set out on a big adventure.
 
-[![YouTube Video](https://img.youtube.com/vi/hkD1mVb7iyA/0.jpg =480x360)](https://www.youtube.com/watch?v=S9c4K2OhZPw)
+[![Rick Future - Development Diary #1 on YouTube](https://img.youtube.com/vi/hkD1mVb7iyA/0.jpg =480x360)](https://www.youtube.com/watch?v=hkD1mVb7iyA)
 
 **Small Dev Talk: What is the story in Rick Future?**
 
@@ -16,7 +16,7 @@ The future of point and click gameplay starts with Rick Future. Recently I got t
 
 With no choice left Rick maneuvers the Eric, his seasoned and sturdy cargo ship, into the mysterious Corvula nebula to hide from his pursuers. But instead of escaping, the Eric collides with an old alien emergency probe which holds an ancient distress call from a long forgotten alien ship. And suddenly the crew of the Eric in the middle of a new adventure which leads them through the dangerous Gon’Dual sector, where they do not know who is friend or foe…
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image2.jpg =500x281)
+![Rick Future work-in-progress screenshot: Rick and the furry Golwonian Hubert stand on a rocky jungle island](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image2.jpg =500x281)
 
 **Small Dev Talk: Can you tell us about the three playable characters, Rick, Hubert and Evi?**
 
@@ -28,7 +28,7 @@ With no choice left Rick maneuvers the Eric, his seasoned and sturdy cargo ship,
 
 We wanted to make the conversations in the game as meaningful as possible. All the NPCs and characters you talk to are not only there to provide you with information but also make the game world come alive. Of course being friendly or mean to the characters in the game will have an effect on how you can progress.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image3.jpg =500x281)
+![Rick Future work-in-progress screenshot: Hubert stands with arms crossed in a spaceship cargo room](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image3.jpg =500x281)
 
 **Small Dev Talk: What type of puzzles and minigames will we see in Rick Future?**
 
@@ -38,7 +38,7 @@ We wanted to make the conversations in the game as meaningful as possible. All t
 
 **Sascha:** Although we have certain elements in the game which give the player a lot of freedom of choice I think the game could be considered rather linear. Linear games make it a lot easier to tell a strong story, which is very important to us. Of course we added a lot of elements that help to make the game more replayable. There will be achievements, collectibles, etc. that will hopefully have the players come back and play the game through another time.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image4.jpg =500x281)
+![Rick Future work-in-progress screenshot: Rick stands in a dim spaceship cargo hold among barrels and crates](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image4.jpg =500x281)
 
 **Small Dev Talk: What type of characters and creatures will the players come across in Rick Future?**
 
@@ -48,7 +48,7 @@ We wanted to make the conversations in the game as meaningful as possible. All t
 
 **Sascha:** The game is set in the dangerous Gon’Dual sector of the galaxy, which is really not the safest place to be. The player will be able to travel between different planets and stations in the sector. All the locations in the game are being built in 3D which adds a lot of new possibilities if you compare it to traditional 2D locations which are still very common in adventure games.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image5.jpg =500x281)
+![Rick Future work-in-progress screenshot: two characters cross an orange desert outpost, seen from above](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image5.jpg =500x281)
 
 **Small Dev Talk: What inspired you to create Rick Future?**
 
@@ -62,7 +62,7 @@ We wanted to make the conversations in the game as meaningful as possible. All t
 
 **Sascha:** Coming from the corporate AAA world where you just throw money at problems to make them go away, we had to learn that producing a game with a low budget is much more difficult. Solving problems without having a big budget is hard - really hard. You can’t just say, ’Hey let’s make some concept art of this location before building it’, because there is no money to pay the artist. Then again, maybe this circumstance challenges you to be more creative, work with what you have and focus on the important parts.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image6.jpg =500x380)
+![Rick Future work-in-progress close-up of Hubert, a white-furred Golwonian with goggles and a blue jacket](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image6.jpg =500x380)
 
 **Small Dev Talk: Do you have any advice for upcoming developers?**
 
@@ -86,7 +86,7 @@ There are probably a million more things that I could list… J
 
 **Sascha:** Please check out our game and give us feedback! J We are always happy about feedback and like to include players as much as possible even in the early phases of production. We have put a handful of cool things in the game that were brought to us from other people, telling us their ideas about the game. Tell us what you like or what sucks and we will have the chance to fix it.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image7.png =500x528)
+![Rick Future RF logo](src\articleArchive\authorAlexanderSullivan\2013-08-23_RickFuture\image7.png =500x528)
 
 ---
 

@@ -1,6 +1,6 @@
-## Motte Island
+## Beyond Infinity
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-11_BeyondInfinity\image1.jpg =492x750)
+![Beyond Infinity: A MatheMATTical Adventure by Charles Ames Fischer, cover of a boy falling into a swirl of numbers](src\articleArchive\authorAlexanderSullivan\2013-05-11_BeyondInfinity\image1.jpg =492x750)
 
 Have you ever wanted to take a mathematical adventure? Haven’t you ever wondered what the personalities of 3, 61, 69 and 313 would be? Well now you can with the upcoming novel by Charles Fischer, Beyond Infinity. Not long ago I got the chance to talk with the author behind Beyond Infinity which you can support at [http://www.kickstarter.com/projects/504814430/beyond-infinity-a-mathematical-adventure](https://www.kickstarter.com/projects/504814430/beyond-infinity-a-mathematical-adventure) or check out the official website at [www.BeyondInfinityBook.com](http://beyondinfinitybook.com/)
 

@@ -1,6 +1,6 @@
 ## Linked Pathways Interview
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-13_LinkedPathways\image1.webp =370x300)
+![Linked Pathways anime-style art: a girl in a wolf hat, a blond guy in shades and a girl in a plaid shirt](src\articleArchive\authorAlexanderSullivan\2013-11-13_LinkedPathways\image1.webp =370x300)
 
 Test out your dating skills in Linked Pathways, a new visual novel dating simulation game created by Esteban Gonzalez and his development team. To support them and find out more, check out their [Kickstarter](https://www.kickstarter.com/projects/372912899/linked-pathways).
 
@@ -72,7 +72,7 @@ There was another scenario where very early in one of our writers suffered massi
 
 **Esteban Gonzalez:** Thank you so much for your time and we really hope you give Linked Pathways a chance.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-13_LinkedPathways\image2.png =500x405)
+![Linked Pathways character art showing the same three characters as the top of the interview](src\articleArchive\authorAlexanderSullivan\2013-11-13_LinkedPathways\image2.png =500x405)
 
 ---
 

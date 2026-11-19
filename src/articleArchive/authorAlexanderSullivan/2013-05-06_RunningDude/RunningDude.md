@@ -1,6 +1,6 @@
 ## Running Dude
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image1.jpg =500x281)
+![Running Dude: the white stick-figure dude runs across a colourful block as text warns Don't step on fire](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image1.jpg =500x281)
 
 RUN DUDE RUN! Experience the adventurous run of this dude in Running Dude by Panin Games. Not long ago I got the chance to talk with the developer of Running Dude and the leader of Panin Games, Serjey Panin and their upcoming PC version of Running Dude. You can check out their game at [http://www.paningames.com/](http://www.paningames.com/)
 
@@ -8,7 +8,7 @@ RUN DUDE RUN! Experience the adventurous run of this dude in Running Dude by Pan
 
 **Serjey Panin:** Running dude is a 2D platformer based on the Mario gameplay. The main idea of the game is to run away from the enemies which are chasing you (a bit like temple run). The game is going to have a time rewinding technique which will add a lot of puzzles to the game (I got the idea from a game called Braid). In some cases the player won’t have to use the time rewind technique which makes the game even more fun because even when you complete the whole game, you will still find it fun to complete it again because there are about 5 or 6 ways to complete each level, therefore every time you complete the game you will get a completely new gaming experience.
 
-[![YouTube Video](https://img.youtube.com/vi/t62lFcJRP2A/0.jpg =480x360)](https://www.youtube.com/watch?v=t62lFcJRP2A)
+[![Running Dude new trailer on YouTube](https://img.youtube.com/vi/t62lFcJRP2A/0.jpg =480x360)](https://www.youtube.com/watch?v=t62lFcJRP2A)
 
 **Small Dev Talk: What is the story in Running Dude?**
 
@@ -18,7 +18,7 @@ RUN DUDE RUN! Experience the adventurous run of this dude in Running Dude by Pan
 
 **Serjey Panin:** There are going to be a lot of types of obstacles such as lava, enemies on the ground, flying enemies and obviously enemies chasing the player. At the moment the enemies which are chasing the player are represented by red cubes (as you can see in the trailer). The look of enemies chasing you is going to change very soon as the game is not 100% ready.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image2.jpg =500x281)
+![Running Dude: the dude floats with an umbrella over a track striped with lava](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image2.jpg =500x281)
 
 **Small Dev Talk: How can the ‘Rewind Time’ feature come to the player’s advantage and why did you choose to add that feature?**
 
@@ -28,7 +28,7 @@ RUN DUDE RUN! Experience the adventurous run of this dude in Running Dude by Pan
 
 **Serjey Panin:** During first 5 or 6 levels the gameplay is pretty linear. The reason for this is to get the player ready for challenges and difficulties ahead of him. Starting with level 7 the gameplay gets more complicated therefore the player never gets bored due to the different features the game keeps adding.(good example of this is the time rewind feature which first appears at level 10) Starting with level 12 the player gets a choice for the first time in the game. From there, the choices the player can make keep expending until the very end of the game.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image3.jpg =500x281)
+![Running Dude: the dude running across a wide, flat grass field](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image3.jpg =500x281)
 
 **Small Dev Talk: The character you play as in Running Dude appears to have some abilities. What abilities will the player get to use in Running Dude?**
 
@@ -38,7 +38,7 @@ RUN DUDE RUN! Experience the adventurous run of this dude in Running Dude by Pan
 
 **Serjey Panin:** As I mentioned earlier on the main creatures the player will come across in the game are going to be enemies. At the moment enemies which are chasing the player are represented by red cubes because the game is still under development. Another type of enemies the player will see in the game are ground enemies which kill the player after 3 touches and can be destroyed by fire grenades which the player is going to have as a standard weapon.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image4.jpg =480x660)
+![Running Dude: the dude stands on a sand block in falling snow while a white ghost-like enemy waits below](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image4.jpg =480x660)
 
 **Small Dev Talk: Will you be adding any multiplayer features to Running Dude?**
 
@@ -48,7 +48,7 @@ RUN DUDE RUN! Experience the adventurous run of this dude in Running Dude by Pan
 
 **Serjey Panin:** You must not forget that “Running dude” and “Running capsule” are one the same game. “Running dude” is the updated version of “Running capsule” and it contains a lot of interesting features that “Running capsule” did not have such as new levels, new character, new enemies, power ups (such as double speed), easter eggs and secret levels, multiplayer, better menu, improved graphics, new types of obstacles and many more things. The PC version of the game is going to have about 25 more levels then the mobile version and also it is going to have much better graphics and design. I’m now also planning to publish the game on to PlayStation network and Xbox live as the game plays very well using the joystick.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image5.jpg =500x281)
+![Running Dude level 6: the dude jumps between floating blocks above a sea of lava](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image5.jpg =500x281)
 
 **Small Dev Talk: What inspired you to create Running Dude?**
 
@@ -58,7 +58,7 @@ RUN DUDE RUN! Experience the adventurous run of this dude in Running Dude by Pan
 
 **Serjey Panin:** My favourite aspect of running dude is definitely the time rewind feature. I think it’s really good fun just to mess around with it after you completed the whole game and also it gives you more ways of completing different levels.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image6.jpg =500x281)
+![Running Dude: the dude glides with an umbrella over lava strips in front of a rocky mountain](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image6.jpg =500x281)
 
 **Small Dev Talk: What challenges did you and your team come across in the development of Running Dude and how did you overcome them?**
 
@@ -84,7 +84,7 @@ RUN DUDE RUN! Experience the adventurous run of this dude in Running Dude by Pan
 
 **Serjey Panin:** If you want to become an independent game developer then you must believe in yourself and believe that your game is going to be a success! Also learn some programming and just do your best. Thank you very much for having an interview with me.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image7.jpg =500x281)
+![Running Dude: the dude running along a wooden path past trees in falling snow](src\articleArchive\authorAlexanderSullivan\2013-05-06_RunningDude\image7.jpg =500x281)
 
 ---
 

@@ -1,6 +1,6 @@
 ## Champion of Dema Interview
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image1.webp =400x220)
+![Champion of Dema banner: five characters in African-style clothing beside the panda mark and title logo](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image1.webp =400x220)
 
 Join along Kade in Hameed Catel’s new afrocentric graphic novel, Champion of Dema. Recently, I got the chance to talk with Hameed Catel from Kiru Comics on his new graphic novel, Champion of Dema. You can support him on [Kickstarter](https://www.kickstarter.com/projects/1088749339/champion-of-dema) and find out more on his [website](https://ronucreative.com/).
 
@@ -18,7 +18,7 @@ Every ten years an individual from the village of Dema is randomly and magically
 
 **Hameed Catel:** All kinds, I don’t know if you realise this but even the cast are all different races, Kade is black, Nia is Latina, Zetta is Caucasian, Gobe is middle eastern, Batam and his sister Siani are both Filipino/Malaysian. I try to include a large mixture of races and characters in the short story to show a world where none of that mattered and no one acknowledged it. Also all my characters have something in common; they all have some sort of inner strength, by that I mean none of them are weak minded. Even the weak ones have a hidden strength that comes out if pushed too far.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image2.png =500x357)
+![Champion of Dema art: Kade, holding a staff, leans on a bar beside a woman in a yellow head wrap](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image2.png =500x357)
 
 **Small Dev Talk: What is Kade like and what inspired you to write this character?**
 
@@ -26,19 +26,19 @@ Every ten years an individual from the village of Dema is randomly and magically
 
 As to what inspired me to write him, well ever since I can remember I have created stories in my head and developed in depth characters. Kade was one of my oldest and most favourite. In the stories I dreamed up, I constantly used him as the guy that would be kind of a villain and then at the last minute help the good guys out. Then after reading the Wheel of Time series and discovering Matrim Cauthon, I realised that Kade was my version of Matt and I wanted to show the world my Matrim Cauthon. That’s where the broad hat and quarter staff came from, from Matrim Cauthon.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image3.png =500x700)
+![Champion of Dema art: Kade carries a friend through a rainy forest as three masked Soul-takers loom behind](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image3.png =500x700)
 
 **Small Dev Talk: I noticed Kade has a panda tattoo on his neck, what does that have to do with his character?**
 
 **Hameed Catel:** The tattoo actually has very little to do with his personality. It is the mark of the champion, every ten years that mark transfers from the previous Champion to the new one. That is how the people of Dema know who to call Champion next. Kade’s mark is on his neck which is why he always wears a shirt that has a collar, so that he can cover it and go unnoticed but it rarely works out for him.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image4.png =500x366)
+![Champion of Dema sketches of Kade's head from four angles, with the panda mark tattooed on his neck](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image4.png =500x366)
 
 **Small Dev Talk: What are the Soul-takers and what are they like?**
 
 **Hameed Catel:** The Soul-takers are exactly what their names suggest. They’re spiritual beings that feed on the souls of humans and any living animal. When a human is taken by a soul taker, there’s no saving him or bringing him back. That person becomes part of the walking dead… many in the village consider it a fate even worse than death, so many will take their own life before letting a Soul-taker catch them.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image5.png =500x366)
+![Champion of Dema concept art of the Soul-takers: dark shrouded figures and their colourful star-patterned masks](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image5.png =500x366)
 
 **Small Dev Talk: What inspired you to write Champion of Dema?**
 
@@ -52,7 +52,7 @@ As to what inspired me to write him, well ever since I can remember I have creat
 
 **Hameed Catel:** One of the main one that comes to mind straight away is the slang. Like I said this is to be an Afrocentric graphic novel so I had this idea of the street slang in Dema being pidgin. Pidgin is a form of broken English used in a lot of African countries, although they vary slightly depending on which country you’re in. The problem with that was, anyone that wasn’t familiar with pidgin had trouble reading the slang and consequently got frustrated. I don’t want that to happen to the readers, I want them to enjoy the reading experience so to solve the problem; we’ve decided to have two versions when the book is complete. The first is that with plain straightforward English and the second will be a version which has pidgin in some parts with a glossary to help those new to it along.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image6.png =500x357)
+![Champion of Dema art: the village of Dema, clay houses packed inside a walled town, seen from a rooftop](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image6.png =500x357)
 
 **Small Dev Talk: Do you ever plan on making Champion of Dema into a movie, TV series or a game?**
 
@@ -66,7 +66,7 @@ As to what inspired me to write him, well ever since I can remember I have creat
 
 **Hameed Catel:** For artist all I can say is keep practicing and requesting feedback as I myself am not an artist but I know that advice stands strong for them. For writers it’s more or less the same, you will only get better with practice and constant constructive criticism. However if you’re aiming to be a comic writer, the route I took was to take the TV series and film that I really liked and study the scripts to see how a good script is properly written. I also read a lot of novels so I learn from them too. All in all the best advice I can give to both artists and writers is DON’T BE AFRAID TO DO and NEVER GIVE UP!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image7.png =500x700)
+![Champion of Dema sketch of a glowing, spectral panda spirit standing in mist](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image7.png =500x700)
 
 **Small Dev Talk: What is the expected release date for Champion of Dema and where can we find it? Can we find it both online and in stores? Also, how much will it cost?**
 
@@ -76,7 +76,7 @@ As to what inspired me to write him, well ever since I can remember I have creat
 
 **Hameed Catel:** I Just want to say thank you all for taking the time to read this interview and Small Dev Talks are awesome people. It would mean the world to me if you guys helped me out with my dream by bringing this project to life. Visit our kickstarter campaign <http://www.kickstarter.com/projects/1088749339/champion-of-dema?ref=live> pre-order your copy by making a pledge, and share it with all your friends. If you have a blog and you wish to share it let me know, I can send you a press release if you want. Or you can write about it yourself. Either way is fine with me. I just need your help to build this tower of success, without you guys, I really can’t achieve my goal and that’s the honest truth.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image8.jpg =500x703)
+![Champion of Dema cover art: Kade in a broad hat holds his quarterstaff as a giant panda spirit rises behind him](src\articleArchive\authorAlexanderSullivan\2013-11-08_ChampionOfDema\image8.jpg =500x703)
 
 ---
 

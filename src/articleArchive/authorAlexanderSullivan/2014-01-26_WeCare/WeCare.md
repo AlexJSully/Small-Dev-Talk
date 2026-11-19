@@ -1,4 +1,6 @@
-![image](src\articleArchive\authorAlexanderSullivan\2014-01-26_WeCare\image1.jpg =500x203)
+## We Care About You
+
+![If you ever need someone to talk to, no matter what you did or who you are, I will be here for you. We can talk anonymously if you want. I care for everyone, especially YOU](src\articleArchive\authorAlexanderSullivan\2014-01-26_WeCare\image1.jpg =500x203)
 
 [jamiebeats](https://jamiebeats.tumblr.com/post/74659439870/joo-hyun-you-can-send-me-an-message-at):
 

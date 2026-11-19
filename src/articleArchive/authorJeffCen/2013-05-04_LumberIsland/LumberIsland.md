@@ -1,6 +1,6 @@
 ## Small Plays - Lumber Island
 
-[![YouTube Video](https://img.youtube.com/vi/eAfotarj-iA/0.jpg =480x360)](https://www.youtube.com/watch?v=eAfotarj-iA)
+[![Small Plays - Lumber Island on YouTube](https://img.youtube.com/vi/eAfotarj-iA/0.jpg =480x360)](https://www.youtube.com/watch?v=eAfotarj-iA)
 
 Check out Small Dev Talks first Small play! Featuring Jeff Cen as the player and the brand new indie game Lumber Island created by Dean Forge!
 

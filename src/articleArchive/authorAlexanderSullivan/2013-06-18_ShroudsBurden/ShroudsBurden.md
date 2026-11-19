@@ -1,6 +1,6 @@
 ## Shroud’s Burden
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-18_ShroudsBurden\image1.png =500x312)
+![Shroud’s Burden in-game screenshot: a stone cellar with a fireplace and a candle-lit table, with Buy, Gold and Sell buttons](src\articleArchive\authorAlexanderSullivan\2013-06-18_ShroudsBurden\image1.png =500x312)
 
 Today I got the chance to talk with C. Scott from ancientgames, the developer of Shroud’s Burden, an upcoming indie game for the PC. Shroud’s Burden is a medieval stealth based action game which brings you on an interesting and amazing new tale of William Shroud. The game can be found at [http://www.indiedb.com/games/shrouds-burden](https://www.indiedb.com/games/shrouds-burden)
 
@@ -8,7 +8,7 @@ Today I got the chance to talk with C. Scott from ancientgames, the developer of
 
 **C. Scott:** Shroud’s Burden is a Stealth Action game being developed for the PC.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-18_ShroudsBurden\image2.png =500x311)
+![Shroud’s Burden in-game screenshot: a dark castle hall lit by torches and blue windows, with the HUD below](src\articleArchive\authorAlexanderSullivan\2013-06-18_ShroudsBurden\image2.png =500x311)
 
 **Small Dev Talk: Is there a story and if so, what is it about?**
 

@@ -1,6 +1,6 @@
-## Motte Island
+## Aurora
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image1.png =500x375)
+![Aurora 2014 title card: a giant armed war robot looming over a dark, ruined industrial city](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image1.png =500x375)
 
 This is the twisted love story of Aurora. Recently I got the chance to talk with Robert Kouba, the director, writer and producer of a new upcoming film called Aurora from Vantis Pictures. You can check it out here at [http://aurorafilm.org/](http://aurorafilm.org/) and you can support the new indie film at their [Kickstarter](https://www.kickstarter.com/projects/vantispictures/aurora-twisted-robot-love-story?ref=card) here.
 
@@ -16,7 +16,7 @@ This is the twisted love story of Aurora. Recently I got the chance to talk with
 
 **Robert Kouba:** Aurora is set in 2080, 60 years after machines have taken over.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image2.png =500x665)
+![Three Aurora concept stills: giant war robots in a forest, over a city skyline and among bare trees](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image2.png =500x665)
 
 **Small Dev Talk: What is the main character, Andrew, like and what inspired you to create this type of character?**
 
@@ -26,7 +26,7 @@ This is the twisted love story of Aurora. Recently I got the chance to talk with
 
 **Robert Kouba:** Many different kinds - 60 years have passed since the robots have taken over, the humans are almost extinct. The ones still alive have lost all faith and morals
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image3.png =500x677)
+![Aurora promotional art of giant war robots in forest and city scenes, captioned They were our weapons](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image3.png =500x677)
 
 **Small Dev Talk: What are these creatures we see in Aurora trailer?**
 
@@ -60,7 +60,7 @@ This is the twisted love story of Aurora. Recently I got the chance to talk with
 
 **Robert Kouba:**When you write a screenplay, you already have a strong image of the characters. After a long pre-casting we found the perfect fit for my vision - Julian and Jeannine!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image4.jpg =500x276)
+![Aurora film still: a woman kneels over a wounded young man slumped against a tree in a forest](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image4.jpg =500x276)
 
 **Small Dev Talk When is the expected release date for Aurora?**
 
@@ -70,7 +70,7 @@ This is the twisted love story of Aurora. Recently I got the chance to talk with
 
 **Robert Kouba:** I’m a passionate filmmaker, storyteller with a good heart and a strong vision. I believe in the power of an unusual and independent story which stays in people’s minds – and can impact on their lives - long after the final credits have rolled. These kinds of films reach the masses and, therefore, are the perfect platform to give people something to think about. That’s why I’m doing Aurora - Help us get it done!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image5.png =500x281)
+![Aurora 2014 title card in gold lettering on black](src\articleArchive\authorAlexanderSullivan\2013-05-03_Aurora\image5.png =500x281)
 
 ---
 

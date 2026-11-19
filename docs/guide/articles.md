@@ -62,17 +62,17 @@ mkdir -p src/articleArchive/authorAlexanderSullivan/2013-03-26_Caravaneer2/
 Create `ArticleTitle.md` in the article directory with content:
 
 ```markdown
-# Article Title
+## Article Title
 
 Article content in markdown format.
 
-## Section Heading
+### Section Heading
 
 More content here with **bold** and _italic_ text.
 
-### Subsection
+#### Subsection
 
-![Image Alt Text](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image1.jpg =500x336)
+![Caravaneer 2 key art: a raider in a bucket helmet shoulders a rifle beside a caravan](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image1.jpg =500x336)
 
 - Bullet list item 1
 - Bullet list item 2
@@ -82,6 +82,8 @@ More content here with **bold** and _italic_ text.
 ```
 
 **File Name:** Must match the key in `articleData.json` exactly
+
+**Opening heading:** The file opens with a level-two heading (`##`) that names the article, because the page's `<h1>` is the site title. A Jest test in [articleData.test.js](../../src/articleArchive/articleData.test.js) fails when an article opens with anything else, or with the same heading as another article, and when two entries in `articleData.json` share a `title`.
 
 ## Step 4: Add Images
 
@@ -99,6 +101,10 @@ src/articleArchive/authorAlexanderSullivan/2013-03-26_Caravaneer2/
 **Image paths and sizes:**
 
 Write each image path from the site root, and end it with the image's width and height in pixels: `![alt](src\articleArchive\…\image1.jpg =WIDTHxHEIGHT)`. Showdown turns the size into the `width` and `height` of the `<img>`, so the browser reserves the image's space before it loads and the text below does not jump. On macOS, `sips -g pixelWidth -g pixelHeight image1.jpg` prints the size. A YouTube thumbnail (`https://img.youtube.com/vi/VIDEO_ID/0.jpg`) is `=480x360`. The same test fails when an image in an article listed in `articleData.json` has no size, a size that differs from the file, or a path to a file that does not exist, and when an image from another site is not a YouTube thumbnail sized `=480x360`.
+
+**Alt text:**
+
+Every image needs alt text that says what the image shows for a reader who cannot see it, such as `![Caravaneer 2 isometric battle among desert ruins](…)`. Keep it under about 125 characters, and skip "Image of". A YouTube thumbnail inside a link is the link's only content, so its alt text names the video, such as `[![Caravaneer 2 trailer on YouTube](https://img.youtube.com/vi/VIDEO_ID/0.jpg =480x360)](https://www.youtube.com/watch?v=VIDEO_ID)`, and the link goes to the video the thumbnail shows. Alt text cannot contain `]`. A Jest test in [articleData.test.js](../../src/articleArchive/articleData.test.js) fails on an empty or placeholder alt (`image`, `image1`, `YouTube Video`) or a file name (`image1.jpg`), and when two image links in one article share a name but go to different places.
 
 **Caching:**
 

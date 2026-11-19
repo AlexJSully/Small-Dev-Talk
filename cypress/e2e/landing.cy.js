@@ -137,25 +137,12 @@ describe("Landing Page", () => {
 	});
 
 	describe("with reduced motion", () => {
-		/**
-		 * Emulate the visitor's reduced motion setting through the browser's DevTools protocol.
-		 * @param {string} value `reduce`, or an empty string to clear the emulation.
-		 * @returns {Cypress.Chainable} The command chain.
-		 */
-		const emulateReducedMotion = (value) =>
-			cy.then(() =>
-				Cypress.automation("remote:debugger:protocol", {
-					command: "Emulation.setEmulatedMedia",
-					params: { features: [{ name: "prefers-reduced-motion", value }] },
-				}),
-			);
-
 		afterEach(() => {
-			emulateReducedMotion("");
+			cy.emulateMedia("prefers-reduced-motion", "");
 		});
 
 		it("should cross-fade the slides instead of sliding them", () => {
-			emulateReducedMotion("reduce");
+			cy.emulateMedia("prefers-reduced-motion", "reduce");
 
 			cy.get("#carouselInner .carousel-item")
 				.first()
@@ -236,9 +223,7 @@ describe("Landing Page", () => {
 		["an article", "http://localhost:3000/index.html?YukiVsPanda", "#articleBody img"],
 	].forEach(([page, url, rendered]) => {
 		it(`should not shift the layout while ${page} loads on a phone`, () => {
-			// Block the X embed, whose timeline X serves or rate-limits from run to run.
-			cy.intercept("https://platform.twitter.com/**", { statusCode: 429, body: "" });
-			cy.intercept("https://syndication.twitter.com/**", { statusCode: 429, body: "" });
+			cy.blockXEmbed();
 			cy.viewport(412, 823);
 			cy.visit(url);
 
@@ -329,8 +314,7 @@ describe("Landing Page", () => {
 
 	it("should show a follow link, not an empty box, when X does not serve the timeline", () => {
 		// X rate-limits embedded timelines per IP with a 429, so block the embed to reproduce that failure.
-		cy.intercept("https://platform.twitter.com/**", { statusCode: 429, body: "" });
-		cy.intercept("https://syndication.twitter.com/**", { statusCode: 429, body: "" });
+		cy.blockXEmbed();
 		cy.visit("http://localhost:3000");
 
 		cy.get(".twitterFallback").should("be.visible");

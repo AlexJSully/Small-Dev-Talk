@@ -1,6 +1,6 @@
 ## Prisonhood
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image1.jpg =500x333)
+![Prisonhood title screen: five tough cartoon inmates in a prison yard above Options, More, Shop and Play buttons](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image1.jpg =500x333)
 
 I recently got the chance to talk with the developers of the upcoming social game for the iOS, Andriod and Facebook: Prisonhood. A truly unique game where the player will experience playing a prisoner and face the challenges of the prison life. You can check the game out here at: [http://www.feihuinteractive.com/games/prisonhood.html](http://www.feihuinteractive.com/games/prisonhood.html) or support them on their indiegogo at [http://www.indiegogo.com/projects/prisonhood-the-game](https://www.indiegogo.com/projects/prisonhood-the-game?utm_source=affiliate&utm_medium=cpc&utm_campaign=sasdeep&utm_content=link&sscid=61k3_9wnkh#/)
 
@@ -8,31 +8,31 @@ I recently got the chance to talk with the developers of the upcoming social gam
 
 **Fei Hu Interactive:** It is an original story based, cross-platform game developed by Fei Hu Interactive for iOS, Android, and Facebook
 
-[![YouTube Video](https://img.youtube.com/vi/Rv9KirRev68/0.jpg =480x360)](https://www.youtube.com/watch?v=Rv9KirRev68)
+[![Prisonhood Final Coming Soon Trailer HD on YouTube](https://img.youtube.com/vi/Rv9KirRev68/0.jpg =480x360)](https://www.youtube.com/watch?v=Rv9KirRev68)
 
 **Small Dev Talk: Is there a story and if so, what is it about?**
 
 **Fei Hu Interactive:** Yes, starting out, you’re a bad guy! You’re guilty! And now you’re locked-up! Worse, you’re a rookie among the prison rank-and-file – easy prey for any prison veteran. But, as a long time thug, you understand the rules of the game and what you need to do to ensure your survival. Play by the warden’s rules while establishing your reputation and base of absolute power. There is also a deep back story unfolding which you can sample from the first 2 editions of our free comic book that are available now
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image2.jpg =500x220)
+![Prisonhood character concept art: three inmates in orange jumpsuits and a female guard in grey](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image2.jpg =500x220)
 
 **Small Dev Talk: What unique features does your game have?**
 
 **Fei Hu Interactive:** Besides the very unique prison setting, we have a complex game that combines traditional social task based gameplay, RPG elements, mini-games (that also are tasks), 2 social games, and cool features like bribing guards, and our gang management system.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image3.jpg =500x333)
+![Prisonhood Black Market screen: an inmate named Sutharshan sells a DVD for $5, playing cards for $2 and a video game for $20](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image3.jpg =500x333)
 
 **Small Dev Talk: Is there or will there be any multiplayer?**
 
 **Fei Hu Interactive:** We utilize asynchronous play in our game. We feature social PvP gameplay with our 2 social games, Dog Pound, and The Ring. The Ring is an asynchronous ‘arm wrestle’ where you bet against friends to see if you can out-wrestle them. Dog Pound is a cool PvP asynchronous ‘battle’ where you put your gang against another player’s gang and go head-to head. You need to build a solid gang for this, and can utilize some great special powers to help you win.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image4.jpg =500x333)
+![Prisonhood Dog Pound battle: two gangs of orange-suited inmates brawl in the prison yard, schmoo versus QPUDWH](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image4.jpg =500x333)
 
 **Small Dev Talk: The game feature in-game task, what type of in-game tasks will there be?**
 
 **Fei Hu Interactive:** We have a number of different task classes including: Routine Tasks (simple daily tasks you would experience in prison), Business Tasks (where you trade items), Power Tasks (where you establish credibility by fighting other inmates), and Social Tasks (involving gifting and stealing from friends). All tasks can be accessed from your ‘Black Book’
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image5.jpg =500x333)
+![Prisonhood arm-wrestling game The Ring: the player grips hands with a burly inmate named Sleez inside a cage](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image5.jpg =500x333)
 
 **Small Dev Talk: How does the reputation system work in this game?**
 
@@ -42,7 +42,7 @@ I recently got the chance to talk with the developers of the upcoming social gam
 
 **Fei Hu Interactive:** Yes, definitely. You need to recruit inmates to form a strong gang that you can use to fight in the Dog Pound. Gang members will have different combinations of attributes such as HP, Attack, Defense, Intelligence, and they may also harvest you some cool weapons or armor. They don’t stay in your gang forever, so you have to make the most of them while you have them!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image6.jpg =500x333)
+![Prisonhood My Flash Card screen: inmate X Troop with attack, defence, health, intelligence, Rookie rank and 5000 cash](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image6.jpg =500x333)
 
 **Small Dev Talk: What is your favourite aspect of the game?**
 
@@ -64,7 +64,7 @@ I recently got the chance to talk with the developers of the upcoming social gam
 
 **Fei Hu Interactive:** Prisonhood will be available in over 9 languages (English, French, Italian, German, Russian, Turkish, Brazilian Portuguese, Simplified Chinese, Japanese and Korean), so we expect to attract fans from all over the world given the topical and universal nature of the prison theme. When launching a new game brand with a strong story line and set of great characters such as Prisonhood, it is always exciting to see what people enjoy the most, and how they connect to the universe. I encourage all your readers to try Prisonhood for themselves.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image7.png =500x90)
+![Prisonhood logo](src\articleArchive\authorAlexanderSullivan\2013-03-21_Prisonhood\image7.png =500x90)
 
 ---
 

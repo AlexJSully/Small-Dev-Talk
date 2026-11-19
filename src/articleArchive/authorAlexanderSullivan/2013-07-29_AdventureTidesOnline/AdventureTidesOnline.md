@@ -1,6 +1,6 @@
 ## AdventureTidesOnline
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image1.png =500x281)
+![Adventurer Tides Online logo](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image1.png =500x281)
 
 This is the era of adventure. Whether you choose to be a headhunter, marksmen, monk or knight; this if your opportunity to fight and change the tides of this war in Adventure Tides Online. Recently I got the chance to talk with the developers from Saker Games on their new Free-To-Play MMO, Adventure Tides Online. You can find more about their game on their [website](http://www.adventurertides.com/) or on their [IndieDB](https://www.indiedb.com/games/adventurer-tides-online) and [Facebook page](https://www.facebook.com/SakerGames).
 
@@ -8,7 +8,7 @@ This is the era of adventure. Whether you choose to be a headhunter, marksmen, m
 
 **Saker Games:** ATO is our first public game, it’s an action RPG in which players will play online together. It’s more like an MMO, but also features adventure, strategic and sandbox elements. The game will also focus on the Player vs. Player part involving war between clans for territory, resources and glory.
 
-[![YouTube Video](https://img.youtube.com/vi/4kqBiqticY0/0.jpg =480x360)](https://www.youtube.com/watch?v=4kqBiqticY0)
+[![ATO - Test Build 8 on YouTube](https://img.youtube.com/vi/4kqBiqticY0/0.jpg =480x360)](https://www.youtube.com/watch?v=4kqBiqticY0)
 
 **Small Dev Talk: What is the story in Adventure Tides Online?**
 
@@ -22,19 +22,19 @@ This is the era of adventure. Whether you choose to be a headhunter, marksmen, m
 
 **Saker Games:** Yes, the combat style is more like in Skyrim or Assassin’s Creed. We found the classical MMO-RPG style combat a little bit boring. So we want to implement a more challenging combat system with combos and different fighting styles, like martial arts, ranged combat, sword fight and magic. The way you fight is up to you.
 
-[![YouTube Video](https://img.youtube.com/vi/4rdulKs-kio/0.jpg =480x360)](https://www.youtube.com/watch?v=4rdulKs-kio)
+[![ATO - Character Animation System Test on YouTube](https://img.youtube.com/vi/4rdulKs-kio/0.jpg =480x360)](https://www.youtube.com/watch?v=4rdulKs-kio)
 
 **Small Dev Talk: What type of enemies will the player come across in Adventure Tides Online?**
 
 **Saker Games:** Usually players will have to fight against animals, humanoids, bandits, goblins and orcs in the mountains, and of course other players. But when night falls you might encounter demons, monsters and ancient undead, creatures like the Vureem.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image2.png =500x409)
+![Adventure Tides Online concept art of a mountain goblin in a tunic and scarf, holding a spear](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image2.png =500x409)
 
 **Small Dev Talk: What will the player see environmentally in the continent of Yarien?**
 
 **Saker Games:** The continent of Yarien is really varied, there are rocky mountains, highlands, steppes, deserts, rainforests and so on. In the first release we plan to have the game to take place near the Little Uthar Mountains that are high and craggy. The place is rich in gold and other resources, and takes to the inland sea of Eárimdor. On this steep land players can admire pine, oak forests, creeks, watelfalls, old ruins and some recently built cities.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image3.png =500x333)
+![Adventure Tides Online concept art: wooden huts on a river below a waterfall and craggy mountains](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image3.png =500x333)
 
 **Small Dev Talk: How will Adventure Tides Online be different and unique compared to the current games on the MMO market?**
 
@@ -60,7 +60,7 @@ Or imagine that you’ve travelled quite a lot with your character, helped a lot
 
 I think these are the aspects I would like in a game like ATO.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image4.png =500x336)
+![Adventure Tides Online pencil sketch of a camp with tents, a covered wagon and a campfire](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image4.png =500x336)
 
 **Small Dev Talk: What challenges did you and your team come across in the development of Adventure Tides Online?**
 
@@ -86,7 +86,7 @@ As I mentioned before the game will be Free-To-Play, but with limitations. There
 
 See you soon on Indiegogo!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image5.png =500x368)
+![Adventure Tides Online concept art of two treasure hunters, a man and a woman in dark leather armour](src\articleArchive\authorAlexanderSullivan\2013-07-29_AdventureTidesOnline\image5.png =500x368)
 
 ---
 

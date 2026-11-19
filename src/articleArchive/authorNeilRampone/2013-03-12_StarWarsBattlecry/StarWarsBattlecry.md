@@ -1,6 +1,6 @@
 ## Star Wars Battlecry
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image1.jpg =500x129)
+![Star Wars: Battlecry logo](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image1.jpg =500x129)
 
 Star Wars: Battlecry is an MMOFPS/TPS that is under development. It takes its origins from Star Wars Battlefront 1 & 2, and looks to continue that sort of game with the help of CryEngine, a new and advanced game development kit. I recently had a chance to chat with Deforges, a developer with the Star Wars: Battlecry team. You can check out their Moddb page at [http://www.moddb.com/games/star-wars-battlecry](https://www.moddb.com/games/star-wars-battlecry), and make sure to support them on Facebook at [https://www.facebook.com/StarWarsBattlecry](https://www.facebook.com/StarWarsBattlecry).
 
@@ -8,19 +8,19 @@ Star Wars: Battlecry is an MMOFPS/TPS that is under development. It takes its or
 
 **Deforges:** Battlecry is an first and third person shooter based on the original Star Wars: Battlefront games. It’s the kind of game people have been waiting for a long long time. We’re trying to create the most immersive Star Wars game anyone has experienced to date. Mechanically, Battlecry follows what the team sees as natural progressions of the original games’ concepts. It’s a very ambitious project that has brought a lot of skilled people together, creating something fans still hope for.
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image2.jpg =500x500)
+![Star Wars: Battlecry proton rifle 3D model by Deforges, shown from three angles](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image2.jpg =500x500)
 
 **Small Dev Talk: What inspired you to create this game?**
 
 **Deforges:** A love for the movies and games definitely motivated a lot of us to start the project with rocknroll237 and sceluk being the first two original members. The last Battlefront game came out in 2005, a time when some of us were still in elementary school. That game became a part of my adolescence and is always able to invoke a sense of nostalgia. The team has gathered Star Wars fans along with people who just want to be able to create a high quality game.
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image3.png =500x230)
+![Star Wars: Battlecry snowspeeder model resting on snow](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image3.png =500x230)
 
 **Small Dev Talk: What kind of classes will there be?**
 
 **Deforges:** The alpha will include base classes like assault and scout troops. We eventually will add more classes and work our way to include all of the original ones. As of right now our main priority is completing the base of the game and getting it out there for people to try out.
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image4.jpg =500x500)
+![Star Wars: Battlecry scout trooper character model by Ben](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image4.jpg =500x500)
 
 **Small Dev Talk: Will there be any special characters, such as Jedi or Sith?**
 
@@ -36,13 +36,13 @@ Star Wars: Battlecry is an MMOFPS/TPS that is under development. It takes its or
 
 **Deforges:** As of now, no.
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image5.jpg =500x240)
+![Star Wars: Battlecry scoped blaster rifle 3D model shown from three angles](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image5.jpg =500x240)
 
 **Small Dev Talk: Is there going to be a campaign mode?**
 
 **Deforges:** The campaign mode was something very definitive of the series and as much as we would like to create a single player experience it’s not planned at the moment. We are completely focused on the multiplayer aspect of the game. After we have created all the assets and levels it would be easier to make a campaign but for now people will have to enjoy the mindless open battlefields.
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image6.jpg =433x670)
+![Star Wars: Battlecry character model of an Imperial officer in cold-weather gear and goggles](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image6.jpg =433x670)
 
 **Small Dev Talk: Will it feature any game modes not included in the original Battlefront, or Battlefront 2?**
 
@@ -52,19 +52,19 @@ Star Wars: Battlecry is an MMOFPS/TPS that is under development. It takes its or
 
 **Deforges:** It wouldn’t be Battlefront without Space! The original space battles seemed very similar which is what we want to change. We plan on having spacious interiors of the space ships so every battle won’t be the same. We’re also on the lookout for any suggestions we can use to make space battles more interesting.
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image7.jpg =500x375)
+![Star Wars: Battlecry snowy mountain terrain around a large crater, built in CryEngine](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image7.jpg =500x375)
 
 **Small Dev Talk: Are there any unique things that you have added to your game to make it special?**
 
 **Deforges:** Space-to-ground combat is something I haven’t seen done in any game so far. That’s one of the newest things we’re trying to bringing to the table. Early tests inside cryengine have been promising but that could all change as we get closer to the end product. For now we are optimistic that this something our fans will go crazy over.
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image8.png =500x281)
+![Star Wars: Battlecry AT-AT walker 3D model](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image8.png =500x281)
 
 **Small Dev Talk: What is your favourite aspect of the game so far?**
 
 **Deforges:** The scale. Many of the newer Star Wars games like The Force Unleashed follow one character going through a linear level facing a few storm troopers at the most. The maps we’re trying to create, especially with Hoth, are huge open battlefields that dynamically change depending on how people fight. It was especially important to capture the vastness of warfare that the past games haven’t been able to support.
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image9.jpg =500x272)
+![Star Wars: Battlecry in the CryEngine editor: two glowing lanterns on a snowy gravel path](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image9.jpg =500x272)
 
 **Small Dev Talk: Do you have a release date in mind for Star Wars: Battlecry? And will it be free to play, or pay to play?**
 
@@ -74,7 +74,7 @@ Star Wars: Battlecry is an MMOFPS/TPS that is under development. It takes its or
 
 **Deforges:** Cryengine. It’s a beauty that is on the forefront of today’s most appealing games like Crysis 3 and Far Cry 3.
 
-![image](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image10.jpg =500x509)
+![Star Wars: Battlecry DL-44 blaster pistol model by Deforges, shown from four angles](src\articleArchive\authorNeilRampone\2013-03-12_StarWarsBattlecry\image10.jpg =500x509)
 
 Did/have you run in to any major difficulties in the development of your game? If so, how did you overcome them?
 
