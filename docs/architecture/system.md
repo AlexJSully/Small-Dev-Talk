@@ -7,7 +7,7 @@ Small Dev Talk is a client-side static web application that loads article metada
 ```mermaid
 graph TB
     accTitle: System architecture overview
-    accDescr: Layered diagram showing the browser client layer (index.html entry point, CSS and Bootstrap styles, JavaScript runtime) driving the ArticleFiller core (retrieveArticleData, grabArticle, updateMetaData), which fetches articleData.json metadata and the Markdown article archive and renders content via Showdown before updating the HTML. External services include the Sentry SDK and a caching service worker, and UI libraries include Bootstrap, Showdown.js, and jQuery.
+    accDescr: Layered diagram showing the browser client layer (index.html entry point, CSS and Bootstrap styles, JavaScript runtime) driving the ArticleFiller core (retrieveArticleData, grabArticle, updateMetaData), which fetches articleData.json metadata and the Markdown article archive and renders content via Showdown before updating the HTML. External services include the Sentry SDK and a caching service worker, and UI libraries include the Bootstrap stylesheet and Showdown.js.
     subgraph Client["Browser / Client Layer"]
         HTML["index.html<br/>Entry Point"]
         CSS["Cascading Style Sheets (CSS)<br/>style.css, Bootstrap"]
@@ -33,9 +33,8 @@ graph TB
     end
 
     subgraph Libraries["UI Libraries"]
-        Bootstrap["Bootstrap<br/>Styling & Components"]
+        Bootstrap["Bootstrap<br/>Stylesheet"]
         Showdown["Showdown.js<br/>Markdown Parser"]
-        jQuery["jQuery<br/>Document Object Model (DOM) Utilities"]
     end
 
     HTML -->|loads| CSS
@@ -76,7 +75,7 @@ The `ArticleFiller` class is the central orchestrator for loading, rendering, an
 - **Data Retrieval:** Fetches `articleData.json` to build the article registry
 - **Page Retrieval:** Fetches legacy page definitions to drive carousel and featured lists
 - **Article Loading:** Retrieves Markdown files based on article name and author
-- **Rendering:** Converts Markdown to Hypertext Markup Language (HTML) using Showdown.js
+- **Rendering:** Converts Markdown to Hypertext Markup Language (HTML) using Showdown.js, and marks every article image after the first `loading="lazy"` so images below the fold download as the visitor scrolls. The carousel and featured lists build their markup first and write each container once
 - **Meta Tagging:** Updates page title, Open Graph, Twitter Card, and structured data
 - **Error Handling:** Classifies a failed load as network, http, parse or missing, shows the visitor a message for that kind, and logs and reports the error with its operation and article
 

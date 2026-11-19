@@ -1,6 +1,6 @@
 global.showdown = require("./libraries/showdown/showdown.min.js");
 
-const { ArticleFiller, escapeHtml, sanitizeHtml } = require("./index.js");
+const { ArticleFiller, escapeHtml, lazyLoadImagesAfterFirst, sanitizeHtml } = require("./index.js");
 
 const {
 	reportToSentry,
@@ -22,6 +22,32 @@ const {
 	watchTwitterTimeline,
 } = require("./index.js");
 const { version: packageVersion } = require("../../package.json");
+
+/**
+ * Record every value written to an element's `innerHTML` while `render` runs. `innerHTML +=` counts as a write.
+ * @param {() => void} render The code under test.
+ * @returns {Object<string, string[]>} The values written, keyed by the id of the element written to.
+ */
+function recordInnerHtmlWrites(render) {
+	const descriptor = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML");
+	const writes = {};
+
+	Object.defineProperty(Element.prototype, "innerHTML", {
+		...descriptor,
+		set(value) {
+			(writes[this.id] ||= []).push(value);
+			descriptor.set.call(this, value);
+		},
+	});
+
+	try {
+		render();
+	} finally {
+		Object.defineProperty(Element.prototype, "innerHTML", descriptor);
+	}
+
+	return writes;
+}
 
 afterEach(() => {
 	// Empty the module's buffer of errors reported without a Sentry client, so one test's errors never reach another.
@@ -384,6 +410,44 @@ describe("ArticleFiller: addToPage", () => {
 			const html = document.getElementById("articleBody").innerHTML;
 			expect(html.replace(/\s+/g, "")).toContain(expected.replace(/\s+/g, ""));
 		});
+	});
+
+	test("loads the first article image at once and every later one lazily", () => {
+		ArticleFiller.articleMd = "## Title\n\n![one](one.jpg)\n\nText.\n\n![two](two.jpg)\n\n![three](three.png)";
+		ArticleFiller.addToPage("TestArticle");
+
+		const images = document.querySelectorAll("#articleBody img");
+		expect(Array.from(images, (image) => image.getAttribute("src"))).toEqual(["one.jpg", "two.jpg", "three.png"]);
+		expect(images[0].hasAttribute("loading")).toBe(false);
+		expect(images[1].getAttribute("loading")).toBe("lazy");
+		expect(images[2].getAttribute("loading")).toBe("lazy");
+	});
+
+	test("leaves an <img> tag shown as code as text", () => {
+		ArticleFiller.articleMd = '![one](one.jpg)\n\n`<img src="two.jpg">`\n\n    <img src="three.jpg">';
+		ArticleFiller.addToPage("TestArticle");
+
+		const body = document.getElementById("articleBody");
+		expect(body.querySelectorAll("img")).toHaveLength(1);
+		expect(body.querySelector("code").textContent).toBe('<img src="two.jpg">');
+		expect(body.querySelector("pre code").textContent).toContain('<img src="three.jpg">');
+	});
+});
+
+describe("lazyLoadImagesAfterFirst", () => {
+	test("adds loading=lazy to every image tag after the first, in any letter case", () => {
+		expect(lazyLoadImagesAfterFirst('<p><img src="a.jpg"></p><IMG src="b.jpg"><img src="c.jpg" />')).toBe(
+			'<p><img src="a.jpg"></p><IMG loading="lazy" src="b.jpg"><img loading="lazy" src="c.jpg" />',
+		);
+	});
+
+	test("returns HTML with no images or one image unchanged", () => {
+		expect(lazyLoadImagesAfterFirst("<p>No images</p>")).toBe("<p>No images</p>");
+		expect(lazyLoadImagesAfterFirst('<img src="a.jpg">')).toBe('<img src="a.jpg">');
+	});
+
+	test("does not match a tag whose name only starts with img", () => {
+		expect(lazyLoadImagesAfterFirst('<img src="a.jpg"><imgx></imgx>')).toBe('<img src="a.jpg"><imgx></imgx>');
 	});
 });
 
@@ -1593,6 +1657,29 @@ describe("ArticleFiller: changeCarousel", () => {
 		expect(heading.tagName).toBe("H3");
 		expect(heading.textContent).toBe("First Article");
 	});
+
+	test("writes the slides and the indicators once each, so earlier slides are not parsed again", () => {
+		ArticleFiller.pageData.featured.carousel.push("ArticleOne");
+
+		const writes = recordInnerHtmlWrites(() => ArticleFiller.changeCarousel());
+
+		expect(writes.carouselInner).toHaveLength(1);
+		expect(writes.carouselIndicator).toHaveLength(1);
+		expect(document.querySelectorAll("#carouselInner .carousel-item")).toHaveLength(3);
+		expect(document.querySelectorAll("#carouselIndicator li")).toHaveLength(3);
+		expect(document.querySelectorAll("#carouselInner .carousel-item.active")).toHaveLength(1);
+		expect(document.getElementById("carouselImage2").getAttribute("src")).toBe(
+			"/src/articleArchive/authorJaneDoe/2024-06-01_ArticleOne/thumb1.png",
+		);
+	});
+
+	test("replaces the slides of an earlier render", () => {
+		ArticleFiller.changeCarousel();
+		ArticleFiller.changeCarousel();
+
+		expect(document.querySelectorAll("#carouselInner .carousel-item")).toHaveLength(2);
+		expect(document.querySelectorAll("#carouselIndicator li")).toHaveLength(2);
+	});
 });
 
 describe("ArticleFiller: featured article links", () => {
@@ -1662,6 +1749,50 @@ describe("ArticleFiller: featured article links", () => {
 		const thumbnailLink = document.querySelector("#featuredArticle0 .col-md-4 a");
 
 		expect(thumbnailLink.getAttribute("aria-label")).toBe("Redirect to First Article");
+	});
+
+	test("writes the list once, so earlier posts are not parsed again", () => {
+		const writes = recordInnerHtmlWrites(() => ArticleFiller.ArticleFiller());
+
+		expect(writes.displayArticles).toHaveLength(1);
+		expect(document.querySelectorAll("#displayArticles > .post")).toHaveLength(2);
+	});
+
+	test("closes every div it opens", () => {
+		const [markup] = recordInnerHtmlWrites(() => ArticleFiller.ArticleFiller()).displayArticles;
+
+		expect(markup.match(/<\/div>/g)).toHaveLength(markup.match(/<div\b/g).length);
+	});
+
+	test("skips a key with no article data and keeps each post's id at its place in the list", () => {
+		ArticleFiller.pageData.featured.displayArticles = ["ArticleOne", "NoSuchArticle", "ArticleTwo"];
+
+		ArticleFiller.ArticleFiller();
+
+		expect(Array.from(document.querySelectorAll("#displayArticles > .post"), (post) => post.id)).toEqual([
+			"featuredArticle0",
+			"featuredArticle2",
+		]);
+	});
+});
+
+describe("index.html scripts and the service worker precache", () => {
+	const fs = require("fs");
+	const path = require("path");
+	const root = path.join(__dirname, "..", "..");
+	const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+	const scripts = Array.from(html.matchAll(/<script\b[^>]*\bsrc="\.\/(src\/[^"]+)"/g), ([, src]) => src);
+	const { globPatterns } = require(path.join(root, "workbox-config.js"));
+
+	test("precaches every site script the page loads", () => {
+		expect(scripts).toContain("src/scripts/index.min.js");
+		scripts.forEach((script) => expect(globPatterns).toContain(script));
+	});
+
+	test("loads and precaches no jQuery or Bootstrap JavaScript, which the site does not call", () => {
+		[...scripts, ...globPatterns].forEach((file) => {
+			expect(file).not.toMatch(/jquery|bootstrap[^/]*\.js$/);
+		});
 	});
 });
 

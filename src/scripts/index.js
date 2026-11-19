@@ -329,6 +329,23 @@ function imageSizeAttributes(article) {
 	return ` width="${width}" height="${height}"`;
 }
 
+/**
+ * Mark every image of an article after the first with `loading="lazy"`, so images below the fold download only as the
+ * visitor scrolls toward them. The first image is usually the article's header and in view, so it loads at once.
+ * @param {string} html The HTML that Showdown made from the article. Showdown escapes `<` inside code, so only real
+ * `<img>` tags match.
+ * @returns {string} The HTML with the attribute added.
+ */
+function lazyLoadImagesAfterFirst(html) {
+	let imageCount = 0;
+
+	return html.replace(/<img\b/gi, (tag) => {
+		imageCount += 1;
+
+		return imageCount === 1 ? tag : `${tag} loading="lazy"`;
+	});
+}
+
 /** Create and fill the page with the desired article */
 class ArticleFiller {
 	constructor() {
@@ -585,7 +602,7 @@ class ArticleFiller {
 	 * @param {string} [articleName] The key of the article, named in the error when the conversion fails.
 	 */
 	static addToPage(articleName) {
-		ArticleFiller.article = sanitizeHtml(converter.makeHtml(ArticleFiller.articleMd));
+		ArticleFiller.article = sanitizeHtml(lazyLoadImagesAfterFirst(converter.makeHtml(ArticleFiller.articleMd)));
 
 		// Check if the converted article is empty when the original content is not
 		if (ArticleFiller?.article?.trim()?.length < 1 && ArticleFiller?.articleMd?.trim()?.length > 0) {
@@ -725,45 +742,33 @@ class ArticleFiller {
 			document.getElementById("carouselInner")
 		) {
 			const carouselList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].carousel;
+			const indicators = [];
+			const slides = [];
 
-			// Reset carousel
-			if (document.getElementById("carouselIndicator")) {
-				document.getElementById("carouselIndicator").innerHTML = "";
-			}
-			document.getElementById("carouselInner").innerHTML = "";
+			// Build every slide first and write each container once: `innerHTML +=` re-parses all earlier slides.
+			carouselList.forEach((key, c) => {
+				const article = ArticleFiller.articleData[key];
+				const authorFolder = `author${article.author.split(" ").join("")}`;
+				const url = `/src/articleArchive/${authorFolder}/${article.date}_${key}/${article.thumbnail}`;
 
-			// Fill carousel
-			for (let c = 0; c < carouselList.length; c += 1) {
-				// Create URL
-				const authorFolder = `author${ArticleFiller.articleData[carouselList[c]].author.split(" ").join("")}`;
-				const articleFolder = `${ArticleFiller.articleData[carouselList[c]].date}_${carouselList[c]}`;
-				const articleThumbnail = ArticleFiller.articleData[carouselList[c]].thumbnail;
-				const articleTitle = ArticleFiller.articleData[carouselList[c]].title;
-				const articleSummary = ArticleFiller.articleData[carouselList[c]].summary;
-				const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
-
-				// Change indicators
-				let appendStr = `
+				indicators.push(`
 					<li
 						data-target="#carouselExampleIndicators"
 						data-slide-to="${c}"
 						${c === 0 ? `class="active"` : ""}
 					></li>
-				`;
-				if (document.getElementById("carouselIndicator")) {
-					document.getElementById("carouselIndicator").innerHTML += appendStr;
-				}
+				`);
 
-				// Change content. The first slide is the page's largest image, so it loads at once and at high priority.
-				appendStr = `
+				// The first slide is the page's largest image, so it loads at once and at high priority.
+				slides.push(`
 					<div class="carousel-item ${c === 0 ? "active" : ""}">
 						<a
 							id="carouselLink${c}"
-							href="index.html?${escapeHtml(carouselList[c])}"
+							href="index.html?${escapeHtml(key)}"
 						>
 							<img
 								id="carouselImage${c}"
-								src="${escapeHtml(url)}"${imageSizeAttributes(ArticleFiller.articleData[carouselList[c]])}
+								src="${escapeHtml(url)}"${imageSizeAttributes(article)}
 								class="d-block w-100"
 								${c === 0 ? `loading="eager" fetchpriority="high"` : `loading="lazy"`}
 								alt=""
@@ -772,15 +777,20 @@ class ArticleFiller {
 								class="carousel-caption d-md-block"
 								style="text-shadow: 0 0 3px #000000;"
 							>
-								<h3 class="h5" id="carouselHeader${c}">${escapeHtml(articleTitle)}</h3>
-								<p id="carouselParagraph${c}">${escapeHtml(articleSummary)}</p>
+								<h3 class="h5" id="carouselHeader${c}">${escapeHtml(article.title)}</h3>
+								<p id="carouselParagraph${c}">${escapeHtml(article.summary)}</p>
 							</div>
 						</a>
 					</div>
-				`;
+				`);
+			});
 
-				document.getElementById("carouselInner").innerHTML += appendStr;
+			const carouselIndicator = document.getElementById("carouselIndicator");
+
+			if (carouselIndicator) {
+				carouselIndicator.innerHTML = indicators.join("");
 			}
+			document.getElementById("carouselInner").innerHTML = slides.join("");
 		}
 
 		ArticleFiller.ArticleFiller();
@@ -798,71 +808,63 @@ class ArticleFiller {
 			ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles
 		) {
 			const displayList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles;
+			const posts = [];
 
-			// Reset featured articles
-			document.getElementById("displayArticles").innerHTML = "";
+			// Build every post first and write the list once: `innerHTML +=` re-parses all earlier posts.
+			displayList.forEach((key, d) => {
+				const article = ArticleFiller.articleData[key];
 
-			// Fill featured articles
-			if (displayList && displayList.length > 0) {
-				for (const d in displayList) {
-					if (ArticleFiller.articleData[displayList[d]]) {
-						// Create URL
-						const authorFolder = `author${ArticleFiller.articleData[displayList[d]].author
-							.split(" ")
-							.join("")}`;
-						const articleFolder = `${ArticleFiller.articleData[displayList[d]].date}_${displayList[d]}`;
-						const articleThumbnail = ArticleFiller.articleData[displayList[d]].thumbnail;
-						const articleTitle = ArticleFiller.articleData[displayList[d]].title;
-						const articleSummary = ArticleFiller.articleData[displayList[d]].summary;
-						const articleDate = ArticleFiller.articleData[displayList[d]].date;
-						const url = `/src/articleArchive/${authorFolder}/${articleFolder}/${articleThumbnail}`;
-
-						// Change indicators
-						const appendStr = `
-							<div class="post row" id="featuredArticle${d}">
-								<div class="col-md-4" style="margin-top: 0.5rem;">
-									<a
-										href="index.html?${escapeHtml(displayList[d])}"
-										aria-label="Redirect to ${escapeHtml(articleTitle)}"
-									>
-										<img
-											src="${escapeHtml(url)}"${imageSizeAttributes(ArticleFiller.articleData[displayList[d]])}
-											class="img-fluid"
-											loading="lazy"
-											alt="Thumbnail for ${escapeHtml(articleTitle)}"
-										>
-									</a>
-								</div>
-								<div class="col-md-8" style="margin-top: 0.5rem;">
-									<h2>
-										<a href="index.html?${escapeHtml(displayList[d])}">
-											${escapeHtml(articleTitle)}
-										</a>
-									</h2>
-								</div>
-								<div class="col-12" style="margin-top: 0.5rem;">
-									<p>
-										${escapeHtml(articleSummary)}
-										<a href="index.html?${escapeHtml(displayList[d])}">
-											Read More<span class="visually-hidden"> about ${escapeHtml(articleTitle)}</span>
-										</a>
-									</p>
-								</div>
-								<div class="col-12">
-									<p class="details">
-										<a href="index.html?${escapeHtml(displayList[d])}">
-											${escapeHtml(articleDate)}<span class="visually-hidden"> ${escapeHtml(articleTitle)}</span>
-										</a>
-									</p>
-								</div>
-								</div>
-							</div>
-						`;
-
-						document.getElementById("displayArticles").innerHTML += appendStr;
-					}
+				if (!article) {
+					return;
 				}
-			}
+
+				const authorFolder = `author${article.author.split(" ").join("")}`;
+				const url = `/src/articleArchive/${authorFolder}/${article.date}_${key}/${article.thumbnail}`;
+				const articleKey = escapeHtml(key);
+				const articleTitle = escapeHtml(article.title);
+
+				posts.push(`
+					<div class="post row" id="featuredArticle${d}">
+						<div class="col-md-4" style="margin-top: 0.5rem;">
+							<a
+								href="index.html?${articleKey}"
+								aria-label="Redirect to ${articleTitle}"
+							>
+								<img
+									src="${escapeHtml(url)}"${imageSizeAttributes(article)}
+									class="img-fluid"
+									loading="lazy"
+									alt="Thumbnail for ${articleTitle}"
+								>
+							</a>
+						</div>
+						<div class="col-md-8" style="margin-top: 0.5rem;">
+							<h2>
+								<a href="index.html?${articleKey}">
+									${articleTitle}
+								</a>
+							</h2>
+						</div>
+						<div class="col-12" style="margin-top: 0.5rem;">
+							<p>
+								${escapeHtml(article.summary)}
+								<a href="index.html?${articleKey}">
+									Read More<span class="visually-hidden"> about ${articleTitle}</span>
+								</a>
+							</p>
+						</div>
+						<div class="col-12">
+							<p class="details">
+								<a href="index.html?${articleKey}">
+									${escapeHtml(article.date)}<span class="visually-hidden"> ${articleTitle}</span>
+								</a>
+							</p>
+						</div>
+					</div>
+				`);
+			});
+
+			document.getElementById("displayArticles").innerHTML = posts.join("");
 		}
 	}
 }
@@ -1173,6 +1175,7 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = {
 		ArticleFiller,
 		escapeHtml,
+		lazyLoadImagesAfterFirst,
 		sanitizeHtml,
 		sanitize: sanitizeHtml,
 		sanitizeHTML: sanitizeHtml,

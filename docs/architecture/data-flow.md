@@ -14,7 +14,7 @@ flowchart TD
     end
 
     subgraph Init["Initialization"]
-        B1["Scripts load:<br/>jQuery, Showdown,<br/>Bootstrap, Sentry"]
+        B1["Scripts load:<br/>Showdown, Sentry"]
         B2["Sentry error tracking<br/>is configured"]
         B4["Page on www.smalldevtalk.net<br/>moves to smalldevtalk.net"]
         B3["Service worker registers<br/>if the browser<br/>supports it"]
@@ -111,7 +111,7 @@ When [index.html](../../index.html) loads:
 1. HTML is parsed
 2. Scripts and stylesheets are downloaded. Everything except Sentry is served from this repository rather than a content delivery network (CDN):
     - `style.min.css` and the Bootstrap stylesheet, both under the site root
-    - jQuery, the Bootstrap JavaScript bundle, and Showdown.js, all under `src/scripts/libraries/`
+    - Showdown.js, under `src/scripts/libraries/`. The jQuery and Bootstrap JavaScript copies there are not loaded, because the site calls neither
     - `src/scripts/index.min.js`, the minified build of [index.js](../../src/scripts/index.js)
     - Sentry SDK, from the version-pinned `browser.sentry-cdn.com` bundle
 

@@ -53,6 +53,22 @@ describe("Landing Page", () => {
 			.and("match", /^\d+$/);
 	});
 
+	it("should load no jQuery or Bootstrap JavaScript, which the site does not call", () => {
+		cy.get("#carouselInner .carousel-item").should("have.length.greaterThan", 1);
+		cy.get('script[src*="jquery"], script[src*="bootstrap"]').should("not.exist");
+		cy.window().should("not.have.property", "jQuery");
+		cy.window().should("not.have.property", "bootstrap");
+	});
+
+	it("should load an article's first image at once and the later ones lazily", () => {
+		cy.visit("http://localhost:3000/index.html?YukiVsPanda");
+
+		cy.get("#articleBody img").should("have.length.greaterThan", 2);
+		cy.get("#articleBody img").each(($img, index) => {
+			expect($img.attr("loading")).to.equal(index === 0 ? undefined : "lazy");
+		});
+	});
+
 	it("should keep the proportions of archive thumbnails", () => {
 		cy.visit("http://localhost:3000/index.html?pages&archive");
 
