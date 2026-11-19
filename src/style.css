@@ -189,11 +189,24 @@ img {
 
 #carouselInner .carousel-item {
 	height: 100%;
+	/* Bootstrap slides the slides with a 0.6s transform transition; a shorter, strongly eased one feels direct. */
+	transition-duration: 0.28s;
+	transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 #carouselInner .carousel-item a {
 	display: block;
 	height: 100%;
+	position: relative;
+}
+
+/* A dark gradient behind the caption keeps its white text readable over light photos. */
+#carouselInner .carousel-item a::before {
+	background: linear-gradient(to top, rgb(0 0 0 / 0.75), rgb(0 0 0 / 0));
+	content: "";
+	inset: 35% 0 0;
+	pointer-events: none;
+	position: absolute;
 }
 
 #carouselInner .carousel-item img {
@@ -201,6 +214,112 @@ img {
 	max-height: 400px;
 	object-fit: cover;
 	width: 100%;
+}
+
+#carouselInner .carousel-caption {
+	text-shadow: 0 1px 3px rgb(0 0 0 / 0.8);
+}
+
+/* A phone's slide is too short for the title and the summary, so it shows the title alone. */
+@media (max-width: 575.98px) {
+	#carouselInner .carousel-caption {
+		padding-bottom: 1.75rem;
+	}
+
+	#carouselInner .carousel-caption p {
+		display: none;
+	}
+}
+
+/* Vertical swipes scroll the page and pinches zoom it; horizontal swipes change the slide. */
+#featuredCarousel {
+	touch-action: pan-y pinch-zoom;
+}
+
+/* The arrows come before the slides in the page, so they sit above the slides' cross-fade stacking explicitly. */
+#featuredCarousel .carousel-control-prev,
+#featuredCarousel .carousel-control-next {
+	opacity: 1;
+	z-index: 2;
+}
+
+/* A dark disc behind each arrow keeps it visible over light photos. */
+#featuredCarousel .carousel-control-prev-icon,
+#featuredCarousel .carousel-control-next-icon {
+	background-color: rgb(0 0 0 / 0.55);
+	background-size: 1.25rem;
+	border-radius: 50%;
+	height: 2.75rem;
+	transition: background-color 0.15s ease-out;
+	width: 2.75rem;
+}
+
+#featuredCarousel .carousel-control-prev:hover .carousel-control-prev-icon,
+#featuredCarousel .carousel-control-next:hover .carousel-control-next-icon {
+	background-color: rgb(0 0 0 / 0.75);
+}
+
+#featuredCarousel .carousel-control-prev:active .carousel-control-prev-icon,
+#featuredCarousel .carousel-control-next:active .carousel-control-next-icon {
+	background-color: rgb(0 0 0 / 0.9);
+}
+
+/* Bootstrap removes the outline on focus; a white ring edged in black shows on light and dark photos alike. */
+#featuredCarousel .carousel-control-prev:focus-visible .carousel-control-prev-icon,
+#featuredCarousel .carousel-control-next:focus-visible .carousel-control-next-icon {
+	box-shadow: 0 0 0 5px #000000;
+	outline: 3px solid #ffffff;
+}
+
+#featuredCarousel .carousel-indicators [data-bs-target]:focus-visible {
+	box-shadow: 0 0 0 4px #000000;
+	outline: 2px solid #ffffff;
+}
+
+#featuredCarousel .carousel-indicators {
+	filter: drop-shadow(0 0 2px rgb(0 0 0 / 0.9));
+}
+
+/* The transparent borders make each indicator a 25px tall target around its 3px dash; the radius rounds its focus ring. */
+#featuredCarousel .carousel-indicators [data-bs-target] {
+	border-bottom-width: 11px;
+	border-radius: 8px;
+	border-top-width: 11px;
+	opacity: 0.6;
+}
+
+#featuredCarousel .carousel-indicators [data-bs-target]:hover {
+	opacity: 0.85;
+}
+
+/* The current indicator is wider as well as brighter, so it does not rely on brightness alone. */
+#featuredCarousel .carousel-indicators .active {
+	opacity: 1;
+	width: 48px;
+}
+
+/* Reduced motion cross-fades the slides instead of sliding them. */
+@media (prefers-reduced-motion: reduce) {
+	#carouselInner .carousel-item {
+		opacity: 0;
+		transform: none;
+		transition: opacity 0.2s ease-out;
+	}
+
+	#carouselInner .carousel-item.active,
+	#carouselInner .carousel-item-next.carousel-item-start,
+	#carouselInner .carousel-item-prev.carousel-item-end {
+		opacity: 1;
+		z-index: 1;
+	}
+
+	/* The outgoing slide stays under the incoming one until the fade ends. */
+	#carouselInner .carousel-item.active.carousel-item-start,
+	#carouselInner .carousel-item.active.carousel-item-end {
+		opacity: 0;
+		transition: opacity 0s 0.2s;
+		z-index: 0;
+	}
 }
 /** END carousel **/
 

@@ -15,6 +15,7 @@ const {
 	handleControlClick,
 	changeCarouselSlide,
 	showCarouselSlide,
+	enableCarouselSwipe,
 	APP_VERSION,
 	redirectToCanonicalHost,
 	removeLegacyServiceWorker,
@@ -1691,7 +1692,7 @@ describe("ArticleFiller: changeCarousel", () => {
 
 		const [first, second] = document.querySelectorAll("#carouselIndicator button");
 		expect(first.getAttribute("type")).toBe("button");
-		expect(first.getAttribute("data-bs-target")).toBe("#carouselExampleIndicators");
+		expect(first.getAttribute("data-bs-target")).toBe("#featuredCarousel");
 		expect(first.getAttribute("aria-label")).toBe("Show slide 1: First Article");
 		expect(first.classList.contains("active")).toBe(true);
 		expect(first.getAttribute("aria-current")).toBe("true");
@@ -1699,6 +1700,19 @@ describe("ArticleFiller: changeCarousel", () => {
 		expect(second.getAttribute("aria-label")).toBe("Show slide 2: Second Article");
 		expect(second.classList.contains("active")).toBe(false);
 		expect(second.hasAttribute("aria-current")).toBe(false);
+	});
+
+	test("labels each slide as a slide with its position, and announces nothing when the carousel renders", () => {
+		document.body.insertAdjacentHTML("beforeend", '<p id="carouselStatus"></p>');
+
+		ArticleFiller.changeCarousel();
+
+		const slides = document.querySelectorAll("#carouselInner .carousel-item");
+		expect(Array.from(slides, (slide) => slide.getAttribute("aria-label"))).toEqual(["1 of 2", "2 of 2"]);
+		expect(slides[0].getAttribute("role")).toBe("group");
+		expect(slides[0].getAttribute("aria-roledescription")).toBe("slide");
+		expect(slides[0].querySelector(".carousel-caption").hasAttribute("style")).toBe(false);
+		expect(document.getElementById("carouselStatus").textContent).toBe("");
 	});
 
 	test("escapes the article title in an indicator's label", () => {
@@ -2242,9 +2256,10 @@ describe("handleControlClick", () => {
 describe("carousel slide changes", () => {
 	beforeEach(() => {
 		document.body.innerHTML = `
-			<div class="carousel-item active" id="slide0"></div>
-			<div class="carousel-item" id="slide1"></div>
+			<div class="carousel-item active" id="slide0"><h3>First</h3></div>
+			<div class="carousel-item" id="slide1"><h3> Second </h3></div>
 			<div class="carousel-item" id="slide2"></div>
+			<p id="carouselStatus"></p>
 			<div id="carouselIndicator">
 				<button data-carousel-slide-to="0" class="active" aria-current="true"></button>
 				<button data-carousel-slide-to="1"></button>
@@ -2324,6 +2339,140 @@ describe("carousel slide changes", () => {
 			activeIndicators: ["0"],
 			currentIndicators: ["0"],
 		});
+	});
+	test("announces the slide shown, with its title when it has one", () => {
+		showCarouselSlide(1);
+		expect(document.getElementById("carouselStatus").textContent).toBe("Slide 2 of 3: Second");
+
+		changeCarouselSlide("next");
+		expect(document.getElementById("carouselStatus").textContent).toBe("Slide 3 of 3");
+	});
+
+	/**
+	 * Give `slide` one running transition whose end the test decides. jsdom has no `getAnimations`, so this stands in
+	 * for the browser's transition of the slide.
+	 * @param {Element} slide The slide that will move.
+	 * @returns {() => Promise<void>} Ends the transition and waits for the carousel to react.
+	 */
+	const runningTransition = (slide) => {
+		let end;
+		const finished = new Promise((resolve) => {
+			end = resolve;
+		});
+
+		slide.getAnimations = () => [{ finished }];
+
+		return () => {
+			end();
+
+			return new Promise((resolve) => setTimeout(resolve, 0));
+		};
+	};
+
+	test("slides the next slide in from the right, and makes it the only active slide when its transition ends", async () => {
+		const endTransition = runningTransition(document.getElementById("slide1"));
+
+		changeCarouselSlide("next");
+
+		expect(document.getElementById("slide0").className).toBe("carousel-item active carousel-item-start");
+		expect(document.getElementById("slide1").className).toBe(
+			"carousel-item carousel-item-next carousel-item-start",
+		);
+		expect(carouselState().currentIndicators).toEqual(["1"]);
+
+		await endTransition();
+
+		expect(document.getElementById("slide0").className).toBe("carousel-item");
+		expect(document.getElementById("slide1").className).toBe("carousel-item active");
+	});
+
+	test("slides in from the left when the previous arrow wraps from the first slide to the last", async () => {
+		const endTransition = runningTransition(document.getElementById("slide2"));
+
+		changeCarouselSlide("prev");
+
+		expect(document.getElementById("slide0").className).toBe("carousel-item active carousel-item-end");
+		expect(document.getElementById("slide2").className).toBe("carousel-item carousel-item-prev carousel-item-end");
+
+		await endTransition();
+
+		expect(carouselState().activeSlides).toEqual(["slide2"]);
+	});
+
+	test("ends a moving slide at once when another change comes, and counts on from it", async () => {
+		const endFirst = runningTransition(document.getElementById("slide1"));
+		const endSecond = runningTransition(document.getElementById("slide2"));
+
+		changeCarouselSlide("next");
+		changeCarouselSlide("next");
+
+		expect(document.getElementById("slide0").className).toBe("carousel-item");
+		expect(document.getElementById("slide1").className).toBe("carousel-item active carousel-item-start");
+		expect(document.getElementById("slide2").className).toBe(
+			"carousel-item carousel-item-next carousel-item-start",
+		);
+
+		await endFirst();
+		expect(document.getElementById("slide2").className).toBe(
+			"carousel-item carousel-item-next carousel-item-start",
+		);
+
+		await endSecond();
+		expect(carouselState().activeSlides).toEqual(["slide2"]);
+	});
+});
+
+describe("enableCarouselSwipe", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<section id="featuredCarousel">
+				<div class="carousel-item active" id="slide0"></div>
+				<div class="carousel-item" id="slide1"></div>
+				<div class="carousel-item" id="slide2"></div>
+			</section>
+		`;
+		enableCarouselSwipe(document.getElementById("featuredCarousel"));
+	});
+
+	afterEach(() => {
+		document.body.innerHTML = "";
+	});
+
+	/**
+	 * Dispatch a pointer event on the carousel. jsdom has no `PointerEvent`, so a plain event carries the pointer's fields.
+	 * @param {string} type The event type.
+	 * @param {string} pointerType `touch`, `pen` or `mouse`.
+	 * @param {number} clientX The horizontal position.
+	 * @param {number} [clientY] The vertical position.
+	 * @returns {void}
+	 */
+	const pointer = (type, pointerType, clientX, clientY = 100) => {
+		document
+			.getElementById("featuredCarousel")
+			.dispatchEvent(Object.assign(new Event(type), { pointerType, clientX, clientY }));
+	};
+	const activeSlide = () => document.querySelector(".carousel-item.active").id;
+
+	test.each([
+		["a touch swipe to the left shows the next slide", "touch", 200, 100, "slide1"],
+		["a touch swipe to the right shows the previous slide", "touch", 400, 100, "slide2"],
+		["a pen swipe to the left shows the next slide", "pen", 200, 100, "slide1"],
+		["a swipe shorter than 40 pixels changes nothing", "touch", 261, 100, "slide0"],
+		["a mostly vertical movement changes nothing", "touch", 240, 200, "slide0"],
+		["a mouse drag changes nothing", "mouse", 100, 100, "slide0"],
+	])("%s", (_name, pointerType, endX, endY, expected) => {
+		pointer("pointerdown", pointerType, 300);
+		pointer("pointerup", pointerType, endX, endY);
+
+		expect(activeSlide()).toBe(expected);
+	});
+
+	test("a cancelled touch changes nothing", () => {
+		pointer("pointerdown", "touch", 300);
+		pointer("pointercancel", "touch", 300);
+		pointer("pointerup", "touch", 100);
+
+		expect(activeSlide()).toBe("slide0");
 	});
 });
 

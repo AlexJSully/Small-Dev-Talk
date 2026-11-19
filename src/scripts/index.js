@@ -761,7 +761,7 @@ class ArticleFiller {
 				indicators.push(`
 					<button
 						type="button"
-						data-bs-target="#carouselExampleIndicators"
+						data-bs-target="#featuredCarousel"
 						data-carousel-slide-to="${c}"
 						aria-label="Show slide ${c + 1}: ${escapeHtml(article.title)}"
 						${c === 0 ? `class="active" aria-current="true"` : ""}
@@ -770,7 +770,12 @@ class ArticleFiller {
 
 				// The first slide is the page's largest image, so it loads at once and at high priority.
 				slides.push(`
-					<div class="carousel-item ${c === 0 ? "active" : ""}">
+					<div
+						class="carousel-item ${c === 0 ? "active" : ""}"
+						role="group"
+						aria-roledescription="slide"
+						aria-label="${c + 1} of ${carouselList.length}"
+					>
 						<a
 							id="carouselLink${c}"
 							href="index.html?${escapeHtml(key)}"
@@ -782,10 +787,7 @@ class ArticleFiller {
 								${c === 0 ? `loading="eager" fetchpriority="high"` : `loading="lazy"`}
 								alt=""
 							>
-							<div
-								class="carousel-caption d-md-block"
-								style="text-shadow: 0 0 3px #000000;"
-							>
+							<div class="carousel-caption">
 								<h3 class="h5" id="carouselHeader${c}">${escapeHtml(article.title)}</h3>
 								<p id="carouselParagraph${c}">${escapeHtml(article.summary)}</p>
 							</div>
@@ -1145,6 +1147,12 @@ async function start(location) {
 
 	document.addEventListener("click", handleControlClick);
 
+	const carousel = document.getElementById("featuredCarousel");
+
+	if (carousel) {
+		enableCarouselSwipe(carousel);
+	}
+
 	try {
 		await init();
 	} catch (error) {
@@ -1205,6 +1213,7 @@ if (typeof module !== "undefined" && module.exports) {
 		handleControlClick,
 		changeCarouselSlide,
 		showCarouselSlide,
+		enableCarouselSwipe,
 		APP_VERSION,
 		redirectToCanonicalHost,
 		removeLegacyServiceWorker,
@@ -1217,22 +1226,18 @@ if (typeof module !== "undefined" && module.exports) {
 
 // ----- Functions related to changing carousel -----
 
+/** The slide change in progress: a function that ends it at once, or null when no slide is moving. */
+let finishCarouselTransition = null;
+
+/** The horizontal distance, in pixels, that a touch must travel across the carousel to count as a swipe. */
+const CAROUSEL_SWIPE_DISTANCE = 40;
+
 /**
- * Show the carousel slide at `index`, and mark its indicator as the current one. An index with no slide changes nothing.
+ * Mark the indicator of the slide at `index` as the current one, and every other indicator as not current.
  * @param {number} index The position of the slide, counted from 0.
  * @returns {void}
  */
-function showCarouselSlide(index) {
-	const slides = document.getElementsByClassName("carousel-item");
-
-	if (!Number.isInteger(index) || !slides[index]) {
-		return;
-	}
-
-	Array.from(slides).forEach((slide, position) => {
-		slide.classList.toggle("active", position === index);
-	});
-
+function markCarouselIndicator(index) {
 	document.querySelectorAll("#carouselIndicator [data-carousel-slide-to]").forEach((indicator) => {
 		const isCurrent = Number(indicator.dataset.carouselSlideTo) === index;
 
@@ -1247,36 +1252,165 @@ function showCarouselSlide(index) {
 }
 
 /**
- * Changes the active slide in a carousel based on the given direction.
+ * Tell screen reader users which slide is now shown, through the carousel's polite status region.
+ * @param {Element} slide The slide being shown.
+ * @param {number} index The position of the slide, counted from 0.
+ * @param {number} count The number of slides.
+ * @returns {void}
+ */
+function announceCarouselSlide(slide, index, count) {
+	const status = document.getElementById("carouselStatus");
+
+	if (!status) {
+		return;
+	}
+
+	const title = slide.querySelector("h3")?.textContent.trim();
+
+	status.textContent = `Slide ${index + 1} of ${count}${title ? `: ${title}` : ""}`;
+}
+
+/**
+ * Slide `incoming` in and `outgoing` out with the slide classes of Bootstrap's carousel stylesheet. The stylesheet moves
+ * them with a `transform` transition, and src/style.css shortens it and swaps it for a cross-fade under reduced motion.
+ * The change ends when the transition does, or at once when nothing animates.
+ * @param {Element} outgoing The slide shown now.
+ * @param {Element} incoming The slide to show.
+ * @param {"next" | "prev"} direction `next` slides the new slide in from the right, `prev` from the left.
+ * @returns {void}
+ */
+function slideCarousel(outgoing, incoming, direction) {
+	const order = direction === "next" ? "carousel-item-next" : "carousel-item-prev";
+	const side = direction === "next" ? "carousel-item-start" : "carousel-item-end";
+
+	incoming.classList.add(order);
+	// Reading the layout places the incoming slide at its side before it starts to move.
+	void incoming.offsetWidth;
+	outgoing.classList.add(side);
+	incoming.classList.add(side);
+
+	const finish = () => {
+		if (finishCarouselTransition !== finish) {
+			return;
+		}
+
+		finishCarouselTransition = null;
+		incoming.classList.remove(order, side);
+		incoming.classList.add("active");
+		outgoing.classList.remove("active", side);
+	};
+
+	finishCarouselTransition = finish;
+
+	const animations = typeof incoming.getAnimations === "function" ? incoming.getAnimations() : [];
+
+	if (animations.length === 0) {
+		finish();
+
+		return;
+	}
+
+	Promise.allSettled(animations.map((animation) => animation.finished)).then(finish);
+}
+
+/**
+ * Show the carousel slide at `index`, mark its indicator as the current one, and announce it. A slide still moving
+ * from an earlier change ends first, so a quick run of clicks builds on the slide last chosen. An index with no slide,
+ * or the slide already shown, changes nothing.
+ * @param {number} index The position of the slide, counted from 0.
+ * @param {"next" | "prev"} [direction] The side the slide enters from. Defaults to `next` for a slide later in the list
+ * and `prev` for an earlier one.
+ * @returns {void}
+ */
+function showCarouselSlide(index, direction) {
+	finishCarouselTransition?.();
+
+	const slides = Array.from(document.getElementsByClassName("carousel-item"));
+	const current = slides.find((slide) => slide.classList.contains("active"));
+	const target = Number.isInteger(index) ? slides[index] : undefined;
+
+	if (!target || target === current) {
+		return;
+	}
+
+	markCarouselIndicator(index);
+	announceCarouselSlide(target, index, slides.length);
+
+	if (!current) {
+		target.classList.add("active");
+
+		return;
+	}
+
+	slideCarousel(current, target, direction ?? (index > slides.indexOf(current) ? "next" : "prev"));
+}
+
+/**
+ * Changes the active slide in a carousel based on the given direction, wrapping from the last slide to the first and
+ * back.
  * @param {string} direction The direction in which to change the active slide.
  * @returns {void}
  */
 function changeCarouselSlide(direction) {
-	/** Define the name of the class that represents the active slide */
-	const activeClass = "active";
+	// A slide still moving ends first, so the next one is counted from the slide last chosen
+	finishCarouselTransition?.();
+
 	/** Elements with the class "carousel-item" */
-	const carouselItems = document.getElementsByClassName("carousel-item");
+	const carouselItems = Array.from(document.getElementsByClassName("carousel-item"));
 
 	// If there are no carousel items, return without doing anything
-	if (!carouselItems || !carouselItems.length) {
+	if (!carouselItems.length) {
 		return;
 	}
 
-	/** Currently active slide by searching through the carousel items for the one with the active class */
-	const activeItem = Array.from(carouselItems).find((item) => item.classList.contains(activeClass));
+	/** Index of the slide with the active class, or -1 when no slide is active */
+	const activeIndex = carouselItems.findIndex((item) => item.classList.contains("active"));
 
 	// If there is no active slide, show the first carousel item and return
-	if (!activeItem) {
+	if (activeIndex < 0) {
 		showCarouselSlide(0);
+
 		return;
 	}
 
 	/** The index of the next slide based on the direction and the current active slide */
 	const nextIndex =
 		direction === "next"
-			? (Array.from(carouselItems).indexOf(activeItem) + 1) % carouselItems.length
-			: (Array.from(carouselItems).indexOf(activeItem) - 1 + carouselItems.length) % carouselItems.length;
+			? (activeIndex + 1) % carouselItems.length
+			: (activeIndex - 1 + carouselItems.length) % carouselItems.length;
 
-	// Move the active class from the current slide and its indicator to the next ones
-	showCarouselSlide(nextIndex);
+	// Slide in from the side the arrow points to, also when wrapping round the ends
+	showCarouselSlide(nextIndex, direction === "next" ? "next" : "prev");
+}
+
+/**
+ * Change the carousel slide when a touch or a pen swipes across it: a swipe to the left shows the next slide and a
+ * swipe to the right the previous one. A mostly vertical movement is left to scroll the page, and a mouse is left to
+ * the arrows, so a drag to select text does not change the slide.
+ * @param {Element} carousel The carousel element.
+ * @returns {void}
+ */
+function enableCarouselSwipe(carousel) {
+	let start = null;
+
+	carousel.addEventListener("pointerdown", (event) => {
+		start = event.pointerType === "mouse" ? null : { x: event.clientX, y: event.clientY };
+	});
+	carousel.addEventListener("pointercancel", () => {
+		start = null;
+	});
+	carousel.addEventListener("pointerup", (event) => {
+		if (!start) {
+			return;
+		}
+
+		const distanceX = event.clientX - start.x;
+		const distanceY = event.clientY - start.y;
+
+		start = null;
+
+		if (Math.abs(distanceX) >= CAROUSEL_SWIPE_DISTANCE && Math.abs(distanceX) > Math.abs(distanceY)) {
+			changeCarouselSlide(distanceX < 0 ? "next" : "prev");
+		}
+	});
 }

@@ -18,7 +18,7 @@ describe("Landing Page", () => {
 		cy.get("#featuredArticles h2.title").should("contain", "Featured Articles");
 
 		// Carousel and indicators
-		cy.get("#carouselExampleIndicators").should("exist");
+		cy.get("#featuredCarousel").should("exist");
 		cy.get("#carouselInner").should("exist");
 		cy.get("#carouselIndicator").should("exist");
 
@@ -67,8 +67,14 @@ describe("Landing Page", () => {
 			.first()
 			.should("have.class", "active")
 			.and("have.attr", "aria-current", "true")
-			// Bootstrap's stylesheet draws each indicator as a 30 pixel dash.
-			.and(($button) => expect($button[0].getBoundingClientRect().width).to.be.closeTo(30, 1));
+			// The current indicator is a 48 pixel dash and the others 30, each in a target at least 24 pixels tall.
+			.and(($button) => {
+				expect($button[0].getBoundingClientRect().width).to.be.closeTo(48, 1);
+				expect($button[0].getBoundingClientRect().height).to.be.at.least(24);
+			});
+		cy.get("#carouselIndicator button")
+			.eq(1)
+			.should(($button) => expect($button[0].getBoundingClientRect().width).to.be.closeTo(30, 1));
 
 		cy.get("#carouselIndicator button").eq(1).click();
 		cy.get("#carouselInner .carousel-item").eq(1).should("have.class", "active");
@@ -81,6 +87,88 @@ describe("Landing Page", () => {
 			.eq(2)
 			.should("have.class", "active")
 			.and("have.attr", "aria-current", "true");
+	});
+
+	it("should slide between slides with a short transform transition, and announce the slide shown", () => {
+		cy.get("#carouselInner .carousel-item")
+			.first()
+			.should("have.css", "transition-property", "transform")
+			.and("have.css", "transition-duration", "0.28s");
+		cy.get("#carouselStatus").should("have.attr", "role", "status").and("be.empty");
+
+		cy.get(".carousel-control-next").click();
+
+		cy.get("#carouselInner .carousel-item.active")
+			.should("have.length", 1)
+			.and("have.descendants", "#carouselImage1")
+			.and("not.have.class", "carousel-item-start");
+		cy.get("#carouselStatus")
+			.invoke("text")
+			.should("match", /^Slide 2 of 3: \S/);
+	});
+
+	it("should run the arrows as buttons, and label the carousel and each slide", () => {
+		cy.get("#featuredCarousel")
+			.should("match", "section")
+			.and("have.attr", "aria-roledescription", "carousel")
+			.and("have.attr", "aria-label", "Featured articles");
+		cy.get(".carousel-control-prev, .carousel-control-next").each(($control) => {
+			expect($control[0].tagName).to.equal("BUTTON");
+			expect($control.attr("aria-label")).to.match(/^(Previous|Next) slide$/);
+		});
+		cy.get("#carouselInner .carousel-item").each(($slide, index, $slides) => {
+			expect($slide.attr("aria-roledescription")).to.equal("slide");
+			expect($slide.attr("aria-label")).to.equal(`${index + 1} of ${$slides.length}`);
+		});
+	});
+
+	it("should show the next slide on a swipe to the left and the previous one on a swipe to the right", () => {
+		cy.get("#carouselInner .carousel-item.active").should("have.descendants", "#carouselImage0");
+
+		cy.get("#featuredCarousel")
+			.trigger("pointerdown", { pointerType: "touch", clientX: 300, clientY: 100 })
+			.trigger("pointerup", { pointerType: "touch", clientX: 150, clientY: 110 });
+		cy.get("#carouselInner .carousel-item.active").should("have.descendants", "#carouselImage1");
+
+		cy.get("#featuredCarousel")
+			.trigger("pointerdown", { pointerType: "touch", clientX: 150, clientY: 100 })
+			.trigger("pointerup", { pointerType: "touch", clientX: 300, clientY: 90 });
+		cy.get("#carouselInner .carousel-item.active").should("have.descendants", "#carouselImage0");
+	});
+
+	describe("with reduced motion", () => {
+		/**
+		 * Emulate the visitor's reduced motion setting through the browser's DevTools protocol.
+		 * @param {string} value `reduce`, or an empty string to clear the emulation.
+		 * @returns {Cypress.Chainable} The command chain.
+		 */
+		const emulateReducedMotion = (value) =>
+			cy.then(() =>
+				Cypress.automation("remote:debugger:protocol", {
+					command: "Emulation.setEmulatedMedia",
+					params: { features: [{ name: "prefers-reduced-motion", value }] },
+				}),
+			);
+
+		afterEach(() => {
+			emulateReducedMotion("");
+		});
+
+		it("should cross-fade the slides instead of sliding them", () => {
+			emulateReducedMotion("reduce");
+
+			cy.get("#carouselInner .carousel-item")
+				.first()
+				.should("have.css", "transition-property", "opacity")
+				.and("have.css", "transform", "none");
+
+			cy.get(".carousel-control-next").click();
+
+			cy.get("#carouselInner .carousel-item.active")
+				.should("have.length", 1)
+				.and("have.descendants", "#carouselImage1")
+				.and("have.css", "opacity", "1");
+		});
 	});
 
 	it("should load no jQuery or Bootstrap JavaScript, which the site does not call", () => {

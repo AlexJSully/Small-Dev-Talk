@@ -192,31 +192,44 @@
 								<div id="featuredArticles" class="featured">
 									<h2 class="title">Featured Articles</h2>
 
-									<div id="carouselExampleIndicators" class="carousel slide">
-										<!-- Indicators -->
-										<div class="carousel-indicators" id="carouselIndicator"></div>
-
-										<!-- Carousel -->
-										<div class="carousel-inner" id="carouselInner"></div>
-
-										<!-- Control buttons -->
-										<a
+									<section
+										id="featuredCarousel"
+										class="carousel slide"
+										aria-roledescription="carousel"
+										aria-label="Featured articles"
+									>
+										<!-- Previous and next come before the slides, so keyboard focus reaches them first. -->
+										<button
+											type="button"
 											class="carousel-control-prev"
 											data-carousel-step="prev"
-											role="button"
-											aria-label="Go back to previous featured article slide"
+											aria-controls="carouselInner"
+											aria-label="Previous slide"
 										>
 											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-										</a>
-										<a
+										</button>
+										<button
+											type="button"
 											class="carousel-control-next"
 											data-carousel-step="next"
-											role="button"
-											aria-label="Go forward to next featured article slide"
+											aria-controls="carouselInner"
+											aria-label="Next slide"
 										>
 											<span class="carousel-control-next-icon" aria-hidden="true"></span>
-										</a>
-									</div>
+										</button>
+
+										<div class="carousel-inner" id="carouselInner"></div>
+
+										<!-- Announces the slide shown after a visitor changes it. -->
+										<p class="visually-hidden" role="status" id="carouselStatus"></p>
+
+										<div
+											class="carousel-indicators"
+											id="carouselIndicator"
+											role="group"
+											aria-label="Choose a slide"
+										></div>
+									</section>
 								</div>
 								<!-- end featured -->
 								<!-- begin displaying articles -->
