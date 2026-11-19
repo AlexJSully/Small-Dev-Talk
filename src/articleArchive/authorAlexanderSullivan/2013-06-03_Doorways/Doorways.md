@@ -1,6 +1,6 @@
 ## Doorways
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image1.png =500x500)
+![Doorways cover art: a decaying, abandoned two-storey house under the game title, framed by twisted wooden spikes](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image1.png =500x500)
 
 Open the door to a new exciting first person survival horror game, Doorways. Recently I got the chance to talk with Tobías Rusjan from Saibot Studios on their new game Doorways, a survival horror puzzle adventure game which you can find at [http://doorwaygame.com/](http://doorwaygame.com/) or support on their green light at [http://steamcommunity.com/sharedfiles/filedetails/?id=109177197](https://steamcommunity.com/sharedfiles/filedetails/?id=109177197).
 
@@ -10,7 +10,7 @@ Open the door to a new exciting first person survival horror game, Doorways. Rec
 
 It has a complex story, puzzles, creatures and other elements that fit the genre.
 
-[![YouTube Video](https://img.youtube.com/vi/cMm2ZRH03Ww/0.jpg =480x360)](https://www.youtube.com/watch?v=cMm2ZRH03Ww)
+[![Doorways - Old Teaser Trailer on YouTube](https://img.youtube.com/vi/cMm2ZRH03Ww/0.jpg =480x360)](https://www.youtube.com/watch?v=cMm2ZRH03Ww)
 
 **Small Dev Talk: What is the story in Doorway?**
 
@@ -22,7 +22,7 @@ There’re some psychopaths that couldn’t be catch by the other agents. So Tho
 
 You travel across strange and horrifying sceneries. What are exactly those places and what is exactly happening there will be your missions.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image2.jpg =500x281)
+![Doorways in-game screenshot: a dark, damp basement with broken wooden pallets and pipes along the ceiling](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image2.jpg =500x281)
 
 **Small Dev Talk: How is Doorway a puzzle-ridden adventure? What puzzles will be included in Doorway?**
 
@@ -30,7 +30,7 @@ You travel across strange and horrifying sceneries. What are exactly those place
 
 This could be in relation with the scenery but also against creatures.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image3.jpg =500x281)
+![Doorways in-game screenshot: a huge draped doorway at the top of stone steps in a gloomy hall](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image3.jpg =500x281)
 
 **Small Dev Talk: What elements in Doorway make it a horror game?**
 
@@ -40,13 +40,13 @@ It also has jump scares, but not in a cheap way. There are flashbacks with disto
 
 The creatures will scare you in every situation. You need to avoid most of them because you’re defenceless.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image4.jpg =500x281)
+![Doorways in-game screenshot: a nearly pitch-black cave with boulders and a broken wooden fence](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image4.jpg =500x281)
 
 **Small Dev Talk: What types of creatures/enemies will you encounter in Doorway?**
 
 **Saibot Studios:** They vary depending upon each map. You can find lost souls of tortured victims, living statues, dead moving corpses and other.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image5.jpg =500x281)
+![Doorways in-game screenshot: a statue of a gaunt figure on a pedestal in a dim stone hall](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image5.jpg =500x281)
 
 **Small Dev Talk: What inspired you to create Doorway?**
 
@@ -54,7 +54,7 @@ The creatures will scare you in every situation. You need to avoid most of them 
 
 The main inspiration about game-play and atmosphere was the fantastic work of Frictional Games, Amnesia: The Dark Descent. This guys really know how to create an unique and intense atmosphere of horror, working with the lights, the music and sounds, the confrontation with strange creatures, and more.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image6.jpg =500x313)
+![Doorways wallpaper: a torch-lit tunnel of twisted roots with a lone figure, titled Doorways, Enter at your own peril](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image6.jpg =500x313)
 
 **Small Dev Talk: What is your favourite aspect of Doorway?**
 
@@ -72,13 +72,13 @@ So these things take a lot of work, time and dedication. We love it, but those a
 
 **Saibot Studios:** We are using Unity 4 Pro. I think this was a good decision, we don’t have to care about the engine, we make the game. Also, this engine is very flexible to port the game to multiple platforms.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image7.jpg =500x281)
+![Doorways in-game screenshot: a dark stone courtyard with pillars and a staircase to an upper level](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image7.jpg =500x281)
 
 **Small Dev Talk: Do you have any advice for players on your upcoming game, Doorways?**
 
 **Saibot Studios:** Just get some immerse headphones and prepare to play Doorways at night and in the darkness.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image8.jpg =500x281)
+![Doorways in-game screenshot: a torch on a stone wall beside a dark open doorway](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image8.jpg =500x281)
 
 **Small Dev Talk: What is the expected launch date for Doorways and will it have a cost or will it be Free-To-Play?**
 
@@ -86,7 +86,7 @@ So these things take a lot of work, time and dedication. We love it, but those a
 
 The game will have a cost but we didn’t define it yet. There’s also a possibility of launching a demo, but it depends in how things go.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image9.jpg =500x281)
+![Doorways in-game screenshot: the inside of a dark, rotting wooden cabin](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image9.jpg =500x281)
 
 **Small Dev Talk: Your game is currently on Steam Greenlight which means you are trying to bring it onto Steam. If your game becomes Greenlit, will take advantage of Steam’s great features such as Workshop for any user create content or Big TV for controller support?**
 
@@ -100,7 +100,7 @@ And we’ll see about the Big TV for controller support. It could be a possibili
 
 **Saibot Studios:** Yes. We want to thank you all the people that have been helping in the development of Doorways: the family, the colleagues and the friends who support us. We could never get so far without them. Thank you!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image10.jpg =500x313)
+![Doorways wallpaper: a cave passage lit by two torches leads to a doorway, titled Doorways, Enter at your own peril](src\articleArchive\authorAlexanderSullivan\2013-06-03_Doorways\image10.jpg =500x313)
 
 ---
 

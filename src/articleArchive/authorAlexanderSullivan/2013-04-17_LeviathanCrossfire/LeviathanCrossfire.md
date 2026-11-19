@@ -1,6 +1,6 @@
 ## LeviathanCrossfire
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image1.png =500x76)
+![Leviathan Crossfire logo beside a blue-armoured soldier](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image1.png =500x76)
 
 The Raken Empire has a new secret weapon called the Leviathan! It is your job to stop this weapon before it is too late. Not long ago, I got the chance to talk with the developers, Dominik Höke and Thomas Meyer from dhk Games and get a new in-depth look on their upcoming game Leviathan Crossfire. A new sci-fi first person shooter game. You can check it out at their official website at [http://www.levcrossfire.bplaced.net/](http://www.levcrossfire.bplaced.net/)
 
@@ -8,7 +8,7 @@ The Raken Empire has a new secret weapon called the Leviathan! It is your job to
 
 **Dominik:** Leviathan Crossfire is a science fiction short story. It is a small First Person Shooter that’s still under development.
 
-[![YouTube Video](https://img.youtube.com/vi/Zrj1BPCyRUg/0.jpg =480x360)](https://www.youtube.com/watch?v=Zrj1BPCyRUg)
+[![Leviathan Crossfire Silent Assault Teaser on YouTube](https://img.youtube.com/vi/Zrj1BPCyRUg/0.jpg =480x360)](https://www.youtube.com/watch?v=Zrj1BPCyRUg)
 
 **Small Dev Talk: What is the story in Leviathan Crossfire?**
 
@@ -24,7 +24,7 @@ So the players will have to destroy the Leviathan in the final game.
 
 **Tom:** To lead the player deeper into the Story, we will release a second prequel demo soon: You are a Nuvebian Soldier who actually steals the Plans and Construction-information in a covert operation.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image2.jpg =500x281)
+![Leviathan Crossfire: blue-armoured soldiers take cover in a dim spaceship corridor as a red-armoured enemy approaches](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image2.jpg =500x281)
 
 **Small Dev Talk: What is the story behind the Rakan Empire and Nuvebians? Why are they are war with each other?**
 
@@ -34,7 +34,7 @@ No, honestly - the reason for this war does not play so much of role for the sto
 
 However, the political situation of Nuvebia and Rakan in those times plus an upcoming fight for resources may play a role for the background of the story.
 
-[![YouTube Video](https://img.youtube.com/vi/kF2mxVchhUM/0.jpg =480x360)](https://www.youtube.com/watch?v=kF2mxVchhUM)
+[![Leviathan Crossfire Revelation Gameplay on YouTube](https://img.youtube.com/vi/kF2mxVchhUM/0.jpg =480x360)](https://www.youtube.com/watch?v=kF2mxVchhUM)
 
 **Small Dev Talk: What is this Leviathan weapon like and what can it do? Why is it so important?**
 
@@ -68,7 +68,7 @@ They are in some way like the Prypiat mission in Modern Warfare: You avoid being
 
 **Dominik:** So they are the strategy part of the game.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image3.jpg =500x281)
+![Leviathan Crossfire first-person view: a glowing rifle aimed down a dark ship corridor at a red-armoured soldier](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image3.jpg =500x281)
 
 **Small Dev Talk: Will there only be a single player game or will it include other game modes and/or multiplayer?**
 
@@ -80,13 +80,13 @@ We do have ideas for multiplayer as well but we don’t have them on our radar r
 
 **Dominik:** There will be four different weapons. We will equip our players with a futuristic Assault Rifle and with a Laser Blaster sidearm. They can also choose to make use of the powerful Atomizer, a weapon that fires a lot of projectiles with high spread. And then there will be a classic Sniper Rifle available for long range high accuracy shots.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image4.jpg =500x293)
+![Leviathan Crossfire weapon design: a futuristic assault rifle with cyan glowing trim, shown from three angles](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image4.jpg =500x293)
 
 **Small Dev Talk: Developing a first person shooter game comes with the challenge of entering one of the biggest video game markets. How is Leviathan Crossfire going to differ and compete against other first person shooter games?**
 
 **Dominik:** We definitely cannot compete with this 'big market’. Leviathan Crossfire will be a niche product, that’s clear. We will tell a short story with a classic setting in a rather unusual way. That will be the unique thing about it.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image5.png =500x401)
+![Leviathan Crossfire: two red-armoured soldiers with rifles advancing through a spaceship corridor](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image5.png =500x401)
 
 **Small Dev Talk: What inspired you to create Leviathan Crossfire?**
 
@@ -98,7 +98,7 @@ We never had that one 100% clear vision of the game but rather a wide range of i
 
 There are pros and cons for working this way, but it allows us to create a game we see a lot of our ideas realized in instead of not changing the game vision during the development because we have a deadline or a fix list of features we designed upfront the development process.
 
-[![YouTube Video](https://img.youtube.com/vi/tc9at1Kf6zo/0.jpg =480x360)](https://www.youtube.com/watch?v=tc9at1Kf6zo)
+[![Leviathan Crossfire Revelation Trailer on YouTube](https://img.youtube.com/vi/tc9at1Kf6zo/0.jpg =480x360)](https://www.youtube.com/watch?v=tc9at1Kf6zo)
 
 **Small Dev Talk: What is your favourite aspect of the game?**
 
@@ -116,7 +116,7 @@ One major challenge is probably that we are both no experienced developers but h
 
 And then it is very, very hard (and probably the art about producing video games) to bring the wild pictures that are inside your head into an actually working and entertaining game. This is difficult in so many ways… but it’s fun to do nevertheless!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image6.png =500x401)
+![Leviathan Crossfire ship design sketch: a large spaceship flying with a fleet of smaller fighters](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image6.png =500x401)
 
 **Small Dev Talk: Are there any advantages or disadvantages to being an indie developer?**
 
@@ -152,7 +152,7 @@ We hope the full game will be good enough to be sold for a very low, definitely 
 
 **Dominik:** Yeah, sure, the typical marketing stuff: Follow us on IndieDB or ModDB, on YouTube, visit our website and give us some time to bring you a cool demo! :)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image7.png =226x283)
+![Red-armoured Leviathan Crossfire soldier holding an assault rifle](src\articleArchive\authorAlexanderSullivan\2013-04-17_LeviathanCrossfire\image7.png =226x283)
 
 ---
 

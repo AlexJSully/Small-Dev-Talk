@@ -13,6 +13,7 @@ const {
 	updateCanonicalLink,
 	startThirdParties,
 	handleControlClick,
+	enableSubmenuDismissal,
 	changeCarouselSlide,
 	showCarouselSlide,
 	enableCarouselSwipe,
@@ -1189,6 +1190,21 @@ describe("start", () => {
 		expect(location.replace).not.toHaveBeenCalled();
 		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
 		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
+	});
+
+	test("lets Escape close the navigation's open submenu", async () => {
+		document.body.innerHTML = `
+			<div id="header"><nav><ul class="pages">
+				<li id="games"><a id="gamesLink" href="index.html?pages&games">Games</a><ul><li></li></ul></li>
+			</ul></nav></div>
+			<div id="articleBody"></div>
+		`;
+
+		await start(createLocation("https://smalldevtalk.net/index.html?TestArticle"));
+		document.getElementById("gamesLink").focus();
+		document.activeElement.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+
+		expect(document.getElementById("games").classList.contains("submenuDismissed")).toBe(true);
 	});
 
 	test("renders the view before it registers the worker, so a slow install never delays the page", async () => {
@@ -2473,6 +2489,93 @@ describe("enableCarouselSwipe", () => {
 		pointer("pointerup", "touch", 100);
 
 		expect(activeSlide()).toBe("slide0");
+	});
+});
+
+describe("enableSubmenuDismissal", () => {
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<nav>
+				<ul>
+					<li id="home"><a id="homeLink" href="index.html">Home</a></li>
+					<li id="games">
+						<a id="gamesLink" href="index.html?pages&games">Games</a>
+						<ul>
+							<li><a id="interviewsLink" href="index.html?pages&gameinterviews">Interviews</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+			<a id="outside" href="#content">Elsewhere</a>
+		`;
+		enableSubmenuDismissal(document.querySelector("nav"));
+	});
+
+	afterEach(() => {
+		document.body.innerHTML = "";
+	});
+
+	const games = () => document.getElementById("games");
+	const pressKey = (key) =>
+		document.activeElement.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
+
+	test("Escape closes the submenu that holds keyboard focus", () => {
+		document.getElementById("interviewsLink").focus();
+
+		pressKey("Escape");
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+	});
+
+	test("the submenu opens again once focus leaves its item", () => {
+		document.getElementById("gamesLink").focus();
+		pressKey("Escape");
+
+		document.getElementById("outside").focus();
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
+	test("the submenu stays closed while focus moves within its item", () => {
+		document.getElementById("gamesLink").focus();
+		pressKey("Escape");
+
+		document.getElementById("interviewsLink").focus();
+
+		expect(games().classList.contains("submenuDismissed")).toBe(true);
+	});
+
+	test("the submenu opens again once the pointer leaves its item", () => {
+		document.getElementById("gamesLink").focus();
+		pressKey("Escape");
+
+		games().dispatchEvent(new Event("pointerleave"));
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
+	test("Escape changes nothing when no submenu is open", () => {
+		document.getElementById("outside").focus();
+
+		pressKey("Escape");
+
+		expect(document.querySelectorAll(".submenuDismissed")).toHaveLength(0);
+	});
+
+	test("a key other than Escape leaves the submenu open", () => {
+		document.getElementById("gamesLink").focus();
+
+		pressKey("Enter");
+
+		expect(games().classList.contains("submenuDismissed")).toBe(false);
+	});
+
+	test("an item without a submenu is never marked", () => {
+		document.getElementById("homeLink").focus();
+
+		pressKey("Escape");
+
+		expect(document.getElementById("home").classList.contains("submenuDismissed")).toBe(false);
 	});
 });
 

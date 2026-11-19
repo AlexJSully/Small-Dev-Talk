@@ -1,6 +1,6 @@
 ## Little Sim Peeps
 
-![image](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image1.png =500x281)
+![Little Sim Peeps title card: a pixel-art peep with a question mark looks at a drumstick](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image1.png =500x281)
 
 Recently, I had a chance to talk with Matt Dalgety, an Indie Developer from Hamilton, New Zealand. He’s been developing video games as a hobby for a very long time, and he has finally decided to take on an idea of his own and make it happen; Little Sim Peeps. The concept of the game is quite intriguing; you can visit his Indiegogo campaign here: [http://www.indiegogo.com/projects/little-sim-peeps?c=home](https://www.indiegogo.com/projects/little-sim-peeps#/) , as well as read on to find out more!
 
@@ -16,7 +16,7 @@ As for adventures, semi-randomly occurring events will happen to your colony of 
 
 **Matt Dalgety:** I was inspired by Tamagotchi’s from the 90’s after reminiscing with a friend. Along with Fez, Dwarf Fortress, Terraria, and many other indie games.
 
-![image](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image2.png =500x305)
+![Little Sim Peeps: a peep stands on a brick ruin in the rain beside a fallen red comet](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image2.png =500x305)
 
 **Small Dev Talk: Can you describe the process of the game to us? What is the main goal?**
 
@@ -26,7 +26,7 @@ The main goal is to keep your peeps alive as individuals and able to survive pot
 
 Some people may want to play more casually, some may want to take on the more brutal challenges. My aim is to let the system decide if your colony is ready to handle certain events before activating them. So if a player is not interested in fighting alien invasions for example, then simply do not train your peeps for combat. Or as another example, if your colony is quite old, then they may have an encounter with a stray comet or meteor shower. Strength will attract strength and power will attract powerful forces.
 
-![image](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image3.png =500x305)
+![Little Sim Peeps: a peep has dropped to the ground beside the comet among the smashed brick walls](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image3.png =500x305)
 
 **Small Dev Talk: What do you think is the most unique aspect of your game, and why does it make it unique?**
 
@@ -36,7 +36,7 @@ Some people may want to play more casually, some may want to take on the more br
 
 **Matt Dalgety:** So far my favourite part is watching stuff I’ve constructed get smashed by a big ol’ comet. But once the game is complete I think I will enjoy watching peeps react to different situations and events the most.
 
-![image](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image4.png =500x305)
+![Little Sim Peeps: peeps wander around the comet-smashed brick ruins in the rain](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image4.png =500x305)
 
 **Small Dev Talk: On your IndieGoGo campaign page, you say you’ve been developing games for over 10 years. How did you get started with this hobby?**
 
@@ -48,7 +48,7 @@ In my early teens I became interested in programming, with the intent of making 
 
 **Matt Dalgety:** I’m using Unity3.5 and GNU Image Manipulation Program 2.
 
-![image](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image5.png =500x305)
+![Little Sim Peeps: a peep falls from the rainy sky above the comet-smashed brick ruins](src\articleArchive\authorNeilRampone\2013-05-29_LittleSimPeeps\image5.png =500x305)
 
 **Small Dev Talk: Do you have any inspirational things that you if you could say, you would say to all the other small time developers out there with big dreams?**
 

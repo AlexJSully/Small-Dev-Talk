@@ -1,6 +1,6 @@
 ## Wave
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image1.jpg =500x153)
+![Wave wristband logo over a rainbow light swirl](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image1.jpg =500x153)
 
 It’s time to wear the future! With the new Wave technology, you can wear a fashionable bracelet that syncs with your mobile device or event to flash to notifications or with the music at the club. Recently I got the chance to talk with a developer behind this amazing new technology of Wave and CEO of Cloudsona, Paul Fulton. You can check out Wave by Cloudsona at [http://wavewristband.com](https://wavewristband.com) or support it [here](https://www.kickstarter.com/projects/667986286/wave-a-lighted-wristband-controlled-by-your-smartp?ref=category).
 
@@ -14,13 +14,13 @@ The Wave wristband lets you see at a glance with a flashing color who is calling
 
 **Paul:** Wave connects wirelessly to your iPhone or Android device via Bluetooth. Setting up Wave is as easy as pairing the Wave wristband to your phone. Our mobile app allows you to set up Wave to glow in different colors and patterns when certain people call or message. You can turn off the alert with a shake of your wrist or the push of a button.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image2.jpg =500x333)
+![A man shows a glowing blue Wave wristband to a smiling woman at a bar](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image2.jpg =500x333)
 
 **Small Dev Talk: Which mobile OS will Wave work for? iOS? Android? Windows Mobile? And/or Blackberry?**
 
 **Paul:** Wave works with iPhone 4S and 5 running iOS 6 and up and with Android devices running OS2.3 and up. We have Windows on the roadmap.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image3.jpg =500x314)
+![Three iPhones showing the Wave app: lighting controls, the home screen and contact notification settings](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image3.jpg =500x314)
 
 **Small Dev Talk: How does the Wave mobile app sync with notifications? Will it work with all notifications on mobile device or specific ones?**
 
@@ -30,7 +30,7 @@ The Wave wristband lets you see at a glance with a flashing color who is calling
 
 **Paul:** Wave uses hypoallergenic silicone rubber and is available in three sizes: Small - 6in/15cm, Medium - 7in/18cm, and Large - 7.75in/20cm
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image4.jpg =500x250)
+![Three framed photos of the frosted Wave wristband with different light patterns on its faceplate](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image4.jpg =500x250)
 
 **Small Dev Talk: Can a user of Wave personalize their Wave wristband?**
 
@@ -40,7 +40,7 @@ The Wave wristband lets you see at a glance with a flashing color who is calling
 
 **Paul:** Of course, the personal version was made to work outside concert and sporting venues, so the personal Wave is all about the user. Providing alerts is the most valuable feature of the personal Wave, while we retain the group lighting features of our commercial version.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image5.jpg =500x333)
+![A DJ at the decks in a club wearing a lit-up Wave wristband](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image5.jpg =500x333)
 
 **Small Dev Talk: What is the planned battery life of Wave? Does it have the potential for an individual wear it all day and charge it a night when sleeping?**
 
@@ -50,7 +50,7 @@ The Wave wristband lets you see at a glance with a flashing color who is calling
 
 **Paul:** The potential for developers with Wave is virtually unlimited. Since we have an open SDK, accelerometers, lights, hyper-location data, and easy access to our cloud services, developers can use Wave as a remote control or alert device for almost any mobile app or Internet event. We have developers lined up to make video game controllers, automatic location check-ins, child finders, weather alerts for sailors, dating apps, health apps, athlete apps, and much more.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image6.jpg =500x334)
+![Wave prototype test rig and circuit boards beside an iPad running the Cloudsona light control app](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image6.jpg =500x334)
 
 **Small Dev Talk: What inspired you to create Wave?**
 
@@ -60,7 +60,7 @@ The Wave wristband lets you see at a glance with a flashing color who is calling
 
 **Paul:** There are so many. I would have to say the fact that this is the most affordable wearable device open to developers on the planet. There is so much Wave can do and we are excited to see how useful they are going to be for everyone.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image7.jpg =500x281)
+![Concert crowd with glowing blue Wave wristbands raising their hands toward a performer on stage](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image7.jpg =500x281)
 
 **Small Dev Talk: What challenges did you and your team come across in the development of Wave and how did you overcome them?**
 
@@ -78,7 +78,7 @@ The Wave wristband lets you see at a glance with a flashing color who is calling
 
 **Paul:** Wearable devices are coming. Wave is a great way to start your personal journey in wearable tech since Wave is similar to an awareness band that many people already wear, but is so much more. Please check out our Wave kickstarter campaign to pre-order one and join the revolution!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image8.jpg =500x346)
+![Two frosted Wave wristbands, one with a Wave logo faceplate](src\articleArchive\authorAlexanderSullivan\2013-05-07_Wave\image8.jpg =500x346)
 
 ---
 

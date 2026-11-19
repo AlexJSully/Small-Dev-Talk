@@ -1,6 +1,6 @@
 ## This Is Normal
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-24_ThisIsNormal\image1.jpg =500x333)
+![This Is Normal, a film: title card over a sunlit, tree-lined street with parked cars](src\articleArchive\authorAlexanderSullivan\2013-03-24_ThisIsNormal\image1.jpg =500x333)
 
 Recently I got the chance to talk with the writers and directors, Justin Giddings and Ryan Welsh, for their short film, This is Normal. A short film that brings the audience across the journey of Gwen, a deaf women, and her difficult life as a member of the deaf community and her choices to find self-identity, acceptance and normalcy. You can check out the short film at [www.thisisnormalafilm.com](http://www.thisisnormal.com/)
 
@@ -8,7 +8,7 @@ Recently I got the chance to talk with the writers and directors, Justin Gidding
 
 **This Is Normal:** THIS IS NORMAL is a film that asks the question “Is it worth giving up who you’ve BEEN for the maybe you could BECOME?” We all face difficult decisions in life, and this story explores the often-unexpected consequences of major decisions. We also explore themes of normalcy, self-identity, regret, and acceptance.
 
-[![YouTube Video](https://img.youtube.com/vi/b7RIHQpVQlI/0.jpg =480x360)](https://www.youtube.com/watch?v=b7RIHQpVQlI)
+[![This Is Normal short film video on YouTube](https://img.youtube.com/vi/b7RIHQpVQlI/0.jpg =480x360)](https://www.youtube.com/watch?v=b7RIHQpVQlI)
 
 **Small Dev Talk: What is the story of This Is Normal?**
 
@@ -30,7 +30,7 @@ Small Dev Talk: What genre will the movie This Is Normal follow?
 
 **This Is Normal:** An actress named Ryann Turner. Your Deaf readers will, of course, want to know if she is Deaf. She is not (and neither does the character Gwen self-identify as a culturally Deaf individual). This decision was made after much discussion and basically boils down to a few points. The first is that the character of Gwen is very unique in that the character goes from total hearing loss to complete hearing. Their is really no antecedent that we could find, particularly as it relates to the second point: the actress playing Gwen has to be able to modify her accent subtly and over time from a Deaf accent to the accent of a hearing person. Each scene is different. In music, this is called the ability to audiate and it is impossible for an actor with even moderate hearing loss to make those subtle vocal adjustments. Our Deaf contacts agree, and it comes down to a technical ability that allows us to tell the story we want to tell. That being said, we know that there will be controversy but hope that our Deaf friends will see that this movie is a missive to the hearing world. All Deaf characters will be played by Deaf actors.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-24_ThisIsNormal\image2.jpg =128x165)
+![Headshot of actress Ryann Turner, who plays Gwen](src\articleArchive\authorAlexanderSullivan\2013-03-24_ThisIsNormal\image2.jpg =128x165)
 
 **Small Dev Talk: Will you include members of the deaf community as actors for your film?**
 

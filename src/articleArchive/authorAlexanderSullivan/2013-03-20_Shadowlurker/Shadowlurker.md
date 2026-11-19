@@ -1,6 +1,6 @@
 ## Shadowlurker
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-20_Shadowlurker\image1.jpg =424x386)
+![The Shadowlurker: a grinning, hooded face with staring eyes and jagged teeth pressed against a rain-streaked window](src\articleArchive\authorAlexanderSullivan\2013-03-20_Shadowlurker\image1.jpg =424x386)
 
 A few days ago I got the chance to talk with the developer Julian W. from Hivemind Tech on their upcoming horror game, Shadowlurker. Based off the meme, Shadowlurker, it brings a new meaning the aspect of horror games with new and innovative gameplay. To check out their official website, it can be found here at [http://www.crydev.net/project_db.php?action=project_profile&team_id=5289&project_id=5122](http://www.crydev.net/project_db.php?action=project_profile&team_id=5289&project_id=5122)
 
@@ -24,7 +24,7 @@ A few days ago I got the chance to talk with the developer Julian W. from Hivemi
 
 **Julian W.:** The Shadowlurker is your nightmares, your fears, and your fate.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-20_Shadowlurker\image2.jpg =500x259)
+![Shadowlurker night scene: a stone shed beside a wooden fence on a dark, rainy forest path](src\articleArchive\authorAlexanderSullivan\2013-03-20_Shadowlurker\image2.jpg =500x259)
 
 **Small Dev Talk: How close will this Shadowlurker resemble or relate to the meme, Shadowlurker?**
 
@@ -34,7 +34,7 @@ A few days ago I got the chance to talk with the developer Julian W. from Hivemi
 
 **Julian W.:** I’m hoping to release winter-time (northern hemisphere) which might be released around Christmas or New Year. That will take place during the day. I chose nighttime for the 3 main hits, though, as that’s always the creepiest times of days (And as they say, the fear is not the dark itself, it’s of what’s in it!)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-20_Shadowlurker\image3.jpg =500x258)
+![Shadowlurker night scene: a house and a water tower silhouetted among dark trees in the rain](src\articleArchive\authorAlexanderSullivan\2013-03-20_Shadowlurker\image3.jpg =500x258)
 
 **Small Dev Talk: How is the survival mode going to work in this game?**
 
@@ -60,7 +60,7 @@ A few days ago I got the chance to talk with the developer Julian W. from Hivemi
 
 **Julian W.:** “Run, and don’t look back, whatever you do.”
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-20_Shadowlurker\image4.jpg =500x301)
+![Shadowlurker title painted on a wooden fence in a night village, with CryENGINE debug text overlaid](src\articleArchive\authorAlexanderSullivan\2013-03-20_Shadowlurker\image4.jpg =500x301)
 
 ---
 

@@ -1,6 +1,6 @@
 ## LifeEssence
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image1.jpg =500x500)
+![LifeEssence logo: a glowing sphere holding a dark forest, ringed by moons in phases against a teal night sky](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image1.jpg =500x500)
 
 LifeEssence is a new innovative game that brings together the fun of adventure games and puzzle games. A few days ago I got the chance to talk with the developer of LifeEssence, Anthony from Transcend Emotion and get a new view into their amazing game. You can check out their game here at [http://www.lifeessencegame.com/](http://www.lifeessencegame.com/)
 
@@ -8,7 +8,7 @@ LifeEssence is a new innovative game that brings together the fun of adventure g
 
 **Anthony:** LifeEssence is a first person puzzle adventure game. You are an ordinary person but you suffer from mental illness. It’s unique in the sense that the game is centered off of real life experience with Depression. We definitely aim as a team to reach out and show the gaming community Mental Illness in another light.
 
-[![YouTube Video](https://img.youtube.com/vi/SHxy5DYvkbM/0.jpg =480x360)](https://www.youtube.com/watch?v=SHxy5DYvkbM)
+[![LifeEssence Teaser: The Dungeon on YouTube](https://img.youtube.com/vi/SHxy5DYvkbM/0.jpg =480x360)](https://www.youtube.com/watch?v=SHxy5DYvkbM)
 
 **Small Dev Talk: Does LifeEssence have a story? If so, what is it?**
 
@@ -18,7 +18,7 @@ LifeEssence is a new innovative game that brings together the fun of adventure g
 
 **Anthony:** In LifeEssence you are the ‘Observer.’ this character is a human without a mouth. The reason for this is in his fight with Mental Illness he barred his emotions inside because he felt he would be judged or misunderstood had he spoken about them. Of course, this only made the Illness deeper, it caused more pain. The story of the Observer is centered around mainly Depression and how once in its grips, it’s hard to have it let go. Once a human, as he falls further into Illness he transforms and his mouth is lost. The Observer learns a lot in his journey, primarily about himself but also about other struggling characters. His story is about growth from the lowest depths of his suffering to complete contentment and acceptance.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image2.jpg =500x500)
+![LifeEssence art of the Observer: a pale face with one violet eye and a dark puzzle-piece shape where the mouth should be](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image2.jpg =500x500)
 
 **Small Dev Talk: What genre does LifeEssence follow?**
 
@@ -28,7 +28,7 @@ LifeEssence is a new innovative game that brings together the fun of adventure g
 
 **Anthony:** The gameplay is unique but it also follows other titles. We’ve made sure to incorporate elements from our inspirations but also to throw in completely new and interesting flairs. It’s mainly atmospheric puzzle based but there is combat and environment manipulation using Essence and certain key story Objects.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image3.jpg =500x471)
+![LifeEssence cave scene: a glowing blue spiral rune on a rock pours out a cloud of blue Essence](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image3.jpg =500x471)
 
 **Small Dev Talk: What are Essence?**
 
@@ -38,25 +38,25 @@ LifeEssence is a new innovative game that brings together the fun of adventure g
 
 **Anthony:** 'They’ could be any number of beings, I guess I never noticed I hadn’t explained. In the game you encounter shadow characters as stated before, but also positive beings like Goddesses and Spirits. The shadow of course are negative influences and can at times be dangerous, at other times slightly helpful. The Goddesses and Spirits help direct you to better routes as well as shed light on who you are as you experience their realms.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image4.jpg =500x236)
+![LifeEssence dungeon scene: a ghostly figure wrapped in purple mist stands in a torch-lit stone corridor](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image4.jpg =500x236)
 
 **Small Dev Talk: Is this game linear or is it open-world?**
 
 **Anthony:** It’s a mixture of both. We’ve made it an option really. If you want to do a puzzle you can, but it isn’t required. The game is split based on the duality of light and dark. Of course to achieve better and more in depth story and experience, the light path which is more linear must be followed. To achieve a different experience, the dark path which is more open-world must be followed. We’ve been making sure to balance both and make sure that you as the player can experience many different facets of this game in a variety of ways.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image5.jpg =500x344)
+![LifeEssence forest scene: tall dark pine trees above moss-covered boulders under a misty sky](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image5.jpg =500x344)
 
 **Small Dev Talk: What is the environment like in LifeEssence?**
 
 **Anthony:** The environment in LifeEssence is based on Life really. We took what I felt in times of Depression and created environments based on the feeling. The dungeon for instance is a very lonely and dark place that feels claustrophobic and trapped. Other environments are the same way. We’ve made sure to make a progression and balance though because in healing comes better understanding and knowledge which makes things easier and more comfortable.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image6.jpg =500x235)
+![LifeEssence concept art: a castle on a cliff above a misty forest river with giant trees](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image6.jpg =500x235)
 
 **Small Dev Talk: What is the story of Trium?**
 
 **Anthony:** Trium is basically a realm of choice. When struggling, the main character fell into this place which is very not ordinary and mysterious. I can’t say much about Trium in general without risking spoilers but what I can say is that Trium is a place many people I’m sure are familiar with but haven’t experienced in a metaphorical sense like this game portrays.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image7.jpg =500x344)
+![LifeEssence castle hall: torch-lit stone arches, an iron chandelier and a red banner on the wall](src\articleArchive\authorAlexanderSullivan\2013-04-03_LifeEssence\image7.jpg =500x344)
 
 **Small Dev Talk: What inspired you to create LifeEssence?**
 

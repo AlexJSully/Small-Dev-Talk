@@ -1,6 +1,6 @@
 ## After Reset
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image1.png =303x83)
+![After Reset logo: A Sci-Fi Post-Apocalyptic Role Playing Game](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image1.png =303x83)
 
 It has been 132 years since the Reset and now, it is your turn to explore this world. This is opportunity. This is After Reset. Not long ago, I got the chance to talk with Mr. Nixon on his new game, After Reset. You can find out more about the game on their [website](http://www.afterreset.com/).
 
@@ -8,9 +8,9 @@ It has been 132 years since the Reset and now, it is your turn to explore this w
 
 **Mr. Nixon:** After Reset RPG is a classic open world roleplaying game with an old school top-down view, in which the action takes place in the future on a slowly dying Earth after a nuclear cataclysm that destroyed nearly all life on the planet.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image2.png =500x234)
+![After Reset concept art: a wrecked armoured vehicle half buried in desert sand under a stormy sky](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image2.png =500x234)
 
-[![YouTube Video](https://img.youtube.com/vi/LZv9Gu-0PHY/0.jpg =480x360)](https://www.youtube.com/watch?v=LZv9Gu-0PHY)
+[![After Reset RPG video on YouTube](https://img.youtube.com/vi/LZv9Gu-0PHY/0.jpg =480x360)](https://www.youtube.com/watch?v=LZv9Gu-0PHY)
 
 **Small Dev Talk: What is the story in After Reset RPG?**
 
@@ -18,7 +18,7 @@ It has been 132 years since the Reset and now, it is your turn to explore this w
 
 An unfamiliar woman’s voice wakes you up with phrases like “Wake up, Commander!” You come to naked on the floor of some kind of laboratory surrounded by shards of glass and some kind of liquid. You can’t figure out who you are, where you are, what you are doing there, and what kind of voice you’re hearing.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image3.png =500x234)
+![After Reset concept art: aircraft fly past a towering ruined industrial structure over a dusty wasteland](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image3.png =500x234)
 
 **Small Dev Talk: Can you go in detail with us about the branching character development system in After Reset RPG? What type of perks and skills will the player be able to choose from in After Reset RPG?**
 
@@ -28,19 +28,19 @@ At the moment of our release on Kickstarter, I’d like to be able to show a cli
 
 But I can already say that the level of the player will top out at level 20, but it won’t necessarily be a vertical progression. First of all, if you’re unarmed in the desert, 20 feet away from an attacker with a firearm, your chances of surviving the attack are nearly zero. And that’s regardless of your level. We try to aim for “real science fiction” in the same way A Song of Fire and Ice tries to be “real fantasy.” Our target gamers are fairly grown up and well versed in games, which is why, in order to guarantee the maximum immersion in the severe world of After Reset, we have to be able to guarantee a certain level of reality. In everything, including the branching character development system.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image4.png =500x234)
+![After Reset character model, front and back, in a cap and a T-shirt printed Liberty or Death, Don't Tread On Me](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image4.png =500x234)
 
 **Small Dev Talk: Being an open world game, what will the player be able to do in the open world environment of After Reset RPG?**
 
 **Mr. Nixon:** There are at least two regions available to the player: The Great Desert (mostly ex-Nevada) and The State of Eagle (mostly ex-California). You can travel and do whatever you want within those regions and do whatever you want. This is the open-world part of the game. The range of your movement across the Global Map is limited by your water reserve and is affected by stats/skills/perks.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image5.png =500x234)
+![After Reset concept art: two survivors on a ridge, one with binoculars, overlook a desert canyon settlement](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image5.png =500x234)
 
 **Small Dev talk: How is the co-op going to work in After Reset RPG?**
 
 **Mr. Nixon:** For now, let’s let that stay a secret. We don’t want to tie that down for marketing reasons. The game will not have to be connected to the internet, there will not be DRM-protection , nor an in-game store, auctions or other heresies. All the same there will be plenty of good reasons, in my opinion, for you to WANT to play the game with the internet on.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image6.png =500x234)
+![After Reset art: a glowing orange ring of particles around the words Core-7 on a black background](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image6.png =500x234)
 
 **Small Dev Talk: What type of weapons will the player come across and get to use in After Reset RPG?**
 
@@ -48,13 +48,13 @@ But I can already say that the level of the player will top out at level 20, but
 
 If your question is what are feats, which you have to accomplish to have this or that type of weapon, the answer is: Weapon Proficiency: Unarmed, Weapon Proficiency: Cold Steel, Weapon Proficiency: Firearms, Weapon Proficiency: Energy Weapons, and others.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image7.png =500x234)
+![After Reset character model, front and back, in dark sci-fi powered armour](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image7.png =500x234)
 
 **Small Dev Talk: What type of enemies will the player come across in After Reset RPG?**
 
 **Mr. Nixon:** Mankind’s biggest enemy is people themselves. But other than other people, you could come across such beings as Animals, Synthetics, Biomass, Aliens, Aberrations and some others. Each species could have several subspecies.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image8.png =500x234)
+![After Reset concept art: bikers gather under a ruined gas station canopy with two bodies hanging from it](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image8.png =500x234)
 
 **Small Dev Talk: What will the environment be like in After Reset RPG? How will it be lifelike and serious?**
 
@@ -72,7 +72,7 @@ What are the Survivors? They are people for whom murder, might makes right, thie
 
 Well, if you’re totally disillusioned with humanity, or generally find your self experience social phobia, you can always throw your backpack over your shoulder, rifle on the other, a flask on your hip and set off to wander in the Great Desert. To study the remains of a human civilization that never quite reached the stars, or simply to live the life of a wanderer, searching for yourself, and your path.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image9.png =500x234)
+![After Reset concept art: a lone figure in a dark industrial city as a huge creature looms on a structure above](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image9.png =500x234)
 
 **Small Dev Talk: What inspired you to create After Reset RPG?**
 
@@ -80,7 +80,7 @@ I was sick of waiting for a decent Fallout 3 :) But to be serious, yes I was rea
 
 Intenseness of development of the game sharply grew after I found out about Kickstarter, and the game Avernum: Escape From the Pit. Successful gaming startups on Kickstarter have shown that it’s completely possible to attract the necessary funds to develop a worthy old-school RPG (from a minimum $900 thousand collection + $100,000 of my own personal savings). Avernum: Escape From the Pit with its huge world, hundreds of hours travelling, and created by just one person really convinced me that even independent of the results of co-founding, I could really create After Reset RPG, even at the level of a hobby.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image10.png =500x234)
+![After Reset in-game screenshot: a wanderer crosses desert scrubland toward a rusted, wrecked truck](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image10.png =500x234)
 
 **Small Dev Talk: What is your favorite aspect of After Reset RPG?**
 
@@ -94,7 +94,7 @@ Intenseness of development of the game sharply grew after I found out about Kick
 
 **Mr. Nixon:** Ups and downs are unavoidable on the path to your goal. Try to stay calm during the ups, and have unshakeable confidence during the downs, and monotonously, and inevitably walk toward your goal. If you can’t take a step, crawl inch by inch. If you cant crawl, at least lie down in the direction of your goal. And then everything becomes possible.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image11.png =500x229)
+![After Reset concept art: a soldier with a backpack surveys a desert littered with bodies and a wrecked Humvee](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image11.png =500x229)
 
 **Small Dev Talk: What is the expected release date for After Reset RPG and how much will it cost or will it be Free-To-Play?**
 
@@ -112,7 +112,7 @@ I’m not much for Perseverance, so the release date will be totally dependent o
 
 **Mr. Nixon:** Clearly define your goals and never give up. And of course follow After Reset RPG and read/watch Small Dev Talk.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image12.png =500x229)
+![After Reset concept art: a lone figure walks a flooded street between ruined, collapsing skyscrapers](src\articleArchive\authorAlexanderSullivan\2013-08-22_AfterReset\image12.png =500x229)
 
 ---
 

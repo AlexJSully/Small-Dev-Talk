@@ -1,6 +1,6 @@
 ## Caravaneer 2
 
-![image1](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image1.jpg =500x336)
+![Caravaneer 2, free post-apocalyptic trading RPG, coming 2013: a raider in a bucket helmet shoulders a rifle beside a caravan](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image1.jpg =500x336)
 
 The great sequel to Caravaneer is coming soon and I got the chance to talk with the developer, Dmitry Zheltobriukhov from [GamesOfHonor.com](http://gamesofhonor.com/) for their upcoming game Caravaneer 2! You can join their crowdfunding campaign at at [http://www.indiegogo.com/caravaneer2](https://www.indiegogo.com/projects/caravaneer-2?utm_source=affiliate&utm_medium=cpc&utm_campaign=sasdeep&utm_content=link&sscid=51k3_odd5b#/)
 
@@ -8,25 +8,25 @@ The great sequel to Caravaneer is coming soon and I got the chance to talk with 
 
 **Dmitry Zheltobriukhov:** Caravaneer 2 is a free single player browser-based game. It can be downloaded and played offline too, but some features will only be available in online mode.
 
-[![YouTube Video](https://img.youtube.com/vi/5MSFJ30FFZ0/0.jpg =480x360)](https://www.youtube.com/watch?v=5MSFJ30FFZ0)
+[![Caravaneer 2 Crowdfunding Campaign Video on YouTube](https://img.youtube.com/vi/5MSFJ30FFZ0/0.jpg =480x360)](https://www.youtube.com/watch?v=5MSFJ30FFZ0)
 
 **Small Dev Talk: Does Caravaneer 2 have a story and if so, what is it about?**
 
 **Dmitry Zheltobriukhov:** It will certainly have a story, and if everything goes according to the plan, the story will be much bigger and more important than in the first part. The game is set in a post-apocalyptic world which has more or less the same style as Mad Max and Fallout universes, with the difference that Caravaneer’s apocalypse was not induced by a nuclear war, but by an environmental cataclysm, which is a subject that I would like to expand a little more in the second part’s story. Of course, the main storyline will not be directly related to the causes of the end of the civilization. You will start the game searching for a disappeared companion and will find yourself in much more serious troubles afterwards. This part’s story takes place 80 years after the first one, so there’ll be no strong storyline connection between them.
 
-![image2](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image2.jpg =500x281)
+![Caravaneer 2 dialogue scene: a weathered villager leaning on a stick answers the player, with two reply choices](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image2.jpg =500x281)
 
 **Small Dev Talk: What is new in Caravaneer 2 that Caravaneer did not have?**
 
 **Dmitry Zheltobriukhov:** Some of the most significant innovations are isometric battles (instead of top-down view), a larger set of more specific skills, a morale system, more developed reputation factor and more complex relations with different factions as well as slavery, business ownership, electricity, different kinds of food, illegal goods and other, less significant features.
 
-![image3](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image3.jpg =450x678)
+![Caravaneer 2 pencil concept sketches of wasteland characters: bearded heads, a man in a fur coat and gaunt figures](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image3.jpg =450x678)
 
 **Small Dev Talk: What type of game is Caravaneer 2?**
 
 **Dmitry Zheltobriukhov:** Caravaneer is basically an RPG that focuses more on the group than on each character personally, and it also has a trading part which, according to some players feels like some sort of a fusion of Fallout and Oregon Trail (even though I’ve never played the second game myself). It’s an old school game with turn-based battles that is similar to the two games mentioned previously and also has some elements that resemble X-Com, Jagged Alliance and Elite, with some other elements being completely unique, of course.
 
-![image4](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image4.jpg =500x281)
+![Caravaneer 2 crew equipment screen for Michelangelo Nise, showing stats, a grenade, a rifle and an M6 missile](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image4.jpg =500x281)
 
 **Small Dev Talk: What is the focus of the player in this game?**
 
@@ -48,7 +48,7 @@ The great sequel to Caravaneer is coming soon and I got the chance to talk with 
 
 **Dmitry Zheltobriukhov:** The same types as in the first part which includes melee, all types of firearms, rocket launchers and grenades, and some new ones: Crossbows, flamethrowers and Molotov cocktails. I want to include a larger variety of melee weapons and make them more effective, especially at the early stages of the game. There’ll probably also be some self-made guns to make the game feel more post-apocalyptic.
 
-![image5](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image5.jpg =500x500)
+![Caravaneer 2 melee weapons: a pipe, crowbar, baseball bat, cleaver, hammer, machete, hatchet, spiked bone and mace](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image5.jpg =500x500)
 
 **Small Dev Talk: Will this or does this game have any multiplayer options? If so, what type of multiplayer options will there be?**
 
@@ -74,7 +74,7 @@ The great sequel to Caravaneer is coming soon and I got the chance to talk with 
 
 **Dmitry Zheltobriukhov:** There’s a crowdfunding campaign for Caravaneer 2 currently running at Indiegogo ([http://www.indiegogo.com/caravaneer2](https://www.indiegogo.com/projects/caravaneer-2?utm_source=affiliate&utm_medium=cpc&utm_campaign=sasdeep&utm_content=link&sscid=51k3_odfcc#/)), which will be active until April 20th, 2013. Please take a look at the perks we offer there and see if you are interested in any of them.
 
-![image6](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image6.jpg =450x643)
+![Caravaneer 2 Needs You poster: the bucket-helmeted raider points at the viewer; get perks at indiegogo.com/caravaneer2](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image6.jpg =450x643)
 
 ---
 

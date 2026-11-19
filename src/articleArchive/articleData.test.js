@@ -148,6 +148,51 @@ describe("article markdown", () => {
 		Array.from((text ?? "").matchAll(/!\[[^\]]*\]\(([^)]+)\)/g), ([, target]) => [key, target]),
 	).flat();
 
+	/** Every image's alt text, with the article it is in and its target. */
+	const imageAlts = Array.from(markdown, ([key, text]) =>
+		Array.from((text ?? "").matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g), ([, alt, target]) => [key, target, alt]),
+	).flat();
+	/** The accessible name of every link whose only content is an image, keyed by article. */
+	const imageLinkNames = Array.from(markdown, ([key, text]) => [
+		key,
+		Array.from((text ?? "").matchAll(/\[!\[([^\]]*)\]\([^)]+\)\]\([^)]+\)/g), ([, alt]) => alt),
+	]);
+
+	test.each(imageAlts)("%s describes image %s in its alt text", (key, target, alt) => {
+		// Placeholder alt text tells a screen reader user nothing (WCAG 2.2 success criterion 1.1.1).
+		expect(alt.trim()).not.toMatch(/^(image\d*|youtube video|image alt text here)?$/i);
+	});
+
+	test.each(imageLinkNames.filter(([, names]) => names.length > 1))(
+		"%s names each of its image links differently",
+		(key, names) => {
+			// Image links with one name that lead to different places fail WCAG 2.2 success criterion 2.4.4.
+			expect(new Set(names).size).toBe(names.length);
+		},
+	);
+
+	/** The text of each article's first heading, keyed by article. */
+	const firstHeadings = Array.from(markdown, ([key, text]) => [key, (text ?? "").match(/^## (.+?)\r?$/m)?.[1]]);
+
+	test.each(articles.map(([key]) => key))("%s opens with a heading that names the article", (key) => {
+		// The heading is the article's title on the page (WCAG 2.2 success criterion 2.4.6).
+		expect(markdown.get(key)).toMatch(/^## \S/);
+	});
+
+	test("no two articles open with the same heading", () => {
+		const keysByHeading = Object.groupBy(firstHeadings, ([, heading]) => heading);
+		const repeated = Object.entries(keysByHeading).filter(([, entries]) => entries.length > 1);
+
+		expect(repeated).toEqual([]);
+	});
+
+	test("no two articles have the same title", () => {
+		const keysByTitle = Object.groupBy(articles, ([, article]) => article.title);
+		const repeated = Object.entries(keysByTitle).filter(([, entries]) => entries.length > 1);
+
+		expect(repeated).toEqual([]);
+	});
+
 	test.each(articles.map(([key]) => key))("%s has article content", (key) => {
 		expect(markdown.get(key)?.trim().length).toBeGreaterThan(0);
 	});

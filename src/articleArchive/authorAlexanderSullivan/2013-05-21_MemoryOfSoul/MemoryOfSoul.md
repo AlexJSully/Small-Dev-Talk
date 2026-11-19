@@ -1,6 +1,6 @@
 ## Memory of Soul
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image1.png =500x500)
+![Memory of Soul cover art: Meira in a fur-hooded coat holding a sword in a snowy landscape](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image1.png =500x500)
 
 It’s time for a new adventure. Recently I got the chance to talk with Shadow Cube about their upcoming game Memory of Soul. You can find more details about the game at [http://memoryofsoul.com/](http://memoryofsoul.com/)
 
@@ -16,13 +16,13 @@ The game tells the story of Meira. She is one of the Seers - humans blessed with
 
 And that’s where the adventure begins!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image2.jpg =500x391)
+![Memory of Soul concept art: a cloaked figure on a cliff overlooking a snowy village at night, wrapped in green spirit mist](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image2.jpg =500x391)
 
 **Small Dev Talk: What is Meira like and what inspired you to create this character?**
 
 **Shadow Cube:** First of all she is strong and self-confident. With the help of her unusual skills she makes a living as a detective or, sometimes, as a mercenary. The common folk in the game’s world are usually afraid of the Seers. Their powers give them an advantage in diplomacy and combat - that’s why Seers don’t openly admit to have them unless it’s needed. We wanted to tell a story of such a character. The player will be able to develop Meira’s abilities, but her appearance will be always the same.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image3.jpg =434x750)
+![Memory of Soul concept art of Meira, a red-haired woman in a fur-hooded coat holding a sword in a snowstorm](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image3.jpg =434x750)
 
 **Small Dev Talk: What is the gameplay like in Memory of Soul?**
 
@@ -32,7 +32,7 @@ There will be a bunch of sidequests, which the player will be able to complete d
 
 Moreover, Meira will be capable of using alchemy to create potions aiding her in combat and investigations.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image4.jpg =500x313)
+![Memory of Soul work in progress: a beam of blue light shining down into a dark cave](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image4.jpg =500x313)
 
 **Small Dev Talk: What are the customizable attack trees?**
 
@@ -42,19 +42,19 @@ Moreover, Meira will be capable of using alchemy to create potions aiding her in
 
 **Shadow Cube:** As stated above - we still need to test the combat system properly to be able to speak about it with certainty. We plan to put a bit of strategy into combat by encouraging the player to use specific abilities against specific enemies or against some elements of environment, in order to gain temporal advantage in combat. These ideas are still subject to a change, though.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image5.jpg =500x313)
+![Memory of Soul creature concept: wireframe sketches and textured 3D models of a lizard-like beast](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image5.jpg =500x313)
 
 **Small Dev Talk: What types of environments will the player come across in Memory of Soul?**
 
 **Shadow Cube:** We do not want to spoil your fun, so for now let’s just say that action will take place mostly in the Eirath village (and a small area around it) situated somewhere between the Frost Bears’ and the Technomages’ territories. The adventure will be linear, with a partially open world. The explorable area gets more and more extensive as the game progresses. We also have several aces up our sleeve, but let’s just say that some mysteries can’t be revealed… on the surface. ;)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image6.jpg =500x257)
+![Memory of Soul concept art: a dark wooden house with a red door and lit windows in the snow](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image6.jpg =500x257)
 
 **Small Dev Talk: What type of people, creatures and enemies will the player encounter in Memory of Soul?**
 
 **Shadow Cube:** Mostly some unusual villagers with their own view of the world and their own secrets. And speaking about enemies - the world of the game can be quite hostile beyond the village’s lights, so be prepared to face some wild animals and beasts. We will for sure reveal some of them during the development process.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image7.jpg =500x313)
+![Memory of Soul 3D model of an old village woman in a red headscarf and green skirt, front and side views](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image7.jpg =500x313)
 
 **Small Dev Talk: What inspired you to create Memory of Soul?**
 
@@ -70,7 +70,7 @@ Moreover, Meira will be capable of using alchemy to create potions aiding her in
 
 Also a huge challenge - which for some of us consumes more time than working on the game itself - is managing the work of others. We work within smaller groups, each focusing on a specific field: programming, design, concept art, 3D modeling or level design.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image8.jpg =500x313)
+![Memory of Soul work in progress: blue light falling through an opening into a large dark cavern](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image8.jpg =500x313)
 
 **Small Dev Talk: Do you have any advice to upcoming developers?**
 
@@ -82,7 +82,7 @@ Also, always work with people, not alone. It can be hard at the beginning, when 
 
 **Shadow Cube:** Memory of Soul is being made with Esenthel Engine. It’s an engine developed in Poland, and we decided to work with it almost from the very beginning of our project. Though we have to say, our programmers had to create a lot of their own tools and systems, highly expanding on the core of the engine.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image9.jpg =500x313)
+![Memory of Soul 3D model of a wooden watchtower, shown from two angles](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image9.jpg =500x313)
 
 **Small Dev Talk: Your game is currently on Steam Greenlight which means you are trying to bring it onto Steam. If your game becomes Greenlit, will take advantage of Steam’s great features such as Workshop for any user create content or Big TV for controller support?**
 
@@ -100,7 +100,7 @@ As for Workshop and gamepad controller - we haven’t planned anything about the
 
 **Shadow Cube:** Create games! And, of course, support struggling and passionate indie developers (wink, wink), but what’s most important - enjoy their creations! See you around!
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image10.jpg =500x313)
+![Memory of Soul work in progress: a vast candlelit library with towering bookshelves and ladders](src\articleArchive\authorAlexanderSullivan\2013-05-21_MemoryOfSoul\image10.jpg =500x313)
 
 ---
 

@@ -1,6 +1,6 @@
 ## FluoroVu
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image1.png =399x224)
+![FluoroVu optics module: a ring of six glowing UV LEDs clipped over the camera on the back of a phone](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image1.png =399x224)
 
 Have you ever wanted your own UV camera to detect fluorescences on your phone? Well check out FluoroVu, crated by Eigen Imaging, a new portable and reliable physical addon to your smart phone that allows you to view and capture Ultraviolet-induced fluorescence images of certain objects and materials. You can find out more on their [website](https://www.eigenimaging.com/fluorovu) or support them on [Kickstarter](https://www.kickstarter.com/projects/857564580/fluorovu-capturing-uv-fluorescence).
 
@@ -12,7 +12,7 @@ Have you ever wanted your own UV camera to detect fluorescences on your phone? W
 
 **Eigen Imaging:** The optics module emits UV light parallel to the optical axis of the smartphone’s camera. Any fluorescence will be captured by the APP’s live camera view. The optics module has a color correction filter that helps bring out the fluorescence against the blue background caused by the UV light.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image2.png =500x141)
+![Rock art photographed without and with the FluoroVu app, where the app makes faint markings stand out in bright colours](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image2.png =500x141)
 
 **Small Dev Talk: What are the practical uses for FluoroVu? Is it meant for professional use or can it be used for the home? Will this be suitable for students in University/post-secondary school?**
 
@@ -28,31 +28,31 @@ Art - Use to the FluoroVu to see hidden fixes paintings, carvings and various ob
 Mineralogy - rocks and gemstone. Different rock and gemstones fluoresce in intricate and beautiful patterns. Use the FluoroVu to get cool images and share with your friends.
 Automotive - refrigerant leak detection, locate repaired windshield cracks. The FluoroVu is a convenient tool for field inspection.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image3.jpg =500x479)
+![FluoroVu images of glow germ powder fluorescing blue on a knife blade and on fingers, labelled germ still present](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image3.jpg =500x479)
 
 **Small Dev Talk: How accurate is the UV detection with FluoroVu?**
 
 **Eigen Imaging:** The FluoroVu is not for detecting UV. It emits long UV light and detects fluorescence of certain materials that are sensitive to UV light. How well it can capture fluorescence depends on many factors, like the type of materials, ambient lighting, the distance from object to camera, etc. Although it is true that a generic UV light source has the same ability to induce UV-fluorescence, we feel the FluoroVu’s optic module in conjunction with the specially developed APP offer several advantages. First our LED ring light design ensures that the light travels parallel to the optical axis thereby producing more uniform illumination. The optics module also contains a color-correction filter to remove the excessive blue in order to better reveal fluorescent features. Last but not least, the FluoroVu App can be used even on non-UV fluorescent subjects. In other words, it can enhance features even without the use of the optics module. The FluoroVu App uses an image processing method that can bring out color contrast of very faint features in objects that are almost invisible to the human eye.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image4.png =500x362)
+![A toilet seat hinge under normal light, a standard UV light, FluoroVu, and FluoroVu enhanced, where green residue grows clearer](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image4.png =500x362)
 
 **Small Dev Talk: What devices and mobile operating systems will the FluoroVu work with?**
 
 **Eigen Imaging:** All android OS smartphones. Iphone versions 3 and 4, Ipad versions 1, 2 and 3. We have had success on a few android tablets but don’t have everything out there to test with. Tell us which model tablet you have and we can look into it. We are currently working on a version that is compatible with Apple devices that have the lightning connector, such as the iPad 4 and iphone5.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image5.png =500x224)
+![FluoroVu optics module colours: black standard, with clear aluminum, blue and red as options](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image5.png =500x224)
 
 **Small Dev Talk: What can the user do on the FluoroVu app besides function the FluoroVu? Will it be able to record what it sees and be imported onto computers for analytic purposes?**
 
 **Eigen Imaging:** The APP allows you take images just like a normal smartphone camera. Therefore the images taken can be exported to reports, presentations and shared with friends and colleagues. The app also allows you to load and enhance an existing image, taken by the device itself or even from an external source.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image6.png =500x291)
+![A finger taps the FluoroVu app icon in an Android app drawer](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image6.png =500x291)
 
 **Small Dev Talk: What about magnification? Due to FluoroVu being a physical addon to the mobile device, will it have any enhanced magnification?**
 
 **Eigen Imaging:** We have made a prototype version that included a lens for more magnification. If there is sufficient interest we can certainly offer a version with magnification as part of our standard product line. The app has a software (digital) zoom feature to enlarge the subject for easier viewing of small details. If your device has optical zoom, you can use that when taking photos of the subject.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image7.png =500x254)
+![FluoroVu app testing guitar string stress, with notes on the text overlay, zoom box and Enhance and Contrast sliders](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image7.png =500x254)
 
 **Small Dev Talk: Will there be any desktop version for FluoroVu?**
 
@@ -66,7 +66,7 @@ Automotive - refrigerant leak detection, locate repaired windshield cracks. The 
 
 **Eigen Imaging:** We want to provide people with a cost-effective, portable and easy-to-use device which can help them with work and daily chores.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image8.png =500x334)
+![FluoroVu app reveals a hidden handwritten marking glowing red on a US banknote](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image8.png =500x334)
 
 **Small Dev talk: What is your favourite aspect of FluoroVu?**
 
@@ -76,7 +76,7 @@ Automotive - refrigerant leak detection, locate repaired windshield cracks. The 
 
 **Eigen Imaging:** Cost is a major hurdle. We have to compromise high-end finishes and color choices to keep the cost reasonable. Making our product compatible with all the different models smartphone and tablets has been a great challenge. We had success with many models and are constantly working to expand on compatibility. Products that incorporate the lightning connector by Apple (ie. Iphone5, Ipad4) are proving to be much more challenging. But we strongly feel that a solution is soon forthcoming.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image9.png =500x281)
+![FluoroVu module diagram: a 2 piece anodized aluminum casing, LEDs, and a PCB with filter and electronics](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image9.png =500x281)
 
 **Small Dev Talk: Do you have any advice for developers creating their own devices?**
 
@@ -90,7 +90,7 @@ Automotive - refrigerant leak detection, locate repaired windshield cracks. The 
 
 **Eigen Imaging:** Already we have gotten many interesting feedback from supporters concerning the intended use of the product. Sample areas of applications include forensics, paleontology, chemistry, mining, education, and others. People plan to use it at the office, in the field and/or at home. Anywhere you can take your smartphone you can use the FluoroVu.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image10.png =500x168)
+![Gemstones photographed with FluoroVu, glowing green and yellow, beside the same stones without it](src\articleArchive\authorAlexanderSullivan\2013-08-18_FluoroVu\image10.png =500x168)
 
 ---
 

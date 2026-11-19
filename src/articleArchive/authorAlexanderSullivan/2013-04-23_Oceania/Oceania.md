@@ -1,6 +1,6 @@
 ## Oceania
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image1.jpg =500x281)
+![Oceania logo over a tropical lagoon at sunset](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image1.jpg =500x281)
 
 Oceania is a new MMORPG coming out that lets the players create the world around them. Not long ago I got the chance to talk with the developers from Digital Engine about this new game Oceania which you can find at <http://oceania-online.com/>.
 
@@ -12,7 +12,7 @@ The Oceania is a limitless fantasy world which is based on the vast expanses of 
 
 The universe of Oceania is ever growing with new creatures and features. It brings together a familiar earthly plane with an undersea world and a dark realm (caverns and murky lands of eternal dusk)
 
-[![YouTube Video](https://img.youtube.com/vi/mD1uBhlSN0E/0.jpg =480x360)](https://www.youtube.com/watch?v=mD1uBhlSN0E)
+[![Oceania - online game MMORPG on YouTube](https://img.youtube.com/vi/mD1uBhlSN0E/0.jpg =480x360)](https://www.youtube.com/watch?v=mD1uBhlSN0E)
 
 **Small Dev Talk: Is there a story and if so, what is it about?**
 
@@ -26,19 +26,19 @@ Elves, thanks to their wings and the ability to fly, settled the floating celest
 
 Thus the new world has begun…
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image2.jpg =500x375)
+![Oceania: a palm-covered island in the ocean with small islands floating in the sky above](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image2.jpg =500x375)
 
 **Small Dev Talk: On your website, it says “based on the vast expanses of the ocean”. Will there be a focus on gameplay on the ocean itself?**
 
 **Eduard Digital Engine:** Yes. The gameplay has much to do with the ocean as about half of all events and actions take place in the ocean. (For the undersea race, it’s more than a half.)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image3.jpg =500x587)
+![Oceania landscapes: waterfalls pouring into a cliff-ringed lagoon, and a sandy beach beside rocky green hills](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image3.jpg =500x587)
 
 **Small Dev Talk: What type of gameplay will this game have?**
 
 **Eduard Digital Engine:** RPG.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image4.jpg =500x281)
+![Oceania: a sword-wielding warrior fighting a pack of raptor-like creatures on a grassy shore](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image4.jpg =500x281)
 
 **Small Dev Talk: What is the Live World feature Oceania has? How will it work?**
 
@@ -50,7 +50,7 @@ Almost any player can take part in creating and filling up the game world with t
 
 Any user can send us a request for creating and adding to the game certain custom content. We determine whether this content is useful and consistent with the game’s style and spirit. If we approve the request, the user will be sent specific requirements to the content and may create and submit it. We check if the submission fits the requirements and either add the content to the game world or send it back to the author to be modified and/or revised. According to the author’s wishes, the content may be added to the game as freely accessible to all, available for purchase from an NPC, sold at the personal shop of the author’s character, etc.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image5.jpg =500x270)
+![Oceania: a butcher at a meat market stall in a medieval town below a castle](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image5.jpg =500x270)
 
 **Small Dev Talk: What type of content will the player be able to create? Will it be like Steam Workshop where they can important their own content?**
 
@@ -60,7 +60,7 @@ Any user can send us a request for creating and adding to the game certain custo
 
 **Eduard Digital Engine:** A private territory is the island that the player gets at the beginning of the game. It can be a sizable area good for building a castle, founding a city and other uses. In some cases, it may be a special location purchased or created by the player. There is a possibility of conquest, although in some cases the islands won over can be only pillaged but not acquired.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image6.jpg =500x677)
+![Oceania: a castle on a green hill above a village, and a market square at the castle's foot](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image6.jpg =500x677)
 
 **Small Dev Talk: Will there be a crucial role difference between the humans and the elves? Will the players get to play both?**
 
@@ -70,7 +70,7 @@ Any user can send us a request for creating and adding to the game certain custo
 
 **Eduard Digital Engine:** Yes. Racial affiliation greatly affects the gameplay. Each race is special, and for each, the gameplay includes totally different features. Basically, different races are different worlds with different opportunities and functionalities.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image7.jpg =500x166)
+![Oceania concept art of dark creatures: a werewolf, a winged vampire woman and a horned demon](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image7.jpg =500x166)
 
 **Small Dev Talk: What is the clan and guild system like in Oceania? Will a player be able to join both a clan and a guild?**
 
@@ -108,7 +108,7 @@ Any user can send us a request for creating and adding to the game certain custo
 
 **Eduard Digital Engine:** We hope that gamers will like Oceania’s universe and find it interesting and unusual enough to participate in its everlasting creation, which in turn will make the game even more original and engaging.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image8.jpg =500x278)
+![Oceania logo beside a woman with a sword standing on a seaside rock at sunset](src\articleArchive\authorAlexanderSullivan\2013-04-23_Oceania\image8.jpg =500x278)
 
 ---
 

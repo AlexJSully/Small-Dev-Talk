@@ -17,7 +17,7 @@ Jest tests are in four files:
 
 - [src/scripts/index.test.js](../../src/scripts/index.test.js) covers the site script, [index.js](../../src/scripts/index.js).
 - [src/scripts/sw-headers.test.js](../../src/scripts/sw-headers.test.js) covers the service worker security headers, and fails when the Content Security Policy in `index.html` differs from the one the worker sends.
-- [src/articleArchive/articleData.test.js](../../src/articleArchive/articleData.test.js) checks the article archive: each entry in `articleData.json` has its markdown and thumbnail, and every image an article shows exists at the size its markdown gives.
+- [src/articleArchive/articleData.test.js](../../src/articleArchive/articleData.test.js) checks the article archive: each entry in `articleData.json` has its markdown and thumbnail, and every image an article shows exists at the size its markdown gives, with alt text that is not a placeholder.
 - [workbox-config.test.js](../../workbox-config.test.js) fails when `index.html` loads a site script the service worker does not precache, or loads jQuery or the Bootstrap JavaScript.
 
 **Run all tests:**
@@ -40,7 +40,7 @@ npm run test -- src/scripts/index.test.js
 
 ## End-to-End Testing with Cypress
 
-Cypress tests are in [cypress/e2e/landing.cy.js](../../cypress/e2e/landing.cy.js), which covers page rendering and the missing-article error, [cypress/e2e/sentry.cy.js](../../cypress/e2e/sentry.cy.js), which covers Sentry initialization and error reporting, and [cypress/e2e/service-worker.cy.js](../../cypress/e2e/service-worker.cy.js), which covers the service worker scope, precache and `Permissions-Policy` header, and [cypress/e2e/csp.cy.js](../../cypress/e2e/csp.cy.js), which fails on any Content Security Policy violation while the page loads. [cypress/support/e2e.js](../../cypress/support/e2e.js) unregisters service workers before each test, because Cypress test isolation does not.
+Cypress tests are in [cypress/e2e/landing.cy.js](../../cypress/e2e/landing.cy.js), which covers page rendering and the missing-article error, [cypress/e2e/accessibility.cy.js](../../cypress/e2e/accessibility.cy.js), which runs [axe-core](https://github.com/dequelabs/axe-core) against WCAG 2.2 AA and best-practice rules on the main pages and covers the skip link, the keyboard-opened Games submenu, focus rings, forced colors and reflow, [cypress/e2e/sentry.cy.js](../../cypress/e2e/sentry.cy.js), which covers Sentry initialization and error reporting, and [cypress/e2e/service-worker.cy.js](../../cypress/e2e/service-worker.cy.js), which covers the service worker scope, precache and `Permissions-Policy` header, and [cypress/e2e/csp.cy.js](../../cypress/e2e/csp.cy.js), which fails on any Content Security Policy violation while the page loads. [cypress/support/e2e.js](../../cypress/support/e2e.js) unregisters service workers before each test, because Cypress test isolation does not.
 
 **Open Cypress Test Runner:**
 

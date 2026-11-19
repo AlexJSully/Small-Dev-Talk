@@ -8,7 +8,7 @@ Playing as Private Investigator John Hope, when your Aunt Jackie disappears from
 
 Note: The first thing that I noticed when I spawned in was the awesome looking HUD. An original-looking and easy to understand concept, it definitely worked well to enhance gameplay. Kudos.
 
-![image1](src\articleArchive\authorNeilRampone\2016-04-13_EarlyAccessPhantasmal\image1.jpg =540x304)
+![Phantasmal journal HUD: a Chinese zodiac wheel beside a page of controls and a pentagram stat chart](src\articleArchive\authorNeilRampone\2016-04-13_EarlyAccessPhantasmal\image1.jpg =540x304)
 
 Armed with a pistol and a plank of wood, there is a vendor right around the corner from your spawn point offering various upgrades and items, if you’ve got the coin. My first round going through the complex wasn’t a speedy process; I’m a huge chicken when it comes to any kind of horror game, so I was taking my time flicking my flashlight on and off, crouching most of the time to avoid attention from anything spooky and getting generally freaked out by the sound track (more on that later).
 
@@ -16,11 +16,11 @@ My first enounter with some baddies went alright, I suppose. Zombie-like in natu
 
 **Note**: One thing that I wasn’t totally hot over with was the rapid inflation of pricing for the upgrade system. Each run through the complex I gathered between $25-45 of the in-game currency, and obviously that amount will go up the better you get at the game… However, the base line for any upgrade to level 2 is $50, and one of the upgrades peaks at $1000 for level 5 (the max level for any upgrade). The appeal to max out all upgrades is definitely evident (because that means you can clear the baddies with ease), but I feel like the range between upgrade levels may be a bit steep (not enough reward for the time played).
 
-![image2](src\articleArchive\authorNeilRampone\2016-04-13_EarlyAccessPhantasmal\image2.jpg =540x304)
+![Phantasmal upgrade shop menu, Egg Chins Place, listing upgrades priced from $50HK to $150HK](src\articleArchive\authorNeilRampone\2016-04-13_EarlyAccessPhantasmal\image2.jpg =540x304)
 
 My second run through was a slightly speedier process. I got attacked by a haunted garbage can while trying to loot a hidden crate (I’m hoping this was a glitch, but it was hilarious either way) and at one point I stumbled across probably the creepiest room in the game, which I dubbed the “Teddy Bear Room”. Filled with dis-membered stuffed bears, complete with a nasty-looking knife sticking out of the counter-top (which I could not pick up, sadface), it gave me a very… escaped asylum patient vibe. Just plain weird.
 
-![image2](src\articleArchive\authorNeilRampone\2016-04-13_EarlyAccessPhantasmal\image3.webp =400x225)
+![Phantasmal: a flashlight lights up shelves of torn stuffed bears in a dark room](src\articleArchive\authorNeilRampone\2016-04-13_EarlyAccessPhantasmal\image3.webp =400x225)
 
 One thing that was refreshing about Phantasmal is the fact that the environment is about 95% interactive. It adds an interesting element to the game, because a lot of objects laying around make fairly loud noises and it makes it difficult to sneak around in certain situations (ie. Breaking empty bottles of alcohol by stepping on them is definitely loud enough to grab an enemies attention – But is that necessarily a bad thing?). One downside of the interactive environment is that I’ve found in tight spaces, you have a chance of getting stuck on certain objects, the main offender being empty cardboard boxes. However, that aside, being able to interact thoroughly with your environment and use it to your (possible) advantage is an interesting alley to explore, and certainly opens up lots of possibilities.
 

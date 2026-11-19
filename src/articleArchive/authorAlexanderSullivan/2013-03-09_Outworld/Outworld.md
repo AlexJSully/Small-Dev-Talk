@@ -1,6 +1,6 @@
 ## Outworld: Return of the Master Teachers
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image1.jpg =500x333)
+![Outworld: Return of the Master Teachers cover art: a female kung-fu warrior with a staff leads armed heroes](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image1.jpg =500x333)
 
 Outworld: Return of the Master Teachers is a new exciting comic by Griot Enterprises that mixes the genres of sci-fi and kung-fu into one amazing adventure. Not long ago, I got the chance to talk with the CEO of Griot Enterprises, Jiba Molei Anderson about their new comic, Outworld: Return of the Master Teachers which you can check out for yourself at: [http://griotenterprises.com/](https://www.griotenterprises.com/) or support it at [http://www.indiegogo.com/projects/outworld-return-of-the-master-teachers-round-two](https://www.indiegogo.com/projects/outworld-return-of-the-master-teachers-round-two?utm_source=affiliate&utm_medium=cpc&utm_campaign=sasdeep&utm_content=link&sscid=61k3_9r068#/) .
 
@@ -8,7 +8,7 @@ Outworld: Return of the Master Teachers is a new exciting comic by Griot Enterpr
 
 **Jiba Molei Anderson:** Outworld: Return of the Master Teachers is a property geared towards males aged 10 -35. In addition, females in the same age bracket may become a large part of our audience as well due to a strong, capable female cast in the series. Finally, we may find a large adult audience as well. Outworld is reminiscent of such properties as Star Wars, Dreadstar & Warp and kung-fu films such as Hero and The Five Deadly Venoms.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image2.jpg =353x546)
+![Outworld poster headed Power Through Strength: the villain Oro looms over his armoured followers; Indiegogo campaign link](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image2.jpg =353x546)
 
 **Small Dev Talk: What is the story of Outworld: Return of the Master Teachers?**
 
@@ -20,7 +20,7 @@ However, a rag tag band of rebels led by a disgraced Master will provide to the 
 
 **Jiba Molei Anderson:** Outworld: Return of the Master Teachers is a science fiction, kung-fu epic spanning 3 generations.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image3.jpg =396x612)
+![Outworld black and white comic page: a female warrior in a white head wrap leaps with a staff before temple ruins](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image3.jpg =396x612)
 
 **Small Dev Talk: Who are the Master Teachers and why have they been outlawed?**
 
@@ -30,7 +30,7 @@ However, a rag tag band of rebels led by a disgraced Master will provide to the 
 
 **Jiba Molei Anderson:** In the galaxy once known as the Diaspora, which is currently divided into the Utopian Collective and the Outworld separated by an expanse of space known as the Ridge.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image4.jpg =396x612)
+![Outworld black and white comic page: a warrior in a wide straw hat and long coat holds a sword before a city skyline](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image4.jpg =396x612)
 
 **Small Dev Talk: What are the characters like in Outworld and who were they inspired by?**
 
@@ -74,7 +74,7 @@ Soon, you’ll see what an 11-year old’s imagination can create.
 
 **Jiba Molei Anderson:** Thanks for reading and keep supporting Indie Comics. Griot Enterprises is the future of entertainment… You better recognize! [http://www.griotenterprises.com](https://www.griotenterprises.com/)
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image5.jpg =485x750)
+![Outworld poster headed Stay Woke: the Master Teachers heroes pose with swords and a staff; Indiegogo campaign link](src\articleArchive\authorAlexanderSullivan\2013-03-09_Outworld\image5.jpg =485x750)
 
 ---
 

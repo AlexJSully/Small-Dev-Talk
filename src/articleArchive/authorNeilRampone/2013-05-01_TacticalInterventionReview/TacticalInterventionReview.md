@@ -1,6 +1,6 @@
 ## Tactical Intervention Review
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/7aosi75-XxI/0.jpg =480x360)](https://www.youtube.com/watch?v=7aosi75-XxI)
+[![Tactical Intervention - Smalldevtalk Review on YouTube](https://img.youtube.com/vi/7aosi75-XxI/0.jpg =480x360)](https://www.youtube.com/watch?v=7aosi75-XxI)
 
 We did an [interview](index.html?TacticalIntervention) and now we do the review. Check out our opinion on FIX Korea’s and OGPlanet’s game, Tactical Interview. A new MMOFPS that comes from the co-creator of Counter Strike. Read more to read details about our reasoning for our rating
 

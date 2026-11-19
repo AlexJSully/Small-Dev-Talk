@@ -1134,6 +1134,39 @@ function handleControlClick(event) {
 }
 
 /**
+ * Let Escape close the navigation's open submenus. The stylesheet opens a submenu while its item is hovered or holds
+ * keyboard focus, and that menu covers the title below, so WCAG 2.2 success criterion 1.4.13 requires a way to close it
+ * without moving the pointer or focus. Escape marks each open item `submenuDismissed`, which the stylesheet keeps
+ * closed until the pointer leaves the item or focus moves out of it.
+ * @param {Element} nav The navigation element.
+ * @returns {void}
+ */
+function enableSubmenuDismissal(nav) {
+	const items = Array.from(nav.querySelectorAll("li")).filter((item) => item.querySelector(":scope > ul"));
+
+	items.forEach((item) => {
+		const reopen = () => item.classList.remove("submenuDismissed");
+
+		item.addEventListener("pointerleave", reopen);
+		item.addEventListener("focusout", (event) => {
+			if (!item.contains(event.relatedTarget)) {
+				reopen();
+			}
+		});
+	});
+
+	document.addEventListener("keydown", (event) => {
+		if (event.key !== "Escape") {
+			return;
+		}
+
+		items
+			.filter((item) => item.matches(":hover, :focus-within"))
+			.forEach((item) => item.classList.add("submenuDismissed"));
+	});
+}
+
+/**
  * Move the page to the canonical host when needed, otherwise render the view and then register the service worker.
  * Rendering does not wait for the worker, so a first visit is not delayed by its installation.
  * @param {Location} location The page location.
@@ -1146,6 +1179,12 @@ async function start(location) {
 	}
 
 	document.addEventListener("click", handleControlClick);
+
+	const nav = document.querySelector("#header nav");
+
+	if (nav) {
+		enableSubmenuDismissal(nav);
+	}
 
 	const carousel = document.getElementById("featuredCarousel");
 
@@ -1211,6 +1250,7 @@ if (typeof module !== "undefined" && module.exports) {
 		updateCanonicalLink,
 		startThirdParties,
 		handleControlClick,
+		enableSubmenuDismissal,
 		changeCarouselSlide,
 		showCarouselSlide,
 		enableCarouselSwipe,

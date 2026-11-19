@@ -1,6 +1,6 @@
 ## Ghostship
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image1.jpg =500x304)
+![Ghostship banner: the huge spaceship Goliath orbiting a planet, with the red Ghostship logo and www.cdfghostship.com](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image1.jpg =500x304)
 
 A new exciting free roaming sci-fi horror game is coming called Ghostship! I got the chance to sit down and talk with the developer of Ghostship, Shaun Williams and get a better look at what Ghostship truly holds for their players. You can find more about Ghostship at [www.cdfghostship.com](http://www.cdfghostship.com/)
 
@@ -8,7 +8,7 @@ A new exciting free roaming sci-fi horror game is coming called Ghostship! I got
 
 **Shaun Williams:** Ghostship is a first person shooter/survival horror game. It is a free roaming game and is based mainly on action and fun.
 
-[![YouTube Video](https://img.youtube.com/vi/gfBQvuJ_Ads/0.jpg =480x360)](https://www.youtube.com/watch?v=gfBQvuJ_Ads)
+[![Ghostship Teaser Trailer 3, 2013, on YouTube](https://img.youtube.com/vi/gfBQvuJ_Ads/0.jpg =480x360)](https://www.youtube.com/watch?v=gfBQvuJ_Ads)
 
 **Small Dev Talk: Does Ghostship have a story and if so, what is it about?**
 
@@ -16,7 +16,7 @@ A new exciting free roaming sci-fi horror game is coming called Ghostship! I got
 
 Unlike most games which are storyline orientated, Ghostship is a free roaming game and you can explore a huge open spacecraft, as well as the colony and the orbital station
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image2.jpg =500x281)
+![Ghostship first-person view: a gun aimed down a dark, red-lit spaceship corridor with a bloodied body on the wall](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image2.jpg =500x281)
 
 **Small Dev Talk: What are the difference between the Ghostship, colony and orbital station in terms of environment and player interactions?**
 
@@ -24,13 +24,13 @@ Unlike most games which are storyline orientated, Ghostship is a free roaming ga
 
 The orbital station and the colony base are civilian and are different environments. When you arrive at these location soon after there will be a huge twist in the storyline and without giving too much away there is lots more fun to be had. The player will have a number of parts of the orbital or the colony they can explore, and then the player is also pitted in a survival type mode for an hour before they can complete the game
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image3.jpg =500x162)
+![Colonial Defence Force capital class ships lineup, from dreadnought, destroyer and carrier down to frigates and a freighter](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image3.jpg =500x162)
 
 **Small Dev Talk: Does that mean the survival game mode can only be selected from a certain part from the campaign or can the player play it at any time despite where they are in the campaign (or after they completed the campaign)?**
 
 **Shaun Williams:** There are 8 different Onslaught maps in a separate game mode. These are a mixture of big open areas and small enclosed areas, 4 are based on the ship and the other 4 are based on the orbital station and the colony base. From the start the player will have access to 4 of these maps, the other 4 will be unlocked at various stages of the story mode.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image4.jpg =500x281)
+![Ghostship first-person view: a large fleshy alien looms in a dim hangar in front of the player's gun](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image4.jpg =500x281)
 
 **Small Dev Talk: What is the story behind the Colonial Defence Force (CDF)?**
 
@@ -42,13 +42,13 @@ The CDF Ghostship game is the first of a trilogy, the second game will start dev
 
 **Shaun Williams:** Zak is a time served fighter pilot who has seen many battles. He is one of the most senior non-commissioned officers serving on board the Goliath. His love for space and the Stars as a child steered him in the direction of the CDF. Zak was born on Earth and was trained at the Mars Elite Piloting Academy. He is confident and act quick in tricky situations, but nothing has prepared him for what he is about to face now.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image5.png =500x205)
+![Ghostship artwork: a pilot's silhouette beside a starfighter in a bright hangar bay, with the Ghostship logo](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image5.png =500x205)
 
 **Small Dev Talk: What type of creatures will the player encounter in Ghostship?**
 
 **Shaun Williams:** The player will encounter a variety of different aliens. They will encounter wriggly ones, little ones, big ones, flying ones, many different types which all have one thing in common, to eat you! There will be around 10-12 different types in the final release, at the moment about 5 are in the alpha. As well as aliens there are zombies, like the traditional slow brain munching zombies these are more of a hindrance than a tactical enemy. But they take a lot to take down, and they will eat away at your ammo. If they get close enough they can do a lot of damage.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image6.jpg =500x349)
+![Ghostship alien concept art labelled Little One: a crawling, fleshy creature with long white fangs](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image6.jpg =500x349)
 
 **Small Dev Talk: What weapons will be featured in your game?**
 
@@ -58,7 +58,7 @@ The weapons also feature Tactical lights, laser sights, thermal vision and II si
 
 As I am Xarmy myself, I know a lot about weapons and how they work, so I have got these futuristic weapons to actually feel like weapons, something a lot of games lack at the moment.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image7.jpg =500x281)
+![Ghostship laser rifle with an ammo display reading 79, held in a spaceship corridor beside a Hangar 2 sign](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image7.jpg =500x281)
 
 **Small Dev Talk: What will the player be able to do in free roaming of the game?**
 
@@ -68,7 +68,7 @@ I have just managed to get the save system up and running with some much appreci
 
 And the first free roamer in the unreal engine.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image8.jpg =500x281)
+![Ghostship hangar under a Hangar 1 sign, with a parked starfighter and the player's scoped plasma rifle](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image8.jpg =500x281)
 
 **Small Dev Talk: Will there be multiplayer game modes in Ghostship?**
 
@@ -78,13 +78,13 @@ And the first free roamer in the unreal engine.
 
 **Shaun Williams:** My love for games and sci-fi is my main inspiration. I love games and sci-fi, but we don’t get many sci-fi games, and most of the ones we do get are too scripted, completed too quick and very heavily storyline based. Most of them are like reading a book or watching a film while you interact a little in between. Ghostship will not be like this, the emphasis with Ghostship is one fun and gameplay. Like the old games Doom and Quake, lots of fun and mainly shooting, not 10 min cut scene, run around for half an hour talking to people, then 10 mins of action, and then more story, more find this etc. Ghostship is focused on shooting and surviving, with plenty of storyline elements if the player wants to look for them.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image9.jpg =500x282)
+![Ghostship deck corridor with an alien hanging from the ceiling and a zombie crew member walking toward the player](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image9.jpg =500x282)
 
 **Small Dev Talk: What is it like being a one man team developing a game?**
 
 **Shaun Williams:** Hard Work, I work an average of 100 hours a week on this game, and will keep putting time into it until its finished later this year. I have worked in all aspects of game development so experience plays a great part in building everything and making a game.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image10.jpg =500x281)
+![CDF Heavy Fighter: four 3D render views of a beige and blue starfighter numbered 21](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image10.jpg =500x281)
 
 **Small Dev Talk: Do you have any advice for upcoming developers?**
 
@@ -96,7 +96,7 @@ Above it should be getting the game finished.
 
 **Shaun Williams:** The biggest challenge apart from zero funding up to now is the coding. I have managed to get everything working as planned, but really struggled with the save system, I am glad I got some help on that, I took this project on bearing in mind I may have to get some help on the coding side as there is only so much I can do, I have a Bachelors in Games Design and am more experienced with the art and design side than the programming side.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image11.jpg =500x188)
+![Collage of 3D renders of a white armoured CDF vehicle, signed Shaun Williams 2012](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image11.jpg =500x188)
 
 **Small Dev Talk: What is the expected release date for Ghostship and will it have a cost or will it be Free-To-Play?**
 
@@ -104,7 +104,7 @@ Above it should be getting the game finished.
 
 People who have alpha and beta access will have access to a private forum where they can give their feedback and suggestions. If I can implement viable changes and suggestions then they will be introduced into the final release, so they can play their part in contributing towards the final game.
 
-![image](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image12.jpg =500x688)
+![Ghostship PC DVD box art: the Goliath over a planet; tagline ends You just have to save yourself! PEGI 18](src\articleArchive\authorAlexanderSullivan\2013-03-07_Ghostship\image12.jpg =500x688)
 
 **Small Dev Talk: Do you have anything to say towards the readers?**
 
