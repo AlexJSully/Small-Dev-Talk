@@ -72,7 +72,7 @@ More content here with **bold** and _italic_ text.
 
 ### Subsection
 
-![Image Alt Text](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image1.jpg =500x281)
+![Image Alt Text](src\articleArchive\authorAlexanderSullivan\2013-03-26_Caravaneer2\image1.jpg =500x336)
 
 - Bullet list item 1
 - Bullet list item 2
