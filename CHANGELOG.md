@@ -32,7 +32,7 @@ UI/UX:
 Optimizations:
 
 - The home page now appears sooner
-- Pages download about 60% less script, and improved mobile performance
+- Pages download about 60% less script, improving mobile performance
 - Images further down an article now load as you scroll
 
 Documentation:
