@@ -10,6 +10,9 @@
  */
 const converter = new showdown.Converter({ parseImgDimensions: true });
 
+/** Host that serves the site. GitHub Pages answers every request on `www.` + this host with a 301 to it. */
+const CANONICAL_HOST = "smalldevtalk.net";
+
 /**
  * Escape HTML special characters to prevent XSS injection.
  * @param {*} unsafe The value to escape.
@@ -64,37 +67,55 @@ function sanitizeHtml(unsafe) {
 	});
 
 	// Remove event handlers and dangerous URL schemes from every element.
-	const urlAttributes = ["href", "src", "action", "formaction", "poster", "xlink:href"];
-
 	root.querySelectorAll("*").forEach((element) => {
 		Array.from(element.attributes).forEach((attribute) => {
 			const name = attribute.name.toLowerCase();
 
-			if (name.startsWith("on")) {
+			if (name.startsWith("on") || isDangerousUrl(name, attribute.value)) {
 				element.removeAttribute(attribute.name);
-
-				return;
-			}
-
-			if (urlAttributes.includes(name)) {
-				const value = attribute.value.trim().toLowerCase();
-				// Browsers strip embedded tabs/newlines from URLs, so remove them
-				// before checking the scheme to prevent encoded-whitespace bypasses.
-				const normalizedValue = value.replace(/[\t\n\r]/g, "");
-				const isDangerousScheme =
-					normalizedValue.startsWith("javascript:") ||
-					normalizedValue.startsWith("vbscript:") ||
-					(normalizedValue.startsWith("data:") &&
-						!(name === "src" && normalizedValue.startsWith("data:image/")));
-
-				if (isDangerousScheme) {
-					element.removeAttribute(attribute.name);
-				}
 			}
 		});
 	});
 
 	return template.innerHTML;
+}
+
+/** Attributes whose value the browser loads or navigates to as a URL. */
+const URL_ATTRIBUTES = ["href", "src", "action", "formaction", "poster", "xlink:href"];
+
+/**
+ * Tell whether an attribute holds a URL with a scheme that runs script or embeds a document: `javascript:`,
+ * `vbscript:`, or `data:` anywhere except an image in `src`.
+ * @param {string} name The attribute name, in lower case.
+ * @param {string} value The attribute value.
+ * @returns {boolean} True when the attribute must be removed.
+ */
+function isDangerousUrl(name, value) {
+	if (!URL_ATTRIBUTES.includes(name)) {
+		return false;
+	}
+
+	// Browsers strip embedded tabs/newlines from URLs, so remove them
+	// before checking the scheme to prevent encoded-whitespace bypasses.
+	const normalizedValue = value
+		.trim()
+		.toLowerCase()
+		.replace(/[\t\n\r]/g, "");
+
+	return (
+		normalizedValue.startsWith("javascript:") ||
+		normalizedValue.startsWith("vbscript:") ||
+		(normalizedValue.startsWith("data:") && !(name === "src" && normalizedValue.startsWith("data:image/")))
+	);
+}
+
+/**
+ * Return a value as an Error, wrapping one that is not an Error in a new Error with its text as the message.
+ * @param {*} value The thrown or reported value.
+ * @returns {Error} The value itself, or a new Error.
+ */
+function toError(value) {
+	return value instanceof Error ? value : new Error(String(value));
 }
 
 /** Most errors kept while waiting for Sentry to initialize. */
@@ -125,7 +146,7 @@ function sentryHasClient() {
  * @returns {void}
  */
 function reportToSentry(error, captureContext) {
-	const reported = error instanceof Error ? error : new Error(String(error));
+	const reported = toError(error);
 
 	if (sentryHasClient()) {
 		Sentry.captureException(reported, captureContext);
@@ -283,7 +304,7 @@ const reportedErrors = new WeakSet();
  * @returns {Error} The error that was logged and reported.
  */
 function reportError(error, context = {}) {
-	const reported = error instanceof Error ? error : new Error(String(error));
+	const reported = toError(error);
 
 	if (reportedErrors.has(reported)) {
 		return reported;
@@ -361,42 +382,507 @@ function lazyLoadImagesAfterFirst(html) {
 }
 
 /**
- * Read the page's query string, which names the article (`?Key`) or the section (`?pages&games`) to show. The fragment
- * is left out: the skip link adds `#content`, which a reload or a shared link keeps.
- * @returns {string} The query string without its leading `?`, or an empty string when the URL has none.
+ * Return a word with its first letter in upper case.
+ * @param {string} word The word.
+ * @returns {string} The capitalized word. An empty string stays empty.
  */
-function pageQuery() {
-	return new URL(document.URL).search.slice(1);
+function capitalize(word) {
+	return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-/** Create and fill the page with the desired article */
+/**
+ * Read which view a page URL asks for. The query string names an article (`?Key`), a section (`?pages&games`) or the
+ * archive (`?pages&archive`), and a URL with no query shows the home page's `index` section. The keys are decoded,
+ * so `?ghost%20ship` reads as `ghost ship`, and an article name is title-cased word by word and joined, so it names
+ * the key `GhostShip`. Only parameters without a value count, so one that another site adds to a shared link, such
+ * as `fbclid=…` or `utm_source=…`, does not change the view, and an empty segment from a doubled or trailing `&` is
+ * left out. The fragment is left out too: the skip link adds `#content`, which a reload or a shared link keeps.
+ * @param {string} url The page URL.
+ * @returns {{view: "article", key: string} | {view: "section", section: string} | {view: "archive"}} The view.
+ */
+function resolveView(url) {
+	const keys = Array.from(new URL(url).searchParams)
+		.filter(([key, value]) => key && !value)
+		.map(([key]) => key);
+
+	if (keys.length === 1) {
+		return { view: "article", key: keys[0].split(" ").map(capitalize).join("") };
+	}
+
+	const section = keys.length === 0 ? "index" : keys[1];
+
+	return section === "archive" ? { view: "archive" } : { view: "section", section };
+}
+
+/**
+ * Show or hide the element with an id, when the page has it.
+ * @param {string} id The element's id.
+ * @param {boolean} hidden True to hide the element.
+ * @returns {void}
+ */
+function setHidden(id, hidden) {
+	const element = document.getElementById(id);
+
+	if (element) {
+		element.hidden = hidden;
+	}
+}
+
+/**
+ * Return the link to an article's page, escaped for an HTML attribute.
+ * @param {string} key The key of the article in articleData.json.
+ * @returns {string} The escaped link, such as `index.html?ArticleOne`.
+ */
+function articleHref(key) {
+	return `index.html?${escapeHtml(key)}`;
+}
+
+/**
+ * Return the path of an article's thumbnail from the site root.
+ * @param {string} key The key of the article in articleData.json.
+ * @param {{author: string, date: string, thumbnail: string}} article The article's data from articleData.json.
+ * @returns {string} The path, such as `/src/articleArchive/authorJaneDoe/2024-06-01_ArticleOne/thumb.png`.
+ */
+function thumbnailPath(key, article) {
+	return `/${articleFolderPath(key, article)}/${article.thumbnail}`;
+}
+
+/**
+ * Build the `src`, `width` and `height` attributes of an article thumbnail.
+ * @param {string} key The key of the article in articleData.json.
+ * @param {object} article The article's data from articleData.json.
+ * @returns {string} The attributes, with `width` and `height` only when both sizes are positive whole numbers.
+ */
+function thumbnailAttributes(key, article) {
+	return `src="${escapeHtml(thumbnailPath(key, article))}"${imageSizeAttributes(article)}`;
+}
+
+/**
+ * Build the button that shows one carousel slide. Bootstrap's stylesheet draws `.carousel-indicators [data-bs-target]`
+ * as a dash, and `handleControlClick()` runs it.
+ * @param {{title: string}} article The article's data from articleData.json.
+ * @param {number} index The position of the slide, counted from 0. The first indicator is the current one.
+ * @returns {string} The button markup.
+ */
+function carouselIndicatorMarkup(article, index) {
+	return `
+		<button
+			type="button"
+			data-bs-target="#featuredCarousel"
+			data-carousel-slide-to="${index}"
+			aria-label="Show slide ${index + 1}: ${escapeHtml(article.title)}"
+			${index === 0 ? `class="active" aria-current="true"` : ""}
+		></button>
+	`;
+}
+
+/**
+ * Build one carousel slide: the article's thumbnail with its title and summary as the caption, linked to the article.
+ * The first slide is the page's largest image, so it loads at once and at high priority; the others load lazily.
+ * @param {string} key The key of the article in articleData.json.
+ * @param {object} article The article's data from articleData.json.
+ * @param {number} index The position of the slide, counted from 0. The first slide is the active one.
+ * @param {number} count The number of slides.
+ * @returns {string} The slide markup.
+ */
+function carouselSlideMarkup(key, article, index, count) {
+	return `
+		<div
+			class="carousel-item ${index === 0 ? "active" : ""}"
+			role="group"
+			aria-roledescription="slide"
+			aria-label="${index + 1} of ${count}"
+		>
+			<a
+				id="carouselLink${index}"
+				href="${articleHref(key)}"
+			>
+				<img
+					id="carouselImage${index}"
+					${thumbnailAttributes(key, article)}
+					class="d-block w-100"
+					${index === 0 ? `loading="eager" fetchpriority="high"` : `loading="lazy"`}
+					alt=""
+				>
+				<div class="carousel-caption">
+					<h3 class="h5" id="carouselHeader${index}">${escapeHtml(article.title)}</h3>
+					<p id="carouselParagraph${index}">${escapeHtml(article.summary)}</p>
+				</div>
+			</a>
+		</div>
+	`;
+}
+
+/**
+ * Build one post of the featured list: the article's thumbnail, title, summary and date, each linked to the article.
+ * @param {string} key The key of the article in articleData.json.
+ * @param {object} article The article's data from articleData.json.
+ * @param {number} position The position of the article in the section's list, used in the post's id.
+ * @returns {string} The post markup.
+ */
+function featuredPostMarkup(key, article, position) {
+	const href = articleHref(key);
+	const articleTitle = escapeHtml(article.title);
+
+	return `
+		<div class="post row" id="featuredArticle${position}">
+			<div class="col-md-4" style="margin-top: 0.5rem;">
+				<a
+					href="${href}"
+					aria-label="Redirect to ${articleTitle}"
+				>
+					<img
+						${thumbnailAttributes(key, article)}
+						class="img-fluid"
+						loading="lazy"
+						alt="Thumbnail for ${articleTitle}"
+					>
+				</a>
+			</div>
+			<div class="col-md-8" style="margin-top: 0.5rem;">
+				<h2>
+					<a href="${href}">
+						${articleTitle}
+					</a>
+				</h2>
+			</div>
+			<div class="col-12" style="margin-top: 0.5rem;">
+				<p>
+					${escapeHtml(article.summary)}
+					<a href="${href}">
+						Read More<span class="visually-hidden"> about ${articleTitle}</span>
+					</a>
+				</p>
+			</div>
+			<div class="col-12">
+				<p class="details">
+					<a href="${href}">
+						${escapeHtml(article.date)}<span class="visually-hidden"> ${articleTitle}</span>
+					</a>
+				</p>
+			</div>
+		</div>
+	`;
+}
+
+/**
+ * Tell whether an article has the data its archive entry shows: a title, an author, a date and a thumbnail.
+ * @param {object} [article] The article's data from articleData.json.
+ * @returns {boolean} True when the article can be listed in the archive.
+ */
+function isListableInArchive(article) {
+	return Boolean(article?.title && article.author && article.date && article.thumbnail);
+}
+
+/**
+ * Build one archive entry: the article's title over its thumbnail, linked to the article.
+ * @param {string} key The key of the article in articleData.json.
+ * @param {object} article The article's data from articleData.json.
+ * @returns {string} The entry markup.
+ */
+function archiveItemMarkup(key, article) {
+	const title = escapeHtml(article.title);
+
+	return `
+		<div class="col-sm archive-display">
+			<a
+				class="archive-link"
+				href="${articleHref(key)}"
+			>
+				<p class="archive-title">${title}</p>
+				<img ${thumbnailAttributes(key, article)} alt="${title}'s thumbnail" loading="lazy">
+			</a>
+		</div>
+	`;
+}
+
+/**
+ * Build the error panel: the message for the visitor, with buttons to reload the page and to go to the home page.
+ * `handleControlClick()` runs the buttons.
+ * @param {string} message The message for the visitor.
+ * @returns {string} The panel markup.
+ */
+function errorMarkup(message) {
+	return `
+		<div style="width:100%; display:flex; justify-content:center; margin-top:2.5rem;">
+			<div style="text-align:center;">
+				<div style="font-size:2.5rem; font-weight:700; color:#dc3545; letter-spacing:1px;">
+					Error
+				</div>
+
+				<div style="font-size:1.25rem; color:#333; margin:1rem 0 2rem 0;">
+					${escapeHtml(message)}
+				</div>
+
+				<div style="display:flex; gap:1rem; justify-content:center;">
+					<button class="btn btn-warning" style="font-size:1rem;" data-page-action="reload">
+						Refresh
+					</button>
+
+					<button class="btn btn-primary" style="font-size:1rem;" data-page-action="home">
+						Home
+					</button>
+				</div>
+			</div>
+		</div>
+	`;
+}
+
+/**
+ * Fetch and parse a JSON file of the site, and log and report a failure before rejecting with it.
+ * @param {string} url The URL of the file.
+ * @param {string} resource What is requested, for example "article data".
+ * @returns {Promise<*>} Resolves with the parsed JSON; rejects with the `LoadError` that was reported.
+ */
+function loadJson(url, resource) {
+	return fetchResource(url, resource, (response) => response.json()).catch((error) => {
+		reportError(error);
+		throw error;
+	});
+}
+
+/**
+ * Update the page's title, description and image, in its meta tags and structured data, to an article's.
+ * @param {Object} articleData The article's data.
+ * @param {String} [articleData.title] Article's title.
+ * @param {String} [articleData.summary] Article's summary.
+ * @param {String} [articleData.thumbnail] The filename of the thumbnail/resoc image of the article.
+ * @param {String} [articleData.author] Author of the article.
+ * @param {String} [articleData.date] Date the article was published (YYYY-MM-DD).
+ * @param {String} articleKey Article in-code name (key name in articleData.json).
+ * @returns {void}
+ */
+function updateMetaData(articleData, articleKey) {
+	const { title, summary, thumbnail, author, date } = articleData;
+	const hasThumbnail = Boolean(thumbnail && author && date && articleKey);
+	const structuredDataElement = document.querySelector("script[type='application/ld+json']");
+	const structuredData = structuredDataElement?.textContent
+		? JSON.parse(structuredDataElement.textContent)
+		: undefined;
+	// Each value replaces the content of its meta tags, and the structured data field when the page has one.
+	const updates = [
+		{
+			value: title && `${title} | Small Dev Talk`,
+			selectors: ["meta[property='og:title']", "meta[name='twitter:title']"],
+			structuredDataKey: "name",
+		},
+		{
+			value: summary && `${summary} | Small Dev Talk`,
+			selectors: [
+				"meta[name='description']",
+				"meta[property='og:description']",
+				"meta[name='twitter:description']",
+			],
+			structuredDataKey: "description",
+		},
+		{
+			value: hasThumbnail ? `https://${CANONICAL_HOST}${thumbnailPath(articleKey, articleData)}` : undefined,
+			selectors: ["meta[property='og:image']", "meta[name='twitter:image']"],
+			structuredDataKey: "image",
+		},
+	];
+
+	if (title) {
+		document.title = `${title} | Small Dev Talk`;
+	}
+
+	updates
+		.filter(({ value }) => value)
+		.forEach(({ value, selectors, structuredDataKey }) => {
+			selectors.forEach((selector) => document.querySelector(selector).setAttribute("content", value));
+
+			if (structuredData?.[structuredDataKey]) {
+				structuredData[structuredDataKey] = value;
+			}
+		});
+
+	if (structuredData) {
+		structuredDataElement.textContent = JSON.stringify(structuredData);
+	}
+}
+
+/**
+ * Convert an article's markdown into HTML and put it in `#articleBody`.
+ * @param {string} markdown The article's markdown.
+ * @param {string} articleKey The key of the article, named in the error when the conversion fails.
+ * @returns {void}
+ */
+function renderArticle(markdown, articleKey) {
+	const article = sanitizeHtml(lazyLoadImagesAfterFirst(converter.makeHtml(markdown)));
+
+	// Check if the converted article is empty when the original content is not
+	if (article.trim().length < 1 && markdown.trim().length > 0) {
+		ArticleFiller.displayError(
+			new LoadError("Article content could not be converted to HTML.", {
+				kind: "parse",
+				operation: "render article",
+				article: articleKey,
+			}),
+		);
+
+		return;
+	}
+
+	const articleBody = document.getElementById("articleBody");
+
+	if (articleBody) {
+		articleBody.innerHTML = article;
+	}
+}
+
+/**
+ * Show one article in place of the section: update the page's metadata, then fetch the article's markdown and render
+ * it. A key with no article data shows the not-found error at once.
+ * @param {string} articleKey The key of the article in articleData.json.
+ * @param {object} articleData All articles' data, from articleData.json.
+ * @returns {Promise<void>|undefined} Resolves once the article is on the page or its load error is shown, and never
+ * rejects. Undefined when the key has no article data.
+ */
+function showArticle(articleKey, articleData) {
+	setHidden("featuredArticles", true);
+	setHidden("displayArticles", true);
+	setHidden("articleBody", false);
+
+	// The key comes from the URL, so an inherited name such as `__proto__` must not count as an article.
+	const article = Object.hasOwn(articleData, articleKey) ? articleData[articleKey] : undefined;
+
+	if (!article) {
+		ArticleFiller.displayError(
+			new LoadError(`Article not found in article data: ${articleKey}`, {
+				kind: "missing",
+				operation: "find article",
+				article: articleKey,
+			}),
+		);
+
+		return undefined;
+	}
+
+	updateMetaData(article, articleKey);
+
+	const url = `/${articleFolderPath(articleKey, article)}/${articleKey}.md`;
+
+	return fetchResource(url, "article", (response) => response.text(), { article: articleKey })
+		.then((markdown) => renderArticle(markdown, articleKey))
+		.catch((error) => {
+			ArticleFiller.displayError(error, { operation: "load article", article: articleKey });
+		});
+}
+
+/**
+ * Show the archive: every article that has a title, an author, a date and a thumbnail, in place of the carousel.
+ * @param {object} articleData All articles' data, from articleData.json.
+ * @returns {void}
+ */
+function showArchive(articleData) {
+	setHidden("featuredArticles", true);
+	setHidden("articleBody", false);
+
+	const entries = Object.entries(articleData)
+		.filter(([, article]) => isListableInArchive(article))
+		.map(([key, article]) => archiveItemMarkup(key, article));
+
+	if (entries.length > 0) {
+		document.getElementById("displayArticles").innerHTML =
+			`<div class="container-fluid"><div class="row">${entries.join("")}</div></div>`;
+	}
+}
+
+/**
+ * Fill the carousel with articles. A key with no article data is left out, so the slides are numbered without a gap.
+ * Nothing changes when there is no list or the page has no carousel.
+ * @param {string[]|undefined} keys The article keys, in order.
+ * @param {object} articleData All articles' data, from articleData.json.
+ * @returns {void}
+ */
+function renderCarousel(keys, articleData) {
+	const carouselInner = document.getElementById("carouselInner");
+
+	if (!keys || !carouselInner) {
+		return;
+	}
+
+	const shownKeys = keys.filter((key) => articleData[key]);
+	const carouselIndicator = document.getElementById("carouselIndicator");
+
+	// Build every slide first and write each container once: `innerHTML +=` re-parses all earlier slides.
+	if (carouselIndicator) {
+		carouselIndicator.innerHTML = shownKeys
+			.map((key, index) => carouselIndicatorMarkup(articleData[key], index))
+			.join("");
+	}
+	carouselInner.innerHTML = shownKeys
+		.map((key, index) => carouselSlideMarkup(key, articleData[key], index, shownKeys.length))
+		.join("");
+}
+
+/**
+ * Fill the featured list with articles. A key with no article data is left out, and each post keeps its position in
+ * the list as its id. Nothing changes when there is no list.
+ * @param {string[]|undefined} keys The article keys, in order.
+ * @param {object} articleData All articles' data, from articleData.json.
+ * @returns {void}
+ */
+function renderFeaturedList(keys, articleData) {
+	if (!keys) {
+		return;
+	}
+
+	// Build every post first and write the list once: `innerHTML +=` re-parses all earlier posts.
+	document.getElementById("displayArticles").innerHTML = keys
+		.map((key, position) => (articleData[key] ? featuredPostMarkup(key, articleData[key], position) : ""))
+		.join("");
+}
+
+/**
+ * Show a section: title the page after it, and fill the carousel and the featured list with the articles that
+ * legacyPagesDisplay.json lists for it.
+ * @param {string} section The section, for example "index" or "games".
+ * @param {{articleData: object, pageData: object}} data The site data from `ArticleFiller.loadData()`.
+ * @returns {void}
+ */
+function showSection(section, { articleData, pageData }) {
+	const pageTitle = document.getElementById("pageTitle");
+
+	if (pageTitle) {
+		pageTitle.innerText = `Small Dev Talk: ${capitalize(section)}`;
+	}
+
+	renderCarousel(pageData[section]?.carousel, articleData);
+	renderFeaturedList(pageData[section]?.displayArticles, articleData);
+}
+
+/** How each view from `resolveView()` is shown, by its `view`. */
+const VIEW_RENDERERS = {
+	article: ({ key }, { articleData }) => showArticle(key, articleData),
+	archive: (_view, { articleData }) => showArchive(articleData),
+	section: ({ section }, data) => showSection(section, data),
+};
+
+/** Load the site's data and show its articles, sections and errors on the page. */
 class ArticleFiller {
-	constructor() {
-		this.articleData;
-		this.articleMd;
-		this.article;
-		this.pageData;
-		this.pageURL;
-		this.callPageDisplay = true;
-		this.whatPageDisplay = "index";
+	/**
+	 * Fetch the article data and the page data together. Each request logs and reports its own failure.
+	 * @returns {Promise<{articleData: object, pageData: object}>} Resolves with articleData.json and
+	 * legacyPagesDisplay.json once both load; rejects with the error of the first request that fails.
+	 */
+	static loadData() {
+		return Promise.all([
+			loadJson("/src/legacyPages/legacyPagesDisplay.json", "page data"),
+			loadJson("/src/articleArchive/articleData.json", "article data"),
+		]).then(([pageData, articleData]) => ({ articleData, pageData }));
 	}
 
 	/**
-	 * Escape HTML special characters to prevent XSS injection.
-	 * @param {*} unsafe The value to escape.
-	 * @returns {string} The escaped string.
+	 * Show a view on the page.
+	 * @param {{view: "article", key: string} | {view: "section", section: string} | {view: "archive"}} view The view,
+	 * from `resolveView()`.
+	 * @param {{articleData: object, pageData: object}} data The site data from `ArticleFiller.loadData()`.
+	 * @returns {Promise<void>|undefined} For an article, resolves once it is on the page or its load error is shown, and
+	 * never rejects. Undefined for the other views, which render at once.
 	 */
-	static escapeHtml(unsafe) {
-		return escapeHtml(unsafe);
-	}
-
-	/**
-	 * Sanitize an HTML string to remove XSS vectors.
-	 * @param {*} unsafe The HTML string to sanitize.
-	 * @returns {string} The sanitized HTML string.
-	 */
-	static sanitizeHtml(unsafe) {
-		return sanitizeHtml(unsafe);
+	static showView(view, data) {
+		return VIEW_RENDERERS[view.view](view, data);
 	}
 
 	/**
@@ -409,489 +895,28 @@ class ArticleFiller {
 	 * @return {void} Does not return a value but updates the article content.
 	 */
 	static displayError(error, context = {}) {
-		ArticleFiller.errMsg = errorDetailsFor(error?.kind).message;
-
 		reportError(error, context);
 
-		// Display the error with Bootstrap styling
-		ArticleFiller.article = `
-			<div style="width:100%; display:flex; justify-content:center; margin-top:2.5rem;">
-				<div style="text-align:center;">
-					<div style="font-size:2.5rem; font-weight:700; color:#dc3545; letter-spacing:1px;">
-						Error
-					</div>
+		const articleBody = document.getElementById("articleBody");
 
-					<div style="font-size:1.25rem; color:#333; margin:1rem 0 2rem 0;">
-						${escapeHtml(ArticleFiller.errMsg)}
-					</div>
-
-					<div style="display:flex; gap:1rem; justify-content:center;">
-						<button class="btn btn-warning" style="font-size:1rem;" data-page-action="reload">
-							Refresh
-						</button>
-
-						<button class="btn btn-primary" style="font-size:1rem;" data-page-action="home">
-							Home
-						</button>
-					</div>
-				</div>
-			</div>
-		`;
-
-		if (document?.getElementById("articleBody")) {
-			const articleBody = document.getElementById("articleBody");
-			articleBody.removeAttribute("hidden");
-			articleBody.innerHTML = ArticleFiller.article;
-		}
-	}
-
-	/** Retrieve all article information */
-	static retrieveArticleData() {
-		const articleDataUrl = "/src/articleArchive/articleData.json";
-
-		return fetchResource(articleDataUrl, "article data", (response) => response.json())
-			.then((articleData) => {
-				ArticleFiller.articleData = articleData;
-			})
-			.catch((error) => {
-				reportError(error);
-				throw error;
-			});
-	}
-
-	/** Call desired article as denoted by index.html?ArticleTitle */
-	static callArticle() {
-		const query = pageQuery();
-
-		if (!query) {
-			ArticleFiller.callDisplay();
-			return;
-		}
-
-		const [articleTitle] = query.split("&"); // Using destructuring to get the article title
-		const isSingleArticle = query.split("&").length === 1;
-
-		if (isSingleArticle) {
-			ArticleFiller.grabArticle(articleTitle);
-
-			// Caching frequently used DOM elements
-			const featuredArticles = document.getElementById("featuredArticles");
-			const displayArticles = document.getElementById("displayArticles");
-			const articleBody = document.getElementById("articleBody");
-
-			if (featuredArticles) {
-				featuredArticles.setAttribute("hidden", true);
-			}
-			if (displayArticles) {
-				displayArticles.setAttribute("hidden", true);
-			}
-			if (articleBody) {
-				articleBody.removeAttribute("hidden");
-			}
-		} else {
-			ArticleFiller.callDisplay();
-		}
-	}
-
-	/**
-	 * Grab article markdown file
-	 * @param {String} rawArticleName Name of article
-	 * @returns {Promise<void>|undefined} Resolves once the article is on the page or its load error is shown. Undefined
-	 * when the article data has not loaded, or when it has no entry for the article, which shows the not-found error at
-	 * once.
-	 */
-	static grabArticle(rawArticleName) {
-		const normalizedName = rawArticleName
-			.split(" ")
-			.map((word) => word[0].toUpperCase() + word.slice(1))
-			.join("");
-
-		if (ArticleFiller.articleData && normalizedName) {
-			const articleData = ArticleFiller.articleData[normalizedName];
-			if (articleData) {
-				this.updateMetaData(articleData, normalizedName);
-
-				const url = `/${articleFolderPath(normalizedName, articleData)}/${normalizedName}.md`;
-
-				// Call article
-				return fetchResource(url, "article", (response) => response.text(), {
-					article: normalizedName,
-				})
-					.then((articleMd) => {
-						ArticleFiller.articleMd = articleMd;
-						ArticleFiller.addToPage(normalizedName);
-					})
-					.catch((error) => {
-						ArticleFiller.displayError(error, { operation: "load article", article: normalizedName });
-					});
-			}
-
-			ArticleFiller.displayError(
-				new LoadError(`Article not found in article data: ${normalizedName}`, {
-					kind: "missing",
-					operation: "find article",
-					article: normalizedName,
-				}),
-			);
-		}
-
-		return undefined;
-	}
-
-	/**
-	 * Dynamically update the article's meta-data based on article content.
-	 * @param {Object} articleData The article's data.
-	 * @param {String} [articleData.title] Article's title.
-	 * @param {String} [articleData.summary] Article's summary.
-	 * @param {String} [articleData.thumbnail] The filename of the thumbnail/resoc image of the article.
-	 * @param {String} [articleData.author] Author of the article.
-	 * @param {String} [articleData.date] Date the article was published (YYYY-MM-DD).
-	 * @param {String} articleKey Article in-code name (key name in articleData.json).
-	 */
-	static updateMetaData(articleData, articleKey) {
-		// If article data object is not empty
-		if (Object.keys(articleData)?.length > 0) {
-			let structuredData = document?.querySelector("script[type='application/ld+json']")?.textContent;
-			// Convert structured data into a usable JSON object
-			if (structuredData) {
-				structuredData = JSON.parse(structuredData);
-			} else {
-				structuredData = undefined;
-			}
-
-			// Update title
-			if (articleData?.title) {
-				const title = `${articleData.title} | Small Dev Talk`;
-				// Document
-				document.title = title;
-
-				// og & twitter
-				document.querySelector("meta[property='og:title']").setAttribute("content", title);
-				document.querySelector("meta[name='twitter:title']").setAttribute("content", title);
-
-				// Update structured data
-				if (structuredData?.name) {
-					structuredData.name = title;
-				}
-			}
-
-			// Update description
-			if (articleData?.summary) {
-				const description = `${articleData.summary} | Small Dev Talk`;
-
-				// Document
-				document.querySelector("meta[name='description']").setAttribute("content", description);
-
-				// og & twitter
-				document.querySelector("meta[property='og:description']").setAttribute("content", description);
-				document.querySelector("meta[name='twitter:description']").setAttribute("content", description);
-
-				// Update structured data
-				if (structuredData?.description) {
-					structuredData.description = description;
-				}
-			}
-
-			// Update image
-			if (articleData?.thumbnail && articleData?.author && articleData?.date && articleKey) {
-				const imgURL = `https://smalldevtalk.net/${articleFolderPath(articleKey, articleData)}/${articleData.thumbnail}`;
-
-				// og & twitter
-				document.querySelector("meta[property='og:image']").setAttribute("content", imgURL);
-				document.querySelector("meta[name='twitter:image']").setAttribute("content", imgURL);
-
-				// Update structured data
-				if (structuredData?.image) {
-					structuredData.image = imgURL;
-				}
-			}
-
-			// Update structured data
-			if (structuredData) {
-				document.querySelector("script[type='application/ld+json']").textContent =
-					JSON.stringify(structuredData);
-			}
-		}
-	}
-
-	/**
-	 * Convert article into HTML and add to page
-	 * @param {string} [articleName] The key of the article, named in the error when the conversion fails.
-	 */
-	static addToPage(articleName) {
-		ArticleFiller.article = sanitizeHtml(lazyLoadImagesAfterFirst(converter.makeHtml(ArticleFiller.articleMd)));
-
-		// Check if the converted article is empty when the original content is not
-		if (ArticleFiller?.article?.trim()?.length < 1 && ArticleFiller?.articleMd?.trim()?.length > 0) {
-			ArticleFiller.displayError(
-				new LoadError("Article content could not be converted to HTML.", {
-					kind: "parse",
-					operation: "render article",
-					article: articleName,
-				}),
-			);
-			return;
-		}
-
-		if (document?.getElementById("articleBody")) {
-			document.getElementById("articleBody").innerHTML = ArticleFiller.article;
-		}
-	}
-
-	// ---- Functions related to changing the featured article -----
-
-	/** Retrieve page information of all possible pages */
-	static retrievePageData() {
-		const pageDataUrl = "/src/legacyPages/legacyPagesDisplay.json";
-
-		return fetchResource(pageDataUrl, "page data", (response) => response.json())
-			.then((pageData) => {
-				ArticleFiller.pageData = pageData;
-			})
-			.catch((error) => {
-				reportError(error);
-				throw error;
-			});
-	}
-
-	/**
-	 * Call the appropriate page
-	 */
-	static callDisplay() {
-		const query = pageQuery();
-
-		ArticleFiller.pageURL = query ? query.split("&") : [];
-		ArticleFiller.whatPageDisplay = query ? ArticleFiller.pageURL[1] : "index";
-
-		if (ArticleFiller.pageURL.length === 1) {
-			ArticleFiller.callPageDisplay = false;
-		} else {
-			ArticleFiller.callPageDisplay = true;
-
-			if (ArticleFiller.whatPageDisplay === "archive") {
-				ArticleFiller.displayArchive();
-			} else {
-				ArticleFiller.changeCarousel();
-			}
-		}
-	}
-
-	/**
-	 * Display archive of articles
-	 */
-	static displayArchive() {
-		// Reset page
-		if (document.getElementById("featuredArticles")) {
-			document.getElementById("featuredArticles").setAttribute("hidden", true);
-		}
-		if (document.getElementById("articleBody")) {
-			document.getElementById("articleBody").removeAttribute("hidden");
-		}
-
-		/** String form of the articles to display */
-		let archiveDisplay = "";
-		/** All article's data */
-		const { articleData } = ArticleFiller;
-
-		if (articleData) {
-			for (const [key, value] of Object.entries(articleData)) {
-				if (value && value.title && value.author && value.date && value.thumbnail) {
-					// Create bootstrap container
-					if (archiveDisplay.trim().length < 1) {
-						archiveDisplay += `
-						<div class="container-fluid">
-						<div class="row">
-					`;
-					}
-
-					/** Article's thumbnail URL */
-					const imgURL = `${articleFolderPath(key, value)}/${value.thumbnail}`;
-
-					archiveDisplay += `
-					<div class="col-sm archive-display">
-						<a
-							class="archive-link"
-							href="${document.location.origin}/index.html?${escapeHtml(key)}"
-						>
-							<p class="archive-title">${escapeHtml(value.title)}</p>
-							<img src="${escapeHtml(imgURL)}"${imageSizeAttributes(value)} alt="${escapeHtml(value.title)}'s thumbnail" loading="lazy">
-						</a>
-					</div>
-				`;
-				}
-			}
-		}
-
-		// If things to add, add it
-		if (archiveDisplay.trim().length > 0) {
-			archiveDisplay += "</div></div>";
-
-			document.getElementById("displayArticles").innerHTML = archiveDisplay;
-		}
-	}
-
-	/** Change what articles are displayed in the carousel */
-	static changeCarousel() {
-		const docTitle =
-			ArticleFiller.whatPageDisplay[0].toUpperCase() +
-			ArticleFiller.whatPageDisplay.substring(1, ArticleFiller.whatPageDisplay.length);
-
-		if (document.getElementById("pageTitle")) {
-			document.getElementById("pageTitle").innerText = `Small Dev Talk: ${docTitle}`;
-		}
-
-		if (
-			ArticleFiller &&
-			ArticleFiller.pageData &&
-			ArticleFiller.articleData &&
-			ArticleFiller.pageData[ArticleFiller.whatPageDisplay] &&
-			ArticleFiller.pageData[ArticleFiller.whatPageDisplay].carousel &&
-			document.getElementById("carouselInner")
-		) {
-			const carouselList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].carousel;
-			const indicators = [];
-			const slides = [];
-
-			// Build every slide first and write each container once: `innerHTML +=` re-parses all earlier slides.
-			carouselList.forEach((key, c) => {
-				const article = ArticleFiller.articleData[key];
-				const url = `/${articleFolderPath(key, article)}/${article.thumbnail}`;
-
-				// Bootstrap's stylesheet draws `.carousel-indicators [data-bs-target]` as a dash; handleControlClick runs it.
-				indicators.push(`
-					<button
-						type="button"
-						data-bs-target="#featuredCarousel"
-						data-carousel-slide-to="${c}"
-						aria-label="Show slide ${c + 1}: ${escapeHtml(article.title)}"
-						${c === 0 ? `class="active" aria-current="true"` : ""}
-					></button>
-				`);
-
-				// The first slide is the page's largest image, so it loads at once and at high priority.
-				slides.push(`
-					<div
-						class="carousel-item ${c === 0 ? "active" : ""}"
-						role="group"
-						aria-roledescription="slide"
-						aria-label="${c + 1} of ${carouselList.length}"
-					>
-						<a
-							id="carouselLink${c}"
-							href="index.html?${escapeHtml(key)}"
-						>
-							<img
-								id="carouselImage${c}"
-								src="${escapeHtml(url)}"${imageSizeAttributes(article)}
-								class="d-block w-100"
-								${c === 0 ? `loading="eager" fetchpriority="high"` : `loading="lazy"`}
-								alt=""
-							>
-							<div class="carousel-caption">
-								<h3 class="h5" id="carouselHeader${c}">${escapeHtml(article.title)}</h3>
-								<p id="carouselParagraph${c}">${escapeHtml(article.summary)}</p>
-							</div>
-						</a>
-					</div>
-				`);
-			});
-
-			const carouselIndicator = document.getElementById("carouselIndicator");
-
-			if (carouselIndicator) {
-				carouselIndicator.innerHTML = indicators.join("");
-			}
-			document.getElementById("carouselInner").innerHTML = slides.join("");
-		}
-
-		ArticleFiller.ArticleFiller();
-	}
-
-	/**
-	 * Change list of featured articles
-	 */
-	static ArticleFiller() {
-		if (
-			ArticleFiller &&
-			ArticleFiller.pageData &&
-			ArticleFiller.articleData &&
-			ArticleFiller.pageData[ArticleFiller.whatPageDisplay] &&
-			ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles
-		) {
-			const displayList = ArticleFiller.pageData[ArticleFiller.whatPageDisplay].displayArticles;
-			const posts = [];
-
-			// Build every post first and write the list once: `innerHTML +=` re-parses all earlier posts.
-			displayList.forEach((key, d) => {
-				const article = ArticleFiller.articleData[key];
-
-				if (!article) {
-					return;
-				}
-
-				const url = `/${articleFolderPath(key, article)}/${article.thumbnail}`;
-				const articleKey = escapeHtml(key);
-				const articleTitle = escapeHtml(article.title);
-
-				posts.push(`
-					<div class="post row" id="featuredArticle${d}">
-						<div class="col-md-4" style="margin-top: 0.5rem;">
-							<a
-								href="index.html?${articleKey}"
-								aria-label="Redirect to ${articleTitle}"
-							>
-								<img
-									src="${escapeHtml(url)}"${imageSizeAttributes(article)}
-									class="img-fluid"
-									loading="lazy"
-									alt="Thumbnail for ${articleTitle}"
-								>
-							</a>
-						</div>
-						<div class="col-md-8" style="margin-top: 0.5rem;">
-							<h2>
-								<a href="index.html?${articleKey}">
-									${articleTitle}
-								</a>
-							</h2>
-						</div>
-						<div class="col-12" style="margin-top: 0.5rem;">
-							<p>
-								${escapeHtml(article.summary)}
-								<a href="index.html?${articleKey}">
-									Read More<span class="visually-hidden"> about ${articleTitle}</span>
-								</a>
-							</p>
-						</div>
-						<div class="col-12">
-							<p class="details">
-								<a href="index.html?${articleKey}">
-									${escapeHtml(article.date)}<span class="visually-hidden"> ${articleTitle}</span>
-								</a>
-							</p>
-						</div>
-					</div>
-				`);
-			});
-
-			document.getElementById("displayArticles").innerHTML = posts.join("");
+		if (articleBody) {
+			articleBody.hidden = false;
+			articleBody.innerHTML = errorMarkup(errorDetailsFor(error?.kind).message);
 		}
 	}
 }
 
 /**
- * Fetch page and article metadata, then render the requested view once both requests settle.
- * @returns {Promise<void>} Resolves after the view renders. Rejects with the error of a failed request, which that
- * request has already logged and reported.
+ * Fetch page and article metadata, then render the view the page URL asks for once both requests succeed. An article
+ * view's own request is not awaited: it shows its own error when it fails.
+ * @returns {Promise<void>} Resolves after the view starts to render. Rejects with the error of a failed request, which
+ * that request has already logged and reported.
  */
 function init() {
-	return Promise.all([ArticleFiller.retrievePageData(), ArticleFiller.retrieveArticleData()]).then(() =>
-		ArticleFiller.callArticle(),
-	);
+	return ArticleFiller.loadData().then((data) => {
+		ArticleFiller.showView(resolveView(document.URL), data);
+	});
 }
-
-/** Host that serves the site. GitHub Pages answers every request on `www.` + this host with a 301 to it. */
-const CANONICAL_HOST = "smalldevtalk.net";
 
 /** Scope path of the service worker that earlier releases registered from `/src/serviceWorker/sw.js`. */
 const LEGACY_SERVICE_WORKER_SCOPE_PATH = "/src/serviceWorker/";
@@ -914,17 +939,27 @@ function redirectToCanonicalHost(location) {
 }
 
 /**
+ * Tell whether the browser exposes a service worker API method. Reading `navigator.serviceWorker` can throw a
+ * SecurityError, so callers run this inside their `try`.
+ * @param {"getRegistrations"|"register"} method The `ServiceWorkerContainer` method.
+ * @returns {boolean} True when the method can be called.
+ */
+function serviceWorkerSupports(method) {
+	return (
+		typeof navigator !== "undefined" &&
+		Boolean(navigator.serviceWorker) &&
+		typeof navigator.serviceWorker[method] === "function"
+	);
+}
+
+/**
  * Unregister the service worker registered from `/src/serviceWorker/sw.js` and delete its precache.
  * Its scope covered no page, so it never served its cache and never updates on its own.
  * @returns {Promise<void>} Resolves once cleanup finishes; failures are logged and reported.
  */
 async function removeLegacyServiceWorker() {
 	try {
-		if (
-			typeof navigator === "undefined" ||
-			!navigator.serviceWorker ||
-			typeof navigator.serviceWorker.getRegistrations !== "function"
-		) {
+		if (!serviceWorkerSupports("getRegistrations")) {
 			return;
 		}
 
@@ -955,11 +990,7 @@ async function removeLegacyServiceWorker() {
  */
 async function registerServiceWorker() {
 	try {
-		if (
-			typeof navigator === "undefined" ||
-			!navigator.serviceWorker ||
-			typeof navigator.serviceWorker.register !== "function"
-		) {
+		if (!serviceWorkerSupports("register")) {
 			return null;
 		}
 
@@ -1078,7 +1109,7 @@ function initializeSentry() {
  */
 function loadGoogleTagManager() {
 	window.dataLayer = window.dataLayer || [];
-	window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+	window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
 
 	const script = document.createElement("script");
 
@@ -1110,6 +1141,17 @@ function updateCanonicalLink(location) {
 	}
 }
 
+/** What each error button does, by its `data-page-action`. */
+const PAGE_ACTIONS = new Map([
+	["reload", () => window.location.reload()],
+	[
+		"home",
+		() => {
+			window.location.href = "index.html";
+		},
+	],
+]);
+
 /**
  * Handle clicks on the carousel arrows, the carousel indicators and the error buttons. The page's Content Security
  * Policy blocks inline `onclick` attributes, so one delegated listener on the document runs these controls.
@@ -1130,10 +1172,8 @@ function handleControlClick(event) {
 		changeCarouselSlide(control.dataset.carouselStep);
 	} else if (control.dataset.carouselSlideTo !== undefined) {
 		showCarouselSlide(Number(control.dataset.carouselSlideTo));
-	} else if (control.dataset.pageAction === "reload") {
-		window.location.reload();
-	} else if (control.dataset.pageAction === "home") {
-		window.location.href = "index.html";
+	} else {
+		PAGE_ACTIONS.get(control.dataset.pageAction)?.();
 	}
 }
 
@@ -1259,11 +1299,10 @@ if (typeof module === "undefined") {
 if (typeof module !== "undefined" && module.exports) {
 	module.exports = {
 		ArticleFiller,
+		resolveView,
 		escapeHtml,
 		lazyLoadImagesAfterFirst,
 		sanitizeHtml,
-		sanitize: sanitizeHtml,
-		sanitizeHTML: sanitizeHtml,
 		reportToSentry,
 		reportError,
 		LoadError,
@@ -1295,6 +1334,14 @@ let finishCarouselTransition = null;
 
 /** The horizontal distance, in pixels, that a touch must travel across the carousel to count as a swipe. */
 const CAROUSEL_SWIPE_DISTANCE = 40;
+
+/**
+ * Return the carousel's slides in page order.
+ * @returns {Element[]} The `.carousel-item` elements.
+ */
+function carouselSlides() {
+	return Array.from(document.getElementsByClassName("carousel-item"));
+}
 
 /**
  * Mark the indicator of the slide at `index` as the current one, and every other indicator as not current.
@@ -1389,7 +1436,7 @@ function slideCarousel(outgoing, incoming, direction) {
 function showCarouselSlide(index, direction) {
 	finishCarouselTransition?.();
 
-	const slides = Array.from(document.getElementsByClassName("carousel-item"));
+	const slides = carouselSlides();
 	const current = slides.find((slide) => slide.classList.contains("active"));
 	const target = Number.isInteger(index) ? slides[index] : undefined;
 
@@ -1420,7 +1467,7 @@ function changeCarouselSlide(direction) {
 	finishCarouselTransition?.();
 
 	/** Elements with the class "carousel-item" */
-	const carouselItems = Array.from(document.getElementsByClassName("carousel-item"));
+	const carouselItems = carouselSlides();
 
 	// If there are no carousel items, return without doing anything
 	if (!carouselItems.length) {

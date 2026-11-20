@@ -7,7 +7,7 @@ Small Dev Talk is a client-side static web application that loads article metada
 ```mermaid
 graph TB
     accTitle: System architecture overview
-    accDescr: Layered diagram showing the browser client layer (index.html entry point, CSS and Bootstrap styles, JavaScript runtime) driving the ArticleFiller core (retrieveArticleData, grabArticle, updateMetaData), which fetches articleData.json metadata and the Markdown article archive and renders content via Showdown before updating the HTML. External services include the Sentry SDK and a caching service worker, and UI libraries include the Bootstrap stylesheet and Showdown.js.
+    accDescr: Layered diagram showing the browser client layer (index.html entry point, CSS and Bootstrap styles, JavaScript runtime) driving the ArticleFiller core (loadData, resolveView, showView), which fetches articleData.json metadata and the Markdown article archive and renders content via Showdown before updating the HTML. External services include the Sentry SDK and a caching service worker, and UI libraries include the Bootstrap stylesheet and Showdown.js.
     subgraph Client["Browser / Client Layer"]
         HTML["index.html<br/>Entry Point"]
         CSS["Cascading Style Sheets (CSS)<br/>style.css, Bootstrap"]
@@ -16,9 +16,9 @@ graph TB
 
     subgraph Core["Core Application"]
         AF["ArticleFiller<br/>Article Loading & Rendering"]
-        AF_subA["retrieveArticleData()"]
-        AF_subB["grabArticle()"]
-        AF_subC["updateMetaData()"]
+        AF_subA["loadData()"]
+        AF_subB["resolveView()"]
+        AF_subC["showView()"]
     end
 
     subgraph Data["Data & Assets"]
@@ -81,16 +81,13 @@ The `ArticleFiller` class is the central orchestrator for loading, rendering, an
 
 **State Management:**
 
-Static class properties maintain:
+The class keeps no state. Its interface is three static methods:
 
-- `articleData` - Complete article metadata registry
-- `articleMd` - Raw Markdown content of the current article
-- `article` - Rendered HTML content
-- `pageData` - Legacy page definitions
-- `pageURL` - Parsed query tokens
-- `callPageDisplay` - Flag for page display logic
-- `whatPageDisplay` - Current view state (for example, "index" or a page category)
-- `errMsg` - Message shown to the visitor by the last `displayError()` call
+- `loadData()` - Fetches `articleData.json` and `legacyPagesDisplay.json` together and resolves with both as `{ articleData, pageData }`
+- `showView(view, data)` - Shows an article, a section or the archive, given a view from `resolveView()` and the data from `loadData()`
+- `displayError(error, context)` - Shows the visitor the message for a failure and reports it
+
+`resolveView(url)` reads which view a page URL asks for, and touches neither the page nor the network.
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 
@@ -169,23 +166,23 @@ The flow below uses the Uniform Resource Locator (URL) query string to decide wh
 ```mermaid
 sequenceDiagram
     accTitle: Article loading data flow
-    accDescr: Sequence showing the browser calling ArticleFiller.retrieveArticleData() on page load, which fetches metadata from articleData.json and receives the article registry. callArticle() then checks the URL query string. If an article is requested, ArticleFiller fetches the Markdown file, converts it to HTML with Showdown, calls updateMetaData() to update page tags, and renders the article. Otherwise it renders the homepage article grid.
+    accDescr: Sequence showing the browser calling ArticleFiller.loadData() on page load, which fetches metadata from articleData.json and receives the article registry. resolveView() then reads the view from the URL query string, and showView() shows it. If an article is requested, ArticleFiller updates the page tags, fetches the Markdown file, converts it to HTML with Showdown, and renders the article. Otherwise it renders the homepage article grid.
     participant Browser
     participant AF as ArticleFiller
     participant JSON as articleData.json
     participant Archive as Article File
     participant Showdown
 
-    Browser->>AF: Page loads, calls retrieveArticleData()
+    Browser->>AF: Page loads, calls loadData()
     AF->>JSON: Fetch metadata
     JSON-->>AF: Return article registry
-    AF->>AF: callArticle() checks URL query string
+    Browser->>AF: showView(resolveView(URL), data)
     alt Article Requested
+        AF->>AF: Update page tags
         AF->>Archive: Fetch YYYY-MM-DD_Title/Title.md
         Archive-->>AF: Return Markdown content
         AF->>Showdown: Convert Markdown to HTML
         Showdown-->>AF: Return HTML
-        AF->>AF: updateMetaData() updates page tags
         AF->>Browser: Render article HTML
     else Homepage
         AF->>Browser: Render article grid

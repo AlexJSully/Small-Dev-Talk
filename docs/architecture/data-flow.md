@@ -21,13 +21,13 @@ flowchart TD
     end
 
     subgraph Metadata["Load Metadata"]
-        C1["ArticleFiller.retrieveArticleData()<br/>called"]
+        C1["ArticleFiller.loadData()<br/>called"]
         C2["Fetch /src/articleArchive/<br/>articleData.json"]
-        C3["Store JSON in memory<br/>ArticleFiller.articleData"]
+        C3["Resolve with the JSON<br/>{ articleData, pageData }"]
     end
 
     subgraph Decision["Process URL & Decide"]
-        D1["ArticleFiller.callArticle()<br/>parses URL query"]
+        D1["resolveView()<br/>reads the URL query"]
         D2{"Article Name<br/>requested?"}
         D3["Show homepage<br/>with grid"]
         D4["Load single article"]
@@ -36,18 +36,18 @@ flowchart TD
     subgraph Fetch["Fetch Article Content"]
         E1["Construct article path:<br/>authorAuthorName/<br/>YYYY-MM-DD_Title/<br/>Title.md"]
         E2["Fetch markdown file<br/>from the network, or the<br/>service worker cache offline"]
-        E3["Store raw markdown<br/>ArticleFiller.articleMd"]
+        E3["Render the raw markdown"]
     end
 
     subgraph Meta["Update Page Metadata"]
-        F1["ArticleFiller.updateMetaData()<br/>updates page tags"]
+        F1["updateMetaData()<br/>updates page tags"]
         F2["Document.title<br/>og:title<br/>og:description<br/>og:image"]
         F3["Structured data<br/>application/ld+json"]
     end
 
     subgraph Render["Render HTML"]
         G1["Showdown.Converter<br/>converts markdown → HTML"]
-        G2["Store rendered HTML<br/>ArticleFiller.article"]
+        G2["Sanitize rendered HTML<br/>sanitizeHtml()"]
         G3["Inject HTML into<br/>#articleBody"]
         G4["Remove #featuredArticles<br/>and #displayArticles"]
     end
@@ -120,14 +120,14 @@ When [index.html](../../index.html) loads:
     - `Sentry.getCurrentScope()` with the `app-version` tag
     - Google Tag Manager, through `loadGoogleTagManager()`, and a canonical URL adjustment applied only on the `smalldevtalk.net` host, through `updateCanonicalLink()`
 
-Metadata loading starts from `start()` in [index.js](../../src/scripts/index.js), which also registers the one click listener that runs the carousel arrows, the carousel indicators and the error buttons, lets a touch or pen swipe across the carousel change the slide, and lets Escape close the navigation submenu that hover or keyboard focus opened (`enableSubmenuDismissal()`). That file is loaded with `defer`, so it runs after the HTML is parsed and calls `start()` at once; when it runs while the document is still loading, it calls `start()` on `DOMContentLoaded` instead. When the page runs on `www.smalldevtalk.net`, `start()` moves it to the same path, query and hash on `smalldevtalk.net` and does nothing else, because GitHub Pages redirects every `www.` request to that host and the redirected data requests and service worker script fail. Otherwise it awaits `init()`, starts `watchTwitterTimeline()`, and then awaits `registerServiceWorker()`, so the worker's installation never delays the first render. `init()` starts `retrievePageData()` and `retrieveArticleData()` together and calls `callArticle()` once, after both requests succeed. Each request reports its own failure and rethrows it, so when one fails, `init()` rejects and `start()` shows the error message for that failure instead of the view.
+Metadata loading starts from `start()` in [index.js](../../src/scripts/index.js), which also registers the one click listener that runs the carousel arrows, the carousel indicators and the error buttons, lets a touch or pen swipe across the carousel change the slide, and lets Escape close the navigation submenu that hover or keyboard focus opened (`enableSubmenuDismissal()`). That file is loaded with `defer`, so it runs after the HTML is parsed and calls `start()` at once; when it runs while the document is still loading, it calls `start()` on `DOMContentLoaded` instead. When the page runs on `www.smalldevtalk.net`, `start()` moves it to the same path, query and hash on `smalldevtalk.net` and does nothing else, because GitHub Pages redirects every `www.` request to that host and the redirected data requests and service worker script fail. Otherwise it awaits `init()`, starts `watchTwitterTimeline()`, and then awaits `registerServiceWorker()`, so the worker's installation never delays the first render. `init()` calls `ArticleFiller.loadData()`, which starts both data requests together, and calls `ArticleFiller.showView()` with the view `resolveView()` reads from the URL, once both requests succeed. Each request reports its own failure and rethrows it, so when one fails, `init()` rejects and `start()` shows the error message for that failure instead of the view.
 
 ### 2. Article Data Retrieval
 
 ```mermaid
 sequenceDiagram
     accTitle: Article data retrieval sequence
-    accDescr: After the browser completes loading, init() has ArticleFiller fetch legacyPagesDisplay.json and articleData.json together, store them in the pageData and articleData static properties, then call callArticle() once both requests succeed.
+    accDescr: After the browser completes loading, init() has ArticleFiller fetch legacyPagesDisplay.json and articleData.json together, resolve with both, then show the view resolveView() reads from the URL once both requests succeed.
     participant Browser
     participant AF as ArticleFiller
     participant Server
@@ -136,34 +136,34 @@ sequenceDiagram
     par Page data
         AF->>Server: GET /src/legacyPages/legacyPagesDisplay.json
         Server-->>AF: JSON with page definitions
-        AF->>AF: Store in pageData static property
+        AF->>AF: Keep as pageData
     and Article data
         AF->>Server: GET /src/articleArchive/articleData.json
         Server-->>AF: JSON with article metadata
-        AF->>AF: Store in articleData static property
+        AF->>AF: Keep as articleData
     end
-    AF->>AF: Call callArticle() once
+    Browser->>AF: showView(resolveView(URL), data), once
 ```
 
 ### 3. Article Loading Logic
 
-The `callArticle()` method determines what to display. It and `callDisplay()` read only the query string (`pageQuery()`), so a fragment such as the skip link's `#content` does not change which article or section shows:
+`resolveView(url)` determines what to display, and `ArticleFiller.showView(view, data)` shows it. `resolveView()` reads only the decoded keys of the query string, so a fragment such as the skip link's `#content` does not change which article or section shows. A parameter with a value, such as `fbclid=…` or `utm_source=…` added to a shared link, and an empty segment from a doubled or trailing `&` are left out. One key is an article, title-cased word by word into its key. Otherwise the second key names a section (`?pages&games`), whose carousel and featured list `showView()` fills, or the archive (`?pages&archive`), and a query with no key is the home page's `index` section:
 
 ```mermaid
 flowchart TD
-    accTitle: Article loading logic in callArticle()
-    accDescr: callArticle() checks for a query string. No query or multiple parameters shows the homepage. A single article triggers grabArticle, which hides the featured and display sections, shows articleBody, fetches the Markdown, converts it with Showdown, updates metadata, and renders to articleBody.
-    A["callArticle()"] --> B{"URL has<br/>query string?"}
-    B -->|No query| C["callDisplay()<br/>Show homepage"]
-    B -->|Has query| D["Parse article name<br/>from query"]
-    D --> E{"Single article<br/>or multiple?"}
-    E -->|Multiple params| C
-    E -->|Single article| F["grabArticle<br/>articleName"]
-    F --> G["Hide#featuredArticles<br/>Hide #displayArticles<br/>Show #articleBody"]
-    G --> H["Fetch article markdown<br/>from archive"]
+    accTitle: Article loading logic in resolveView() and showView()
+    accDescr: resolveView() reads the decoded keys of the query string, leaving out parameters with a value and empty segments. No key, or two or more keys, shows a section or the archive. A single article key makes showView() hide the featured and display sections, show articleBody, update metadata, fetch the Markdown, convert it with Showdown, and render it to articleBody.
+    A["resolveView()"] --> B{"Query has a key<br/>without a value?"}
+    B -->|No| C["showView()<br/>Show a section"]
+    B -->|Yes| D["Read decoded keys"]
+    D --> E{"One key<br/>or more?"}
+    E -->|Two or more| C
+    E -->|One| F["showView()<br/>article key"]
+    F --> G["Hide #featuredArticles<br/>Hide #displayArticles<br/>Show #articleBody"]
+    G --> J["updateMetaData<br/>update page tags"]
+    J --> H["Fetch article markdown<br/>from archive"]
     H --> I["Convert to HTML<br/>with Showdown"]
-    I --> J["updateMetaData<br/>update page tags"]
-    J --> K["Render HTML<br/>to #articleBody"]
+    I --> K["Render HTML<br/>to #articleBody"]
 ```
 
 ### 4. Error Handling Flow
@@ -228,16 +228,16 @@ twitter:image → article thumbnail
 
 ## State Transitions
 
-ArticleFiller maintains state through static properties:
+The page moves through these states:
 
 ```mermaid
 stateDiagram-v2
     accTitle: ArticleFiller state transitions
-    accDescr: States move from Uninitialized to MetadataLoaded after retrieveArticleData(), then to DisplayingHome or FetchingArticle, then RenderingArticle and DisplayingArticle. A failed fetch enters ErrorState, with paths back to the homepage or a retry.
+    accDescr: States move from Uninitialized to MetadataLoaded after loadData(), then to DisplayingHome or FetchingArticle, then RenderingArticle and DisplayingArticle. A failed fetch enters ErrorState, with paths back to the homepage or a retry.
     [*] --> Uninitialized
-    Uninitialized --> MetadataLoaded: retrieveArticleData()<br/>completes
-    MetadataLoaded --> DisplayingHome: callArticle()<br/>no query
-    MetadataLoaded --> FetchingArticle: grabArticle()<br/>called
+    Uninitialized --> MetadataLoaded: loadData()<br/>completes
+    MetadataLoaded --> DisplayingHome: showView()<br/>section or archive view
+    MetadataLoaded --> FetchingArticle: showView()<br/>article view
     FetchingArticle --> RenderingArticle: Markdown fetched
     RenderingArticle --> DisplayingArticle: HTML injected
     DisplayingArticle --> FetchingArticle: User clicks article
@@ -247,13 +247,18 @@ stateDiagram-v2
     ErrorState --> FetchingArticle: User retries
 
     note right of MetadataLoaded
-        articleData populated
+        articleData and pageData loaded
         Ready for navigation
+    end note
+
+    note right of FetchingArticle
+        Page tags updated
+        Markdown requested
     end note
 
     note right of RenderingArticle
         Showdown converting
-        Metadata updating
+        HTML sanitized
     end note
 
     note right of DisplayingArticle

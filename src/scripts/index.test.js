@@ -1,6 +1,6 @@
 global.showdown = require("./libraries/showdown/showdown.min.js");
 
-const { ArticleFiller, escapeHtml, lazyLoadImagesAfterFirst, sanitizeHtml } = require("./index.js");
+const { ArticleFiller, resolveView, escapeHtml, lazyLoadImagesAfterFirst, sanitizeHtml } = require("./index.js");
 
 const {
 	reportToSentry,
@@ -154,8 +154,6 @@ describe("ArticleFiller: displayError", () => {
             <div id="carouselIndicator"></div>
             <div id="pageTitle"></div>
         `;
-		ArticleFiller.errMsg = "";
-		ArticleFiller.article = "";
 		jest.spyOn(console, "error").mockImplementation(() => {});
 	});
 
@@ -180,7 +178,6 @@ describe("ArticleFiller: displayError", () => {
 
 			ArticleFiller.displayError(error);
 
-			expect(ArticleFiller.errMsg).toBe(message);
 			expect(document.getElementById("articleBody").textContent).toContain(message);
 			expect(document.getElementById("articleBody").innerHTML).not.toContain("503");
 			expect(document.getElementById("articleBody").hasAttribute("hidden")).toBe(false);
@@ -191,7 +188,6 @@ describe("ArticleFiller: displayError", () => {
 		ArticleFiller.displayError(new Error("<script>alert('xss')</script>"));
 
 		const articleBody = document.getElementById("articleBody");
-		expect(ArticleFiller.errMsg).toBe(UNKNOWN_MESSAGE);
 		expect(articleBody.textContent).toContain(UNKNOWN_MESSAGE);
 		expect(articleBody.innerHTML).not.toContain("alert");
 		expect(articleBody.querySelector("script")).toBeNull();
@@ -220,7 +216,7 @@ describe("ArticleFiller: displayError", () => {
 		const [reported] = global.Sentry.captureException.mock.calls[0];
 		expect(reported).toBeInstanceOf(Error);
 		expect(reported.message).toBe("plain failure");
-		expect(ArticleFiller.errMsg).toBe(UNKNOWN_MESSAGE);
+		expect(document.getElementById("articleBody").textContent).toContain(UNKNOWN_MESSAGE);
 	});
 
 	test("logs one object with the original error and its context, preferring the error's own operation and article", () => {
@@ -285,7 +281,7 @@ describe("ArticleFiller: displayError", () => {
 
 		expect(console.error).toHaveBeenCalledTimes(1);
 		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
-		expect(ArticleFiller.errMsg).toContain("We could not reach Small Dev Talk");
+		expect(document.getElementById("articleBody").textContent).toContain("We could not reach Small Dev Talk");
 	});
 
 	test("shows the error when the Sentry SDK did not load", () => {
@@ -377,48 +373,142 @@ describe("fetchResource", () => {
 	});
 });
 
-describe("ArticleFiller: addToPage", () => {
+/** The meta tags and structured data in index.html that an article view updates. */
+const PAGE_METADATA = `
+	<meta name="description" content="">
+	<meta property="og:title" content="">
+	<meta name="twitter:title" content="">
+	<meta property="og:description" content="">
+	<meta name="twitter:description" content="">
+	<meta property="og:image" content="">
+	<meta name="twitter:image" content="">
+	<script type="application/ld+json">{}</script>
+`;
+
+/**
+ * Return the data of an article as articleData.json holds it.
+ * @param {object} [fields] Fields that replace the defaults.
+ * @returns {{title: string, summary: string, thumbnail: string, author: string, date: string}} The article's data.
+ */
+function testArticle(fields = {}) {
+	return {
+		title: "Test Article",
+		summary: "A summary.",
+		thumbnail: "thumb.png",
+		author: "Jane Doe",
+		date: "2024-06-01",
+		...fields,
+	};
+}
+
+describe("ArticleFiller.showView: an article", () => {
+	const MARKDOWN_URL = "/src/articleArchive/authorJaneDoe/2024-06-01_TestArticle/TestArticle.md";
+
 	beforeEach(() => {
 		document.body.innerHTML = `
-            <div id="articleBody"></div>
-            <div id="displayArticles"></div>
-            <div id="featuredArticles"></div>
-            <div id="carouselInner"></div>
-            <div id="carouselIndicator"></div>
-            <div id="pageTitle"></div>
-        `;
+			<div id="featuredArticles"></div>
+			<div id="displayArticles"></div>
+			<div id="articleBody" hidden></div>
+			${PAGE_METADATA}
+		`;
 	});
 
-	const testCases = [
-		{
-			name: "renders markdown heading",
-			input: "# Hello World",
-			expected: '<h1 id="helloworld">Hello World</h1>',
-		},
-		{
-			name: "renders markdown paragraph",
-			input: "This is a test.",
-			expected: "<p>This is a test.</p>",
-		},
-		{
-			name: "empty markdown produces empty output",
-			input: "",
-			expected: "",
-		},
-	];
+	afterEach(() => {
+		jest.restoreAllMocks();
+		delete global.fetch;
+		delete global.Sentry;
+	});
 
-	testCases.forEach(({ name, input, expected }) => {
-		test(name, () => {
-			ArticleFiller.articleMd = input;
-			ArticleFiller.addToPage();
-			const html = document.getElementById("articleBody").innerHTML;
-			expect(html.replace(/\s+/g, "")).toContain(expected.replace(/\s+/g, ""));
+	/**
+	 * Show the article view of a key.
+	 * @param {string} key The article key.
+	 * @param {object} [articleData] The articles' data. Defaults to one article, `TestArticle`.
+	 * @returns {Promise<void>|undefined} What showView returns.
+	 */
+	function showArticle(key, articleData = { TestArticle: testArticle() }) {
+		return ArticleFiller.showView({ view: "article", key }, { articleData, pageData: {} });
+	}
+
+	/**
+	 * Show `TestArticle`, answering its markdown request with a body.
+	 * @param {*} markdown What the response's `text()` resolves with.
+	 * @returns {Promise<void>} Resolves once the article or its error is on the page.
+	 */
+	function showTestArticle(markdown) {
+		// fetch reaches the network.
+		global.fetch = jest.fn().mockResolvedValue({ ok: true, text: () => Promise.resolve(markdown) });
+
+		return showArticle("TestArticle");
+	}
+
+	test.each([
+		["renders markdown heading", "# Hello World", '<h1 id="helloworld">Hello World</h1>'],
+		["renders markdown paragraph", "This is a test.", "<p>This is a test.</p>"],
+	])("%s", async (_name, markdown, expected) => {
+		await showTestArticle(markdown);
+
+		expect(document.getElementById("articleBody").innerHTML.replace(/\s+/g, "")).toContain(
+			expected.replace(/\s+/g, ""),
+		);
+	});
+
+	test("renders empty markdown as an empty article, not an error", async () => {
+		await showTestArticle("");
+
+		expect(document.getElementById("articleBody").innerHTML).toBe("");
+	});
+
+	test("fetches the markdown from the article's folder, hides the section and shows the article", async () => {
+		await showTestArticle("# Test Article");
+
+		expect(global.fetch).toHaveBeenCalledWith(MARKDOWN_URL);
+		expect(document.getElementById("featuredArticles").hidden).toBe(true);
+		expect(document.getElementById("displayArticles").hidden).toBe(true);
+		expect(document.getElementById("articleBody").hidden).toBe(false);
+		expect(document.getElementById("articleBody").innerHTML).toContain('<h1 id="testarticle">Test Article</h1>');
+	});
+
+	test("updates the title and meta tags to the article's", async () => {
+		await showArticle("MetaArticle", {
+			MetaArticle: testArticle({
+				title: "Meta Title",
+				summary: "Meta Summary",
+				thumbnail: "meta.png",
+				author: "Meta Author",
+			}),
+		});
+
+		expect(document.title).toBe("Meta Title | Small Dev Talk");
+		expect(document.querySelector("meta[name='description']").content).toBe("Meta Summary | Small Dev Talk");
+		expect(document.querySelector("meta[property='og:title']").content).toBe("Meta Title | Small Dev Talk");
+		expect(document.querySelector("meta[name='twitter:title']").content).toBe("Meta Title | Small Dev Talk");
+		expect(document.querySelector("meta[property='og:description']").content).toBe("Meta Summary | Small Dev Talk");
+		expect(document.querySelector("meta[name='twitter:description']").content).toBe(
+			"Meta Summary | Small Dev Talk",
+		);
+		expect(document.querySelector("meta[property='og:image']").content).toBe(
+			"https://smalldevtalk.net/src/articleArchive/authorMetaAuthor/2024-06-01_MetaArticle/meta.png",
+		);
+		expect(document.querySelector("meta[name='twitter:image']").content).toContain("meta.png");
+	});
+
+	test("updates the fields the page's structured data has, and adds none", async () => {
+		const structuredData = document.querySelector("script[type='application/ld+json']");
+		structuredData.textContent = JSON.stringify({ "@type": "WebSite", name: "Site", description: "About" });
+
+		await showArticle("MetaArticle", {
+			MetaArticle: testArticle({ title: "Meta Title", summary: "Meta Summary", author: "Meta Author" }),
+		});
+
+		expect(JSON.parse(structuredData.textContent)).toEqual({
+			"@type": "WebSite",
+			name: "Meta Title | Small Dev Talk",
+			description: "Meta Summary | Small Dev Talk",
 		});
 	});
 
-	test("loads the first article image at once and every later one lazily", () => {
-		ArticleFiller.articleMd = "## Title\n\n![one](one.jpg)\n\nText.\n\n![two](two.jpg)\n\n![three](three.png)";
-		ArticleFiller.addToPage("TestArticle");
+	test("loads the first article image at once and every later one lazily", async () => {
+		await showTestArticle("## Title\n\n![one](one.jpg)\n\nText.\n\n![two](two.jpg)\n\n![three](three.png)");
 
 		const images = document.querySelectorAll("#articleBody img");
 		expect(Array.from(images, (image) => image.getAttribute("src"))).toEqual(["one.jpg", "two.jpg", "three.png"]);
@@ -427,9 +517,8 @@ describe("ArticleFiller: addToPage", () => {
 		expect(images[2].getAttribute("loading")).toBe("lazy");
 	});
 
-	test("gives an article image the width and height its markdown names", () => {
-		ArticleFiller.articleMd = "![one](one.jpg =500x304)\n\n![two](two.png)";
-		ArticleFiller.addToPage("TestArticle");
+	test("gives an article image the width and height its markdown names", async () => {
+		await showTestArticle("![one](one.jpg =500x304)\n\n![two](two.png)");
 
 		const [sized, unsized] = document.querySelectorAll("#articleBody img");
 		expect(sized.getAttribute("src")).toBe("one.jpg");
@@ -438,14 +527,130 @@ describe("ArticleFiller: addToPage", () => {
 		expect(unsized.hasAttribute("width")).toBe(false);
 	});
 
-	test("leaves an <img> tag shown as code as text", () => {
-		ArticleFiller.articleMd = '![one](one.jpg)\n\n`<img src="two.jpg">`\n\n    <img src="three.jpg">';
-		ArticleFiller.addToPage("TestArticle");
+	test("leaves an <img> tag shown as code as text", async () => {
+		await showTestArticle('![one](one.jpg)\n\n`<img src="two.jpg">`\n\n    <img src="three.jpg">');
 
 		const body = document.getElementById("articleBody");
 		expect(body.querySelectorAll("img")).toHaveLength(1);
 		expect(body.querySelector("code").textContent).toBe('<img src="two.jpg">');
 		expect(body.querySelector("pre code").textContent).toContain('<img src="three.jpg">');
+	});
+
+	test("sanitizes script tags in markdown output", async () => {
+		await showTestArticle("# Hello <script>alert(1)</script>");
+
+		const html = document.getElementById("articleBody").innerHTML;
+		expect(html).toContain("<h1");
+		expect(html).not.toContain("<script");
+		expect(html).not.toContain("alert(1)");
+	});
+
+	test("sanitizes dangerous attributes in markdown output", async () => {
+		await showTestArticle('<img src="img.png" onerror="alert(1)">');
+
+		expect(document.getElementById("articleBody").innerHTML).not.toContain("onerror");
+	});
+
+	test("shows the parse message and logs the article name when the content sanitizes to nothing", async () => {
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		await showTestArticle("<script>alert(1)</script>");
+
+		expect(document.getElementById("articleBody").textContent).toContain("This content could not be displayed.");
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({ kind: "parse", operation: "render article", article: "TestArticle" }),
+		);
+	});
+
+	test("shows the missing message when the article file answers 404", async () => {
+		global.fetch = jest.fn().mockResolvedValue({
+			ok: false,
+			status: 404,
+			statusText: "Not Found",
+			text: () => Promise.resolve(""),
+		});
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		await showArticle("TestArticle");
+
+		const html = document.getElementById("articleBody").innerHTML;
+		expect(html).toContain("We could not find that article.");
+		expect(html).not.toContain("404");
+	});
+
+	test("shows the network message, at warning level, when the connection drops during the article download", async () => {
+		global.fetch = jest
+			.fn()
+			.mockResolvedValue({ ok: true, text: () => Promise.reject(new TypeError("network error")) });
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
+
+		await showArticle("TestArticle");
+
+		const html = document.getElementById("articleBody").textContent;
+		expect(html).toContain("We could not reach Small Dev Talk.");
+		expect(html).not.toContain("This content could not be displayed.");
+		expect(global.Sentry.captureException.mock.calls[0][1]).toMatchObject({
+			level: "warning",
+			tags: { operation: "retrieve article", kind: "network" },
+		});
+	});
+
+	test("shows the network message and logs the article when the request does not complete", async () => {
+		global.fetch = jest.fn().mockRejectedValue(new TypeError("Failed to fetch"));
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		await showArticle("TestArticle");
+
+		expect(document.getElementById("articleBody").innerHTML).toContain("We could not reach Small Dev Talk.");
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({ kind: "network", operation: "retrieve article", article: "TestArticle" }),
+		);
+	});
+
+	test("shows the missing message at once, at warning level, for an article that is not in the article data", () => {
+		global.fetch = jest.fn();
+		jest.spyOn(console, "error").mockImplementation(() => {});
+		// Sentry is a third-party SDK that sends events over the network.
+		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
+
+		expect(showArticle("NoSuchArticle")).toBeUndefined();
+
+		const articleBody = document.getElementById("articleBody");
+		expect(articleBody.hidden).toBe(false);
+		expect(articleBody.innerHTML).toContain("We could not find that article.");
+		expect(global.fetch).not.toHaveBeenCalled();
+		expect(global.Sentry.captureException).toHaveBeenCalledWith(
+			expect.objectContaining({ message: "Article not found in article data: NoSuchArticle" }),
+			{
+				level: "warning",
+				tags: { operation: "find article", kind: "missing" },
+				extra: expect.objectContaining({ article: "NoSuchArticle" }),
+			},
+		);
+	});
+
+	test("shows a rendering failure as an unknown failure of loading the article, not a retrieval failure", async () => {
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		// showdown's makeHtml calls replace() on its input, so a body that is not a string throws while rendering.
+		await showTestArticle({});
+
+		expect(document.getElementById("articleBody").textContent).toContain(
+			"Something went wrong while loading this page.",
+		);
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({
+				kind: "unknown",
+				operation: "load article",
+				article: "TestArticle",
+				error: expect.any(TypeError),
+			}),
+		);
 	});
 });
 
@@ -466,55 +671,31 @@ describe("lazyLoadImagesAfterFirst", () => {
 	});
 });
 
-describe("ArticleFiller: addToPage with content that sanitizes to nothing", () => {
-	afterEach(() => {
-		jest.restoreAllMocks();
-	});
+describe("ArticleFiller.loadData", () => {
+	const ARTICLE_DATA_URL = "/src/articleArchive/articleData.json";
+	const PAGE_DATA_URL = "/src/legacyPages/legacyPagesDisplay.json";
+	const articleData = { TestArticle: { title: "Test Article" } };
+	const pageData = { index: { carousel: [], displayArticles: [] } };
 
-	test("shows the parse message and logs the article name", () => {
-		document.body.innerHTML = '<div id="articleBody" hidden></div>';
-		jest.spyOn(console, "error").mockImplementation(() => {});
-		ArticleFiller.articleMd = "<script>alert(1)</script>";
-
-		ArticleFiller.addToPage("TestArticle");
-
-		expect(document.getElementById("articleBody").textContent).toContain("This content could not be displayed.");
-		expect(console.error).toHaveBeenCalledWith(
-			"ArticleFiller error:",
-			expect.objectContaining({ kind: "parse", operation: "render article", article: "TestArticle" }),
-		);
-	});
-});
-
-describe("ArticleFiller: grabArticle", () => {
-	beforeEach(() => {
-		document.body.innerHTML = `
-            <div id="articleBody"></div>
-            <div id="displayArticles"></div>
-            <div id="featuredArticles"></div>
-            <div id="carouselInner"></div>
-            <div id="carouselIndicator"></div>
-            <div id="pageTitle"></div>
-            <meta name="description" content="">
-            <meta property="og:title" content="">
-            <meta name="twitter:title" content="">
-            <meta property="og:description" content="">
-            <meta name="twitter:description" content="">
-            <meta property="og:image" content="">
-            <meta name="twitter:image" content="">
-            <script type="application/ld+json">{}</script>
-        `;
-		ArticleFiller.articleMd = undefined;
-		// Reset static properties
-		ArticleFiller.articleData = {
-			TestArticle: {
-				title: "Test Article",
-				summary: "A summary.",
-				thumbnail: "thumb.png",
-				author: "Jane Doe",
-				date: "2024-06-01",
-			},
+	/**
+	 * Answer the two data requests with valid JSON, except the one given an answer here.
+	 * @param {string} url The URL of the request to answer differently.
+	 * @param {() => Promise<*>} answer Returns what `fetch` returns for that URL.
+	 * @returns {void}
+	 */
+	function answerDataRequests(url, answer) {
+		const answers = {
+			[ARTICLE_DATA_URL]: () => Promise.resolve({ ok: true, json: () => Promise.resolve(articleData) }),
+			[PAGE_DATA_URL]: () => Promise.resolve({ ok: true, json: () => Promise.resolve(pageData) }),
+			[url]: answer,
 		};
+
+		// fetch reaches the network.
+		global.fetch = jest.fn((requested) => answers[requested]());
+	}
+
+	beforeEach(() => {
+		document.body.innerHTML = `<div id="articleBody"></div>`;
 	});
 
 	afterEach(() => {
@@ -523,212 +704,43 @@ describe("ArticleFiller: grabArticle", () => {
 		delete global.Sentry;
 	});
 
-	test("loads markdown and updates DOM", async () => {
-		const mockMd = "# Test Article";
-
-		global.fetch = jest.fn().mockResolvedValue({
-			ok: true,
-			text: () => Promise.resolve(mockMd),
-		});
-
-		await ArticleFiller.grabArticle("TestArticle");
-
-		// Wait for the fetch and DOM update
-		await new Promise((r) => setTimeout(r, 0));
-
-		expect(ArticleFiller.articleMd).toBe(mockMd);
-		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
-	});
-
-	test("shows the missing message when the article file answers 404", async () => {
-		ArticleFiller.articleData = {
-			MissingArticle: {
-				title: "Missing Article",
-				summary: "A summary.",
-				thumbnail: "thumb.png",
-				author: "Jane Doe",
-				date: "2024-06-01",
-			},
-		};
-
-		global.fetch = jest.fn().mockResolvedValue({
-			ok: false,
-			status: 404,
-			statusText: "Not Found",
-			text: () => Promise.resolve(""),
-		});
-
-		jest.spyOn(console, "error").mockImplementation(() => {});
-
-		await ArticleFiller.grabArticle("MissingArticle");
-
-		await new Promise((r) => setTimeout(r, 0));
-
-		const html = document.getElementById("articleBody").innerHTML;
-		expect(html).toContain("We could not find that article.");
-		expect(html).not.toContain("404");
-		expect(ArticleFiller.articleMd).toBeUndefined();
-	});
-
-	test("shows the network message, at warning level, when the connection drops during the article download", async () => {
-		global.fetch = jest
-			.fn()
-			.mockResolvedValue({ ok: true, text: () => Promise.reject(new TypeError("network error")) });
-		jest.spyOn(console, "error").mockImplementation(() => {});
-		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
-
-		await ArticleFiller.grabArticle("TestArticle");
-
-		const html = document.getElementById("articleBody").textContent;
-		expect(html).toContain("We could not reach Small Dev Talk.");
-		expect(html).not.toContain("This content could not be displayed.");
-		expect(global.Sentry.captureException.mock.calls[0][1]).toMatchObject({
-			level: "warning",
-			tags: { operation: "retrieve article", kind: "network" },
-		});
-	});
-
-	test("shows the network message and logs the article when the request does not complete", async () => {
-		global.fetch = jest.fn().mockRejectedValue(new TypeError("Failed to fetch"));
-		jest.spyOn(console, "error").mockImplementation(() => {});
-
-		await ArticleFiller.grabArticle("TestArticle");
-
-		expect(document.getElementById("articleBody").innerHTML).toContain("We could not reach Small Dev Talk.");
-		expect(console.error).toHaveBeenCalledWith(
-			"ArticleFiller error:",
-			expect.objectContaining({ kind: "network", operation: "retrieve article", article: "TestArticle" }),
+	test("resolves with the article data and the page data, without rendering", async () => {
+		answerDataRequests(ARTICLE_DATA_URL, () =>
+			Promise.resolve({ ok: true, json: () => Promise.resolve(articleData) }),
 		);
+
+		await expect(ArticleFiller.loadData()).resolves.toEqual({ articleData, pageData });
+
+		expect(global.fetch).toHaveBeenCalledTimes(2);
+		expect(document.getElementById("articleBody").innerHTML).toBe("");
 	});
 
-	test("shows the missing message, at warning level, for an article that is not in the article data", async () => {
-		jest.spyOn(console, "error").mockImplementation(() => {});
-		// Sentry is a third-party SDK that sends events over the network.
-		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
-
-		ArticleFiller.grabArticle("NoSuchArticle");
-
-		expect(document.getElementById("articleBody").innerHTML).toContain("We could not find that article.");
-		expect(global.Sentry.captureException).toHaveBeenCalledWith(
-			expect.objectContaining({ message: "Article not found in article data: NoSuchArticle" }),
-			{
-				level: "warning",
-				tags: { operation: "find article", kind: "missing" },
-				extra: expect.objectContaining({ article: "NoSuchArticle" }),
-			},
-		);
-	});
-
-	test("shows a rendering failure as an unknown failure of loading the article, not a retrieval failure", async () => {
-		// showdown's makeHtml calls replace() on its input, so a body that is not a string throws inside addToPage.
-		global.fetch = jest.fn().mockResolvedValue({ ok: true, text: () => Promise.resolve({}) });
-		jest.spyOn(console, "error").mockImplementation(() => {});
-
-		await ArticleFiller.grabArticle("TestArticle");
-
-		expect(document.getElementById("articleBody").textContent).toContain(
-			"Something went wrong while loading this page.",
-		);
-		expect(console.error).toHaveBeenCalledWith(
-			"ArticleFiller error:",
-			expect.objectContaining({
-				kind: "unknown",
-				operation: "load article",
-				article: "TestArticle",
-				error: expect.any(TypeError),
-			}),
-		);
-	});
-
-	test("returns a promise that settles once the article is on the page", async () => {
-		global.fetch = jest.fn().mockResolvedValue({ ok: true, text: () => Promise.resolve("# Test Article") });
-
-		await ArticleFiller.grabArticle("TestArticle");
-
-		expect(document.getElementById("articleBody").innerHTML).toContain("Test Article");
-	});
-
-	test("normalizes a multi-word article name by title-casing each word", async () => {
-		const mockMd = "# Ghost Ship";
-		ArticleFiller.articleData = {
-			GhostShip: {
-				title: "Ghost Ship",
-				summary: "A summary.",
-				thumbnail: "thumb.png",
-				author: "Jane Doe",
-				date: "2024-06-01",
-			},
-		};
-
-		global.fetch = jest.fn().mockResolvedValue({
-			ok: true,
-			text: () => Promise.resolve(mockMd),
-		});
-
-		await ArticleFiller.grabArticle("ghost ship");
-
-		await new Promise((r) => setTimeout(r, 0));
-
-		expect(global.fetch).toHaveBeenCalledWith(
-			"/src/articleArchive/authorJaneDoe/2024-06-01_GhostShip/GhostShip.md",
-		);
-		expect(ArticleFiller.articleMd).toBe(mockMd);
-	});
-});
-
-describe("ArticleFiller: retrieveArticleData", () => {
-	beforeEach(() => {
-		ArticleFiller.articleData = undefined;
-	});
-
-	afterEach(() => {
-		jest.restoreAllMocks();
-		delete global.fetch;
-		delete document.URL;
-		delete global.Sentry;
-	});
-
-	test("fetches and stores article data without rendering", async () => {
-		const articleData = { TestArticle: { title: "Test Article" } };
-		const fetchSpy = (global.fetch = jest
-			.fn()
-			.mockResolvedValue({ ok: true, json: () => Promise.resolve(articleData) }));
-
-		await ArticleFiller.retrieveArticleData();
-
-		expect(fetchSpy).toHaveBeenCalledTimes(1);
-		expect(fetchSpy).toHaveBeenCalledWith("/src/articleArchive/articleData.json");
-		expect(ArticleFiller.articleData).toEqual(articleData);
-	});
-
-	test("logs network failures and re-throws the error", async () => {
+	test("logs network failures and rejects with the error", async () => {
 		const error = new Error("Network unavailable");
-		global.fetch = jest.fn().mockRejectedValue(error);
+		answerDataRequests(ARTICLE_DATA_URL, () => Promise.reject(error));
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
-		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow("Network unavailable");
+		await expect(ArticleFiller.loadData()).rejects.toThrow("Network unavailable");
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith(
 			"ArticleFiller error:",
 			expect.objectContaining({
 				kind: "network",
 				operation: "retrieve article data",
-				url: "/src/articleArchive/articleData.json",
+				url: ARTICLE_DATA_URL,
 				error: expect.objectContaining({ cause: error }),
 			}),
 		);
-		expect(ArticleFiller.articleData).toBeUndefined();
 	});
 
-	test("reports the failure to Sentry as a warning with its operation, and re-throws when the fetch fails", async () => {
+	test("reports the failure to Sentry as a warning with its operation", async () => {
 		const error = new Error("Network unavailable");
-		global.fetch = jest.fn().mockRejectedValue(error);
+		answerDataRequests(ARTICLE_DATA_URL, () => Promise.reject(error));
 		jest.spyOn(console, "error").mockImplementation(() => {});
 		// Sentry is a third-party SDK that sends events over the network.
 		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 
-		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow("Network unavailable");
+		await expect(ArticleFiller.loadData()).rejects.toThrow("Network unavailable");
 
 		expect(global.Sentry.captureException).toHaveBeenCalledTimes(1);
 		expect(global.Sentry.captureException).toHaveBeenCalledWith(
@@ -740,12 +752,12 @@ describe("ArticleFiller: retrieveArticleData", () => {
 		);
 	});
 
-	test("logs non-OK responses and re-throws without parsing or processing article data", async () => {
+	test("logs non-OK responses and rejects without parsing the body", async () => {
 		const response = { ok: false, status: 500, statusText: "Internal Server Error", json: jest.fn() };
-		global.fetch = jest.fn().mockResolvedValue(response);
+		answerDataRequests(ARTICLE_DATA_URL, () => Promise.resolve(response));
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
-		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow(
+		await expect(ArticleFiller.loadData()).rejects.toThrow(
 			"Failed to fetch article data: 500 Internal Server Error",
 		);
 
@@ -758,69 +770,39 @@ describe("ArticleFiller: retrieveArticleData", () => {
 				message: "Failed to fetch article data: 500 Internal Server Error",
 			}),
 		);
-		expect(ArticleFiller.articleData).toBeUndefined();
 	});
 
-	test("logs JSON parsing failures and re-throws without processing article data", async () => {
+	test("logs JSON parsing failures and rejects", async () => {
 		const error = new SyntaxError("Unexpected token");
-		global.fetch = jest.fn().mockResolvedValue({ ok: true, json: () => Promise.reject(error) });
+		answerDataRequests(ARTICLE_DATA_URL, () => Promise.resolve({ ok: true, json: () => Promise.reject(error) }));
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
-		await expect(ArticleFiller.retrieveArticleData()).rejects.toThrow("Unexpected token");
+		await expect(ArticleFiller.loadData()).rejects.toThrow("Unexpected token");
 
 		expect(consoleErrorSpy).toHaveBeenCalledWith(
 			"ArticleFiller error:",
 			expect.objectContaining({ kind: "parse", error: expect.objectContaining({ cause: error }) }),
 		);
-		expect(ArticleFiller.articleData).toBeUndefined();
-	});
-});
-
-describe("ArticleFiller: retrievePageData", () => {
-	beforeEach(() => {
-		ArticleFiller.pageData = undefined;
 	});
 
-	afterEach(() => {
-		jest.restoreAllMocks();
-		delete global.fetch;
-		delete global.Sentry;
-	});
-
-	test("fetches and stores page data", async () => {
-		const pageData = { index: { carousel: [], displayArticles: [] } };
-		global.fetch = jest.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve(pageData) });
-
-		await ArticleFiller.retrievePageData();
-
-		expect(global.fetch).toHaveBeenCalledWith("/src/legacyPages/legacyPagesDisplay.json");
-		expect(ArticleFiller.pageData).toEqual(pageData);
-	});
-
-	test("logs and reports non-OK responses and re-throws without storing page data", async () => {
-		global.fetch = jest
-			.fn()
-			.mockResolvedValue({ ok: false, status: 503, statusText: "Service Unavailable", json: jest.fn() });
+	test("logs and reports a failed page data request and rejects", async () => {
+		answerDataRequests(PAGE_DATA_URL, () =>
+			Promise.resolve({ ok: false, status: 503, statusText: "Service Unavailable", json: jest.fn() }),
+		);
 		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 		// Sentry is a third-party SDK that sends events over the network.
 		global.Sentry = { captureException: jest.fn(), getClient: () => ({}) };
 
-		await expect(ArticleFiller.retrievePageData()).rejects.toThrow(
-			"Failed to fetch page data: 503 Service Unavailable",
-		);
+		await expect(ArticleFiller.loadData()).rejects.toThrow("Failed to fetch page data: 503 Service Unavailable");
 
-		const expectedError = expect.objectContaining({
-			message: "Failed to fetch page data: 503 Service Unavailable",
-		});
 		expect(consoleErrorSpy).toHaveBeenCalledWith(
 			"ArticleFiller error:",
 			expect.objectContaining({ kind: "http", status: 503, operation: "retrieve page data" }),
 		);
 		expect(global.Sentry.captureException).toHaveBeenCalledWith(
-			expectedError,
+			expect.objectContaining({ message: "Failed to fetch page data: 503 Service Unavailable" }),
 			expect.objectContaining({ level: "error", tags: { operation: "retrieve page data", kind: "http" } }),
 		);
-		expect(ArticleFiller.pageData).toBeUndefined();
 	});
 });
 
@@ -829,8 +811,6 @@ describe("init", () => {
 		jest.restoreAllMocks();
 		delete global.fetch;
 		delete document.URL;
-		ArticleFiller.articleData = undefined;
-		ArticleFiller.pageData = undefined;
 	});
 
 	test("renders the requested article once after both data requests settle", async () => {
@@ -887,7 +867,6 @@ describe("init", () => {
 			configurable: true,
 		});
 		jest.spyOn(console, "error").mockImplementation(() => {});
-		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
 		global.fetch = jest.fn((url) => {
 			if (url === "/src/legacyPages/legacyPagesDisplay.json") {
 				return Promise.reject(new Error("Network unavailable"));
@@ -1131,12 +1110,11 @@ describe("ServiceWorker registration", () => {
 
 describe("start", () => {
 	beforeEach(() => {
-		document.body.innerHTML = `<div id="articleBody"></div>`;
+		document.body.innerHTML = `<div id="articleBody"></div>${PAGE_METADATA}`;
 		Object.defineProperty(document, "URL", {
 			value: "http://localhost/index.html?TestArticle",
 			configurable: true,
 		});
-		jest.spyOn(ArticleFiller, "updateMetaData").mockImplementation(() => {});
 		global.navigator = {
 			serviceWorker: {
 				getRegistrations: jest.fn().mockResolvedValue([]),
@@ -1166,8 +1144,6 @@ describe("start", () => {
 		delete global.fetch;
 		delete global.navigator;
 		delete document.URL;
-		ArticleFiller.articleData = undefined;
-		ArticleFiller.pageData = undefined;
 	});
 
 	test("on the www host, redirects before registering the worker or fetching any data", async () => {
@@ -1198,6 +1174,7 @@ describe("start", () => {
 				<li id="games"><a id="gamesLink" href="index.html?pages&games">Games</a><ul><li></li></ul></li>
 			</ul></nav></div>
 			<div id="articleBody"></div>
+			${PAGE_METADATA}
 		`;
 
 		await start(createLocation("https://smalldevtalk.net/index.html?TestArticle"));
@@ -1233,7 +1210,7 @@ describe("start", () => {
 		expect(global.navigator.serviceWorker.register).toHaveBeenCalledWith("./sw.js");
 	});
 
-	test("shows error message when retrievePageData fails", async () => {
+	test("shows error message when the page data request fails", async () => {
 		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
 		jest.spyOn(console, "error").mockImplementation(() => {});
 		global.fetch = jest.fn((url) => {
@@ -1266,7 +1243,7 @@ describe("start", () => {
 		);
 	});
 
-	test("shows error message when retrieveArticleData fails", async () => {
+	test("shows error message when the article data request fails", async () => {
 		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
 		jest.spyOn(console, "error").mockImplementation(() => {});
 		global.fetch = jest.fn((url) => {
@@ -1293,7 +1270,7 @@ describe("start", () => {
 		);
 	});
 
-	test("grabArticle handles markdown fetch failure and displays specific error", async () => {
+	test("shows the specific error when the article markdown request fails", async () => {
 		const location = createLocation("https://smalldevtalk.net/index.html?TestArticle");
 		jest.spyOn(console, "error").mockImplementation(() => {});
 		global.fetch = jest.fn((url) => {
@@ -1316,7 +1293,7 @@ describe("start", () => {
 		await start(location);
 		await new Promise((resolve) => setTimeout(resolve, 0));
 
-		// grabArticle catches its own error and shows the message for its kind
+		// The article view catches its own error and shows the message for its kind
 		expect(document.getElementById("articleBody").textContent).toContain("We could not reach Small Dev Talk.");
 		expect(console.error).toHaveBeenCalledWith(
 			"ArticleFiller error:",
@@ -1417,142 +1394,67 @@ describe("start", () => {
 	});
 });
 
-describe("ArticleFiller: updateMetaData", () => {
-	beforeEach(() => {
-		document.body.innerHTML = `
-            <title></title>
-            <meta name="description" content="">
-            <meta property="og:title" content="">
-            <meta name="twitter:title" content="">
-            <meta property="og:description" content="">
-            <meta name="twitter:description" content="">
-            <meta property="og:image" content="">
-            <meta name="twitter:image" content="">
-            <script type="application/ld+json">{}</script>
-        `;
+/** The view of the test sections' `featured` section. */
+const FEATURED_VIEW = { view: "section", section: "featured" };
+
+/** The view of the archive. */
+const ARCHIVE_VIEW = { view: "archive" };
+
+describe("resolveView", () => {
+	const GAMES = { view: "section", section: "games" };
+
+	test.each([
+		["http://localhost/index.html", { view: "section", section: "index" }],
+		["http://localhost/index.html#content", { view: "section", section: "index" }],
+		["http://localhost/index.html?TestArticle", { view: "article", key: "TestArticle" }],
+		// The skip link adds #content to the URL, which a reload or a shared link keeps.
+		["http://localhost/index.html?TestArticle#content", { view: "article", key: "TestArticle" }],
+		["http://localhost/index.html?pages&games", GAMES],
+		["http://localhost/index.html?pages&games#content", GAMES],
+		["http://localhost/index.html?pages&archive", ARCHIVE_VIEW],
+		["http://localhost/index.html?TestArticle&archive", ARCHIVE_VIEW],
+		// A link carrying only parameters with a value, such as tracking parameters, names no article or section.
+		["http://localhost/index.html?fbclid=IwAR1&utm_source=x", { view: "section", section: "index" }],
+	])("reads %s", (url, view) => {
+		expect(resolveView(url)).toEqual(view);
 	});
 
-	test("updates title and meta tags", () => {
-		const articleData = {
-			title: "Meta Title",
-			summary: "Meta Summary",
-			thumbnail: "meta.png",
-			author: "Meta Author",
-			date: "2024-06-01",
-		};
-		const articleKey = "MetaArticle";
-
-		ArticleFiller.updateMetaData(articleData, articleKey);
-
-		expect(document.title).toBe("Meta Title | Small Dev Talk");
-		expect(document.querySelector("meta[name='description']").content).toBe("Meta Summary | Small Dev Talk");
-		expect(document.querySelector("meta[property='og:title']").content).toBe("Meta Title | Small Dev Talk");
-		expect(document.querySelector("meta[name='twitter:title']").content).toBe("Meta Title | Small Dev Talk");
-		expect(document.querySelector("meta[property='og:description']").content).toBe("Meta Summary | Small Dev Talk");
-		expect(document.querySelector("meta[name='twitter:description']").content).toBe(
-			"Meta Summary | Small Dev Talk",
-		);
-		expect(document.querySelector("meta[property='og:image']").content).toContain("meta.png");
-		expect(document.querySelector("meta[name='twitter:image']").content).toContain("meta.png");
-	});
-});
-
-describe("ArticleFiller: callArticle", () => {
-	beforeEach(() => {
-		document.body.innerHTML = `
-            <div id="articleBody"></div>
-            <div id="displayArticles"></div>
-            <div id="featuredArticles"></div>
-            <div id="carouselInner"></div>
-            <div id="carouselIndicator"></div>
-            <div id="pageTitle"></div>
-        `;
-		ArticleFiller.articleData = {
-			TestArticle: {
-				title: "Test Article",
-				summary: "A summary.",
-				thumbnail: "thumb.png",
-				author: "Jane Doe",
-				date: "2024-06-01",
-			},
-		};
+	test.each([
+		"http://localhost/index.html?ghost ship",
+		"http://localhost/index.html?ghost%20ship",
+		"http://localhost/index.html?ghost+ship",
+	])("decodes a multi-word article name and title-cases each word, %s", (url) => {
+		expect(resolveView(url)).toEqual({ view: "article", key: "GhostShip" });
 	});
 
-	afterEach(() => {
-		jest.restoreAllMocks();
-		delete document.URL;
-	});
-
-	const testCases = [
-		{
-			name: "calls callDisplay for no query in URL",
-			url: "http://localhost/index.html",
-			expectGrabArticle: false,
-			expectCallDisplay: true,
-		},
-		{
-			name: "calls callDisplay for multiple params in URL",
-			url: "http://localhost/index.html?TestArticle&archive",
-			expectGrabArticle: false,
-			expectCallDisplay: true,
-		},
-		{
-			name: "grabs the article named by a single param",
-			url: "http://localhost/index.html?TestArticle",
-			expectGrabArticle: true,
-			expectCallDisplay: false,
-		},
-		{
-			// The skip link adds #content to the URL, which a reload or a shared link keeps.
-			name: "grabs the article named by a single param when the URL has a fragment",
-			url: "http://localhost/index.html?TestArticle#content",
-			expectGrabArticle: true,
-			expectCallDisplay: false,
-		},
-		{
-			name: "calls callDisplay for no query in a URL with a fragment",
-			url: "http://localhost/index.html#content",
-			expectGrabArticle: false,
-			expectCallDisplay: true,
-		},
-	];
-
-	testCases.forEach(({ name, url, expectGrabArticle, expectCallDisplay }) => {
-		test(name, () => {
-			Object.defineProperty(document, "URL", {
-				value: url,
-				configurable: true,
-			});
-			const grabSpy = jest.spyOn(ArticleFiller, "grabArticle").mockImplementation(() => {});
-			const callDisplaySpy = jest.spyOn(ArticleFiller, "callDisplay").mockImplementation(() => {});
-
-			ArticleFiller.callArticle();
-
-			if (expectGrabArticle) {
-				expect(grabSpy).toHaveBeenCalledWith("TestArticle");
-			} else {
-				expect(grabSpy).not.toHaveBeenCalled();
-			}
-			if (expectCallDisplay) {
-				expect(callDisplaySpy).toHaveBeenCalled();
-			} else {
-				expect(callDisplaySpy).not.toHaveBeenCalled();
-			}
+	test("capitalizes only the first letter of each word", () => {
+		expect(resolveView("http://localhost/index.html?earlyAccess%20phantasmal")).toEqual({
+			view: "article",
+			key: "EarlyAccessPhantasmal",
 		});
 	});
+
+	test("ignores parameters that have a value, such as the tracking parameters another site adds to a link", () => {
+		expect(resolveView("http://localhost/index.html?GhostShip&fbclid=IwAR1&utm_source=x")).toEqual({
+			view: "article",
+			key: "GhostShip",
+		});
+		expect(resolveView("http://localhost/index.html?pages&games&utm_source=x")).toEqual(GAMES);
+	});
+
+	test("ignores the empty segments of a doubled or trailing &", () => {
+		expect(resolveView("http://localhost/index.html?pages&&games")).toEqual(GAMES);
+		expect(resolveView("http://localhost/index.html?pages&")).toEqual({ view: "article", key: "Pages" });
+	});
+
+	test("reads a blank article name as an empty key", () => {
+		expect(resolveView("http://localhost/index.html?%20")).toEqual({ view: "article", key: "" });
+	});
 });
 
-describe("ArticleFiller: callDisplay", () => {
-	beforeEach(() => {
-		document.body.innerHTML = `
-			<div id="pageTitle"></div>
-			<div id="carouselInner"></div>
-			<div id="carouselIndicator"></div>
-			<div id="featuredArticles"></div>
-			<div id="displayArticles"></div>
-			<div id="articleBody" hidden></div>
-		`;
-		ArticleFiller.articleData = {
+describe("ArticleFiller.showView: the view a page URL asks for", () => {
+	const data = {
+		articleData: {
 			ArticleOne: {
 				title: "First Article",
 				summary: "Summary 1",
@@ -1567,68 +1469,93 @@ describe("ArticleFiller: callDisplay", () => {
 				author: "John Smith",
 				date: "2024-06-02",
 			},
-		};
-		ArticleFiller.pageData = {
-			games: { carousel: ["ArticleOne"] },
+		},
+		pageData: {
+			games: { carousel: ["ArticleOne"], displayArticles: ["ArticleTwo"] },
 			index: { carousel: ["ArticleTwo"] },
-		};
+		},
+	};
+
+	beforeEach(() => {
+		document.body.innerHTML = `
+			<div id="pageTitle"></div>
+			<div id="carouselInner"></div>
+			<div id="carouselIndicator"></div>
+			<div id="featuredArticles"></div>
+			<div id="displayArticles"></div>
+			<div id="articleBody" hidden></div>
+		`;
 	});
 
 	afterEach(() => {
-		delete document.URL;
-		document.body.innerHTML = "";
-		ArticleFiller.whatPageDisplay = "index";
-		ArticleFiller.pageURL = undefined;
-		ArticleFiller.articleData = undefined;
-		ArticleFiller.pageData = undefined;
+		jest.restoreAllMocks();
 	});
 
 	/**
-	 * Run callDisplay at a URL.
+	 * Show the view that a URL asks for.
 	 * @param {string} url The page URL.
-	 * @returns {void}
+	 * @returns {Promise<void>|undefined} What showView returns.
 	 */
-	function callDisplayAt(url) {
-		Object.defineProperty(document, "URL", { value: url, configurable: true });
-
-		ArticleFiller.callDisplay();
+	function showPage(url) {
+		return ArticleFiller.showView(resolveView(url), data);
 	}
 
-	test.each(["http://localhost/index.html?pages&games", "http://localhost/index.html?pages&games#content"])(
-		"shows the Games section's carousel for %s",
-		(url) => {
-			callDisplayAt(url);
+	test("shows a section's carousel and titles the page after it", () => {
+		showPage("http://localhost/index.html?pages&games");
 
-			expect(document.getElementById("pageTitle").innerText).toBe("Small Dev Talk: Games");
-			expect(document.getElementById("carouselInner").textContent).toContain("First Article");
-			expect(document.getElementById("carouselInner").textContent).not.toContain("Second Article");
-		},
-	);
+		expect(document.getElementById("pageTitle").innerText).toBe("Small Dev Talk: Games");
+		expect(document.getElementById("carouselInner").textContent).toContain("First Article");
+		expect(document.getElementById("carouselInner").textContent).not.toContain("Second Article");
+	});
 
-	test.each(["http://localhost/index.html?pages&archive", "http://localhost/index.html?pages&archive#content"])(
-		"shows the archive for %s",
-		(url) => {
-			callDisplayAt(url);
+	test("fills the featured list with the section's articles", () => {
+		showPage("http://localhost/index.html?pages&games");
 
-			expect(document.querySelectorAll("#displayArticles .archive-display")).toHaveLength(2);
-			expect(document.getElementById("featuredArticles").hasAttribute("hidden")).toBe(true);
-			expect(document.getElementById("carouselInner").innerHTML).toBe("");
-		},
-	);
+		expect(
+			Array.from(document.querySelectorAll("#displayArticles .post h2"), (h2) => h2.textContent.trim()),
+		).toEqual(["Second Article"]);
+	});
 
-	test.each(["http://localhost/index.html", "http://localhost/index.html#content"])(
-		"shows the home page's carousel for %s",
-		(url) => {
-			callDisplayAt(url);
+	test("shows the archive in place of the carousel", () => {
+		showPage("http://localhost/index.html?pages&archive");
 
-			expect(document.getElementById("pageTitle").innerText).toBe("Small Dev Talk: Index");
-			expect(document.getElementById("carouselInner").textContent).toContain("Second Article");
-			expect(document.getElementById("carouselInner").textContent).not.toContain("First Article");
-		},
-	);
+		expect(document.querySelectorAll("#displayArticles .archive-display")).toHaveLength(2);
+		expect(document.getElementById("featuredArticles").hasAttribute("hidden")).toBe(true);
+		expect(document.getElementById("carouselInner").innerHTML).toBe("");
+	});
+
+	test("shows the home page's carousel when the URL has no query", () => {
+		showPage("http://localhost/index.html");
+
+		expect(document.getElementById("pageTitle").innerText).toBe("Small Dev Talk: Index");
+		expect(document.getElementById("carouselInner").textContent).toContain("Second Article");
+		expect(document.getElementById("carouselInner").textContent).not.toContain("First Article");
+	});
+
+	test.each([
+		"http://localhost/index.html?pages&",
+		"http://localhost/index.html?%20",
+		"http://localhost/index.html?__proto__",
+		"http://localhost/index.html?__defineGetter__",
+	])("shows the not-found message, not a crash, for %s", (url) => {
+		jest.spyOn(console, "error").mockImplementation(() => {});
+
+		showPage(url);
+
+		const articleBody = document.getElementById("articleBody");
+		expect(articleBody.hasAttribute("hidden")).toBe(false);
+		expect(articleBody.textContent).toContain("We could not find that article.");
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({ kind: "missing", operation: "find article" }),
+		);
+	});
 });
 
-describe("ArticleFiller: displayArchive", () => {
+describe("ArticleFiller.showView: the archive", () => {
+	let articleData;
+	const pageData = {};
+
 	beforeEach(() => {
 		document.body.innerHTML = `
             <div id="articleBody"></div>
@@ -1638,7 +1565,7 @@ describe("ArticleFiller: displayArchive", () => {
             <div id="carouselIndicator"></div>
             <div id="pageTitle"></div>
         `;
-		ArticleFiller.articleData = {
+		articleData = {
 			ArticleOne: {
 				title: "First Article",
 				summary: "Summary 1",
@@ -1657,7 +1584,7 @@ describe("ArticleFiller: displayArchive", () => {
 	});
 
 	test("renders archive articles in displayArticles", () => {
-		ArticleFiller.displayArchive();
+		ArticleFiller.showView(ARCHIVE_VIEW, { articleData, pageData });
 		const html = document.getElementById("displayArticles").innerHTML;
 		expect(html).toContain("First Article");
 		expect(html).toContain("Second Article");
@@ -1667,10 +1594,10 @@ describe("ArticleFiller: displayArchive", () => {
 	});
 
 	test("gives archive thumbnails their width and height when articleData has them", () => {
-		ArticleFiller.articleData.ArticleOne.thumbnailWidth = 400;
-		ArticleFiller.articleData.ArticleOne.thumbnailHeight = 225;
+		articleData.ArticleOne.thumbnailWidth = 400;
+		articleData.ArticleOne.thumbnailHeight = 225;
 
-		ArticleFiller.displayArchive();
+		ArticleFiller.showView(ARCHIVE_VIEW, { articleData, pageData });
 
 		const images = document.querySelectorAll("#displayArticles img");
 		expect(images[0].getAttribute("width")).toBe("400");
@@ -1680,7 +1607,7 @@ describe("ArticleFiller: displayArchive", () => {
 	});
 
 	test("archive links take their accessible name from the visible title", () => {
-		ArticleFiller.displayArchive();
+		ArticleFiller.showView(ARCHIVE_VIEW, { articleData, pageData });
 
 		const link = document.querySelector("#displayArticles .archive-link");
 		expect(link.hasAttribute("aria-label")).toBe(false);
@@ -1688,14 +1615,17 @@ describe("ArticleFiller: displayArchive", () => {
 	});
 
 	test("renders each archive article once when called twice", () => {
-		ArticleFiller.displayArchive();
-		ArticleFiller.displayArchive();
+		ArticleFiller.showView(ARCHIVE_VIEW, { articleData, pageData });
+		ArticleFiller.showView(ARCHIVE_VIEW, { articleData, pageData });
 
 		expect(document.querySelectorAll("#displayArticles .archive-display")).toHaveLength(2);
 	});
 });
 
-describe("ArticleFiller: changeCarousel", () => {
+describe("ArticleFiller.showView: a section's carousel", () => {
+	let articleData;
+	let pageData;
+
 	beforeEach(() => {
 		document.body.innerHTML = `
             <div id="articleBody"></div>
@@ -1705,13 +1635,12 @@ describe("ArticleFiller: changeCarousel", () => {
             <div id="carouselIndicator"></div>
             <div id="pageTitle"></div>
         `;
-		ArticleFiller.whatPageDisplay = "featured";
-		ArticleFiller.pageData = {
+		pageData = {
 			featured: {
 				carousel: ["ArticleOne", "ArticleTwo"],
 			},
 		};
-		ArticleFiller.articleData = {
+		articleData = {
 			ArticleOne: {
 				title: "First Article",
 				summary: "Summary 1",
@@ -1730,7 +1659,7 @@ describe("ArticleFiller: changeCarousel", () => {
 	});
 
 	test("renders carousel items and indicators", () => {
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 		const carouselInner = document.getElementById("carouselInner").innerHTML;
 		const carouselIndicator = document.getElementById("carouselIndicator").innerHTML;
 		const pageTitle = document.getElementById("pageTitle").innerText;
@@ -1746,7 +1675,7 @@ describe("ArticleFiller: changeCarousel", () => {
 	});
 
 	test("loads the first slide's image at once and at high priority, and the others lazily", () => {
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 
 		const [first, second] = document.querySelectorAll("#carouselInner img");
 		expect(first.getAttribute("loading")).toBe("eager");
@@ -1756,10 +1685,10 @@ describe("ArticleFiller: changeCarousel", () => {
 	});
 
 	test("gives each slide image its width and height when articleData has them", () => {
-		ArticleFiller.articleData.ArticleOne.thumbnailWidth = 400;
-		ArticleFiller.articleData.ArticleOne.thumbnailHeight = 225;
+		articleData.ArticleOne.thumbnailWidth = 400;
+		articleData.ArticleOne.thumbnailHeight = 225;
 
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 
 		const [first, second] = document.querySelectorAll("#carouselInner img");
 		expect(first.getAttribute("width")).toBe("400");
@@ -1769,12 +1698,12 @@ describe("ArticleFiller: changeCarousel", () => {
 	});
 
 	test("ignores a size that is not a positive whole number", () => {
-		ArticleFiller.articleData.ArticleOne.thumbnailWidth = 0;
-		ArticleFiller.articleData.ArticleOne.thumbnailHeight = 225;
-		ArticleFiller.articleData.ArticleTwo.thumbnailWidth = "wide";
-		ArticleFiller.articleData.ArticleTwo.thumbnailHeight = 10.5;
+		articleData.ArticleOne.thumbnailWidth = 0;
+		articleData.ArticleOne.thumbnailHeight = 225;
+		articleData.ArticleTwo.thumbnailWidth = "wide";
+		articleData.ArticleTwo.thumbnailHeight = 10.5;
 
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 
 		document.querySelectorAll("#carouselInner img").forEach((image) => {
 			expect(image.hasAttribute("width")).toBe(false);
@@ -1783,7 +1712,7 @@ describe("ArticleFiller: changeCarousel", () => {
 	});
 
 	test("names each slide through its caption, with a level-three heading and no label that differs from it", () => {
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 
 		const link = document.getElementById("carouselLink0");
 		const heading = document.getElementById("carouselHeader0");
@@ -1794,9 +1723,9 @@ describe("ArticleFiller: changeCarousel", () => {
 	});
 
 	test("writes the slides and the indicators once each, so earlier slides are not parsed again", () => {
-		ArticleFiller.pageData.featured.carousel.push("ArticleOne");
+		pageData.featured.carousel.push("ArticleOne");
 
-		const writes = recordInnerHtmlWrites(() => ArticleFiller.changeCarousel());
+		const writes = recordInnerHtmlWrites(() => ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData }));
 
 		expect(writes.carouselInner).toHaveLength(1);
 		expect(writes.carouselIndicator).toHaveLength(1);
@@ -1809,7 +1738,7 @@ describe("ArticleFiller: changeCarousel", () => {
 	});
 
 	test("renders each indicator as a button named after its slide, with the first one current", () => {
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 
 		const [first, second] = document.querySelectorAll("#carouselIndicator button");
 		expect(first.getAttribute("type")).toBe("button");
@@ -1826,7 +1755,7 @@ describe("ArticleFiller: changeCarousel", () => {
 	test("labels each slide as a slide with its position, and announces nothing when the carousel renders", () => {
 		document.body.insertAdjacentHTML("beforeend", '<p id="carouselStatus"></p>');
 
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 
 		const slides = document.querySelectorAll("#carouselInner .carousel-item");
 		expect(Array.from(slides, (slide) => slide.getAttribute("aria-label"))).toEqual(["1 of 2", "2 of 2"]);
@@ -1837,25 +1766,43 @@ describe("ArticleFiller: changeCarousel", () => {
 	});
 
 	test("escapes the article title in an indicator's label", () => {
-		ArticleFiller.articleData.ArticleOne.title = 'Say "hi" <b>loud</b>';
+		articleData.ArticleOne.title = 'Say "hi" <b>loud</b>';
 
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 
 		const first = document.querySelector("#carouselIndicator button");
 		expect(first.getAttribute("aria-label")).toBe('Show slide 1: Say "hi" <b>loud</b>');
 		expect(first.children).toHaveLength(0);
 	});
 
+	test("skips a key with no article data and numbers the other slides and indicators without a gap", () => {
+		pageData.featured.carousel = ["ArticleOne", "NoSuchArticle", "ArticleTwo"];
+
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
+
+		const slides = document.querySelectorAll("#carouselInner .carousel-item");
+		expect(Array.from(slides, (slide) => slide.getAttribute("aria-label"))).toEqual(["1 of 2", "2 of 2"]);
+		expect(document.getElementById("carouselHeader1").textContent).toBe("Second Article");
+		expect(
+			Array.from(document.querySelectorAll("#carouselIndicator button"), (button) =>
+				button.getAttribute("data-carousel-slide-to"),
+			),
+		).toEqual(["0", "1"]);
+	});
+
 	test("replaces the slides of an earlier render", () => {
-		ArticleFiller.changeCarousel();
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 
 		expect(document.querySelectorAll("#carouselInner .carousel-item")).toHaveLength(2);
 		expect(document.querySelectorAll("#carouselIndicator button")).toHaveLength(2);
 	});
 });
 
-describe("ArticleFiller: featured article links", () => {
+describe("ArticleFiller.showView: a section's featured list", () => {
+	let articleData;
+	let pageData;
+
 	beforeEach(() => {
 		document.body.innerHTML = `
             <div id="articleBody"></div>
@@ -1865,9 +1812,8 @@ describe("ArticleFiller: featured article links", () => {
             <div id="carouselIndicator"></div>
             <div id="pageTitle"></div>
         `;
-		ArticleFiller.whatPageDisplay = "featured";
-		ArticleFiller.pageData = { featured: { displayArticles: ["ArticleOne", "ArticleTwo"] } };
-		ArticleFiller.articleData = {
+		pageData = { featured: { displayArticles: ["ArticleOne", "ArticleTwo"] } };
+		articleData = {
 			ArticleOne: {
 				title: "First Article",
 				summary: "Summary 1",
@@ -1885,7 +1831,7 @@ describe("ArticleFiller: featured article links", () => {
 				date: "2024-06-02",
 			},
 		};
-		ArticleFiller.ArticleFiller();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 	});
 
 	test("gives each thumbnail its width and height when articleData has them", () => {
@@ -1925,22 +1871,24 @@ describe("ArticleFiller: featured article links", () => {
 	});
 
 	test("writes the list once, so earlier posts are not parsed again", () => {
-		const writes = recordInnerHtmlWrites(() => ArticleFiller.ArticleFiller());
+		const writes = recordInnerHtmlWrites(() => ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData }));
 
 		expect(writes.displayArticles).toHaveLength(1);
 		expect(document.querySelectorAll("#displayArticles > .post")).toHaveLength(2);
 	});
 
 	test("closes every div it opens", () => {
-		const [markup] = recordInnerHtmlWrites(() => ArticleFiller.ArticleFiller()).displayArticles;
+		const [markup] = recordInnerHtmlWrites(() =>
+			ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData }),
+		).displayArticles;
 
 		expect(markup.match(/<\/div>/g)).toHaveLength(markup.match(/<div\b/g).length);
 	});
 
 	test("skips a key with no article data and keeps each post's id at its place in the list", () => {
-		ArticleFiller.pageData.featured.displayArticles = ["ArticleOne", "NoSuchArticle", "ArticleTwo"];
+		pageData.featured.displayArticles = ["ArticleOne", "NoSuchArticle", "ArticleTwo"];
 
-		ArticleFiller.ArticleFiller();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 
 		expect(Array.from(document.querySelectorAll("#displayArticles > .post"), (post) => post.id)).toEqual([
 			"featuredArticle0",
@@ -2084,13 +2032,12 @@ describe("escapeHtml", () => {
 		expect(escapeHtml(undefined)).toBe("");
 		expect(escapeHtml(123)).toBe("123");
 	});
-
-	test("is exposed via ArticleFiller.escapeHtml", () => {
-		expect(ArticleFiller.escapeHtml(`<b>`)).toBe("&lt;b&gt;");
-	});
 });
 
 describe("ArticleFiller: XSS sanitization", () => {
+	let articleData;
+	let pageData = {};
+
 	beforeEach(() => {
 		document.body.innerHTML = `
             <div id="articleBody"></div>
@@ -2102,8 +2049,8 @@ describe("ArticleFiller: XSS sanitization", () => {
         `;
 	});
 
-	test("displayArchive escapes malicious titles in text content", () => {
-		ArticleFiller.articleData = {
+	test("the archive escapes malicious titles in text content", () => {
+		articleData = {
 			ArticleOne: {
 				title: `<b>evil</b>`,
 				summary: "Summary",
@@ -2112,13 +2059,13 @@ describe("ArticleFiller: XSS sanitization", () => {
 				date: "2024-06-01",
 			},
 		};
-		ArticleFiller.displayArchive();
+		ArticleFiller.showView(ARCHIVE_VIEW, { articleData, pageData });
 		const html = document.getElementById("displayArticles").innerHTML;
 		expect(html).toContain("&lt;b&gt;evil&lt;/b&gt;");
 	});
 
-	test("displayArchive prevents attribute breakout", () => {
-		ArticleFiller.articleData = {
+	test("the archive prevents attribute breakout", () => {
+		articleData = {
 			ArticleOne: {
 				title: `" onclick="alert(1)`,
 				summary: "Summary",
@@ -2127,13 +2074,13 @@ describe("ArticleFiller: XSS sanitization", () => {
 				date: "2024-06-01",
 			},
 		};
-		ArticleFiller.displayArchive();
+		ArticleFiller.showView(ARCHIVE_VIEW, { articleData, pageData });
 		const html = document.getElementById("displayArticles").innerHTML;
 		expect(html).not.toContain('onclick="alert(1)"');
 	});
 
-	test("displayArchive properly quotes and escapes thumbnail src", () => {
-		ArticleFiller.articleData = {
+	test("the archive properly quotes and escapes thumbnail src", () => {
+		articleData = {
 			ArticleOne: {
 				title: "Safe Title",
 				summary: "Summary",
@@ -2142,18 +2089,17 @@ describe("ArticleFiller: XSS sanitization", () => {
 				date: "2024-06-01",
 			},
 		};
-		ArticleFiller.displayArchive();
+		ArticleFiller.showView(ARCHIVE_VIEW, { articleData, pageData });
 		const html = document.getElementById("displayArticles").innerHTML;
 		expect(html).not.toContain('onload="alert(1)"');
 		expect(html).toContain(
-			'src="src/articleArchive/authorJaneDoe/2024-06-01_ArticleOne/evil.png&quot; onload=&quot;alert(1)"',
+			'src="/src/articleArchive/authorJaneDoe/2024-06-01_ArticleOne/evil.png&quot; onload=&quot;alert(1)"',
 		);
 	});
 
-	test("changeCarousel escapes malicious titles in text content", () => {
-		ArticleFiller.whatPageDisplay = "featured";
-		ArticleFiller.pageData = { featured: { carousel: ["ArticleOne"] } };
-		ArticleFiller.articleData = {
+	test("the carousel escapes malicious titles in text content", () => {
+		pageData = { featured: { carousel: ["ArticleOne"] } };
+		articleData = {
 			ArticleOne: {
 				title: `<b>evil</b>`,
 				summary: `<i>x</i>`,
@@ -2162,16 +2108,15 @@ describe("ArticleFiller: XSS sanitization", () => {
 				date: "2024-06-01",
 			},
 		};
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 		const html = document.getElementById("carouselInner").innerHTML;
 		expect(html).toContain("&lt;b&gt;evil&lt;/b&gt;");
 		expect(html).toContain("&lt;i&gt;x&lt;/i&gt;");
 	});
 
-	test("changeCarousel prevents attribute breakout", () => {
-		ArticleFiller.whatPageDisplay = "featured";
-		ArticleFiller.pageData = { featured: { carousel: ["ArticleOne"] } };
-		ArticleFiller.articleData = {
+	test("the carousel prevents attribute breakout", () => {
+		pageData = { featured: { carousel: ["ArticleOne"] } };
+		articleData = {
 			ArticleOne: {
 				title: `" onclick="alert(1)`,
 				summary: "Summary",
@@ -2180,15 +2125,14 @@ describe("ArticleFiller: XSS sanitization", () => {
 				date: "2024-06-01",
 			},
 		};
-		ArticleFiller.changeCarousel();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 		const html = document.getElementById("carouselInner").innerHTML;
 		expect(html).not.toContain('onclick="alert(1)"');
 	});
 
-	test("ArticleFiller (featured) escapes malicious titles in text content", () => {
-		ArticleFiller.whatPageDisplay = "featured";
-		ArticleFiller.pageData = { featured: { displayArticles: ["ArticleOne"] } };
-		ArticleFiller.articleData = {
+	test("the featured list escapes malicious titles in text content", () => {
+		pageData = { featured: { displayArticles: ["ArticleOne"] } };
+		articleData = {
 			ArticleOne: {
 				title: `<script>alert(3)</script>`,
 				summary: `<script>alert(4)</script>`,
@@ -2197,15 +2141,14 @@ describe("ArticleFiller: XSS sanitization", () => {
 				date: "2024-06-01",
 			},
 		};
-		ArticleFiller.ArticleFiller();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 		const html = document.getElementById("displayArticles").innerHTML;
 		expect(html).toContain("&lt;script&gt;alert(3)&lt;/script&gt;");
 	});
 
-	test("ArticleFiller (featured) prevents attribute breakout", () => {
-		ArticleFiller.whatPageDisplay = "featured";
-		ArticleFiller.pageData = { featured: { displayArticles: ["ArticleOne"] } };
-		ArticleFiller.articleData = {
+	test("the featured list prevents attribute breakout", () => {
+		pageData = { featured: { displayArticles: ["ArticleOne"] } };
+		articleData = {
 			ArticleOne: {
 				title: `" onclick="alert(1)`,
 				summary: "Summary",
@@ -2214,7 +2157,7 @@ describe("ArticleFiller: XSS sanitization", () => {
 				date: "2024-06-01",
 			},
 		};
-		ArticleFiller.ArticleFiller();
+		ArticleFiller.showView(FEATURED_VIEW, { articleData, pageData });
 		const html = document.getElementById("displayArticles").innerHTML;
 		expect(html).not.toContain('onclick="alert(1)"');
 	});
@@ -2262,10 +2205,6 @@ describe("sanitizeHtml", () => {
 		expect(sanitizeHtml("")).toBe("");
 	});
 
-	test("is exposed via ArticleFiller.sanitizeHtml", () => {
-		expect(ArticleFiller.sanitizeHtml("<script>x</script>")).not.toContain("<script");
-	});
-
 	test("removes SVG animation elements that mutate URLs", () => {
 		const html = sanitizeHtml(
 			'<svg><a href="#"><animate attributeName="href" values="javascript:alert(1)"/><text x="20" y="20">click</text></a></svg>',
@@ -2278,28 +2217,6 @@ describe("sanitizeHtml", () => {
 		expect(sanitizeHtml('<a href="java&#9;script:alert(1)">click</a>')).not.toContain("javascript:");
 		expect(sanitizeHtml('<a href="java&#10;script:alert(1)">click</a>')).not.toContain("javascript:");
 		expect(sanitizeHtml('<a href="java&#13;script:alert(1)">click</a>')).not.toContain("javascript:");
-	});
-});
-
-describe("ArticleFiller: addToPage XSS", () => {
-	beforeEach(() => {
-		document.body.innerHTML = `<div id="articleBody"></div>`;
-	});
-
-	test("sanitizes script tags in markdown output", () => {
-		ArticleFiller.articleMd = "# Hello <script>alert(1)</script>";
-		ArticleFiller.addToPage();
-		const html = document.getElementById("articleBody").innerHTML;
-		expect(html).toContain("<h1");
-		expect(html).not.toContain("<script");
-		expect(html).not.toContain("alert(1)");
-	});
-
-	test("sanitizes dangerous attributes in markdown output", () => {
-		ArticleFiller.articleMd = '<img src="img.png" onerror="alert(1)">';
-		ArticleFiller.addToPage();
-		const html = document.getElementById("articleBody").innerHTML;
-		expect(html).not.toContain("onerror");
 	});
 });
 
