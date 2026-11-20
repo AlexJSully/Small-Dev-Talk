@@ -1054,7 +1054,7 @@ function watchTwitterTimeline() {
 }
 
 /** Version of the site. When updating the package version number in package.json, update this one as well. */
-const APP_VERSION = "1.3.4";
+const APP_VERSION = "1.3.5";
 
 /** Where Sentry sends the events of the site. */
 const SENTRY_DSN = "https://c74a8d7e001f45c8bb4ebfa5a1e92664@o1185775.ingest.us.sentry.io/6600431";

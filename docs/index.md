@@ -61,7 +61,7 @@ Implementation: [index.html](../index.html), [package.json](../package.json)
 ## Current Status
 
 - **Project Status:** Maintenance Mode
-- **Latest Version:** 1.3.4
+- **Latest Version:** 1.3.5
 - **License:** GPL-3.0
 
 ## Contributing
