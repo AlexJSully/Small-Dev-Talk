@@ -120,7 +120,7 @@ When [index.html](../../index.html) loads:
     - `Sentry.getCurrentScope()` with the `app-version` tag
     - Google Tag Manager, through `loadGoogleTagManager()`, and a canonical URL adjustment applied only on the `smalldevtalk.net` host, through `updateCanonicalLink()`
 
-Metadata loading starts from `start()` in [index.js](../../src/scripts/index.js), which also registers the one click listener that runs the carousel arrows, the carousel indicators and the error buttons, lets a touch or pen swipe across the carousel change the slide, and lets Escape close the navigation submenu that hover or keyboard focus opened (`enableSubmenuDismissal()`). That file is loaded with `defer`, so it runs after the HTML is parsed and calls `start()` at once; when it runs while the document is still loading, it calls `start()` on `DOMContentLoaded` instead. When the page runs on `www.smalldevtalk.net`, `start()` moves it to the same path, query and hash on `smalldevtalk.net` and does nothing else, because GitHub Pages redirects every `www.` request to that host and the redirected data requests and service worker script fail. Otherwise it awaits `init()`, starts `watchTwitterTimeline()`, and then awaits `registerServiceWorker()`, so the worker's installation never delays the first render. `init()` calls `ArticleFiller.loadData()`, which starts both data requests together, and calls `ArticleFiller.showView()` with the view `resolveView()` reads from the URL once, after both requests succeed. Each request reports its own failure and rethrows it, so when one fails, `init()` rejects and `start()` shows the error message for that failure instead of the view.
+Metadata loading starts from `start()` in [index.js](../../src/scripts/index.js), which also registers the one click listener that runs the carousel arrows, the carousel indicators and the error buttons, lets a touch or pen swipe across the carousel change the slide, and lets Escape close the navigation submenu that hover or keyboard focus opened (`enableSubmenuDismissal()`). That file is loaded with `defer`, so it runs after the HTML is parsed and calls `start()` at once; when it runs while the document is still loading, it calls `start()` on `DOMContentLoaded` instead. When the page runs on `www.smalldevtalk.net`, `start()` moves it to the same path, query and hash on `smalldevtalk.net` and does nothing else, because GitHub Pages redirects every `www.` request to that host and the redirected data requests and service worker script fail. Otherwise it awaits `init()`, starts `watchTwitterTimeline()`, and then awaits `registerServiceWorker()`, so the worker's installation never delays the first render. `init()` calls `ArticleFiller.loadData()`, which starts both data requests together, and calls `ArticleFiller.showView()` with the view `resolveView()` reads from the URL, once both requests succeed. Each request reports its own failure and rethrows it, so when one fails, `init()` rejects and `start()` shows the error message for that failure instead of the view.
 
 ### 2. Article Data Retrieval
 
@@ -147,18 +147,18 @@ sequenceDiagram
 
 ### 3. Article Loading Logic
 
-`resolveView(url)` determines what to display, and `ArticleFiller.showView(view, data)` shows it. `resolveView()` reads only the decoded keys of the query string, so a fragment such as the skip link's `#content` does not change which article or section shows. A parameter with a value, such as `fbclid=…` or `utm_source=…` added to a shared link, and an empty segment from a doubled or trailing `&` are left out. One key is an article, title-cased word by word into its key. Otherwise the second key names a section (`?pages&games`), whose carousel and featured list `showView()` fills, or the archive (`?pages&archive`), and no query is the home page's `index` section:
+`resolveView(url)` determines what to display, and `ArticleFiller.showView(view, data)` shows it. `resolveView()` reads only the decoded keys of the query string, so a fragment such as the skip link's `#content` does not change which article or section shows. A parameter with a value, such as `fbclid=…` or `utm_source=…` added to a shared link, and an empty segment from a doubled or trailing `&` are left out. One key is an article, title-cased word by word into its key. Otherwise the second key names a section (`?pages&games`), whose carousel and featured list `showView()` fills, or the archive (`?pages&archive`), and a query with no key is the home page's `index` section:
 
 ```mermaid
 flowchart TD
     accTitle: Article loading logic in resolveView() and showView()
-    accDescr: resolveView() checks for a query string. No query or multiple parameters shows a section or the archive. A single article key makes showView() hide the featured and display sections, show articleBody, update metadata, fetch the Markdown, convert it with Showdown, and render it to articleBody.
-    A["resolveView()"] --> B{"URL has<br/>query string?"}
-    B -->|No query| C["showView()<br/>Show a section"]
-    B -->|Has query| D["Parse article name<br/>from query"]
-    D --> E{"Single article<br/>or multiple?"}
-    E -->|Multiple params| C
-    E -->|Single article| F["showView()<br/>article key"]
+    accDescr: resolveView() reads the decoded keys of the query string, leaving out parameters with a value and empty segments. No key, or two or more keys, shows a section or the archive. A single article key makes showView() hide the featured and display sections, show articleBody, update metadata, fetch the Markdown, convert it with Showdown, and render it to articleBody.
+    A["resolveView()"] --> B{"Query has a key<br/>without a value?"}
+    B -->|No| C["showView()<br/>Show a section"]
+    B -->|Yes| D["Read decoded keys"]
+    D --> E{"One key<br/>or more?"}
+    E -->|Two or more| C
+    E -->|One| F["showView()<br/>article key"]
     F --> G["Hide #featuredArticles<br/>Hide #displayArticles<br/>Show #articleBody"]
     G --> J["updateMetaData<br/>update page tags"]
     J --> H["Fetch article markdown<br/>from archive"]
@@ -236,7 +236,7 @@ stateDiagram-v2
     accDescr: States move from Uninitialized to MetadataLoaded after loadData(), then to DisplayingHome or FetchingArticle, then RenderingArticle and DisplayingArticle. A failed fetch enters ErrorState, with paths back to the homepage or a retry.
     [*] --> Uninitialized
     Uninitialized --> MetadataLoaded: loadData()<br/>completes
-    MetadataLoaded --> DisplayingHome: showView()<br/>section view
+    MetadataLoaded --> DisplayingHome: showView()<br/>section or archive view
     MetadataLoaded --> FetchingArticle: showView()<br/>article view
     FetchingArticle --> RenderingArticle: Markdown fetched
     RenderingArticle --> DisplayingArticle: HTML injected
@@ -247,13 +247,18 @@ stateDiagram-v2
     ErrorState --> FetchingArticle: User retries
 
     note right of MetadataLoaded
-        articleData populated
+        articleData and pageData loaded
         Ready for navigation
+    end note
+
+    note right of FetchingArticle
+        Page tags updated
+        Markdown requested
     end note
 
     note right of RenderingArticle
         Showdown converting
-        Metadata updating
+        HTML sanitized
     end note
 
     note right of DisplayingArticle

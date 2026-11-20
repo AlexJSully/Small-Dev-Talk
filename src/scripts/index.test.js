@@ -1413,6 +1413,8 @@ describe("resolveView", () => {
 		["http://localhost/index.html?pages&games#content", GAMES],
 		["http://localhost/index.html?pages&archive", ARCHIVE_VIEW],
 		["http://localhost/index.html?TestArticle&archive", ARCHIVE_VIEW],
+		// A link carrying only parameters with a value, such as tracking parameters, names no article or section.
+		["http://localhost/index.html?fbclid=IwAR1&utm_source=x", { view: "section", section: "index" }],
 	])("reads %s", (url, view) => {
 		expect(resolveView(url)).toEqual(view);
 	});
@@ -1530,27 +1532,29 @@ describe("ArticleFiller.showView: the view a page URL asks for", () => {
 		expect(document.getElementById("carouselInner").textContent).not.toContain("First Article");
 	});
 
-	test.each(["http://localhost/index.html?pages&", "http://localhost/index.html?%20"])(
-		"shows the not-found message, not a crash, for %s",
-		(url) => {
-			jest.spyOn(console, "error").mockImplementation(() => {});
+	test.each([
+		"http://localhost/index.html?pages&",
+		"http://localhost/index.html?%20",
+		"http://localhost/index.html?__proto__",
+		"http://localhost/index.html?__defineGetter__",
+	])("shows the not-found message, not a crash, for %s", (url) => {
+		jest.spyOn(console, "error").mockImplementation(() => {});
 
-			showPage(url);
+		showPage(url);
 
-			const articleBody = document.getElementById("articleBody");
-			expect(articleBody.hasAttribute("hidden")).toBe(false);
-			expect(articleBody.textContent).toContain("We could not find that article.");
-			expect(console.error).toHaveBeenCalledWith(
-				"ArticleFiller error:",
-				expect.objectContaining({ kind: "missing", operation: "find article" }),
-			);
-		},
-	);
+		const articleBody = document.getElementById("articleBody");
+		expect(articleBody.hasAttribute("hidden")).toBe(false);
+		expect(articleBody.textContent).toContain("We could not find that article.");
+		expect(console.error).toHaveBeenCalledWith(
+			"ArticleFiller error:",
+			expect.objectContaining({ kind: "missing", operation: "find article" }),
+		);
+	});
 });
 
 describe("ArticleFiller.showView: the archive", () => {
 	let articleData;
-	let pageData = {};
+	const pageData = {};
 
 	beforeEach(() => {
 		document.body.innerHTML = `
@@ -1620,7 +1624,7 @@ describe("ArticleFiller.showView: the archive", () => {
 
 describe("ArticleFiller.showView: a section's carousel", () => {
 	let articleData;
-	let pageData = {};
+	let pageData;
 
 	beforeEach(() => {
 		document.body.innerHTML = `
@@ -1797,7 +1801,7 @@ describe("ArticleFiller.showView: a section's carousel", () => {
 
 describe("ArticleFiller.showView: a section's featured list", () => {
 	let articleData;
-	let pageData = {};
+	let pageData;
 
 	beforeEach(() => {
 		document.body.innerHTML = `

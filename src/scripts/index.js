@@ -10,6 +10,9 @@
  */
 const converter = new showdown.Converter({ parseImgDimensions: true });
 
+/** Host that serves the site. GitHub Pages answers every request on `www.` + this host with a 301 to it. */
+const CANONICAL_HOST = "smalldevtalk.net";
+
 /**
  * Escape HTML special characters to prevent XSS injection.
  * @param {*} unsafe The value to escape.
@@ -445,6 +448,16 @@ function thumbnailPath(key, article) {
 }
 
 /**
+ * Build the `src`, `width` and `height` attributes of an article thumbnail.
+ * @param {string} key The key of the article in articleData.json.
+ * @param {object} article The article's data from articleData.json.
+ * @returns {string} The attributes, with `width` and `height` only when both sizes are positive whole numbers.
+ */
+function thumbnailAttributes(key, article) {
+	return `src="${escapeHtml(thumbnailPath(key, article))}"${imageSizeAttributes(article)}`;
+}
+
+/**
  * Build the button that shows one carousel slide. Bootstrap's stylesheet draws `.carousel-indicators [data-bs-target]`
  * as a dash, and `handleControlClick()` runs it.
  * @param {{title: string}} article The article's data from articleData.json.
@@ -486,7 +499,7 @@ function carouselSlideMarkup(key, article, index, count) {
 			>
 				<img
 					id="carouselImage${index}"
-					src="${escapeHtml(thumbnailPath(key, article))}"${imageSizeAttributes(article)}
+					${thumbnailAttributes(key, article)}
 					class="d-block w-100"
 					${index === 0 ? `loading="eager" fetchpriority="high"` : `loading="lazy"`}
 					alt=""
@@ -519,7 +532,7 @@ function featuredPostMarkup(key, article, position) {
 					aria-label="Redirect to ${articleTitle}"
 				>
 					<img
-						src="${escapeHtml(thumbnailPath(key, article))}"${imageSizeAttributes(article)}
+						${thumbnailAttributes(key, article)}
 						class="img-fluid"
 						loading="lazy"
 						alt="Thumbnail for ${articleTitle}"
@@ -568,14 +581,16 @@ function isListableInArchive(article) {
  * @returns {string} The entry markup.
  */
 function archiveItemMarkup(key, article) {
+	const title = escapeHtml(article.title);
+
 	return `
 		<div class="col-sm archive-display">
 			<a
 				class="archive-link"
 				href="${articleHref(key)}"
 			>
-				<p class="archive-title">${escapeHtml(article.title)}</p>
-				<img src="${escapeHtml(thumbnailPath(key, article))}"${imageSizeAttributes(article)} alt="${escapeHtml(article.title)}'s thumbnail" loading="lazy">
+				<p class="archive-title">${title}</p>
+				<img ${thumbnailAttributes(key, article)} alt="${title}'s thumbnail" loading="lazy">
 			</a>
 		</div>
 	`;
@@ -728,7 +743,8 @@ function showArticle(articleKey, articleData) {
 	setHidden("displayArticles", true);
 	setHidden("articleBody", false);
 
-	const article = articleData[articleKey];
+	// The key comes from the URL, so an inherited name such as `__proto__` must not count as an article.
+	const article = Object.hasOwn(articleData, articleKey) ? articleData[articleKey] : undefined;
 
 	if (!article) {
 		ArticleFiller.displayError(
@@ -891,7 +907,7 @@ class ArticleFiller {
 }
 
 /**
- * Fetch page and article metadata, then render the view the page URL asks for once both requests settle. An article
+ * Fetch page and article metadata, then render the view the page URL asks for once both requests succeed. An article
  * view's own request is not awaited: it shows its own error when it fails.
  * @returns {Promise<void>} Resolves after the view starts to render. Rejects with the error of a failed request, which
  * that request has already logged and reported.
@@ -901,9 +917,6 @@ function init() {
 		ArticleFiller.showView(resolveView(document.URL), data);
 	});
 }
-
-/** Host that serves the site. GitHub Pages answers every request on `www.` + this host with a 301 to it. */
-const CANONICAL_HOST = "smalldevtalk.net";
 
 /** Scope path of the service worker that earlier releases registered from `/src/serviceWorker/sw.js`. */
 const LEGACY_SERVICE_WORKER_SCOPE_PATH = "/src/serviceWorker/";

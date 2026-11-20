@@ -49,7 +49,7 @@ npm run start
 - `start()` runs when the deferred `index.min.js` executes, after the HTML is parsed (or on `DOMContentLoaded` when the script runs while the document is still loading), so slow third-party scripts do not delay the data requests
 - `index.html` preloads `articleData.json` and `legacyPagesDisplay.json`, so the requests start while the HTML is parsed
 - `ArticleFiller.loadData()` fetches the legacy page definitions and the article metadata together
-- `init()` calls `ArticleFiller.showView()` with the view `resolveView()` reads from the URL, once both requests settle
+- `init()` calls `ArticleFiller.showView()` with the view `resolveView()` reads from the URL, once both requests succeed
 - `registerServiceWorker()` runs after the page renders, so the worker's installation never delays the first render
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
