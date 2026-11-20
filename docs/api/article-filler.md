@@ -8,7 +8,7 @@ The public entry points for the site are Uniform Resource Locator (URL) query st
 - `/?pages&archive` displays the archive view.
 - `/?pages&{category}` displays a category view built from legacy page definitions.
 
-Article keys are normalized by removing spaces and uppercasing the first letter of each segment before lookup.
+The query string is read as decoded keys, so `/?ghost%20ship` and `/?ghost+ship` read as `ghost ship`. Parameters with a value, such as `fbclid=…` or `utm_source=…` added to a shared link, are left out, as are empty segments from a doubled or trailing `&`. Article keys are normalized by removing spaces and uppercasing the first letter of each segment before lookup, so `/?ghost%20ship` loads the article `GhostShip`. A key with no article shows the "could not find that article" message.
 
 Implementation: [src/scripts/index.js](../../src/scripts/index.js)
 

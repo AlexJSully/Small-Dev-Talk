@@ -357,6 +357,31 @@ describe("Landing Page", () => {
 		cy.location("search").should("equal", "");
 	});
 
+	it("should reload the page from the Refresh button of the error page", () => {
+		cy.visit("http://localhost:3000/index.html?NotAnArticleKey");
+
+		cy.get("#articleBody").should("contain", "We could not find that article.");
+		cy.window().then((win) => {
+			win.loadedBeforeRefresh = true;
+		});
+		cy.get('#articleBody [data-page-action="reload"]').click();
+		cy.window().should("not.have.property", "loadedBeforeRefresh");
+		cy.location("search").should("equal", "?NotAnArticleKey");
+	});
+
+	it("should open an article whose link carries a tracking parameter", () => {
+		cy.visit("http://localhost:3000/index.html?Ghostship&fbclid=IwAR1&utm_source=x");
+
+		cy.get("#articleBody").should("be.visible").find("h1, h2").should("exist");
+		cy.get("#featuredArticles").should("not.be.visible");
+	});
+
+	it("should show the not-found message for a link that ends with &", () => {
+		cy.visit("http://localhost:3000/index.html?pages&");
+
+		cy.get("#articleBody").should("be.visible").and("contain", "We could not find that article.");
+	});
+
 	it("should have a document head the W3C validator accepts", () => {
 		cy.get("head meta[charset]").should("have.attr", "charset", "UTF-8");
 		cy.get("head meta[http-equiv]")
