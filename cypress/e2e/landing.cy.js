@@ -376,6 +376,14 @@ describe("Landing Page", () => {
 		cy.get("#featuredArticles").should("not.be.visible");
 	});
 
+	it("should open the article that a multi-word link names", () => {
+		cy.visit("http://localhost:3000/index.html?motte%20island");
+
+		cy.get("#articleBody").should("be.visible").and("contain", "Motte Island");
+		cy.get("#articleBody").should("not.contain", "We could not find that article.");
+		cy.title().should("equal", "Motte Island | Small Dev Talk");
+	});
+
 	it("should show the not-found message for a link that ends with &", () => {
 		cy.visit("http://localhost:3000/index.html?pages&");
 
