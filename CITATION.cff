@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+title: Small Dev Talk
+message: >-
+    Open-source website and code for Small Dev Talk, an
+    archive of interviews, news articles and reviews from
+    the indie scene.
+type: software
+authors:
+    - given-names: Alexander
+      family-names: Sullivan
+      orcid: "https://orcid.org/0000-0002-4463-4473"
+      email: alexjsully.connect@outlook.com
+      website: "https://alexjsully.me/"
+    - given-names: Neil
+      family-names: Rampone
+    - given-names: Jeffery
+      family-names: Cen
+      website: "https://www.jefferycen.com"
+contact:
+    - email: alexjsully.connect@outlook.com
+      family-names: Sullivan
+      given-names: Alexander
+      country: CA
+      orcid: "https://orcid.org/0000-0002-4463-4473"
+      website: "https://alexjsully.me/"
+identifiers:
+    - type: url
+      value: "https://smalldevtalk.net/"
+repository-code: "https://github.com/AlexJSully/Small-Dev-Talk"
+url: "https://smalldevtalk.net/"
+abstract: >-
+    Small Dev Talk is an independent news source that covers
+    all things from the indie world of entertainment, from
+    games to movies to books to technology and more. It gives
+    upcoming developers the chance to show off their projects
+    through interviews with images and video.
+keywords:
+    - entertainment
+    - game development
+    - indie
+    - news
+    - technology
+    - website
+license: GPL-3.0
+commit: 55e68820ae3bd64fb96edbb73f576634018a5b3e
+version: 1.3.5
+date-released: "2026-11-20"
