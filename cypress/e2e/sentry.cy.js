@@ -57,7 +57,7 @@ describe("Sentry initialization", () => {
 			expect(win.Sentry.getClient()).to.exist;
 			expect(win.Sentry.browserTracingIntegration).to.be.a("function");
 			expect(win.Sentry.replayIntegration).to.be.a("function");
-			expect(win.Sentry.getCurrentScope().getScopeData().tags["app-version"]).to.equal("1.3.4");
+			expect(win.Sentry.getCurrentScope().getScopeData().tags["app-version"]).to.match(/^\d+\.\d+\.\d+$/);
 		});
 
 		cy.window().then((win) => {

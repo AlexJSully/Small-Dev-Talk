@@ -6,6 +6,53 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 To see tags and releases, please go to [Tags](https://github.com/AlexJSully/Small-Dev-Talk/tags) on [GitHub](https://github.com/AlexJSully/Small-Dev-Talk).
 
+## [1.3.5] - 2026-11-20
+
+Version 1.3.5 mostly includes accessibility, speed and reliability improvements.
+
+Accessibility:
+
+- Added a "skip to content" link as the first item on every page
+- Added descriptions (alt text) to all 515 article images for screen reader users
+- Made the Games menu usable with a keyboard: it opens when focused and closes with Escape
+- Made carousel captions easier to read, and kept the arrows and indicators visible in high contrast modes
+- Marked up the page header, main content and sidebar so assistive tools can jump between them
+
+Security:
+
+- Article text and titles are now cleaned before they are shown, so a bad article file cannot run code in your browser
+- Tightened the site's security rules and added extra browser protections for returning visitors
+
+UI/UX:
+
+- Error messages now say what went wrong and what to do next, with Refresh and Home buttons
+- A "Follow @SmallDevTalk on X" link now shows until the X timeline loads, instead of an empty box
+- Stopped the page from jumping around while it loads
+
+Optimizations:
+
+- The home page now appears sooner
+- Pages download about 60% less script, improving mobile performance
+- Images further down an article now load as you scroll
+
+Documentation:
+
+- Updated the documentation
+
+Bug fix:
+
+- Fixed the site failing to start offline support when opened from <https://www.smalldevtalk.net>
+- Fixed a script error that stopped the site from loading in some browsers
+- Fixed links with tracking parameters (for example ?Ghostship&fbclid=abc) opening an empty page
+- Fixed links with spaces in the article name not opening the article
+- Fixed some broken links showing an error instead of a "could not find that article" message
+- Fixed one missing carousel article replacing the whole page with an error
+- Fixed the Ghostship article, which was empty
+- Fixed missing or repeated images in the Prisonhood, DeadPlasma, PlanetExplorers, LeviathanCrossfire, Aurora and Jagged Alliance Flashback articles
+- Fixed the video links in the Son of Nor, CENTS and Rick Future articles
+- Fixed headings and titles that were copied from other articles
+- Fixed the Playsets trailer thumbnail, the Gloria Victis date, the CENTS Kickstarter link and the "Comabt" typo in the Cube Metalheart 2 review title
+
 ## [1.3.4] - 2024-09-17
 
 UI/UX:
